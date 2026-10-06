@@ -104,6 +104,9 @@ class BackgroundTests(unittest.TestCase):
         self.assertIn("if: steps.train.outputs.completed == 'false'", workflow)
         self.assertIn('next_count >= 64', workflow)
         self.assertIn('cancel-in-progress: false', workflow)
+        self.assertIn('path: background-work/context-trial\n', workflow)
+        self.assertIn("python -m pip install 'numpy>=2,<3'", workflow)
+        self.assertIn('test -s background-work/context-trial/generalist-state/bootstrap-data/candidate/model.pt', workflow)
         self.assertNotIn('generalist-bootstrap.yml/dispatches', workflow)
 
 if __name__ == '__main__': unittest.main()

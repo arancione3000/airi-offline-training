@@ -53,11 +53,13 @@ jobs:
         with:
           repository: arancione3000/airi-pc-bootstrap
           ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
-          path: background-work/context-trial/generalist-state
+          path: background-work/context-trial
           persist-credentials: false
       - name: Install exact CPU runtime and apply isolated recovery patch
         run: |
           python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy>=2,<3'
+          test -s background-work/context-trial/generalist-state/bootstrap-data/candidate/model.pt
           git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
           python -m unittest discover -s tests/offline-training -v
       - name: Resume bounded offline chunk
