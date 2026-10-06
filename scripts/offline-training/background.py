@@ -63,6 +63,34 @@ def verify_checkpoint(path):
     return manifest
 
 
+
+def assemble_archive(seed, entry):
+    """Reconstruct a split seed upload, verifying every part and the original ZIP."""
+    archive = seed / entry['name']
+    if archive.exists():
+        return archive
+    parts = entry.get('parts', [])
+    if not 1 <= len(parts) <= 64 or sum(x['bytes'] for x in parts) != entry['bytes']:
+        raise ValueError('invalid archive parts')
+    partial = archive.with_suffix(archive.suffix + '.partial')
+    try:
+        with partial.open('wb') as out:
+            for i, item in enumerate(parts):
+                if item['name'] != entry['name'] + f'.part{i:02d}':
+                    raise ValueError('invalid part identity or order')
+                path = seed / item['name']
+                if path.stat().st_size != item['bytes'] or digest(path) != item['sha256']:
+                    raise ValueError('part integrity failed')
+                with path.open('rb') as source:
+                    shutil.copyfileobj(source, out)
+        if partial.stat().st_size != entry['bytes'] or digest(partial) != entry['sha256']:
+            raise ValueError('reconstructed archive digest mismatch')
+        partial.replace(archive)
+        return archive
+    finally:
+        partial.unlink(missing_ok=True)
+
+
 def load_release(tag, root):
     check_tag(tag)
     seed = root / 'download'
@@ -82,7 +110,7 @@ def load_release(tag, root):
         name = entry.get('name') or entry.get('file_name') or Path(entry.get('local_path', '')).name
         if name not in names or name in found:
             raise ValueError('unexpected archive identity')
-        archive = seed / name
+        archive = assemble_archive(seed, {**entry, 'name': name})
         if archive.stat().st_size != entry['bytes'] or digest(archive) != entry['sha256']:
             raise ValueError('release archive digest mismatch')
         safe_extract(archive, root / 'restored')

@@ -14,9 +14,10 @@ jobs do not chain; resume manually from the last committed release. Concurrency
 prevents overlapping writers. The chain is capped at64 jobs.
 
 Before first launch, transfer the two original1280 ZIP archives and their index
-to the dedicated `airi-offline-seed-01280` release. This is a required external
-checkpoint transfer and is currently blocked pending explicit user approval.
-No training has been launched by installing this workflow alone.
+to the dedicated `airi-offline-seed-01280` release. The user explicitly authorized the checkpoint transfer and public release
+publication on 2026-10-06. The initial release contains six verified parts and a
+committed index. The runner reconstructs the original ZIP archives and verifies
+every part plus both original SHA256 digests before loading tensors.
 
 Run **AIRI offline background training** on `main` with
 `checkpoint_release=airi-offline-seed-01280` and `continuation=0`.

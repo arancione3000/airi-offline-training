@@ -73,6 +73,25 @@ class BackgroundTests(unittest.TestCase):
                                  started=0, seconds=60, clock=lambda: 10000)
         self.assertEqual(bounded(None, None, None, None, None, Path('final'))['completed_steps'], bg.TARGET)
 
+    def test_split_seed_reconstruction_and_corruption(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            content = b'original archive bytes'
+            parts = [content[:7], content[7:]]
+            items = []
+            for i, data in enumerate(parts):
+                name = f'seed.zip.part{i:02d}'
+                (root / name).write_bytes(data)
+                items.append({'name': name, 'bytes': len(data), 'sha256': bg.digest(root / name)})
+            entry = {'name': 'seed.zip', 'bytes': len(content),
+                     'sha256': bg.hashlib.sha256(content).hexdigest(), 'parts': items}
+            self.assertEqual(bg.assemble_archive(root, entry).read_bytes(), content)
+            (root / 'seed.zip').unlink()
+            (root / items[1]['name']).write_bytes(b'bad')
+            with self.assertRaisesRegex(ValueError, 'part integrity'):
+                bg.assemble_archive(root, entry)
+            self.assertFalse((root / 'seed.zip.partial').exists())
+
     def test_live_release_names_rejected(self):
         for tag in ['generalist-state', 'v1', 'airi-offline-../../live', 'airi-offline-x;echo bad']:
             with self.assertRaises(ValueError): bg.check_tag(tag)
