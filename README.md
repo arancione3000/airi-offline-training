@@ -34,3 +34,9 @@ saved experiment; `background.py` replaces only storage and bounded stopping.
 The runner lives in a small dedicated repository because the canonical AIRI
 repository exceeded its GitHub size quota. AIRI source and native reference are
 checked out from their immutable canonical commits.
+
+The first job uses a short time budget and stops at the next128-update snapshot
+to verify remote persistence and continuation. Later jobs use four hours. Each
+job also uploads an AIRI_PROGRESS_<run-id>.json status asset to its input
+checkpoint release after its first16 updates and then every128 updates. Status
+assets are separate from the immutable checkpoint index and model archives.

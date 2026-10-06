@@ -92,6 +92,17 @@ class BackgroundTests(unittest.TestCase):
                 bg.assemble_archive(root, entry)
             self.assertFalse((root / 'seed.zip.partial').exists())
 
+    def test_progress_reports_first_update_and_boundaries_only(self):
+        written, reports = [], []
+        write = bg.progress_writer(lambda path, payload: written.append(Path(path).name), reports.append)
+        write('checkpoint.json', {'completed_steps': 1280, 'status': 'training'})
+        write('PROGRESS.json', {'completed_steps': 1296, 'status': 'training'})
+        write('PROGRESS.json', {'completed_steps': 1312, 'status': 'training'})
+        write('PROGRESS.json', {'completed_steps': 1408, 'status': 'training'})
+        write('PROGRESS.json', {'completed_steps': 1408, 'status': 'evaluating'})
+        self.assertEqual([x['completed_steps'] for x in reports], [1296, 1408])
+        self.assertEqual(len(written), 5)
+
     def test_live_release_names_rejected(self):
         for tag in ['generalist-state', 'v1', 'airi-offline-../../live', 'airi-offline-x;echo bad']:
             with self.assertRaises(ValueError): bg.check_tag(tag)

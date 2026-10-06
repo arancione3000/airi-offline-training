@@ -139,6 +139,18 @@ def bounded_save(save, publish, *, started, seconds, target=TARGET, clock=time.m
     return wrapped
 
 
+def progress_writer(write, report):
+    reported = False
+    def wrapped(path, payload):
+        nonlocal reported
+        write(path, payload)
+        if (Path(path).name == 'PROGRESS.json' and payload.get('status') == 'training'
+                and (not reported or payload['completed_steps'] % 128 == 0)):
+            report(payload)
+            reported = True
+    return wrapped
+
+
 class ReleasePublisher:
     def __init__(self, output):
         self.output = output
@@ -180,6 +192,15 @@ class ReleasePublisher:
         shutil.rmtree(dest)
         return {'release': tag, 'completed_steps': step}
 
+    def progress(self, payload, source_tag):
+        check_tag(source_tag)
+        path = self.output / 'status' / f'AIRI_PROGRESS_{os.environ["GITHUB_RUN_ID"]}.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({**payload, 'fingerprint': FINGERPRINT,
+                                   'production_qualified': False, 'live_promoted': False,
+                                   'checkpoint_release': self.next_release or source_tag}, indent=2))
+        gh('release', 'upload', source_tag, path, '--repo', os.environ['GITHUB_REPOSITORY'], '--clobber')
+
     def upload(self, paths):
         if not self.next_release:
             raise RuntimeError('no committed checkpoint for final reports')
@@ -218,6 +239,7 @@ def main():
     transport = ReleasePublisher(root / 'releases')
     run.publish = persist.publish = transport.publish
     persist.upload = transport.upload
+    run.atomic_json = progress_writer(run.atomic_json, lambda payload: transport.progress(payload, args.release))
     extras = [scripts / name for name in SPEC['script_sha256']] + [HERE / 'SPEC.json']
     extras += list((data / 'data').glob('*.jsonl')) + [data / 'CONVERSATION_TEST.json']
     run.save_session = bounded_save(run.save_session,
