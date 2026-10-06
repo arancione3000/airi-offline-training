@@ -20,6 +20,19 @@ class BackgroundTests(unittest.TestCase):
         self.assertEqual(bg.hashlib.sha256(json.dumps(original, sort_keys=True).encode()).hexdigest(), bg.FINGERPRINT)
         self.assertEqual(bg.TARGET, 13107)
 
+    def test_legacy_checkpoint_requires_explicit_seed_migration(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'file').write_text('weights')
+            payload = {'fingerprint': bg.LEGACY_FINGERPRINT, 'completed_steps': 1280,
+                       'files': {'file': bg.digest(root / 'file')}}
+            (root / 'checkpoint.json').write_text(json.dumps(payload))
+            with self.assertRaises(ValueError):
+                bg.verify_checkpoint(root)
+            self.assertEqual(bg.verify_checkpoint(root, bg.LEGACY_FINGERPRINT)['completed_steps'], 1280)
+        self.assertNotEqual(bg.FINGERPRINT, bg.LEGACY_FINGERPRINT)
+        self.assertEqual(bg.SPEC['precision'], 'fp32')
+
     def test_safe_archive_and_traversal_rejection(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

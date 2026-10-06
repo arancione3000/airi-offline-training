@@ -5,7 +5,7 @@
   "context_length": 1024,
   "tokenizer_digest": "4cb489f8509618aeeec96245ea89009e343a9d9d2bcb752d51b1a88b47efebc1",
   "torch_version": "2.14.1+cpu",
-  "precision": "bf16",
+  "precision": "fp32",
   "batch_size": 1,
   "learning_rate": 1e-05,
   "weight_decay": 0.01,
@@ -28,11 +28,11 @@
     "domains": 48
   },
   "script_sha256": {
-    "run.py": "d278fca14fdf19f49bd6f799a4195a4271172f62f90a4330a1cc95923c281a8f",
-    "session.py": "ef8eb7161048a79036b3e7c57fa01be4fc9796b0a16393fa10b909c8f81dc97c",
+    "run.py": "5b70a7b7eb923b46ee83bba194f1431210f385336053cafb9da442d5b0191bd9",
+    "session.py": "ac61ad50f51701687d616523da777d12431355b6ce514c9e165c303f721ae230",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86"
   },
   "promotion": "offline only; production_qualified false; human conversation assessment still required",
-  "fingerprint": "2d094df3bec97621f6393644014043fd3716e7a975ed4fd2105a8cdc9db7177f",
+  "fingerprint": "83f75c81dedda92a46706481f532c802cd9cc6584d69ea0fa68146c8d7c7bd83",
   "parameter_count": 50127552
 }

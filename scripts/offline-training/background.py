@@ -16,6 +16,8 @@ HERE = Path(__file__).resolve().parent
 SPEC = json.loads((HERE / 'SPEC.json').read_text())
 FINGERPRINT = SPEC['fingerprint']
 TARGET = SPEC['max_steps']
+LEGACY_FINGERPRINT = '2d094df3bec97621f6393644014043fd3716e7a975ed4fd2105a8cdc9db7177f'
+SEED_TAG = 'airi-offline-seed-01280'
 
 
 def digest(path):
@@ -48,9 +50,9 @@ def safe_extract(archive, root):
         z.extractall(root)
 
 
-def verify_checkpoint(path):
+def verify_checkpoint(path, expected_fingerprint=FINGERPRINT):
     manifest = json.loads((path / 'checkpoint.json').read_text())
-    if manifest['fingerprint'] != FINGERPRINT:
+    if manifest['fingerprint'] != expected_fingerprint:
         raise ValueError('checkpoint fingerprint mismatch')
     if not 1280 <= manifest['completed_steps'] <= TARGET:
         raise ValueError('checkpoint outside the authorized experiment')
@@ -101,7 +103,8 @@ def load_release(tag, root):
     if len(indexes) != 1:
         raise ValueError('one committed checkpoint index required')
     index = json.loads(indexes[0].read_text())
-    if index['fingerprint'] != FINGERPRINT or len(index['archives']) != 2:
+    expected = LEGACY_FINGERPRINT if tag == SEED_TAG else FINGERPRINT
+    if index['fingerprint'] != expected or len(index['archives']) != 2:
         raise ValueError('release provenance mismatch')
     step = index['completed_steps']
     names = {f'AIRI_TRAINING_{step:05d}_{part}.zip' for part in ['MODEL', 'OPTIMIZER']}
@@ -116,7 +119,7 @@ def load_release(tag, root):
         safe_extract(archive, root / 'restored')
         found.add(name)
     checkpoint = root / 'restored/checkpoint'
-    manifest = verify_checkpoint(checkpoint)
+    manifest = verify_checkpoint(checkpoint, expected)
     if manifest['completed_steps'] != step:
         raise ValueError('index/checkpoint step mismatch')
     return checkpoint
@@ -235,6 +238,16 @@ def main():
     shutil.copy2(root / 'restored/experiment/CONVERSATION_TEST.json', data / 'CONVERSATION_TEST.json')
     sys.path.insert(0, str(scripts))
     run = importlib.import_module('run')
+    # Only the verified original seed may cross the explicit BF16 -> FP32 boundary.
+    if args.release == SEED_TAG:
+        restore = run.restore_session
+        def migrate_seed(path, factory, *, fingerprint):
+            if fingerprint != FINGERPRINT:
+                raise ValueError('FP32 recipe fingerprint mismatch')
+            return restore(path, factory, fingerprint=LEGACY_FINGERPRINT)
+        run.restore_session = migrate_seed
+    print(json.dumps({'phase': 'starting', 'precision': SPEC['precision'],
+                      'fingerprint': FINGERPRINT, 'source_release': args.release}), flush=True)
     persist = importlib.import_module('persist')
     transport = ReleasePublisher(root / 'releases')
     run.publish = persist.publish = transport.publish

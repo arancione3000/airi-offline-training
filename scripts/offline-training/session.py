@@ -17,7 +17,7 @@ def atomic_json(path,payload):
     tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False))
     tmp.replace(path)
 
-def train_step(model,reference,optimizer,ids,labels,anchor_ids,anchor_labels,*,precision='bf16'):
+def train_step(model,reference,optimizer,ids,labels,anchor_ids,anchor_labels,*,precision='fp32'):
     student_storage={p.untyped_storage().data_ptr() for p in model.parameters()}
     if any(p.untyped_storage().data_ptr() in student_storage for p in reference.parameters()):
         raise ValueError('reference must have independent parameter storage')

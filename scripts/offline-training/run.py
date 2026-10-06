@@ -97,7 +97,7 @@ def main():
         args.max_steps=min(args.max_steps,len(dialogue)+len(dialogue)//4)
         spec={'parent_sha256':EXPECTED_PARENT,'parent_snapshot':'e949157c88a582b7e52ca46001afcf8da8ddd22e',
               'dataset_sha256':EXPECTED_DATA,'context_length':1024,'tokenizer_digest':reference.tokenizer.digest,
-              'torch_version':torch.__version__,'precision':'bf16','batch_size':1,'learning_rate':1e-5,
+              'torch_version':torch.__version__,'precision':'fp32','batch_size':1,'learning_rate':1e-5,
               'weight_decay':.01,'gradient_clip':1.,'kl_weight':4.,'unlikelihood_weight':.05,'eos_weight':1.2,
               'seed':71025,'max_steps':args.max_steps,'dialogue_schedule':'four dialogue updates then one replay; shuffled deck without replacement',
               'replay_policy':'cycle language-it, language-en, domains; training-only; 20% updates, not token quota',
@@ -154,7 +154,7 @@ def main():
                           'peak_rss_gb':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,'live_promoted':False}
                 atomic_json(OUT/'PROGRESS.json',progress)
                 print(json.dumps({k:progress[k] for k in ['completed_steps','supervised_tokens','eta_training_seconds','peak_rss_gb']}),flush=True)
-            if (step+1)%128==0:checkpoint(durable=(step+1==128 or (step+1)%1024==0))
+            if (step+1)%16==0:checkpoint(durable=(step+1==128 or (step+1)%1024==0))
         final=checkpoint(durable=True)
         assert state_digest(reference.model)==teacher_digest and all(p.grad is None for p in reference.model.parameters())
         assert all(sha256_file(p)==digest for p,digest in parent_hashes.items())
