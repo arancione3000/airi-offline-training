@@ -103,6 +103,8 @@ class BackgroundTests(unittest.TestCase):
         self.assertNotIn('always()', workflow)
         self.assertIn("if: steps.train.outputs.completed == 'false'", workflow)
         self.assertIn('next_count >= 64', workflow)
+        self.assertIn("CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '14400' }}", workflow)
+        self.assertIn('--seconds "$CHUNK_SECONDS"', workflow)
         self.assertIn('cancel-in-progress: false', workflow)
         self.assertIn('path: background-work/context-trial\n', workflow)
         self.assertIn("python -m pip install 'numpy>=2,<3'", workflow)

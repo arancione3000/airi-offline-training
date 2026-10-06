@@ -26,6 +26,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
       CONTINUATION: ${{ inputs.continuation }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '14400' }}
       PYTHONPATH: ${{ github.workspace }}/source/computer
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +66,7 @@ jobs:
       - name: Resume bounded offline chunk
         id: train
         run: |
-          python scripts/offline-training/background.py --release "$CHECKPOINT_RELEASE" --root background-work
+          python scripts/offline-training/background.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
       - name: Continue only after committed checkpoint
         if: steps.train.outputs.completed == 'false'
         env:
