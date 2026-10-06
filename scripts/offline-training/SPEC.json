@@ -1,0 +1,38 @@
+{
+  "parent_sha256": "998530839d9722316b59cb28ff1ef68a7863f517de73fa8fef8ce9677a24b85e",
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "dataset_sha256": "4cd65b21228375b7abaf81da5e32e977dc1182f0a73b942dc81c34a38a698d91",
+  "context_length": 1024,
+  "tokenizer_digest": "4cb489f8509618aeeec96245ea89009e343a9d9d2bcb752d51b1a88b47efebc1",
+  "torch_version": "2.14.1+cpu",
+  "precision": "bf16",
+  "batch_size": 1,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "gradient_clip": 1.0,
+  "kl_weight": 4.0,
+  "unlikelihood_weight": 0.05,
+  "eos_weight": 1.2,
+  "seed": 71025,
+  "max_steps": 13107,
+  "dialogue_schedule": "four dialogue updates then one replay; shuffled deck without replacement",
+  "replay_policy": "cycle language-it, language-en, domains; training-only; 20% updates, not token quota",
+  "source_rows": 10564,
+  "rows": 10486,
+  "excluded_prompt_overlap_rows": 78,
+  "dialogue_supervised_tokens_per_pass": 3472648,
+  "anchors": 61,
+  "replay_rows": {
+    "language-it": 512,
+    "language-en": 512,
+    "domains": 48
+  },
+  "script_sha256": {
+    "run.py": "d278fca14fdf19f49bd6f799a4195a4271172f62f90a4330a1cc95923c281a8f",
+    "session.py": "ef8eb7161048a79036b3e7c57fa01be4fc9796b0a16393fa10b909c8f81dc97c",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86"
+  },
+  "promotion": "offline only; production_qualified false; human conversation assessment still required",
+  "fingerprint": "2d094df3bec97621f6393644014043fd3716e7a975ed4fd2105a8cdc9db7177f",
+  "parameter_count": 50127552
+}

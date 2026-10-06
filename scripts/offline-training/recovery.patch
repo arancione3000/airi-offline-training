@@ -1,0 +1,526 @@
+diff --git a/.ai/PROJECT_MEMORY.md b/.ai/PROJECT_MEMORY.md
+index 3ff3548..4f381bf 100644
+--- a/.ai/PROJECT_MEMORY.md
++++ b/.ai/PROJECT_MEMORY.md
+@@ -442,3 +442,13 @@ User requests faster training. Main c24c66f/run37127825887 spends11–13min per
+ ## 2026-10-03 — Protected rollback step adaptation and widening hysteresis
+ 
+ User requests a fix for excessive scards. Scope: recovery policy/LR persistence, Phase5 tests, production-shadow contract and diagnostic report. Read-only state a00bb69a/checkpoint8d184426 has33,478,285 accepted tokens, repetition .236422 versus hard .237721. The prepared bundle works (~5s), but3/14 latest live attempts accepted. Diagnosed: rejected LR halving is undone by the1/128 floor; accepted path also restores that floor; one tolerated success doubles rescue batch. Allow protected-only bounded adaptation down to1/2048; retain accepted LR; require two same-batch/LR non-worsening NLL/repetition successes before widening. Legacy entry/healthy paths, anchor/gates/objectives/token accounting unchanged. Snapshots in /tmp/airi-rejection-snapshot.281 passed/1 optional skip, compile/diff checks passed. Paired read-only current-checkpoint diagnostics (3seeds,16k,batch128): LR1/128 and1/512 each1/3 accepted;1/2048 2/3 accepted. One lower-LR sample still rejected, gains tiny, replay sample not full live data; overlapping timing excluded. No sustained acceptance, language recovery or100k/hour claim. Raw evidence and reproduction: reports/generalist-adaptive-recovery. Publish/check/activate via normal workflows; never manually edit generalist-state.
++
++2026-10-05 Recovery R1: restored bounded NLL and teacher accuracy batches from lost local work. Parent d078e718; unchanged scoring/guardrails. Snapshot recovery-snapshots/R1.
++
++2026-10-05 Recovery R2: restored opt-in complete-dialogue encoding from saved patch. Legacy train/eval unchanged; overflow preflight before any model movement.
++
++2026-10-05 Recovery R3: optional independent frozen reference KL in train_sft. Separate complete anchors use the minimum of student/reference contexts. Separate RNG preserves SFT sampling; reference tokens reported separately. Lost 6639b85 reconstructed, not claimed byte-identical.
++
++2026-10-05 Long training authorized after explicit >2h compute question. Restored verified R1–R3 patch after workspace maintenance; 482 Generalist tests pass, 7 optional skips. Native parent and 1024 corpus digests verified. Checkpointed experiment outside repo; no live/main/generalist-state writes.
++
++2026-10-05 Resumed long-training recovery: checkpoint128 restored after workspace maintenance; 27 SHA256 verified, frozen script hashes and Torch2.14.1+cpu match. Clean CPU-only environment restored. First regression invocation used wrong cwd (15 workflow FileNotFoundError); rollback to d078e718 and identical patch reapply, proper repo-cwd rerun490 passed/7 optional skips incl.8 session tests. No tests changed. Resume source is unchanged; live/main/generalist-state read-only.
+diff --git a/computer/generalist_lm/research_cycle.py b/computer/generalist_lm/research_cycle.py
+index 8632da8..f505ba7 100644
+--- a/computer/generalist_lm/research_cycle.py
++++ b/computer/generalist_lm/research_cycle.py
+@@ -57,33 +57,40 @@ def _teacher_forced_accuracy(model, tokenizer: ByteTokenizer, rows: list[Researc
+     import hashlib
+     import torch
+ 
+-    encoded = [encode_sft_example(row.sft(), tokenizer, model.config.context_length) for row in rows]
+-    ids = torch.stack([item[0] for item in encoded]).to(device)
+-    labels = torch.stack([item[1] for item in encoded]).to(device)
+     model.eval()
+-    with torch.no_grad():
+-        logits = model(ids)["logits"]
+-    predicted = logits[:, :-1, :].argmax(dim=-1)
+-    targets = labels[:, 1:]
+-    mask = targets != -100
+-    correct = (predicted == targets) & mask
+-
+-    total = int(mask.sum().item())
+-    token_accuracy = float(correct.sum().item() / total) if total else 0.0
++    total = 0
++    total_correct = 0
+     solved: list[str] = []
+     domain_correct: dict[str, int] = {}
+     domain_total: dict[str, int] = {}
+-    for index, row in enumerate(rows):
+-        row_mask = mask[index]
+-        row_correct = correct[index]
+-        count = int(row_mask.sum().item())
+-        good = int(row_correct.sum().item())
+-        domain_correct[row.domain] = domain_correct.get(row.domain, 0) + good
+-        domain_total[row.domain] = domain_total.get(row.domain, 0) + count
+-        if count and bool(torch.all(row_correct[row_mask]).item()):
+-            prompt = row.messages[0]["content"]
+-            digest = hashlib.sha256(f"{row.domain}\0{prompt}".encode("utf-8")).hexdigest()[:16]
+-            solved.append(f"{row.domain}:{digest}")
++    with torch.no_grad():
++        for start in range(0, len(rows), 8):
++            chunk = rows[start:start + 8]
++            encoded = [encode_sft_example(row.sft(), tokenizer, model.config.context_length) for row in chunk]
++            ids = torch.stack([item[0] for item in encoded])
++            labels = torch.stack([item[1] for item in encoded])
++            scored = (labels != -100).nonzero()
++            width = int(scored[:, 1].max()) + 1 if scored.numel() else 2
++            ids, labels = ids[:, :width].to(device), labels[:, :width].to(device)
++            logits = model(ids)["logits"]
++            predicted = logits[:, :-1, :].argmax(dim=-1)
++            targets = labels[:, 1:]
++            mask = targets != -100
++            correct = (predicted == targets) & mask
++            for index, row in enumerate(chunk):
++                row_mask = mask[index]
++                row_correct = correct[index]
++                count = int(row_mask.sum().item())
++                good = int(row_correct.sum().item())
++                total += count
++                total_correct += good
++                domain_correct[row.domain] = domain_correct.get(row.domain, 0) + good
++                domain_total[row.domain] = domain_total.get(row.domain, 0) + count
++                if count and bool(torch.all(row_correct[row_mask]).item()):
++                    prompt = row.messages[0]["content"]
++                    digest = hashlib.sha256(f"{row.domain}\0{prompt}".encode("utf-8")).hexdigest()[:16]
++                    solved.append(f"{row.domain}:{digest}")
++    token_accuracy = total_correct / total if total else 0.0
+ 
+     return {
+         "target_token_accuracy": token_accuracy,
+diff --git a/computer/generalist_lm/training.py b/computer/generalist_lm/training.py
+index 979b0e0..185d455 100644
+--- a/computer/generalist_lm/training.py
++++ b/computer/generalist_lm/training.py
+@@ -42,7 +42,15 @@ def load_sft_jsonl(path: str | Path) -> list[SFTExample]:
+     return out
+ 
+ 
+-def encode_sft_example(example: SFTExample, tokenizer: ByteTokenizer, context_length: int):
++def encode_sft_example(
++    example: SFTExample, tokenizer: ByteTokenizer, context_length: int,
++    *, require_complete: bool = False,
++):
++    """Encode SFT, optionally rejecting overflow instead of truncating dialogue.
++
++    The opt-in policy preserves every prompt and response token, including EOS.
++    The default remains unchanged for existing training and evaluation callers.
++    """
+     import torch
+     messages = list(example.messages)
+     target = messages[-1]
+@@ -50,6 +58,12 @@ def encode_sft_example(example: SFTExample, tokenizer: ByteTokenizer, context_le
+     prompt_ids = tokenizer.serialize_messages(prompt, add_generation_prompt=True)
+     target_ids = tokenizer.encode(target["content"], eos=True)
+ 
++    if require_complete and len(prompt_ids) + len(target_ids) > context_length:
++        raise ValueError(
++            "complete SFT example exceeds context: "
++            f"{len(prompt_ids) + len(target_ids)} > {context_length}"
++        )
++
+     max_target = max(1, context_length - 1)
+     target_ids = target_ids[:max_target]
+     prompt_budget = max(1, context_length - len(target_ids))
+@@ -128,7 +142,7 @@ def _utf8_prefix(text: str, max_bytes: int) -> str:
+     return raw[:max(0, int(max_bytes))].decode("utf-8", errors="ignore")
+ 
+ 
+-def nll_stats_on_examples(model, tokenizer, examples: list[SFTExample], *, device: str = "cpu") -> dict[str, float | int]:
++def nll_stats_on_examples(model, tokenizer, examples: list[SFTExample], *, device: str = "cpu", batch_size: int = 8) -> dict[str, float | int]:
+     """Return tokenizer-comparable held-out negative log-likelihood metrics.
+ 
+     Cross-entropy per token is not comparable across tokenizer families because
+@@ -160,30 +174,31 @@ def nll_stats_on_examples(model, tokenizer, examples: list[SFTExample], *, devic
+         fair_examples.append(SFTExample(messages))
+ 
+     model.eval()
+-    ids, labels = _batch(fair_examples, tokenizer, model.config.context_length, range(len(fair_examples)))
+-    ids, labels = ids.to(device), labels.to(device)
+-    with torch.no_grad():
+-        logits = model(ids)["logits"][:, :-1, :].contiguous()
+-        targets = labels[:, 1:].contiguous()
+-        total_nll = F.cross_entropy(
+-            logits.view(-1, logits.shape[-1]),
+-            targets.view(-1),
+-            ignore_index=-100,
+-            reduction="sum",
+-        )
+-
+-    target_tokens = int((targets != -100).sum().item())
++    nll = 0.0
++    target_tokens = 0
+     target_bytes = 0
+-    labels_cpu = labels.detach().cpu()
+-    for row in labels_cpu:
+-        supervised = [int(token) for token in row.tolist() if int(token) != -100]
+-        target_bytes += len(
+-            tokenizer.decode(supervised, skip_special=True).encode(
+-                "utf-8",
+-                errors="replace",
++    chunk = max(1, int(batch_size))
++    with torch.no_grad():
++        for start in range(0, len(fair_examples), chunk):
++            ids, labels = _batch(fair_examples, tokenizer, model.config.context_length,
++                                 range(start, min(start + chunk, len(fair_examples))))
++            # Causality makes ignored trailing padding irrelevant to every
++            # scored token. Keep the complete prefix through the last target.
++            scored_positions = (labels != -100).nonzero()
++            width = int(scored_positions[:, 1].max()) + 1 if scored_positions.numel() else 2
++            ids, labels = ids[:, :width].to(device), labels[:, :width].to(device)
++            logits = model(ids)["logits"][:, :-1, :].contiguous()
++            targets = labels[:, 1:].contiguous()
++            total_nll = F.cross_entropy(
++                logits.view(-1, logits.shape[-1]), targets.reshape(-1),
++                ignore_index=-100, reduction="sum",
+             )
+-        )
+-    nll = float(total_nll.detach().cpu())
++            nll += float(total_nll.detach().cpu())
++            target_tokens += int((targets != -100).sum().item())
++            for row in labels.detach().cpu():
++                supervised = [int(token) for token in row.tolist() if int(token) != -100]
++                target_bytes += len(tokenizer.decode(supervised, skip_special=True).encode(
++                    "utf-8", errors="replace"))
+     per_token = nll / max(1, target_tokens)
+     per_byte = nll / max(1, target_bytes)
+     return {
+@@ -348,11 +363,56 @@ def train_sft(
+     repetition_unlikelihood_weight: float = 0.0,
+     eos_loss_weight: float = 1.0,
+     repetition_window: int = 16,
++    require_complete_examples: bool = False,
++    reference_model=None,
++    reference_kl_weight: float = 0.0,
++    reference_temperature: float = 1.0,
++    reference_examples: list[SFTExample] | None = None,
+ ) -> dict[str, Any]:
+     import torch
+     if not examples:
+         raise ValueError("no SFT examples")
+ 
++    kl_weight = float(reference_kl_weight)
++    if not math.isfinite(kl_weight) or kl_weight < 0.0:
++        raise ValueError("reference_kl_weight must be finite and nonnegative")
++    reference_context = int(model.config.context_length)
++    if kl_weight > 0.0:
++        if reference_model is None:
++            raise ValueError("positive reference KL requires an independent reference model")
++        if reference_model is model:
++            raise ValueError("reference model must be independent")
++        student_storage = {p.untyped_storage().data_ptr() for p in model.parameters()}
++        if any(p.untyped_storage().data_ptr() in student_storage for p in reference_model.parameters()):
++            raise ValueError("reference model must not share parameter storage")
++        if model.config.vocab_size != reference_model.config.vocab_size:
++            raise ValueError("reference vocabulary mismatch")
++        if not math.isfinite(float(reference_temperature)) or float(reference_temperature) <= 0.0:
++            raise ValueError("reference temperature must be positive and finite")
++        reference_context = min(reference_context, int(reference_model.config.context_length))
++        if reference_examples is not None:
++            if not reference_examples:
++                raise ValueError("reference examples must be nonempty")
++            for index, example in enumerate(reference_examples):
++                try:
++                    encode_sft_example(example, tokenizer, reference_context, require_complete=True)
++                except ValueError as exc:
++                    raise ValueError(f"reference example {index}: {exc}") from exc
++        elif model.config.context_length > reference_model.config.context_length:
++            raise ValueError("shorter reference context requires separate reference examples")
++
++    # Validate the entire corpus before moving the model, evaluating, or taking
++    # any optimizer step. A late overflow must not leave partially trained weights.
++    if require_complete_examples:
++        for index, example in enumerate(examples):
++            try:
++                encode_sft_example(
++                    example, tokenizer, model.config.context_length,
++                    require_complete=True,
++                )
++            except ValueError as exc:
++                raise ValueError(f"SFT example {index}: {exc}") from exc
++
+     steps = max(1, int(steps))
+     batch_size = max(1, int(batch_size))
+     accumulation = max(1, min(64, int(gradient_accumulation_steps)))
+@@ -377,8 +437,12 @@ def train_sft(
+         autocast_dtype = None
+ 
+     rng = random.Random(seed)
++    reference_rng = random.Random(seed + 1)
+     torch.manual_seed(seed)
+     model.to(device_obj)
++    if kl_weight > 0.0:
++        reference_model.to(device_obj)
++        reference_model.eval()
+     initial_loss = loss_on_examples(model, tokenizer, examples, device=str(device_obj))
+     model.train()
+     optimizer = torch.optim.AdamW(
+@@ -392,6 +456,8 @@ def train_sft(
+     )
+     losses: list[float] = []
+     supervised_tokens = 0
++    reference_tokens = 0
++    kl_losses: list[float] = []
+     last_objective_stats = {
+         "causal_ce_loss": float(initial_loss),
+         "repetition_unlikelihood_loss": 0.0,
+@@ -429,6 +495,22 @@ def train_sft(
+                     repetition_unlikelihood_weight=repetition_unlikelihood_weight,
+                     repetition_window=repetition_window,
+                 )
++                if kl_weight > 0.0:
++                    if reference_examples is None:
++                        reference_ids, reference_labels = ids, labels
++                        student_logits = result["logits"]
++                    else:
++                        reference_indices = [reference_rng.randrange(len(reference_examples)) for _ in range(batch_size)]
++                        reference_ids, reference_labels = _batch(reference_examples, tokenizer, reference_context, reference_indices)
++                        reference_ids = reference_ids.to(device_obj)
++                        reference_labels = reference_labels.to(device_obj)
++                        student_logits = model(reference_ids)["logits"]
++                    with torch.no_grad():
++                        reference_logits = reference_model(reference_ids)["logits"]
++                    kl_loss, count = reference_kl_loss(student_logits, reference_logits, reference_labels, temperature=reference_temperature)
++                    reference_tokens += count
++                    kl_losses.append(float(kl_loss.detach().cpu()))
++                    raw_loss = raw_loss + kl_weight * kl_loss
+                 loss = raw_loss / accumulation
+ 
+             if not torch.isfinite(raw_loss):
+@@ -458,6 +540,11 @@ def train_sft(
+         "gradient_accumulation_steps": accumulation,
+         "effective_batch_size": batch_size * accumulation,
+         "precision": precision,
++        "require_complete_examples": bool(require_complete_examples),
++        "reference_kl_weight": kl_weight,
++        "reference_scope": ("anchors" if reference_examples is not None else "sft_batch") if kl_weight > 0.0 else "disabled",
++        "reference_tokens": reference_tokens,
++        "reference_kl_loss_mean": sum(kl_losses) / len(kl_losses) if kl_losses else 0.0,
+         "learning_rate": float(learning_rate),
+         "initial_loss": initial_loss,
+         "final_loss": final_loss,
+diff --git a/tests/test_generalist_context_memory.py b/tests/test_generalist_context_memory.py
+new file mode 100644
+index 0000000..102efdd
+--- /dev/null
++++ b/tests/test_generalist_context_memory.py
+@@ -0,0 +1,45 @@
++import pytest
++torch = pytest.importorskip('torch')
++from generalist_lm.model import CausalTransformerLM, GeneralistLMConfig
++from generalist_lm.tokenizer import ByteTokenizer
++from generalist_lm.training import SFTExample, _batch, nll_stats_on_examples
++from generalist_lm.curriculum import train_rows
++from generalist_lm.research_cycle import _teacher_forced_accuracy
++
++def model():
++    torch.manual_seed(42)
++    return CausalTransformerLM(GeneralistLMConfig(context_length=128, d_model=32, n_heads=4, n_layers=1, d_ff=64)).eval()
++
++def test_nll_bounded_batches_preserve_dense_token_and_byte_scores(monkeypatch):
++    m=model(); t=ByteTokenizer()
++    rows=[SFTExample([{'role':'user','content':'Question?'},{'role':'assistant','content':'Caffè '+str(i)}]) for i in range(11)]
++    ids,labels=_batch(rows,t,128,range(len(rows)))
++    with torch.no_grad():
++        logits=m(ids)['logits'][:,:-1,:]
++        expected=torch.nn.functional.cross_entropy(logits.reshape(-1,logits.shape[-1]),labels[:,1:].reshape(-1),ignore_index=-100,reduction='sum').item()
++    shapes=[]; forward=m.forward
++    def record(ids,*args,**kwargs):
++        shapes.append(tuple(ids.shape)); return forward(ids,*args,**kwargs)
++    monkeypatch.setattr(m,'forward',record)
++    stats=nll_stats_on_examples(m,t,rows,batch_size=2)
++    assert stats['total_nll']==pytest.approx(expected,rel=1e-6)
++    assert stats['target_tokens']==int((labels[:,1:]!=-100).sum())
++    assert stats['target_bytes']==sum(len(r.messages[-1]['content'].encode()) for r in rows)
++    assert max(b for b,_ in shapes)<=2
++    assert max(n for _,n in shapes)<128
++
++def test_teacher_accuracy_preserves_dense_scores_and_limits_batch(monkeypatch):
++    m=model();t=ByteTokenizer();rows=train_rows()[:19]
++    ids,labels=_batch([r.sft() for r in rows],t,128,range(len(rows)))
++    with torch.no_grad():
++        predicted=m(ids)['logits'][:,:-1,:].argmax(-1)
++    valid=labels[:,1:]!=-100
++    expected=float(((predicted==labels[:,1:])&valid).sum()/valid.sum())
++    shapes=[];forward=m.forward
++    def record(ids,*args,**kwargs):
++        shapes.append(tuple(ids.shape));return forward(ids,*args,**kwargs)
++    monkeypatch.setattr(m,'forward',record)
++    stats=_teacher_forced_accuracy(m,t,rows,device='cpu')
++    assert stats['target_token_accuracy']==pytest.approx(expected)
++    assert stats['target_tokens']==int(valid.sum())
++    assert max(b for b,_ in shapes)<=8
+diff --git a/tests/test_generalist_sft_encoding.py b/tests/test_generalist_sft_encoding.py
+new file mode 100644
+index 0000000..a068f47
+--- /dev/null
++++ b/tests/test_generalist_sft_encoding.py
+@@ -0,0 +1,97 @@
++import pytest
++
++torch = pytest.importorskip("torch")
++
++from generalist_lm.bpe_tokenizer import train_bpe
++from generalist_lm.model import CausalTransformerLM, GeneralistLMConfig
++from generalist_lm.tokenizer import ASSISTANT, EOS, PAD, ByteTokenizer
++from generalist_lm.training import SFTExample, encode_sft_example, train_sft
++
++
++@pytest.fixture(params=["byte", "bpe"])
++def tokenizer(request):
++    if request.param == "byte":
++        return ByteTokenizer()
++    return train_bpe(["Caffè 🌸 grazie! " * 10], vocab_size=280)
++
++
++def example(answer="Caffè 🌸 grazie!"):
++    return SFTExample([
++        {"role": "system", "content": "Rispondi brevemente."},
++        {"role": "user", "content": "Cosa bevi?"},
++        {"role": "assistant", "content": "Tè."},
++        {"role": "user", "content": "E ora?"},
++        {"role": "assistant", "content": answer},
++    ])
++
++
++@pytest.mark.parametrize("padding", [0, 17])
++def test_complete_encoding_preserves_all_turns_utf8_and_eos(tokenizer, padding):
++    row = example()
++    prompt = tokenizer.serialize_messages(row.messages[:-1], add_generation_prompt=True)
++    target = tokenizer.encode(row.messages[-1]["content"], eos=True)
++    context = len(prompt) + len(target) + padding
++    ids, labels = encode_sft_example(row, tokenizer, context, require_complete=True)
++    legacy = encode_sft_example(row, tokenizer, context)
++    assert torch.equal(ids, legacy[0])
++    assert torch.equal(labels, legacy[1])
++    assert ids.tolist() == prompt + target + [PAD] * padding
++    assert labels.tolist() == [-100] * len(prompt) + target + [-100] * padding
++    assert prompt[-1] == ASSISTANT
++    assert target[-1] == EOS
++    assert tokenizer.decode(target) == row.messages[-1]["content"]
++
++
++@pytest.mark.parametrize("part", ["prompt", "answer"])
++def test_complete_encoding_rejects_overflow_without_fabricating_eos(tokenizer, part):
++    row = example("x" * 400 if part == "answer" else "Va bene.")
++    if part == "prompt":
++        row.messages[-2]["content"] = "Domanda lunga " * 100
++    with pytest.raises(ValueError, match="complete SFT example exceeds context"):
++        encode_sft_example(row, tokenizer, 128, require_complete=True)
++    # Existing evaluation encoding remains the historical target-first policy.
++    prompt = tokenizer.serialize_messages(row.messages[:-1], add_generation_prompt=True)
++    target = tokenizer.encode(row.messages[-1]["content"], eos=True)[:127]
++    prompt = prompt[-max(1, 128 - len(target)):]
++    ids, labels = encode_sft_example(row, tokenizer, 128)
++    assert ids[:len(prompt) + len(target)].tolist() == prompt + target
++    assert labels[:len(prompt)].tolist() == [-100] * len(prompt)
++    assert labels[len(prompt):len(prompt) + len(target)].tolist() == target
++
++
++def test_training_preflights_every_row_before_any_model_mutation(monkeypatch):
++    tokenizer = ByteTokenizer()
++    model = CausalTransformerLM(GeneralistLMConfig(
++        context_length=128, d_model=32, n_heads=4, n_layers=1, d_ff=64,
++    ))
++    before = {k: v.clone() for k, v in model.state_dict().items()}
++    def forbidden(*args, **kwargs):
++        pytest.fail("model was touched before corpus validation completed")
++    monkeypatch.setattr(model, "to", forbidden)
++    with pytest.raises(ValueError, match="SFT example 1: complete SFT example"):
++        train_sft(model, tokenizer, [example(), example("x" * 400)],
++                  steps=1, require_complete_examples=True)
++    assert all(torch.equal(before[k], v) for k, v in model.state_dict().items())
++
++
++def test_complete_encoding_handles_minimum_context_and_empty_response(tokenizer):
++    row = SFTExample([{"role": "assistant", "content": ""}])
++    ids, labels = encode_sft_example(row, tokenizer, 3, require_complete=True)
++    assert ids.tolist() == [1, ASSISTANT, EOS]
++    assert labels.tolist() == [-100, -100, EOS]
++    with pytest.raises(ValueError, match="exceeds context"):
++        encode_sft_example(row, tokenizer, 2, require_complete=True)
++
++
++def test_complete_training_smoke_reports_only_real_supervised_tokens():
++    tokenizer = ByteTokenizer()
++    model = CausalTransformerLM(GeneralistLMConfig(
++        context_length=128, d_model=32, n_heads=4, n_layers=1, d_ff=64,
++    ))
++    row = example()
++    result = train_sft(model, tokenizer, [row], steps=2, batch_size=1,
++                       require_complete_examples=True)
++    assert result["require_complete_examples"] is True
++    assert result["supervised_tokens"] == 2 * len(tokenizer.encode(
++        row.messages[-1]["content"], eos=True))
++    assert torch.isfinite(torch.tensor(result["final_loss"]))
+diff --git a/tests/test_generalist_sft_reference.py b/tests/test_generalist_sft_reference.py
+new file mode 100644
+index 0000000..d82cbdb
+--- /dev/null
++++ b/tests/test_generalist_sft_reference.py
+@@ -0,0 +1,69 @@
++import copy
++import pytest
++torch=pytest.importorskip('torch')
++from generalist_lm.model import CausalTransformerLM, GeneralistLMConfig
++from generalist_lm.tokenizer import ByteTokenizer
++from generalist_lm.training import SFTExample, train_sft
++
++def model(context=128):
++    torch.manual_seed(11)
++    return CausalTransformerLM(GeneralistLMConfig(context_length=context,d_model=32,n_heads=4,n_layers=1,d_ff=64))
++
++def row(prompt='Hi',answer='Hello'):
++    return SFTExample([{'role':'user','content':prompt},{'role':'assistant','content':answer}])
++
++def test_zero_weight_preserves_exact_updates_and_sampling():
++    a=model();b=copy.deepcopy(a);t=ByteTokenizer();rows=[row(),row('Ciao','Salve')]
++    original=train_sft(a,t,rows,steps=2,batch_size=2,gradient_accumulation_steps=2)
++    zero=train_sft(b,t,rows,steps=2,batch_size=2,gradient_accumulation_steps=2,reference_model=b,reference_kl_weight=0)
++    assert all(torch.equal(v,b.state_dict()[k]) for k,v in a.state_dict().items())
++    assert original['supervised_tokens']==zero['supervised_tokens']
++    assert zero['reference_tokens']==0
++
++def test_reference_frozen_and_receives_only_separate_short_anchors(monkeypatch):
++    a=model(128);teacher=model(64);t=ByteTokenizer();anchor=row('Keep','Safe')
++    before={k:v.clone() for k,v in teacher.state_dict().items()}
++    seen=[];forward=teacher.forward
++    def observe(ids,*args,**kwargs):
++        assert not torch.is_grad_enabled()
++        assert not teacher.training
++        assert ids.shape[1]==64
++        seen.extend(t.decode(x.tolist()) for x in ids)
++        return forward(ids,*args,**kwargs)
++    monkeypatch.setattr(teacher,'forward',observe)
++    stats=train_sft(a,t,[row('New question','New lesson')],steps=2,batch_size=2,gradient_accumulation_steps=2,reference_model=teacher,reference_kl_weight=1,reference_examples=[anchor],require_complete_examples=True)
++    assert seen and all('Keep' in text and 'New question' not in text for text in seen)
++    assert all(torch.equal(before[k],v) for k,v in teacher.state_dict().items())
++    assert all(p.grad is None for p in teacher.parameters())
++    assert stats['reference_scope']=='anchors'
++    assert stats['supervised_tokens']==8*len(t.encode('New lesson',eos=True))
++    assert stats['reference_tokens']==8*len(t.encode('Safe',eos=True))
++
++@pytest.mark.parametrize('weight',[-1,float('nan'),float('inf')])
++def test_invalid_weight_rejected_before_mutation(monkeypatch,weight):
++    a=model();monkeypatch.setattr(a,'to',lambda *args,**kwargs:pytest.fail('model moved'))
++    with pytest.raises(ValueError,match='finite and nonnegative'):
++        train_sft(a,ByteTokenizer(),[row()],reference_kl_weight=weight)
++
++def test_shared_parameter_storage_rejected():
++    a=model();b=copy.deepcopy(a);b.token_embedding.weight=a.token_embedding.weight
++    with pytest.raises(ValueError,match='share parameter storage'):
++        train_sft(a,ByteTokenizer(),[row()],reference_model=b,reference_kl_weight=1)
++
++def test_missing_reference_rejected():
++    with pytest.raises(ValueError,match='independent reference'):
++        train_sft(model(),ByteTokenizer(),[row()],reference_kl_weight=1)
++
++@pytest.mark.parametrize('anchors',[[],[row('x'*100,'answer')]])
++def test_invalid_anchors_preflight_before_either_model_moves(monkeypatch,anchors):
++    a=model();b=model(64)
++    for m in [a,b]:monkeypatch.setattr(m,'to',lambda *args,**kwargs:pytest.fail('model moved'))
++    with pytest.raises(ValueError,match='reference example'):
++        train_sft(a,ByteTokenizer(),[row()],reference_model=b,reference_kl_weight=1,reference_examples=anchors)
++
++def test_legacy_same_batch_reference_path_is_masked_and_finite():
++    a=model();b=copy.deepcopy(a);t=ByteTokenizer()
++    result=train_sft(a,t,[row()],steps=2,reference_model=b,reference_kl_weight=1)
++    assert result['reference_scope']=='sft_batch'
++    assert result['reference_kl_loss_mean']>=0
++    assert result['reference_tokens']==result['supervised_tokens']
