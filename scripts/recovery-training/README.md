@@ -1,0 +1,9 @@
+# Native autonomous recovery experiment
+
+Requested by Thomas on 2026-10-07. Continue the saved native model, optimizer and RNG from the exact completed first-pass release `airi-offline-13107-37560538801-1-4`; the prior model failed quality gates. It is an experimental recovery candidate, not a qualified model.
+
+4096 additional updates (global target 17203). Learning rate decreases from 1e-5 to 2e-6; the existing Adam state is preserved, with LR explicitly changed after restore. Training updates balance Italian and English dialogue (25% each) plus replay (50%, rotating Italian, English, domains). Sampling with replacement uses the saved RNG, on training rows only; new recovery counters are persisted. Repetition unlikelihood increases from .05 to .2 and EOS weight from 1.2 to 2.0; frozen native-reference KL remains 4. These are hypotheses to test, not guaranteed fixes. No held-out prompts become training examples.
+
+The old runner and its fingerprints remain unchanged. A separate recipe fingerprint verifies the new scripts and policy. Only the named completed release can migrate from the former fingerprint; all subsequent recovery checkpoints require the new fingerprint. Model, tokenizer and architecture remain native.
+
+Run `airi-recovery-background.yml` with its default checkpoint and continuation=0. First chunk is 60 seconds, subsequent chunks up to 4 hours, automatic dispatch only after remote checkpoint commit, shared concurrency with the original trainer, maximum 64 jobs. SHA verification precedes tensor restore. Failure stops the chain; saved releases remain. Final gates and 50 frozen generation probes run at target. No live promotion or canonical state writes. Closing ChatGPT does not stop GitHub Actions; GitHub runner availability, account permissions and quota still apply.

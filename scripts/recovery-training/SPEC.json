@@ -1,0 +1,42 @@
+{
+  "parent_sha256": "998530839d9722316b59cb28ff1ef68a7863f517de73fa8fef8ce9677a24b85e",
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "dataset_sha256": "4cd65b21228375b7abaf81da5e32e977dc1182f0a73b942dc81c34a38a698d91",
+  "context_length": 1024,
+  "tokenizer_digest": "4cb489f8509618aeeec96245ea89009e343a9d9d2bcb752d51b1a88b47efebc1",
+  "torch_version": "2.14.1+cpu",
+  "precision": "fp32",
+  "batch_size": 1,
+  "learning_rate": 2e-06,
+  "weight_decay": 0.01,
+  "gradient_clip": 1.0,
+  "kl_weight": 4.0,
+  "unlikelihood_weight": 0.2,
+  "eos_weight": 2.0,
+  "seed": 71025,
+  "max_steps": 17203,
+  "dialogue_schedule": "recovery: 25% Italian dialogue, 25% English dialogue, 50% replay; seeded sampling with replacement",
+  "replay_policy": "cycle language-it, language-en, domains; training-only; 50% updates, not token quota",
+  "source_rows": 10564,
+  "rows": 10486,
+  "excluded_prompt_overlap_rows": 78,
+  "dialogue_supervised_tokens_per_pass": 3472648,
+  "anchors": 61,
+  "replay_rows": {
+    "language-it": 512,
+    "language-en": 512,
+    "domains": 48
+  },
+  "script_sha256": {
+    "run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
+    "session.py": "418188688fcab0d50341ecc36afd2ca46368d586d48d4feb2a53ad8b628f4f14",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
+    "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38"
+  },
+  "promotion": "offline only; production_qualified false; human conversation assessment still required",
+  "fingerprint": "9cd021f40fb592f09c2533e92ecb0b126d7af440253380d23d989069aee3d2f2",
+  "parameter_count": 50127552,
+  "recovery_start_step": 13107,
+  "recovery_updates": 4096,
+  "migration_source_release": "airi-offline-13107-37560538801-1-4"
+}

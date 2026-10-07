@@ -4,6 +4,9 @@ on:
     paths:
       - 'scripts/offline-training/**'
       - 'tests/offline-training/**'
+      - 'scripts/recovery-training/**'
+      - 'tests/recovery-training/**'
+      - '.github/workflows/airi-recovery-background.yml'
       - '.github/workflows/*offline*.yml'
   workflow_dispatch:
 permissions:
@@ -19,3 +22,5 @@ jobs:
           python-version: '3.11'
       - run: python -m unittest discover -s tests/offline-training -v
       - run: python -m py_compile scripts/offline-training/*.py
+      - run: python -m unittest discover -s tests/recovery-training -v
+      - run: python -m py_compile scripts/recovery-training/*.py

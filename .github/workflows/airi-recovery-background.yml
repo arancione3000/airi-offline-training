@@ -1,0 +1,92 @@
+name: AIRI autonomous recovery training
+on:
+  workflow_dispatch:
+    inputs:
+      checkpoint_release:
+        description: 'Dedicated offline release containing the verified model, optimizer and SHA256 index'
+        required: true
+        default: airi-offline-13107-37560538801-1-4
+        type: string
+      continuation:
+        description: 'Automatic continuation counter (maximum 64 jobs)'
+        required: true
+        default: '0'
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-offline-background-training
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
+      CONTINUATION: ${{ inputs.continuation }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '14400' }}
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore immutable AIRI source
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: d078e718dfba0d68babd31de90fa55c0beac1951
+          path: source
+          persist-credentials: false
+      - name: Verify finite continuation and dedicated checkpoint
+        run: |
+          python - <<'PY'
+          import os, re
+          assert re.fullmatch(r'airi-offline-[A-Za-z0-9._-]+', os.environ['CHECKPOINT_RELEASE'])
+          value = os.environ['CONTINUATION']
+          assert re.fullmatch(r'[0-9]{1,2}', value) and int(value) < 64
+          PY
+          gh release view "$CHECKPOINT_RELEASE" --repo "$GITHUB_REPOSITORY"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore immutable native reference
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
+          path: background-work/context-trial
+          persist-credentials: false
+      - name: Install exact CPU runtime and apply isolated recovery patch
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy>=2,<3'
+          test -s background-work/context-trial/generalist-state/bootstrap-data/candidate/model.pt
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+          python -m unittest discover -s tests/offline-training -v
+          python -m unittest discover -s tests/recovery-training -v
+      - name: Resume bounded offline chunk
+        id: train
+        run: |
+          python scripts/recovery-training/background.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
+      - name: Continue only after committed checkpoint
+        if: steps.train.outputs.completed == 'false'
+        env:
+          NEXT_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          next_count = int(os.environ['CONTINUATION']) + 1
+          if next_count >= 64:
+              raise RuntimeError('Continuation limit reached; last checkpoint retained for review')
+          payload = {'ref': os.environ['GITHUB_REF_NAME'], 'inputs': {
+              'checkpoint_release': os.environ['NEXT_RELEASE'], 'continuation': str(next_count)}}
+          subprocess.run(['gh', 'api', '--method', 'POST',
+              'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/workflows/airi-recovery-background.yml/dispatches',
+              '--input', '-'], input=json.dumps(payload), text=True, check=True)
+          PY
+      - name: Record result
+        env:
+          SAVED_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+          COMPLETED: ${{ steps.train.outputs.completed }}
+        run: |
+          printf 'Checkpoint: %s\nCompleted: %s\nOffline experiment; no live promotion.\n' "$SAVED_RELEASE" "$COMPLETED" >> "$GITHUB_STEP_SUMMARY"
