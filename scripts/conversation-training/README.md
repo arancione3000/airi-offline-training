@@ -38,3 +38,5 @@ Technical recovery v2 resumes only the exact SHA-indexed trial-0 winner at step
 18739 after a transient GitHub HTTP 500 interrupted a non-critical progress upload.
 The recipe and optimizer/RNG are preserved. Progress telemetry now retries and may
 be skipped after four failures; checkpoint and final-report uploads remain fatal.
+The three-pilot search ledger crosses this technical boundary only from its exact
+release and SHA-256; its old fingerprint is verified before recording the new one.

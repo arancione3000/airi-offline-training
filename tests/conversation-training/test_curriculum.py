@@ -7,6 +7,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts/conversation-training'))
 import curriculum
 import transport
+import run
 
 class CurriculumTests(unittest.TestCase):
     def test_split_and_arithmetic(self):
@@ -55,6 +56,12 @@ class CurriculumTests(unittest.TestCase):
             raise subprocess.CalledProcessError(1,['gh'])
         self.assertFalse(transport.best_effort_upload(upload,attempts=2,pause=lambda _:None))
         self.assertEqual(len(calls),2)
+    def test_unknown_old_ledger_is_rejected(self):
+        import json
+        blob=json.dumps({'fingerprint':run.SPEC['recovery_source_fingerprint'],
+                         'records':[{'trial':0},{'trial':1},{'trial':2}]}).encode()
+        with self.assertRaises(ValueError):
+            run.verified_ledger(blob,'not-the-pinned-recovery-ledger')
     def test_scripts_and_spec_pinned(self):
         import hashlib,json
         here=ROOT/'scripts/conversation-training'

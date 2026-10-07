@@ -1,6 +1,7 @@
 """Finite autonomous recipe search, followed by validated offline learning."""
 import argparse
 import gc
+import hashlib
 import importlib
 import json
 import os
@@ -12,6 +13,21 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SPEC = json.loads((HERE/'SPEC.json').read_text())
+
+def verified_ledger(blob, source_release):
+    """Accept the prior search ledger only by exact release, digest and fingerprint."""
+    ledger=json.loads(blob)
+    if source_release==SPEC['recovery_ledger_release']:
+        if hashlib.sha256(blob).hexdigest()!=SPEC['recovery_ledger_sha256']:
+            raise ValueError('recovery ledger digest mismatch')
+        if ledger.get('fingerprint')!=SPEC['recovery_source_fingerprint']:
+            raise ValueError('recovery ledger fingerprint mismatch')
+        if sorted(r.get('trial') for r in ledger.get('records',[]))!=[0,1,2]:
+            raise ValueError('recovery ledger trials mismatch')
+        ledger['fingerprint']=SPEC['fingerprint']
+    elif ledger.get('fingerprint')!=SPEC['fingerprint']:
+        raise ValueError('ledger fingerprint mismatch')
+    return ledger
 
 def main():
     import torch
@@ -153,8 +169,7 @@ def main():
         ledger_path=root/'ledger';ledger_path.mkdir()
         transport.gh('release','download',transport.check_tag(args.ledger_release),'--repo',os.environ['GITHUB_REPOSITORY'],
                      '--pattern','SEARCH_STATE.json','--dir',ledger_path)
-        ledger=json.loads((ledger_path/'SEARCH_STATE.json').read_text())
-        if ledger.get('fingerprint')!=SPEC['fingerprint']:raise ValueError('ledger fingerprint mismatch')
+        ledger=verified_ledger((ledger_path/'SEARCH_STATE.json').read_bytes(),args.ledger_release)
     out=root/'conversation-results';out.mkdir(exist_ok=True)
     dataset=out/'AUTHORED_CURRICULUM.json';atomic_json(dataset,{'train':authored,'heldout':heldout,'sha256':curriculum_sha})
     extras=[HERE/name for name in SPEC['script_sha256']]+[HERE/'SPEC.json',dataset]
