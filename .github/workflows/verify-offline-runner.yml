@@ -6,6 +6,9 @@ on:
       - 'tests/offline-training/**'
       - 'scripts/recovery-training/**'
       - 'tests/recovery-training/**'
+      - 'scripts/expanded-training/**'
+      - 'tests/expanded-training/**'
+      - '.github/workflows/airi-expanded-background.yml'
       - '.github/workflows/airi-recovery-background.yml'
       - '.github/workflows/*offline*.yml'
   workflow_dispatch:
@@ -24,3 +27,5 @@ jobs:
       - run: python -m py_compile scripts/offline-training/*.py
       - run: python -m unittest discover -s tests/recovery-training -v
       - run: python -m py_compile scripts/recovery-training/*.py
+      - run: python -m unittest discover -s tests/expanded-training -v
+      - run: python -m py_compile scripts/expanded-training/*.py
