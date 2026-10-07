@@ -94,7 +94,10 @@ jobs:
           else:
               count=int(os.environ['CONTINUATION'])+1
               if count>=32:raise RuntimeError('Finite job limit reached; last checkpoint retained')
-              payload={'ref':os.environ['GITHUB_SHA'],'inputs':{
+              ref=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/git/ref/heads/'+os.environ['GITHUB_REF_NAME']],text=True))
+              if ref['object']['sha']!=os.environ['GITHUB_SHA']:
+                  raise RuntimeError('Runner ref changed; do not resume with a different experiment')
+              payload={'ref':os.environ['GITHUB_REF_NAME'],'inputs':{
                   'checkpoint_release':action['release'],'ledger_release':action['ledger_release'],
                   'stage':action['stage'],'trial':str(action['trial']),'continuation':str(count)}}
               subprocess.run(['gh','api','--method','POST',
