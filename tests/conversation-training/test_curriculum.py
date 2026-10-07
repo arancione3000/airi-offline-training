@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts/conversation-training'))
 import curriculum
+import transport
 
 class CurriculumTests(unittest.TestCase):
     def test_split_and_arithmetic(self):
@@ -38,6 +39,22 @@ class CurriculumTests(unittest.TestCase):
         self.assertFalse(curriculum.pilot_eligible(before,after))
     def test_no_eligible_winner(self):
         self.assertIsNone(curriculum.choose_winner([{'eligible':False}]))
+    def test_progress_upload_retries_then_succeeds(self):
+        import subprocess
+        calls=[]
+        def upload():
+            calls.append(1)
+            if len(calls)<3:raise subprocess.CalledProcessError(1,['gh'])
+        self.assertTrue(transport.best_effort_upload(upload,attempts=4,pause=lambda _:None))
+        self.assertEqual(len(calls),3)
+    def test_progress_upload_failure_is_nonfatal(self):
+        import subprocess
+        calls=[]
+        def upload():
+            calls.append(1)
+            raise subprocess.CalledProcessError(1,['gh'])
+        self.assertFalse(transport.best_effort_upload(upload,attempts=2,pause=lambda _:None))
+        self.assertEqual(len(calls),2)
     def test_scripts_and_spec_pinned(self):
         import hashlib,json
         here=ROOT/'scripts/conversation-training'

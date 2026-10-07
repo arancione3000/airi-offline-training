@@ -18,6 +18,7 @@ FINGERPRINT = SPEC['fingerprint']
 TARGET = SPEC['max_steps']
 LEGACY_FINGERPRINT = '9cd021f40fb592f09c2533e92ecb0b126d7af440253380d23d989069aee3d2f2'
 SEED_TAG = 'airi-offline-17203-37613251656-1-1'
+SOURCE_FINGERPRINTS = {}
 
 
 def digest(path):
@@ -30,6 +31,23 @@ def digest(path):
 
 def gh(*args):
     return subprocess.check_output(['gh', *map(str, args)], text=True).strip()
+
+
+def best_effort_upload(upload, *, attempts=4, pause=time.sleep):
+    """Retry non-critical telemetry without aborting model training."""
+    if attempts < 1:
+        raise ValueError('at least one telemetry upload attempt is required')
+    for attempt in range(attempts):
+        try:
+            upload()
+            return True
+        except subprocess.CalledProcessError as error:
+            if attempt + 1 < attempts:
+                pause(2 ** attempt)
+            else:
+                print(json.dumps({'warning': 'progress upload failed; training continues',
+                                  'attempts': attempts, 'returncode': error.returncode}), flush=True)
+    return False
 
 
 def check_tag(tag):
@@ -105,7 +123,7 @@ def load_release(tag, root):
     if len(indexes) != 1:
         raise ValueError('one committed checkpoint index required')
     index = json.loads(indexes[0].read_text())
-    expected = LEGACY_FINGERPRINT if tag == SEED_TAG else FINGERPRINT
+    expected = SOURCE_FINGERPRINTS.get(tag, FINGERPRINT)
     if index['fingerprint'] != expected or len(index['archives']) != 2:
         raise ValueError('release provenance mismatch')
     step = index['completed_steps']
@@ -204,7 +222,9 @@ class ReleasePublisher:
         path.write_text(json.dumps({**payload, 'fingerprint': FINGERPRINT,
                                    'production_qualified': False, 'live_promoted': False,
                                    'checkpoint_release': self.next_release or source_tag}, indent=2))
-        gh('release', 'upload', source_tag, path, '--repo', os.environ['GITHUB_REPOSITORY'], '--clobber')
+        return best_effort_upload(
+            lambda: gh('release', 'upload', source_tag, path, '--repo',
+                       os.environ['GITHUB_REPOSITORY'], '--clobber'))
 
     def upload(self, paths):
         if not self.next_release:

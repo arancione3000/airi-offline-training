@@ -8,6 +8,8 @@
   "pilot_step": 18739,
   "migration_source_release": "airi-offline-17715-37636717273-1-4",
   "migration_source_fingerprint": "c29199d0e801432eb28edd9bfab891e4474a408b30142f0209be2b5be13e75be",
+  "recovery_source_release": "airi-offline-18739-37647017638-1-1",
+  "recovery_source_fingerprint": "5ec57744b782bc4cf607d885fe528c3739111ec3c54a6079fce33f9227a92f28",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
@@ -32,9 +34,9 @@
     "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "960efb5edd8247d13c8d561d35a5c6251cae124e20d589442ef9d66459db782d",
+    "run.py": "b834a713061e0de7b38cf6b5afac035bc64af610ca92ea359049fc723f10ce87",
     "session.py": "8125862513877e6e81f456df6c2fd9253a359defe837a21c7a8e95523ac771b6",
-    "transport.py": "9afdad2be59871c2dbca8d26fc0936deb85547b870eaf54918083cafaca0070e"
+    "transport.py": "f997675cf919752b6227a18c02369be81ee7ba44d285acd1b6a9fd35a7e681ce"
   },
-  "fingerprint": "5ec57744b782bc4cf607d885fe528c3739111ec3c54a6079fce33f9227a92f28"
+  "fingerprint": "8900908bd9ee87601e30943783080c155a24774ed28041569a7bb652dd9962dd"
 }

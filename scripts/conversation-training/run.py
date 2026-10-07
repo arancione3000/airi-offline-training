@@ -42,6 +42,10 @@ def main():
     transport.TARGET=SPEC['max_steps']
     transport.LEGACY_FINGERPRINT=SPEC['migration_source_fingerprint']
     transport.SEED_TAG=SPEC['migration_source_release']
+    transport.SOURCE_FINGERPRINTS={
+        transport.SEED_TAG: transport.LEGACY_FINGERPRINT,
+        SPEC['recovery_source_release']: SPEC['recovery_source_fingerprint'],
+    }
     # Strict exact migration; transport's old numeric bounds are replaced here.
     def verify(path,expected_fingerprint=SPEC['fingerprint']):
         manifest=json.loads((path/'checkpoint.json').read_text())
@@ -52,6 +56,9 @@ def main():
             raise ValueError('checkpoint outside finite conversation experiment')
         if expected_fingerprint==transport.LEGACY_FINGERPRINT and step!=SPEC['start_step']:
             raise ValueError('only the exact verified pilot checkpoint can migrate')
+        if (expected_fingerprint==SPEC['recovery_source_fingerprint']
+                and step!=SPEC['pilot_step']):
+            raise ValueError('only the exact verified conversation winner can migrate')
         if not manifest['files']:
             raise ValueError('empty checkpoint')
         for name,expected in manifest['files'].items():
@@ -121,7 +128,7 @@ def main():
                 'scope':'narrow authored heldout tasks; not proof of general conversation'}
     recipe=SPEC['recipes'][args.trial]
     factory=lambda model:torch.optim.AdamW(model.parameters(),lr=recipe['learning_rate'],weight_decay=.01)
-    source_fingerprint=transport.LEGACY_FINGERPRINT if args.release==transport.SEED_TAG else SPEC['fingerprint']
+    source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
     runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint)
     rng,anchor_rng=random.Random(),random.Random()
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])

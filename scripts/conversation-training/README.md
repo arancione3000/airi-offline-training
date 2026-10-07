@@ -33,3 +33,8 @@ Jobs stop within a 3-hour chunk and publish model/optimizer/RNG/hash index befor
 dispatching the next action. Shared concurrency prevents overlapping old runners.
 At most 32 jobs; failure leaves the previous committed release. Code ref is pinned
 for self-dispatch. GitHub Actions persists independently of the chat.
+
+Technical recovery v2 resumes only the exact SHA-indexed trial-0 winner at step
+18739 after a transient GitHub HTTP 500 interrupted a non-critical progress upload.
+The recipe and optimizer/RNG are preserved. Progress telemetry now retries and may
+be skipped after four failures; checkpoint and final-report uploads remain fatal.
