@@ -1,0 +1,33 @@
+name: AIRI GitHub-only recovery
+on:
+  workflow_run:
+    workflows: [AIRI autonomous conversational curriculum]
+    types: [completed]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: airi-github-only-watchdog
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify bounded recovery decisions
+        run: python -m unittest discover -s tests/autonomous-control -v
+      - name: Diagnose and retry only transient failures
+        run: |
+          args=()
+          if [ -n "$EVENT_RUN_ID" ]; then args+=(--run-id "$EVENT_RUN_ID"); fi
+          python scripts/autonomous-control/watchdog.py --repository "$GITHUB_REPOSITORY" "${args[@]}" | tee -a "$GITHUB_STEP_SUMMARY"
