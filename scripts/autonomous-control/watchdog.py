@@ -4,10 +4,11 @@ import json
 import re
 import subprocess
 
-BRANCH = 'conversation-curriculum-v3'
-COMMIT = '22b967b6ff8bc12c08b07db4c26a778b9407ed03'
-WORKFLOW = 'airi-conversation-background.yml'
+BRANCH = 'overnight-training-v1'
+COMMIT = 'f4bb6c14a9be26adaa45c50b5db2638867a8df44'
+WORKFLOW = 'airi-overnight-background.yml'
 TRAINING_PATHS = {
+    '.github/workflows/airi-overnight-background.yml',
     '.github/workflows/airi-conversation-background.yml',
     '.github/workflows/airi-offline-background.yml',
     '.github/workflows/airi-recovery-background.yml',

@@ -1,7 +1,7 @@
 name: AIRI GitHub-only recovery
 on:
   workflow_run:
-    workflows: [AIRI autonomous conversational curriculum]
+    workflows: [AIRI autonomous conversational curriculum, AIRI ten hour overnight training]
     types: [completed]
   schedule:
     - cron: '17 * * * *'
