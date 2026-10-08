@@ -1,0 +1,26 @@
+name: AIRI adaptive training controller
+on:
+  workflow_run:
+    workflows: [AIRI conservative native dialogue, AIRI adaptive verified context]
+    types: [completed]
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: airi-adaptive-start-controller
+  cancel-in-progress: false
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify start and recovery decisions
+        run: python -m unittest discover -s tests/autonomous-control -v
+      - name: Start verified trial when idle
+        run: python scripts/autonomous-control/start_evolving.py | tee -a "$GITHUB_STEP_SUMMARY"

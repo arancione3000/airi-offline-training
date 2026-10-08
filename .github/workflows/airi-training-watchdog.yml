@@ -1,7 +1,7 @@
 name: AIRI GitHub-only recovery
 on:
   workflow_run:
-    workflows: [AIRI autonomous conversational curriculum, AIRI ten hour overnight training, AIRI afternoon expanded dialogue, AIRI conservative native dialogue]
+    workflows: [AIRI autonomous conversational curriculum, AIRI ten hour overnight training, AIRI afternoon expanded dialogue, AIRI conservative native dialogue, AIRI adaptive verified context]
     types: [completed]
   schedule:
     - cron: '17 * * * *'
