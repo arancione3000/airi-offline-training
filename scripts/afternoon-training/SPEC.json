@@ -1,0 +1,41 @@
+{
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
+  "start_step": 27443,
+  "max_steps": 1000000,
+  "pilot_step": 27443,
+  "migration_source_release": "airi-offline-27443-37679637583-1-3",
+  "migration_source_fingerprint": "2fe2cd3864de0a4045c320efcbb1f3fa4198fd0c9b73db87ce6f076fb6a6688e",
+  "precision": "fp32",
+  "torch_version": "2.14.1+cpu",
+  "recipes": [
+    {
+      "learning_rate": 1e-05,
+      "kl_weight": 0.5
+    },
+    {
+      "learning_rate": 5e-06,
+      "kl_weight": 0.75
+    },
+    {
+      "learning_rate": 2.5e-06,
+      "kl_weight": 1.0
+    }
+  ],
+  "optimizer_policy": "preserve AdamW moments and RNG; explicit lower LR at migration and phase changes",
+  "schedule": "25% old authored, 50% new authored dialogue and memory, 12.5% short human dialogue, 12.5% native replay; train until 13:40 Europe/Rome 2026-10-08, reserve 20 minutes for final verification; no live promotion",
+  "promotion": "offline only; no live promotion; original final gates unchanged",
+  "script_sha256": {
+    "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
+    "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
+    "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
+    "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
+    "run.py": "81f6743f87b52f0a3e4b43c969b49f9ae79fcdc27b20c8ee0a8766fdb08e251c",
+    "session.py": "8125862513877e6e81f456df6c2fd9253a359defe837a21c7a8e95523ac771b6",
+    "transport.py": "200d5d8c9a5bea895063aca54fab21a82673d3b2c02e7d37bfb260b46c9bc847"
+  },
+  "training_cutoff_epoch": 1791459600.0,
+  "report_deadline_epoch": 1791460800.0,
+  "fingerprint": "72642ee42ce31c298dd68730e35c33717c12a4b7befb26da60b1a162c4403dc7"
+}

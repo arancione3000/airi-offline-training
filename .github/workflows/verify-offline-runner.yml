@@ -10,6 +10,9 @@ on:
       - 'tests/expanded-training/**'
       - 'scripts/conversation-training/**'
       - 'tests/conversation-training/**'
+      - 'scripts/afternoon-training/**'
+      - 'tests/afternoon-training/**'
+      - '.github/workflows/airi-afternoon-background.yml'
       - 'scripts/overnight-training/**'
       - 'tests/overnight-training/**'
       - '.github/workflows/airi-overnight-background.yml'
@@ -44,3 +47,5 @@ jobs:
       - run: python -m py_compile scripts/autonomous-control/*.py
       - run: python -m unittest discover -s tests/overnight-training -v
       - run: python -m py_compile scripts/overnight-training/*.py
+      - run: python -m unittest discover -s tests/afternoon-training -v
+      - run: python -m py_compile scripts/afternoon-training/*.py

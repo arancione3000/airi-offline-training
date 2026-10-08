@@ -3,11 +3,16 @@ import argparse
 import json
 import re
 import subprocess
+import time
 
 BRANCH = 'overnight-training-v1'
 COMMIT = 'f4bb6c14a9be26adaa45c50b5db2638867a8df44'
 WORKFLOW = 'airi-overnight-background.yml'
+EXPERIMENTS={WORKFLOW:(BRANCH,COMMIT,None),
+    'airi-afternoon-background.yml':('afternoon-dialogue-v1','0a502c0242528f475837167501c2056eaaeecdc2',1791459600.0)}
+
 TRAINING_PATHS = {
+    '.github/workflows/airi-afternoon-background.yml',
     '.github/workflows/airi-overnight-background.yml',
     '.github/workflows/airi-conversation-background.yml',
     '.github/workflows/airi-offline-background.yml',
@@ -59,23 +64,31 @@ def recover(client,run_id=None,dry_run=False):
     if run_id:
         run=client.get(f'actions/runs/{int(run_id)}')
     else:
-        runs=client.get(f'actions/workflows/{WORKFLOW}/runs?branch={BRANCH}&per_page=1')['workflow_runs']
+        runs=[]
+        for workflow,(branch,commit,cutoff) in EXPERIMENTS.items():
+            runs+=client.get(f'actions/workflows/{workflow}/runs?branch={branch}&per_page=1')['workflow_runs']
         if not runs:return {'action':'none','reason':'no configured run'}
-        run=runs[0]
-    if workflow_path(run)!='.github/workflows/'+WORKFLOW or run.get('head_branch')!=BRANCH or run.get('head_sha')!=COMMIT:
+        run=max(runs,key=lambda r:r['id'])
+    workflow=workflow_path(run).rsplit('/',1)[-1]
+    experiment=EXPERIMENTS.get(workflow)
+    if experiment is None:return {'action':'none','reason':'outside configured frozen experiment'}
+    branch,commit,cutoff=experiment
+    if run.get('head_branch')!=branch or run.get('head_sha')!=commit:
         return {'action':'none','reason':'outside configured frozen experiment'}
+    if cutoff is not None and time.time()>=cutoff:
+        return {'action':'none','reason':'afternoon training deadline passed; do not restart'}
     if run['status']!='completed' or run.get('conclusion') not in {'failure','timed_out'}:
         return {'action':'none','reason':'running, successful, quality stop, or intentionally cancelled'}
     if run.get('run_attempt',1)>=3:
         return {'action':'none','reason':'two automatic recovery attempts exhausted; checkpoint retained'}
     # Never restart an old failed ancestor after a newer continuation has started.
-    latest=client.get(f'actions/workflows/{WORKFLOW}/runs?branch={BRANCH}&per_page=1')['workflow_runs']
+    latest=client.get(f'actions/workflows/{workflow}/runs?branch={branch}&per_page=1')['workflow_runs']
     if not latest or latest[0]['id']!=run['id']:
         return {'action':'none','reason':'superseded by a newer run'}
     for status in sorted(ACTIVE):
         if any(workflow_path(r) in TRAINING_PATHS for r in client.pages(f'actions/runs?status={status}','workflow_runs')):
             return {'action':'none','reason':'another training job is active'}
-    if client.get('git/ref/heads/'+BRANCH)['object']['sha']!=COMMIT:
+    if client.get('git/ref/heads/'+branch)['object']['sha']!=commit:
         return {'action':'none','reason':'frozen experiment ref changed'}
     failed=[j for j in client.pages(f'actions/runs/{run["id"]}/jobs','jobs') if j.get('conclusion')=='failure']
     if not failed:

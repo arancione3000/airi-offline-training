@@ -46,6 +46,19 @@ class WatchdogTests(unittest.TestCase):
         self.assertEqual(w.recover(client,10,dry_run=True)['action'],'would retry')
         client.active=[{'path':'.github/workflows/'+w.WORKFLOW+'@'+w.BRANCH}]
         self.assertEqual(w.recover(client,10)['action'],'none')
+    def test_afternoon_deadline_prevents_restart(self):
+        from unittest.mock import patch
+        client=FakeClient()
+        workflow='airi-afternoon-background.yml'
+        branch,sha,cutoff=w.EXPERIMENTS[workflow]
+        client.run.update(path='.github/workflows/'+workflow,head_branch=branch,head_sha=sha)
+        client.sha=sha
+        with patch.object(w.time,'time',return_value=cutoff+1):
+            self.assertEqual(w.recover(client,10)['action'],'none')
+            self.assertEqual(client.retried,[])
+        with patch.object(w.time,'time',return_value=cutoff-1):
+            self.assertEqual(w.recover(client,10)['action'],'retry submitted')
+
     def test_deterministic_code_error_is_not_transient(self):
         self.assertFalse(w.transient('ValueError: checkpoint missing'))
         for code in [429,500,502,503,504]:self.assertTrue(w.transient(f'HTTP {code}'))
