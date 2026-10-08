@@ -1,0 +1,91 @@
+name: AIRI afternoon expanded dialogue
+on:
+  workflow_dispatch:
+    inputs:
+      checkpoint_release:
+        description: Verified checkpoint release
+        required: true
+        default: airi-offline-27443-37679637583-1-3
+        type: string
+      continuation:
+        description: Finite total job counter
+        default: '0'
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-offline-background-training
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
+      CONTINUATION: ${{ inputs.continuation }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '10800' }}
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate finite inputs
+        run: |
+          python - <<'PY'
+          import os,re
+          assert re.fullmatch(r'airi-offline-[A-Za-z0-9._-]+',os.environ['CHECKPOINT_RELEASE'])
+          assert re.fullmatch(r'[0-9]{1,2}',os.environ['CONTINUATION']) and int(os.environ['CONTINUATION'])<32
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore immutable source
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: d078e718dfba0d68babd31de90fa55c0beac1951
+          path: source
+          persist-credentials: false
+      - name: Restore immutable native reference
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
+          path: background-work/context-trial
+          persist-credentials: false
+      - name: Verify runner and install exact CPU runtime
+        run: |
+          python -m unittest discover -s tests/afternoon-training -v
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy>=2,<3'
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+      - name: Train, evaluate and save bounded chunk
+        id: train
+        run: |
+          python scripts/afternoon-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
+      - name: Continue verified search or selected candidate
+        env:
+          NEXT_ACTION: ${{ steps.train.outputs.next_action }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          action=json.loads(os.environ['NEXT_ACTION'])
+          if action is None:
+              print('Finite experiment stopped; inspect FINAL_RESULT.json and best offline checkpoint.')
+          else:
+              count=int(os.environ['CONTINUATION'])+1
+              if count>=32:raise RuntimeError('Finite job limit reached; last checkpoint retained')
+              ref=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/git/ref/heads/'+os.environ['GITHUB_REF_NAME']],text=True))
+              if ref['object']['sha']!=os.environ['GITHUB_SHA']:
+                  raise RuntimeError('Runner ref changed; do not resume with a different experiment')
+              payload={'ref':os.environ['GITHUB_REF_NAME'],'inputs':{
+                  'checkpoint_release':action['release'],'continuation':str(count)}}
+              subprocess.run(['gh','api','--method','POST',
+                  'repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/airi-afternoon-background.yml/dispatches',
+                  '--input','-'],input=json.dumps(payload),text=True,check=True)
+          PY
+      - name: Record result
+        env:
+          SAVED_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+        run: |
+          printf 'Offline saved checkpoint: %s\nNo live promotion.\n' "$SAVED_RELEASE" >> "$GITHUB_STEP_SUMMARY"
