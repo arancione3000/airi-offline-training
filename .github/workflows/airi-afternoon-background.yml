@@ -18,9 +18,27 @@ concurrency:
   group: airi-offline-background-training
   cancel-in-progress: false
 jobs:
-  train:
+  budget:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 3
+    outputs:
+      timeout_minutes: ${{ steps.clock.outputs.timeout_minutes }}
+    steps:
+      - name: Bound job lifetime before the final deadline
+        id: clock
+        run: |
+          python - <<'PY_CLOCK'
+          import os,time
+          from datetime import datetime
+          deadline=datetime.fromisoformat('2026-10-08T12:00:00+00:00').timestamp()
+          minutes=max(1,min(300,int((deadline-time.time()-300)//60)))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:
+              output.write('timeout_minutes='+str(minutes)+'\n')
+          PY_CLOCK
+  train:
+    needs: budget
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ fromJSON(needs.budget.outputs.timeout_minutes) }}
     env:
       GH_TOKEN: ${{ github.token }}
       CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
