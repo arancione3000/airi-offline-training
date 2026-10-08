@@ -27,7 +27,7 @@
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
-    "extra_dialogues.py": "fa7c29da486caa51caff234468600f02f5090696e263ca677dd5c7f491f55ff5",
+    "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
     "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
@@ -37,5 +37,5 @@
   },
   "training_cutoff_epoch": 1791459600.0,
   "report_deadline_epoch": 1791460800.0,
-  "fingerprint": "b72cabefdf4993f9e1348161e8e3499643fd1cde212e80bc1eaf9d65cdc57f88"
+  "fingerprint": "72642ee42ce31c298dd68730e35c33717c12a4b7befb26da60b1a162c4403dc7"
 }

@@ -1,4 +1,4 @@
-"""Human-authored short dialogue, deterministic variations and protected validation."""
+"""Curated short dialogue, deterministic variations and protected validation."""
 from curriculum import norm
 
 # Each answer is deliberately short enough for this native model's present ability.
@@ -92,7 +92,7 @@ def build_extra(blocked=(),old_validation=()):
         if any(norm(m['content']) in blocked for m in messages):return
         if norm(messages[0]['content']) in reserved:return
         row=dict(messages=messages,language=lang,family=family,expected=messages[-1]['content'],
-                 provenance='human-authored afternoon curriculum; deterministic variations; not model self-labels')
+                 provenance='assistant-authored reviewed examples; deterministic variations; not student self-labels')
         (heldout if validation else train).append(row)
     for lang,pairs in PAIRS.items():
         prefixes=['','Airi, ','Senti, ' if lang=='it' else 'Listen, ','Ehi Airi, ' if lang=='it' else 'Hey Airi, ']
