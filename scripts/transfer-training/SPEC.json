@@ -1,0 +1,45 @@
+{
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
+  "start_step": 39731,
+  "max_steps": 1000000,
+  "pilot_step": 39731,
+  "migration_source_release": "airi-offline-39731-37846269682-1-1",
+  "migration_source_fingerprint": "0973812b4464b3d693313dd36f14e0a5d9600050342349f4dcba3becd9580342",
+  "precision": "fp32",
+  "torch_version": "2.14.1+cpu",
+  "recipes": [
+    {
+      "learning_rate": 3e-05,
+      "kl_weight": 0.05
+    },
+    {
+      "learning_rate": 1e-05,
+      "kl_weight": 0.1
+    },
+    {
+      "learning_rate": 5e-06,
+      "kl_weight": 0.15
+    }
+  ],
+  "optimizer_policy": "preserve AdamW moments and RNG; explicit lower LR at migration and phase changes",
+  "schedule": "25% family-balanced old authored, 12.5% curated dialogue, 37.5% length-balanced compositional copy/recall, 12.5% context, 12.5% native replay; no fixed diagnostic oversampling; 12h actual update compute; LR phases 4h/8h by compute only; final-only sealed transfer set; retained champion separate; original production gates unchanged",
+  "promotion": "offline only; no live promotion; original final gates unchanged",
+  "script_sha256": {
+    "composition_data.py": "6b78f20a9cc179204e1357928f7cc8d9358f53b93d29e3489c58b3a1f33ee8a8",
+    "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
+    "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
+    "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
+    "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
+    "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
+    "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
+    "policy.py": "1057cff5ee64c44b597db311e960bb06f3ef7a6a3026a457f424ac75f402d950",
+    "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
+    "run.py": "3d5ea0a8dd2b1bf50688d3e384d0d02e5626a26c1e4d4c94cfda21ae62286d5c",
+    "session.py": "8125862513877e6e81f456df6c2fd9253a359defe837a21c7a8e95523ac771b6",
+    "transport.py": "200d5d8c9a5bea895063aca54fab21a82673d3b2c02e7d37bfb260b46c9bc847"
+  },
+  "maximum_training_seconds": 43200,
+  "fingerprint": "83a1664e7ecba76daa7c48f13460c93cbe045e4c4f1ec4328891fa7b2d306434"
+}
