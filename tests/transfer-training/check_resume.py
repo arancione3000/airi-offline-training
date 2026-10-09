@@ -44,6 +44,10 @@ for row in context+tests+old+extra+heldout+more+foundation+foundation_test+compo
  assert labels[len(prompt):len(prompt)+len(target)].tolist()==target
 print('All curriculum histories and answers fit full 1024 context; chat/SFT prompt and masked targets agree.')
 
+# Restore the tiny probe tensors: the curriculum loop uses 1-D padded rows.
+ids=torch.tensor([[2,12,13,14,15,1]])
+labels=ids.clone();labels[:,:2]=-100
+
 # Test cached decoding against full-prefix logits, beyond one token.
 r.model.eval()
 with torch.no_grad():
