@@ -10,6 +10,9 @@ on:
       - 'tests/expanded-training/**'
       - 'scripts/conversation-training/**'
       - 'tests/conversation-training/**'
+      - 'scripts/noon-training/**'
+      - 'tests/noon-training/**'
+      - '.github/workflows/airi-noon-background.yml'
       - 'scripts/evolving-training/**'
       - 'tests/evolving-training/**'
       - '.github/workflows/airi-evolving-background.yml'
@@ -59,3 +62,5 @@ jobs:
       - run: python -m py_compile scripts/stable-training/*.py
       - run: python -m unittest discover -s tests/evolving-training -v
       - run: python -m py_compile scripts/evolving-training/*.py
+      - run: python -m unittest discover -s tests/noon-training -v
+      - run: python -m py_compile scripts/noon-training/*.py
