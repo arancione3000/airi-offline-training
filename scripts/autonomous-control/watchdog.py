@@ -9,12 +9,14 @@ BRANCH = 'overnight-training-v1'
 COMMIT = 'f4bb6c14a9be26adaa45c50b5db2638867a8df44'
 WORKFLOW = 'airi-overnight-background.yml'
 EXPERIMENTS={WORKFLOW:(BRANCH,COMMIT,None),
+    'airi-focused-background.yml':('focused-learning-v1','bd98259560582bb64258a1a8c7a6c0c0f0c90dfd',None),
     'airi-noon-background.yml':('morning-dialogue-v1','6cc1ea287133b671ab73b5504350fd33ebb483fd',1791547200.0),
     'airi-evolving-background.yml':('evolving-context-v1','6c6c72dea5b7512cb45ec174ee69510674b7bb1f',None),
     'airi-stable-background.yml':('stable-dialogue-v1','f436b73d71e9eee06595f58b96945672f36a6527',None),
     'airi-afternoon-background.yml':('afternoon-dialogue-v1','0a502c0242528f475837167501c2056eaaeecdc2',1791459600.0)}
 
 TRAINING_PATHS = {
+    '.github/workflows/airi-focused-background.yml',
     '.github/workflows/airi-noon-background.yml',
     '.github/workflows/airi-evolving-background.yml',
     '.github/workflows/airi-stable-background.yml',
