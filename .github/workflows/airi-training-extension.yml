@@ -1,0 +1,29 @@
+name: AIRI authorized four-hour extension
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI compositional native learning]
+    types: [completed]
+  schedule:
+    - cron: '7,27,47 * * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-single-authorized-extension-20261011
+  cancel-in-progress: false
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify no overlap, provenance and one-time continuation
+        run: python -m unittest discover -s tests/training-extension -v
+      - name: Register or launch the authorized four-hour sequel
+        run: python scripts/training-extension/extend.py | tee -a "$GITHUB_STEP_SUMMARY"
