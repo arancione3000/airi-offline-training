@@ -1,12 +1,12 @@
 name: AIRI compositional native learning
-run-name: ${{ inputs.preflight_only == 'true' && 'AIRI transfer preflight' || 'AIRI transfer training' }}
+run-name: ${{ inputs.preflight_only == 'true' && 'AIRI transfer preflight' || 'AIRI dialogue-focused training' }}
 on:
   workflow_dispatch:
     inputs:
       checkpoint_release:
         description: Verified checkpoint release
         required: true
-        default: airi-offline-39731-37846269682-1-1
+        default: airi-offline-49971-37998439310-1-2
         type: string
       preflight_only:
         description: Verify runtime without loading or training a checkpoint

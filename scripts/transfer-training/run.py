@@ -28,6 +28,14 @@ def needs_training(counters):
     validate_budget(counters)
     return counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
 
+def sampling_group(update):
+    if not isinstance(update,int) or isinstance(update,bool) or update<0:
+        raise ValueError('invalid update index')
+    slot=update%16
+    return ('old-authored' if slot<6 else 'curated-dialogue' if slot<12
+            else 'composition' if slot<14 else 'verified-context' if slot<15
+            else 'native-replay')
+
 def main():
     import torch
     from torch.nn import functional as F
@@ -221,23 +229,23 @@ def main():
     if any(not v for v in human_by.values()):raise ValueError('empty filtered human language')
     while needs_training(counters):
         update=counters['conversation_updates'];lang='it' if update%3!=1 else 'en'
-        slot=update%8
-        if slot<2:
+        sample_group=sampling_group(update)
+        if sample_group=='old-authored':
             families=sorted({r['family'] for r in authored_by[lang]})
             family=rng.choice(families)
             batch=encode(rng.choice([r for r in authored_by[lang] if r['family']==family]));group='old-authored-'+lang
-        elif slot==2:
+        elif sample_group=='curated-dialogue':
             batch=encode(rng.choice([r for r in extra_by[lang] if r['family'].startswith('extra-') or r['family']=='foundation-dialogue']));group='curated-dialogue-'+lang
-        elif slot<6:
+        elif sample_group=='composition':
             pools=composition_pools[lang]
             family=rng.choice(sorted(pools))
             batch=encode(rng.choice(pools[family]));group='foundation-'+lang
-        elif slot<7:
+        elif sample_group=='verified-context':
             candidates=[r for r in extra_by[lang] if r['family'].startswith('context-') and r['stage']<=counters['curriculum_stage']]
             family=rng.choice(sorted({r['family'] for r in candidates}))
             batch=encode(rng.choice([r for r in candidates if r['family']==family]));group='verified-context-'+lang
         else:
-            group=['language-it','language-en','domains'][(update//8)%3]
+            group=['language-it','language-en','domains'][(update//16)%3]
             batch=rng.choice(replay[group])
         scored=(batch[1]!=-100).nonzero()
         width=int(scored[:,1].max())+1
@@ -300,7 +308,7 @@ def main():
             sealed_samples.append({'messages':row['messages'][:-1],'expected':row['expected'],'response':response,'correct':exact_correct(response,row['expected']),'family':row['family'],'language':row['language']})
         counters['sealed_transfer']={'correct':sum(r['correct'] for r in sealed_samples),'probes':len(sealed_samples),'samples':sealed_samples,'scope':'final only; excluded from selection and adaptation'}
         counters['development_scope']='Repeated development checks; not an untouched final test.' 
-        counters['stop_reason']='twelve hours of compositional native training completed; best offline candidate retained'
+        counters['stop_reason']='twelve hours of dialogue-focused native training completed; best offline candidate retained'
         save()
         atomic_json(out/'FINAL_RESULT.json',{'counters':counters,'next_action':None,
                   'maximum_training_seconds':SPEC['maximum_training_seconds'],

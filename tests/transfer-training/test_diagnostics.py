@@ -7,6 +7,8 @@ from diagnostics import diagnostic_rows,recipe_phase
 from curriculum import norm
 from policy import reward,improved
 import run
+from composition_data import PREVIOUS_SEALED_VALUES
+from collections import Counter
 
 class TransferTests(unittest.TestCase):
  def test_values_and_prompts_of_final_set_are_sealed(self):
@@ -44,4 +46,23 @@ class TransferTests(unittest.TestCase):
   train,test=build_composition();blocked=[norm(train[0]['messages'][-2]['content'])]
   filtered,_=build_composition(blocked)
   self.assertTrue(all(norm(m['content']) not in blocked for r in filtered for m in r['messages']))
+ def test_new_cycle_excludes_previous_final_values(self):
+  train,sealed=build_composition()
+  self.assertFalse(set(SEALED_VALUES)&set(PREVIOUS_SEALED_VALUES))
+  self.assertFalse({norm(r['expected']) for r in train}&{norm(v) for v in PREVIOUS_SEALED_VALUES})
+  self.assertEqual({r['expected'] for r in sealed},set(SEALED_VALUES))
+ def test_dialogue_cycle_preserves_replay_and_both_languages(self):
+  counts=Counter(run.sampling_group(i) for i in range(48))
+  self.assertEqual(counts,dict({'old-authored':18,'curated-dialogue':18,'composition':6,'verified-context':3,'native-replay':3}))
+  for group in counts:
+   langs={'it' if i%3!=1 else 'en' for i in range(48) if run.sampling_group(i)==group}
+   self.assertEqual(langs,{'it','en'})
+  for bad in (-1,True,1.5):self.assertRaises(ValueError,run.sampling_group,bad)
+ def test_exact_seed_and_new_finite_ledger(self):
+  self.assertEqual(run.SPEC['migration_source_release'],'airi-offline-49971-37998439310-1-2')
+  self.assertEqual(run.SPEC['start_step'],49971)
+  self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
+  c=dict(completed_steps=49972,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
+  self.assertTrue(run.needs_training(c));c['completed_steps']+=1
+  self.assertRaises(ValueError,run.needs_training,c)
 if __name__=='__main__':unittest.main()

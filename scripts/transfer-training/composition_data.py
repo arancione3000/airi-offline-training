@@ -6,9 +6,12 @@ values AND templates. Neither set is a source of labels for training.
 import random
 from curriculum import norm
 
-SEALED_VALUES=('qv7m','rt8n','wk6p','jd9s','fv3r','hm4t','np5w','sx2k',
+PREVIOUS_SEALED_VALUES=('qv7m','rt8n','wk6p','jd9s','fv3r','hm4t','np5w','sx2k',
                'silver orchard','quiet pebble','amber forest','violet river',
                'gentle sunrise','winter garden','hidden meadow','distant island')
+SEALED_VALUES=('zb6q','vk3x','mq9f','px5r','gt7w','bn2j','yz8d','cr4h',
+               'copper window','patient willow','frozen canvas','sudden lantern',
+               'velvet canyon','wooden compass','dancing mountain','silent harbor')
 PROTECTED_VALUES=('ab','xy','casa blu','blue cup','Lidia','Nereo','Luca','Sara','Marco','Anna','Giulia','Paolo','Elena','Andrea','Sofia','Davide','Marta','Nina')
 WORDS=('alba','neve','fiore','ponte','sasso','verde','rosso','calmo','piccolo','nuovo',
        'dawn','snow','flower','bridge','stone','green','red','calm','small','new')
@@ -17,8 +20,8 @@ def exchange(prompt,answer):
     return [dict(role='user',content=prompt),dict(role='assistant',content=answer)]
 
 def build_composition(blocked=()):
-    blocked=set(blocked);train=[];sealed=[];rng=random.Random(20261010)
-    reserved={norm(v) for v in SEALED_VALUES+PROTECTED_VALUES}
+    blocked=set(blocked);train=[];sealed=[];rng=random.Random(20261011)
+    reserved={norm(v) for v in SEALED_VALUES+PREVIOUS_SEALED_VALUES+PROTECTED_VALUES}
     copies={
       'it':('Trascrivi questo testo senza commenti: {}','Riporta esattamente: {}',
             'Testo da ripetere: {}','Scrivi soltanto il contenuto fra parentesi: ({})',
