@@ -1,0 +1,944 @@
+diff --git a/.ai/PROJECT_MEMORY.md b/.ai/PROJECT_MEMORY.md
+index 3ff3548..712207a 100644
+--- a/.ai/PROJECT_MEMORY.md
++++ b/.ai/PROJECT_MEMORY.md
+@@ -442,3 +442,13 @@ User requests faster training. Main c24c66f/run37127825887 spends11–13min per
+ ## 2026-10-03 — Protected rollback step adaptation and widening hysteresis
+ 
+ User requests a fix for excessive scards. Scope: recovery policy/LR persistence, Phase5 tests, production-shadow contract and diagnostic report. Read-only state a00bb69a/checkpoint8d184426 has33,478,285 accepted tokens, repetition .236422 versus hard .237721. The prepared bundle works (~5s), but3/14 latest live attempts accepted. Diagnosed: rejected LR halving is undone by the1/128 floor; accepted path also restores that floor; one tolerated success doubles rescue batch. Allow protected-only bounded adaptation down to1/2048; retain accepted LR; require two same-batch/LR non-worsening NLL/repetition successes before widening. Legacy entry/healthy paths, anchor/gates/objectives/token accounting unchanged. Snapshots in /tmp/airi-rejection-snapshot.281 passed/1 optional skip, compile/diff checks passed. Paired read-only current-checkpoint diagnostics (3seeds,16k,batch128): LR1/128 and1/512 each1/3 accepted;1/2048 2/3 accepted. One lower-LR sample still rejected, gains tiny, replay sample not full live data; overlapping timing excluded. No sustained acceptance, language recovery or100k/hour claim. Raw evidence and reproduction: reports/generalist-adaptive-recovery. Publish/check/activate via normal workflows; never manually edit generalist-state.
++
++## 2026-10-10 — Computer runtime reliability
++
++Declared scope: maintenance, supervisor, startup/contract readiness, bounded job output and regression/evidence files. Snapshots saved before edits. 133 selected PC regression tests passed; the desktop-only health check was excluded locally. Matching private runtime CI 38047877497 passed 134 tests, full graphical/MCP/coding self-tests and actual server recovery. Existing model policy, live telemetry and job cancellation behavior preserved. Persist to canonical main after verification.
++
++Index follow-up: native runtime crashed while reading browser caches and binaries. Project index now prunes runtime/package caches, skips binary/oversized/credential files, bounds source/context reads and rejects symlink escapes. Native full self-test passed 33/33; cold index bootstrap 0.457s. Final PC regression selection 136 passed, one desktop-only test excluded locally; private final CI 38049085611 verifies 137 tests plus full GUI/MCP/coding and recovery. Existing path guard retained.
++
++Public publication blocked: GitHub returned HTTP 403, repository above size quota. Private runtime main received the fixes. Preserve the public diff as state/patches/airi-pc-bootstrap-runtime-20261010.patch in the private repository; do not claim public main updated or delete history to force publication.
++
++2026-10-10: Browser-cache follow-up scope: airi-selftest, reliability tests and evidence. Snapshot before edits. First local pytest invocation could not start because its transient venv was absent; restored all edits to snapshot before reapplying. Actual cache/configured-install checks passed with standard-library harness. Complete native CI38057870170 passed139 tests, coding, GUI/MCP and supervisor recovery. Source unchanged outside declared paths. Current runtime provider restored and readiness passed; later control commands timed out, so native follow-up deployment/readback remains pending. Publish full public diff in public training repo without changing frozen active training branch or deleting bootstrap history.
+diff --git a/AIRI_RUNTIME_RELIABILITY.md b/AIRI_RUNTIME_RELIABILITY.md
+new file mode 100644
+index 0000000..f93e670
+--- /dev/null
++++ b/AIRI_RUNTIME_RELIABILITY.md
+@@ -0,0 +1,20 @@
++# AIRI-PC runtime reliability — 2026-10-10
++
++Maintenance and supervision now validate readiness response bodies, check actual display availability, respect the workspace and virtual environment, reject invalid recovery levels, and launch restarts without shell interpolation. The contract accepts the configured display only when the observed desktop matches it. Startup probes installed GUI packages without importing them before Xvfb starts.
++
++Persistent job status and attach read bounded UTF-8 log suffixes instead of whole log files. Existing cancellation handling and live telemetry are preserved.
++
++Verification: 136 selected PC regression tests passed locally, with only the test requiring a running desktop excluded. All updated display/health/log/search tests passed. The corresponding private runtime passed 137 tests, complete coding and graphical/browser/MCP self-tests, and recovery after terminating the actual server:
++https://github.com/arancione3000/airi-pc/actions/runs/38049085611
++
++Project indexing now excludes caches, binary/oversized files and runtime credentials. File reads and context packs are bounded, and symlinks cannot escape the workspace.
++
++The original AIRI computer has been restored and readiness verified. Its full native self-test passed all 33 checks, and a cold control-plane/index bootstrap completed in 0.457 seconds without disrupting readiness. These changes concern runtime reliability; conversational quality still requires the existing model qualification process.
++
++Publication: GitHub rejected the public repository write with HTTP 403, "Repository is above its size quota." The verified public changes are retained as a patch in the private runtime repository. Public main remains d078e718dfba0d68babd31de90fa55c0beac1951. No repository history was deleted.
++
++## Browser-cache follow-up — 2026-10-10
++
++Cold restore exposed a diagnostic bug: airi-selftest searched HOME/.cache while startup installed Chromium in the workspace cache. The self-test now shares the startup/browser cache and respects an explicit PLAYWRIGHT_BROWSERS_PATH, including paths containing spaces. Two regression cases were added. Cache guard and configured-install checks passed locally; complete native workflow1390fdbc3a3ef365bdc7f19653bb8458e7f93327 passed (139 Python tests plus coding, GUI/MCP and real server recovery): https://github.com/arancione3000/airi-pc/actions/runs/38057870170.
++
++The current provider workspace was restored from private backupa57fb4edf077fccf64ea8d8a43a475e2906e12a5:184 file hashes and213 Git objects verified. Its startup completed and readiness/status GUI/browser/MCP/source checks returned true. Direct provider commands subsequently timed out; deployment/readback of this diagnostic follow-up on that host is pending. The autonomous GitHub training cycle is independent of this provider connection.
+diff --git a/computer/contract_server.py b/computer/contract_server.py
+index 64bab90..f33bcd5 100644
+--- a/computer/contract_server.py
++++ b/computer/contract_server.py
+@@ -186,7 +186,7 @@ def _ready_payload() -> dict[str, Any]:
+     try:
+         st = _legacy.status()
+         checks["status"] = bool(st.get("ok"))
+-        checks["gui"] = bool(st.get("gui_available")) and st.get("resolution") == "1280x800" and os.environ.get("DISPLAY", ":99") == ":99"
++        checks["gui"] = bool(st.get("gui_available")) and st.get("resolution") == "1280x800" and st.get("display") == os.environ.get("DISPLAY", ":99")
+     except Exception:
+         pass
+     try:
+diff --git a/computer/control_plane/job_manager.py b/computer/control_plane/job_manager.py
+index a9c0a73..4e6d677 100644
+--- a/computer/control_plane/job_manager.py
++++ b/computer/control_plane/job_manager.py
+@@ -3,6 +3,7 @@ import json, os, shlex, signal, subprocess, time, uuid
+ from pathlib import Path
+ from typing import Any
+ from .store import load_json, save_json, now
++from .log_tail import read_log_tail
+ from .live_telemetry import live_emit
+ from coding import ROOT, safe_path
+ JOBS_FILE = 'jobs.json'; LOG_DIR = ROOT / '.ai' / 'state' / 'jobs'; ACTIVE = {'queued','running','detached'}; FINAL = {'completed','failed','cancelled','lost'}
+@@ -46,7 +47,7 @@ class JobManager:
+                 row['finished_at'] = row.get('finished_at') or now()
+         log = Path(row['log_file'])
+         if log.exists():
+-            try: row['last_output'] = log.read_text(errors='replace')[-20000:]
++            try: row['last_output'] = read_log_tail(log)
+             except Exception: pass
+         if before_status != row.get('status') and row.get('status') in FINAL:
+             live_emit('job', f"Job {row['status']}", f"exit={row.get('exit_code')}", row['status'], task_id=row.get('owner_task'), node_id=row.get('id'), dedupe_key=f"job:{row.get('id')}:{row.get('status')}")
+@@ -79,7 +80,7 @@ class JobManager:
+         for job_id in list(self.state['jobs']): rows.append(self.status(job_id))
+         return {'count':len(rows),'jobs':rows}
+     def attach(self, job_id: str, tail: int = 200) -> dict[str, Any]:
+-        row=self.status(job_id); log=Path(row['log_file']); text=log.read_text(errors='replace') if log.exists() else ''; row['attached_output']=text[-max(1,int(tail))*200:]; return row
++        row=self.status(job_id); log=Path(row['log_file']); row['attached_output']=read_log_tail(log, max(1,int(tail))*200) if log.exists() else ''; return row
+     def detach(self, job_id: str) -> dict[str, Any]:
+         row=self._row(job_id)
+         if row.get('status')=='running': row['status']='detached'; row['updated_at']=now(); self._save()
+diff --git a/computer/control_plane/log_tail.py b/computer/control_plane/log_tail.py
+new file mode 100644
+index 0000000..5d1af3a
+--- /dev/null
++++ b/computer/control_plane/log_tail.py
+@@ -0,0 +1,15 @@
++from __future__ import annotations
++
++import os
++from pathlib import Path
++
++MAX_OUTPUT_CHARS = 1_000_000
++
++
++def read_log_tail(path: Path, max_chars: int = 20_000) -> str:
++    """Read only a bounded UTF-8 suffix, even when a job produces huge logs."""
++    limit = min(MAX_OUTPUT_CHARS, max(1, int(max_chars)))
++    with path.open('rb') as log:
++        size = log.seek(0, os.SEEK_END)
++        log.seek(max(0, size - limit * 4))
++        return log.read(limit * 4).decode('utf-8', errors='replace')[-limit:]
+diff --git a/computer/control_plane/maintenance.py b/computer/control_plane/maintenance.py
+index 5b936f4..b3f0109 100644
+--- a/computer/control_plane/maintenance.py
++++ b/computer/control_plane/maintenance.py
+@@ -1,51 +1,124 @@
+ from __future__ import annotations
+-import os, shutil, subprocess, urllib.request
++
++import json
++import os
++from pathlib import Path
++import shutil
++import subprocess
++import urllib.request
++
+ from .store import load_json, save_json, now
+ from .reliability import REGISTRY
+-BASE=__import__('pathlib').Path(os.environ.get('AIRIPC_WORKSPACE_ROOT','/home/user/airi')).resolve(); PORT=os.environ.get('AIRI_PORT','9010')
++
++
+ class MaintenanceManager:
+-    LEVELS={1:'retry',2:'component_restart',3:'component_repair',4:'runtime_rebuild',5:'escalation'}
+-    def _root(self): return os.environ.get('AIRIPC_WORKSPACE_ROOT','/home/user/airi')
+-    def _port(self): return os.environ.get('AIRI_PORT','9010')
+-    def _probe_url(self,url):
++    LEVELS = {1: 'retry', 2: 'component_restart', 3: 'component_repair',
++              4: 'runtime_rebuild', 5: 'escalation'}
++
++    def _root(self):
++        return os.environ.get('AIRIPC_WORKSPACE_ROOT', '/home/user/airi')
++
++    def _port(self):
++        return os.environ.get('AIRI_PORT', os.environ.get('AIRIPC_PORT', '9010'))
++
++    def _probe_url(self, url):
+         try:
+-            with urllib.request.urlopen(url,timeout=3) as r: return {'ok':r.status==200}
+-        except Exception as e: return {'ok':False,'error':str(e)}
++            with urllib.request.urlopen(url, timeout=3) as response:
++                payload = json.loads(response.read(65537))
++                field = 'ready' if url.endswith('/ready') else 'ok'
++                ok = response.status == 200 and isinstance(payload, dict) and payload.get(field) is True
++                if field == 'ready' and isinstance(payload, dict):
++                    checks = payload.get('checks', {})
++                    ok = ok and isinstance(checks, dict) and all(value is True for value in checks.values())
++                return {'ok': ok, **({} if ok else {'error': 'unhealthy_response'})}
++        except Exception as exc:
++            return {'ok': False, 'error': str(exc)}
++
+     def run(self):
+-        checks={}; base=__import__('pathlib').Path(self._root()).resolve(); port=self._port()
++        checks = {}
++        base = Path(self._root()).resolve()
++        port = self._port()
+         try:
+-            du=shutil.disk_usage(base.parent); checks['disk']={'ok':du.free>512*1024*1024,'free_gb':round(du.free/1e9,3),'used_percent':round(100*(du.total-du.free)/du.total,2)}
+-        except Exception as e: checks['disk']={'ok':False,'error':str(e)}
+-        try: checks['processes']={'ok':subprocess.run(['bash','-lc','pgrep -f "[u]vicorn.*--port ${AIRI_PORT:-9010}" >/dev/null'],capture_output=True).returncode==0}
+-        except Exception as e: checks['processes']={'ok':False,'error':str(e)}
+-        checks['display']={'ok':bool(os.environ.get('DISPLAY',':99')),'display':os.environ.get('DISPLAY',':99')}
+-        checks['mcp']=self._probe_url(f'http://127.0.0.1:{port}/status'); REGISTRY.record('mcp',checks['mcp'].get('ok',False),error=checks['mcp'].get('error',''))
+-        checks['ready']=self._probe_url(f'http://127.0.0.1:{port}/ready'); REGISTRY.record('ready',checks['ready'].get('ok',False),error=checks['ready'].get('error',''))
+-        overall=all(bool(v.get('ok')) for v in checks.values()); row={'timestamp':now(),'overall_ok':overall,'checks':checks,'recommended_level':1 if overall else 2,'reliability':REGISTRY.summary()}; save_json('maintenance.json',row); return row
+-    def recover(self,level='auto',confirm=None):
+-        current=self.run(); base=__import__('pathlib').Path(self._root()).resolve()
+-        if level in ('auto',None):
+-            if current['overall_ok']: return {'ok':True,'level':1,'action':'retry','result':current,'noop':True}
+-            lvl=2
++            usage = shutil.disk_usage(base.parent)
++            checks['disk'] = {'ok': usage.free > 512 * 1024 * 1024,
++                              'free_gb': round(usage.free / 1e9, 3),
++                              'used_percent': round(100 * (usage.total - usage.free) / usage.total, 2)}
++        except Exception as exc:
++            checks['disk'] = {'ok': False, 'error': str(exc)}
++        try:
++            if not port.isdigit() or not 1 <= int(port) <= 65535:
++                raise ValueError('invalid runtime port')
++            process = subprocess.run(['pgrep', '-f', rf'[u]vicorn.*--port {port}(\s|$)'],
++                                     capture_output=True, timeout=3)
++            checks['processes'] = {'ok': process.returncode == 0}
++        except Exception as exc:
++            checks['processes'] = {'ok': False, 'error': str(exc)}
++        display = os.environ.get('DISPLAY', ':99')
++        try:
++            probe = subprocess.run(['xdpyinfo', '-display', display], capture_output=True, timeout=3)
++            checks['display'] = {'ok': probe.returncode == 0, 'display': display}
++        except Exception as exc:
++            checks['display'] = {'ok': False, 'display': display, 'error': str(exc)}
++        for name, endpoint in (('mcp', 'status'), ('ready', 'ready')):
++            checks[name] = self._probe_url(f'http://127.0.0.1:{port}/{endpoint}')
++            REGISTRY.record(name, checks[name]['ok'], error=checks[name].get('error', ''))
++        overall = all(bool(value.get('ok')) for value in checks.values())
++        row = {'timestamp': now(), 'overall_ok': overall, 'checks': checks,
++               'recommended_level': 1 if overall else 2, 'reliability': REGISTRY.summary()}
++        save_json('maintenance.json', row)
++        return row
++
++    def recover(self, level='auto', confirm=None):
++        if level in ('auto', None):
++            lvl = None
++        elif isinstance(level, bool) or str(level) not in {str(key) for key in self.LEVELS}:
++            return {'ok': False, 'error': 'level must be auto or 1..5'}
+         else:
+-            try: lvl=int(level)
+-            except (TypeError,ValueError): return {'ok':False,'error':'level must be auto or 1..5'}
+-            if lvl not in self.LEVELS: return {'ok':False,'error':'level must be auto or 1..5'}
+-        if current['overall_ok'] and lvl==1: return {'ok':True,'level':1,'action':'retry','result':current}
+-        record={'timestamp':now(),'requested_level':lvl,'current':current,'action':self.LEVELS[lvl]}
++            lvl = int(level)
++        current = self.run()
++        base = Path(self._root()).resolve()
++        if lvl is None:
++            if current['overall_ok']:
++                return {'ok': True, 'level': 1, 'action': 'retry', 'result': current, 'noop': True}
++            lvl = 2
++        if current['overall_ok'] and lvl == 1:
++            return {'ok': True, 'level': 1, 'action': 'retry', 'result': current}
++        record = {'timestamp': now(), 'requested_level': lvl, 'current': current, 'action': self.LEVELS[lvl]}
+         try:
+-            if lvl==1:
+-                result=self.run(); record.update({'ok':result['overall_ok'],'result':result})
+-            elif lvl==2:
+-                log=str(base/'logs/maintenance-restart.log'); cmd=f'cd {base} && AIRI_FORCE_RESTART=1 sh computer/start.sh'; base.joinpath('logs').mkdir(parents=True,exist_ok=True)
+-                with open(log,'ab') as f: subprocess.Popen(['/bin/bash','-lc',cmd],stdout=f,stderr=f,start_new_session=True)
+-                record.update({'ok':True,'started':True,'detail':'component restart delegated to start.sh','log':log})
+-            elif lvl==3:
+-                py=str(base/'.venv/bin/python'); p=subprocess.run([py,'-m','pip','install','--disable-pip-version-check','-r',str(base/'computer/requirements.txt')],text=True,capture_output=True,timeout=120); record.update({'ok':p.returncode==0,'returncode':p.returncode,'stdout':p.stdout[-3000:],'stderr':p.stderr[-3000:]})
+-            elif lvl==4 and confirm=='REBUILD':
+-                log=str(base/'logs/maintenance-rebuild.log'); base.joinpath('logs').mkdir(parents=True,exist_ok=True); f=open(log,'ab'); subprocess.Popen(['/bin/sh',str(base/'scripts/airi-rebuild')],stdout=f,stderr=f,start_new_session=True); record.update({'ok':True,'started':True,'log':log})
+-            elif lvl==4: record.update({'ok':False,'needs_confirmation':True,'required_confirmation':'REBUILD'})
+-            else: record.update({'ok':False,'escalation':{'reason':'automatic recovery exhausted or explicitly requested','recommendation':'inspect maintenance.json and logs'}})
+-        except Exception as exc: record.update({'ok':False,'error':str(exc)})
+-        save_json('maintenance-last-recovery.json',record); return record
+-    def history(self): return load_json('maintenance.json',{})
++            if lvl == 1:
++                result = self.run()
++                record.update(ok=result['overall_ok'], result=result)
++            elif lvl == 2:
++                log = base / 'logs/maintenance-restart.log'
++                log.parent.mkdir(parents=True, exist_ok=True)
++                env = dict(os.environ, AIRIPC_WORKSPACE_ROOT=str(base), AIRI_FORCE_RESTART='1')
++                with log.open('ab') as output:
++                    subprocess.Popen(['/bin/sh', str(base / 'computer/start.sh')], cwd=str(base), env=env,
++                                     stdout=output, stderr=output, stdin=subprocess.DEVNULL, start_new_session=True)
++                record.update(ok=True, started=True, detail='component restart delegated to start.sh', log=str(log))
++            elif lvl == 3:
++                venv = Path(os.environ.get('AIRIPC_VENV', str(base / '.venv')))
++                result = subprocess.run([str(venv / 'bin/python'), '-m', 'pip', 'install',
++                                         '--disable-pip-version-check', '-r', str(base / 'computer/requirements.txt')],
++                                        text=True, capture_output=True, timeout=120)
++                record.update(ok=result.returncode == 0, returncode=result.returncode,
++                              stdout=result.stdout[-3000:], stderr=result.stderr[-3000:])
++            elif lvl == 4 and confirm == 'REBUILD':
++                log = base / 'logs/maintenance-rebuild.log'
++                log.parent.mkdir(parents=True, exist_ok=True)
++                with log.open('ab') as output:
++                    subprocess.Popen(['/bin/sh', str(base / 'scripts/airi-rebuild')], cwd=str(base),
++                                     stdout=output, stderr=output, stdin=subprocess.DEVNULL, start_new_session=True)
++                record.update(ok=True, started=True, log=str(log))
++            elif lvl == 4:
++                record.update(ok=False, needs_confirmation=True, required_confirmation='REBUILD')
++            else:
++                record.update(ok=False, escalation={'reason': 'automatic recovery exhausted or explicitly requested',
++                                                   'recommendation': 'inspect maintenance.json and logs'})
++        except Exception as exc:
++            record.update(ok=False, error=str(exc))
++        save_json('maintenance-last-recovery.json', record)
++        return record
++
++    def history(self):
++        return load_json('maintenance.json', {})
+diff --git a/computer/control_plane/project_index.py b/computer/control_plane/project_index.py
+index 5b2d418..2dfcbf0 100644
+--- a/computer/control_plane/project_index.py
++++ b/computer/control_plane/project_index.py
+@@ -1,8 +1,28 @@
+ from __future__ import annotations
+-import re,hashlib,ast
++import re,hashlib,ast,os
+ from pathlib import Path
+ from coding import ROOT, safe_path
+ from .store import load_json,save_json,now
++
++SKIP_DIRS = {'.git', '.venv', '__pycache__', '.cache', '.ai', '.pytest_cache', 'node_modules', 'logs'}
++MAX_INDEX_FILE_BYTES = 2 * 1024 * 1024
++MAX_CONTEXT_BYTES = 1024 * 1024
++
++
++def _runtime_file(path):
++    return (any(part in SKIP_DIRS for part in path.parts)
++            or path.name in {'.mcp_token', '.env'}
++            or (path.name.startswith('.env.') and path.name != '.env.example'))
++
++
++def _source_files(root):
++    for directory, dirs, files in os.walk(root, followlinks=False):
++        base = Path(directory)
++        dirs[:] = sorted(name for name in dirs if name not in SKIP_DIRS and not (base / name).is_symlink())
++        for name in sorted(files):
++            yield base / name
++
++
+ class ProjectIndex:
+     def __init__(self):
+         self.state=load_json("project-index.json", {"version":2,"files":{},"symbols":{},"dependencies":{},"updated_at":None})
+@@ -13,27 +33,46 @@ class ProjectIndex:
+             for x in paths:
+                 p=safe_path(x, missing=True)
+                 if p.is_file(): targets.append(p)
+-                elif p.is_dir(): targets.extend(q for q in p.rglob('*') if q.is_file())
+-        else: targets=[p for p in ROOT.rglob('*') if p.is_file() and '.git' not in p.parts and '.venv' not in p.parts and '__pycache__' not in p.parts]
++                elif p.is_dir(): targets.extend(_source_files(p))
++        else: targets=_source_files(ROOT)
++        seen=set()
+         for p in targets:
+-            rel=str(p.relative_to(ROOT))
+             try:
+-                stat=p.stat(); prev=self.state['files'].get(rel)
+-                if prev and prev.get('mtime_ns')==stat.st_mtime_ns and prev.get('bytes')==stat.st_size: continue
+-                data=p.read_text(errors='replace')
+-            except Exception: continue
++                rel=str(p.resolve().relative_to(ROOT.resolve()))
++                if p.is_symlink() or _runtime_file(Path(rel)): continue
++                stat=p.stat()
++                prev=self.state['files'].get(rel)
++                if stat.st_size > MAX_INDEX_FILE_BYTES: continue
++                if prev and prev.get('mtime_ns')==stat.st_mtime_ns and prev.get('bytes')==stat.st_size:
++                    seen.add(rel)
++                    continue
++                with p.open('rb') as stream:
++                    prefix=stream.read(8192)
++                    if b'\0' in prefix: continue
++                    raw=prefix+stream.read(MAX_INDEX_FILE_BYTES+1-len(prefix))
++                if len(raw)>MAX_INDEX_FILE_BYTES: continue
++                data=raw.decode('utf-8',errors='replace')
++                seen.add(rel)
++            except Exception:
++                continue
+             sha=hashlib.sha256(data.encode()).hexdigest()
+             if prev and prev.get('sha256')==sha:
+-                prev.update({'mtime_ns': stat.st_mtime_ns, 'bytes': stat.st_size, 'updated_at': now()}); continue
+-            self.state['files'][rel]={"sha256":sha,"bytes":len(data.encode()),"mtime_ns":p.stat().st_mtime_ns,"updated_at":now()}
++                prev.update({'mtime_ns': stat.st_mtime_ns, 'bytes': stat.st_size, 'updated_at': now()})
++                continue
++            self.state['files'][rel]={"sha256":sha,"bytes":stat.st_size,"mtime_ns":stat.st_mtime_ns,"updated_at":now()}
+             if p.suffix == '.py':
+                 try:
+                     tree_ast=ast.parse(data)
+                     imports=[n.names[0].name for n in ast.walk(tree_ast) if isinstance(n, ast.Import) and n.names] + [n.module for n in ast.walk(tree_ast) if isinstance(n, ast.ImportFrom) and n.module]
+-                except Exception: imports=[]
++                except Exception:
++                    imports=[]
+             else: imports=[]
+             syms=re.findall(r'^\s*(?:def|class)\s+([A-Za-z_][A-Za-z0-9_]*)',data,re.M)
+-            self.state['symbols'][rel]=syms; self.state.setdefault('dependencies', {})[rel]=sorted({x for x in imports if x})
++            self.state['symbols'][rel]=syms
++            self.state.setdefault('dependencies', {})[rel]=sorted({x for x in imports if x})
++        if not paths:
++            for rel in set(self.state['files'])-seen:
++                for key in ('files','symbols','dependencies'): self.state[key].pop(rel,None)
+         self.state['updated_at']=now(); save_json('project-index.json',self.state); return self.summary()
+     def search(self,q,limit=50):
+         q=q.casefold(); out=[]
+@@ -45,18 +84,25 @@ class ProjectIndex:
+     def context_pack(self, query: str, limit_files: int = 12, max_bytes: int = 120000):
+         q=str(query).casefold().strip(); scored=[]
+         for path, meta in self.state.get('files',{}).items():
+-            symbols=self.state.get('symbols',{}).get(path,[]); hay=(path+' '+' '.join(symbols)).casefold()
++            symbols=self.state.get('symbols',{}).get(path,[])
++            hay=(path+' '+' '.join(symbols)).casefold()
+             score=sum(2 for tok in q.split() if tok and tok in path.casefold()) + sum(1 for tok in q.split() if tok and tok in hay)
+             if score: scored.append((score,path))
+         scored.sort(key=lambda x:(-x[0],x[1])); selected=[p for _,p in scored[:max(1,int(limit_files))]]
++        budget=min(MAX_CONTEXT_BYTES,max(0,int(max_bytes)))
+         snippets=[]; total=0
+         for rel in selected:
++            if total>=budget: break
+             p=ROOT/rel
+             try:
+-                raw=p.read_bytes()[:max(0,max_bytes-total)]; text=raw.decode('utf-8',errors='replace')
+-                while len(text.encode()) > max(0,max_bytes-total): text=text[:-1]
++                p.resolve().relative_to(ROOT.resolve())
++                if p.is_symlink() or _runtime_file(Path(rel)): continue
++                with p.open('rb') as stream: raw=stream.read(budget-total)
++                text=raw.decode('utf-8',errors='replace')
++                text=text.encode('utf-8')[:budget-total].decode('utf-8',errors='ignore')
+             except Exception: continue
+             snippets.append({'path':rel,'score':next((s for s,r in scored if r==rel),0),'content':text}); total += len(text.encode())
+-            if total>=max_bytes: break
+-        return {'query':query,'files':snippets,'bytes':total,'truncated':total>=max_bytes}
++            if total>=budget: break
++        return {'query':query,'files':snippets,'bytes':total,'truncated':total>=budget}
++
+     def summary(self): return {"files":len(self.state['files']),"symbol_files":len(self.state['symbols']),"dependency_files":len(self.state.get('dependencies',{})),"updated_at":self.state['updated_at']}
+diff --git a/computer/control_plane/supervisor.py b/computer/control_plane/supervisor.py
+index c5ca2e2..508d398 100644
+--- a/computer/control_plane/supervisor.py
++++ b/computer/control_plane/supervisor.py
+@@ -1,72 +1,167 @@
+ from __future__ import annotations
+-import argparse, fcntl, os, signal, subprocess, time
++import argparse, fcntl, json, os, signal, subprocess, time
+ from pathlib import Path
+-try: from .store import now, save_json
+-except ImportError: from store import now, save_json
+-BASE='/home/user/airi'; READY_URL='http://127.0.0.1:9010/ready'; STATUS_URL='http://127.0.0.1:9010/status'
+-LOOP_INTERVAL=float(os.environ.get('AIRI_SUPERVISOR_INTERVAL','5')); PROBE_TIMEOUT=float(os.environ.get('AIRI_SUPERVISOR_PROBE_TIMEOUT','5')); RECOVERY_TIMEOUT=float(os.environ.get('AIRI_SUPERVISOR_RECOVERY_TIMEOUT','30')); MAX_RECOVERY_RETRIES=int(os.environ.get('AIRI_SUPERVISOR_MAX_RETRIES','3'))
++try:
++    from .store import now, save_json
++except ImportError:
++    from store import now, save_json
++
++BASE = '/home/user/airi'
++READY_URL = 'http://127.0.0.1:9010/ready'
++STATUS_URL = 'http://127.0.0.1:9010/status'
++LOOP_INTERVAL = float(os.environ.get('AIRI_SUPERVISOR_INTERVAL', '5'))
++PROBE_TIMEOUT = float(os.environ.get('AIRI_SUPERVISOR_PROBE_TIMEOUT', '5'))
++RECOVERY_TIMEOUT = float(os.environ.get('AIRI_SUPERVISOR_RECOVERY_TIMEOUT', '30'))
++MAX_RECOVERY_RETRIES = int(os.environ.get('AIRI_SUPERVISOR_MAX_RETRIES', '3'))
++
++
+ class Supervisor:
+-    def __init__(self,base: str=BASE):
+-        self.base=Path(base).resolve(); self.state_dir=self.base/'.ai'/'state'; self.lock_path=self.state_dir/'supervisor.lock'; self.pid_path=self.state_dir/'supervisor.pid'; self._lock_fh=None; self._stop=False
+-    def acquire_single_instance(self):
+-        self.state_dir.mkdir(parents=True,exist_ok=True); self._lock_fh=self.lock_path.open('a+')
+-        try: fcntl.flock(self._lock_fh.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+-        except BlockingIOError: self._lock_fh.close(); self._lock_fh=None; return False
+-        self.pid_path.write_text(str(os.getpid())+'\n',encoding='utf-8'); return True
+-    def release_single_instance(self):
++    def __init__(self, base: str | None = None):
++        self.base = Path(base or os.environ.get('AIRIPC_WORKSPACE_ROOT', BASE)).resolve()
++        self.state_dir = self.base / '.ai' / 'state'
++        self.lock_path = self.state_dir / 'supervisor.lock'
++        self.pid_path = self.state_dir / 'supervisor.pid'
++        self._lock_fh = None
++        self._stop = False
++
++    def acquire_single_instance(self) -> bool:
++        self.state_dir.mkdir(parents=True, exist_ok=True)
++        self._lock_fh = self.lock_path.open('a+')
+         try:
+-            if self.pid_path.exists() and self.pid_path.read_text(encoding='utf-8').strip()==str(os.getpid()): self.pid_path.unlink()
+-        except OSError: pass
++            fcntl.flock(self._lock_fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
++        except BlockingIOError:
++            self._lock_fh.close(); self._lock_fh = None
++            return False
++        self.pid_path.write_text(str(os.getpid()) + '\n', encoding='utf-8')
++        return True
++
++    def release_single_instance(self) -> None:
++        try:
++            if self.pid_path.exists() and self.pid_path.read_text(encoding='utf-8').strip() == str(os.getpid()):
++                self.pid_path.unlink()
++        except OSError:
++            pass
+         if self._lock_fh is not None:
+-            try: fcntl.flock(self._lock_fh.fileno(),fcntl.LOCK_UN)
+-            finally: self._lock_fh.close(); self._lock_fh=None
+-    def _run(self,args,timeout): return subprocess.run(args,cwd=str(self.base),text=True,capture_output=True,timeout=timeout)
++            try: fcntl.flock(self._lock_fh.fileno(), fcntl.LOCK_UN)
++            finally:
++                self._lock_fh.close(); self._lock_fh = None
++
++    def _run(self, args: list[str], timeout: float) -> subprocess.CompletedProcess[str]:
++        return subprocess.run(args, cwd=str(self.base), text=True, capture_output=True, timeout=timeout)
++
+     def process_snapshot(self):
+-        try: p=self._run(['/bin/bash','-lc',"pgrep -af 'contract_server|airi-watchdog|airi-tunnel-supervisor|uvicorn' || true"],5)
+-        except subprocess.TimeoutExpired: return ['PROCESS_SNAPSHOT_TIMEOUT']
++        try:
++            p = self._run(['/bin/bash','-lc', "pgrep -af 'contract_server|airi-watchdog|airi-tunnel-supervisor|uvicorn' || true"], 5)
++        except subprocess.TimeoutExpired:
++            return ['PROCESS_SNAPSHOT_TIMEOUT']
+         return [x for x in p.stdout.splitlines() if x.strip()]
+-    def http_probe(self,url):
++
++    def http_probe(self, url: str):
+         try:
+-            p=self._run(['curl','-fsS','--max-time',str(PROBE_TIMEOUT),url],PROBE_TIMEOUT+2); return {'ok':p.returncode==0,'output':p.stdout[-4000:],'error':p.stderr[-1000:],'returncode':p.returncode}
+-        except subprocess.TimeoutExpired: return {'ok':False,'output':'','error':'probe_timeout','returncode':124}
++            p = self._run(['curl','-fsS','--max-time',str(PROBE_TIMEOUT),url], PROBE_TIMEOUT + 2)
++            ok = p.returncode == 0
++            if ok:
++                try:
++                    payload = json.loads(p.stdout)
++                    field = 'ready' if url.endswith('/ready') else 'ok'
++                    ok = isinstance(payload, dict) and payload.get(field) is True
++                    if field == 'ready' and isinstance(payload, dict):
++                        checks = payload.get('checks', {})
++                        ok = ok and isinstance(checks, dict) and all(value is True for value in checks.values())
++                        expected = os.environ.get('AIRI_EXPECTED_SHA', '').strip()
++                        if expected:
++                            ok = ok and payload.get('source_sha') == expected
++                except (ValueError, TypeError):
++                    ok = False
++            return {'ok': ok, 'output': p.stdout[-4000:], 'error': p.stderr[-1000:] or ('' if ok else 'unhealthy_response'), 'returncode': p.returncode}
++        except subprocess.TimeoutExpired:
++            return {'ok': False, 'output': '', 'error': 'probe_timeout', 'returncode': 124}
++
+     def snapshot(self):
+-        ready=self.http_probe(READY_URL); status=self.http_probe(STATUS_URL); row={'timestamp':now(),'ready':ready,'status':status,'processes':self.process_snapshot()}; save_json('supervisor.json',row); return row
+-    def health(self): return self.snapshot()
+-    def _wait_ready(self,deadline):
+-        last=None
+-        while time.monotonic()<deadline and not self._stop:
+-            last=self.snapshot()
+-            if last['ready']['ok'] and last['status']['ok']: return last
+-            time.sleep(min(1.0,max(0.05,deadline-time.monotonic())))
++        ready = self.http_probe(READY_URL)
++        status = self.http_probe(STATUS_URL)
++        row = {'timestamp': now(), 'ready': ready, 'status': status, 'processes': self.process_snapshot()}
++        save_json('supervisor.json', row)
++        return row
++
++    def health(self):
++        return self.snapshot()
++
++    def _wait_ready(self, deadline: float):
++        last = None
++        while time.monotonic() < deadline and not self._stop:
++            last = self.snapshot()
++            if last['ready']['ok'] and last['status']['ok']:
++                return last
++            time.sleep(min(1.0, max(0.05, deadline - time.monotonic())))
+         return last or self.snapshot()
++
+     def recover(self):
+-        before=self.snapshot()
+-        if before['ready']['ok'] and before['status']['ok']: return {'ok':True,'actions':[],'attempts':0,'before':before,'after':before}
+-        actions=[]; attempts=0; last=before; script=self.base/'computer'/'start.sh'
+-        for attempts in range(1,MAX_RECOVERY_RETRIES+1):
+-            if not script.exists(): return {'ok':False,'actions':actions,'attempts':attempts,'before':before,'after':last,'error':'start_script_missing'}
+-            actions.append('runtime_restart'); started=time.monotonic()
+-            try: proc=subprocess.Popen(['/bin/sh',str(script)],cwd=str(self.base),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+-            except OSError as exc: last={'timestamp':now(),'ready':{'ok':False,'error':str(exc)},'status':{'ok':False},'processes':[]}; continue
+-            last=self._wait_ready(min(time.monotonic()+RECOVERY_TIMEOUT,started+RECOVERY_TIMEOUT))
+-            if last['ready']['ok'] and last['status']['ok']: return {'ok':True,'actions':actions,'attempts':attempts,'before':before,'after':last}
+-            if proc.poll() is None and time.monotonic()>=started+RECOVERY_TIMEOUT:
++        before = self.snapshot()
++        if before['ready']['ok'] and before['status']['ok']:
++            return {'ok': True, 'actions': [], 'attempts': 0, 'before': before, 'after': before}
++        actions = []
++        attempts = 0
++        last = before
++        script = self.base / 'computer' / 'start.sh'
++        for attempts in range(1, MAX_RECOVERY_RETRIES + 1):
++            if not script.exists():
++                return {'ok': False, 'actions': actions, 'attempts': attempts, 'before': before, 'after': last, 'error': 'start_script_missing'}
++            actions.append('runtime_restart')
++            started = time.monotonic()
++            try:
++                proc = subprocess.Popen(['/bin/sh', str(script)], cwd=str(self.base), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
++            except OSError as exc:
++                last = {'timestamp': now(), 'ready': {'ok': False, 'error': str(exc)}, 'status': {'ok': False}, 'processes': []}
++                continue
++            last = self._wait_ready(min(time.monotonic() + RECOVERY_TIMEOUT, started + RECOVERY_TIMEOUT))
++            if last['ready']['ok'] and last['status']['ok']:
++                return {'ok': True, 'actions': actions, 'attempts': attempts, 'before': before, 'after': last}
++            if proc.poll() is None and time.monotonic() >= started + RECOVERY_TIMEOUT:
+                 try: proc.terminate()
+                 except OSError: pass
+                 try: proc.wait(timeout=3)
+                 except subprocess.TimeoutExpired: proc.kill()
+-            if attempts<MAX_RECOVERY_RETRIES: time.sleep(min(2**(attempts-1),8))
+-        return {'ok':False,'actions':actions,'attempts':attempts,'before':before,'after':last,'error':'recovery_verification_failed'}
++            if attempts < MAX_RECOVERY_RETRIES:
++                time.sleep(min(2 ** (attempts - 1), 8))
++        return {'ok': False, 'actions': actions, 'attempts': attempts, 'before': before, 'after': last, 'error': 'recovery_verification_failed'}
++
+     def run_once(self):
+-        row=self.snapshot()
+-        if row['ready']['ok'] and row['status']['ok']: return {'ok':True,'recovered':False,'snapshot':row}
+-        rec=self.recover(); return {'ok':rec['ok'],'recovered':True,'recovery':rec}
+-    def stop(self,*_args): self._stop=True
++        row = self.snapshot()
++        if row['ready']['ok'] and row['status']['ok']:
++            return {'ok': True, 'recovered': False, 'snapshot': row}
++        rec = self.recover()
++        return {'ok': rec['ok'], 'recovered': True, 'recovery': rec}
++
++    def stop(self, *_args):
++        self._stop = True
++
+     def run_forever(self):
+-        if not self.acquire_single_instance(): return 20
+-        signal.signal(signal.SIGTERM,self.stop); signal.signal(signal.SIGINT,self.stop)
++        if not self.acquire_single_instance():
++            return 20
++        signal.signal(signal.SIGTERM, self.stop); signal.signal(signal.SIGINT, self.stop)
+         try:
+             while not self._stop:
+-                result=self.run_once(); save_json('supervisor-run.json',{'timestamp':now(),**result}); time.sleep(min(LOOP_INTERVAL*2,15) if not result['ok'] else max(0.5,LOOP_INTERVAL))
+-        finally: self.release_single_instance()
++                result = self.run_once()
++                save_json('supervisor-run.json', {'timestamp': now(), **result})
++                if not result['ok']:
++                    time.sleep(min(LOOP_INTERVAL * 2, 15))
++                else:
++                    time.sleep(max(0.5, LOOP_INTERVAL))
++        finally:
++            self.release_single_instance()
+         return 0
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--once', action='store_true')
++    args = parser.parse_args()
++    supervisor = Supervisor()
++    if args.once:
++        return 0 if supervisor.run_once()['ok'] else 1
++    return supervisor.run_forever()
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/computer/start.sh b/computer/start.sh
+index 491ce11..1100595 100644
+--- a/computer/start.sh
++++ b/computer/start.sh
+@@ -12,6 +12,8 @@ case "$DISPLAY_NUM" in
+   ''|*[!0-9]*) echo 'AIRI_START_INVALID_DISPLAY_NUM' >&2; exit 2 ;;
+ esac
+ export DISPLAY=":$DISPLAY_NUM"
++export AIRIPC_WORKSPACE_ROOT="$ROOT"
++export AIRIPC_VENV="$VENV"
+ SERVER_PID_FILE="$LOG_DIR/computer-server.pid"
+ LIVE_PID_FILE="$LOG_DIR/airi-live-runtime.pid"
+ LIVE_SESSION_FILE="$ROOT/.ai/state/live_session_id"
+@@ -96,7 +98,7 @@ fi
+ AIRI_BOOTSTRAP_SHA="$("$PYTHON_BIN" -c 'import os; from startup import resolve_runtime_sha; print(resolve_runtime_sha(os.environ["ROOT_FOR_AIRI"], os.environ["RUNTIME_SHA_FILE_FOR_AIRI"], os.environ))')"
+ export AIRI_BOOTSTRAP_SHA
+ if [ -f "$ROOT/computer/requirements.txt" ]; then
+-  if ! "$PYTHON_BIN" -c 'import fastapi,uvicorn,pyautogui,pytesseract,PIL,playwright' >/dev/null 2>&1; then
++  if ! "$PYTHON_BIN" -c 'import importlib.util; raise SystemExit(not all(importlib.util.find_spec(name) for name in ("fastapi", "uvicorn", "pyautogui", "pytesseract", "PIL", "playwright")))' >/dev/null 2>&1; then
+     command -v pip3 >/dev/null 2>&1 || { echo 'AIRI_START_NO_PIP3' >&2; exit 2; }
+     SITE_PACKAGES="$($PYTHON_BIN -c 'import sysconfig; print(sysconfig.get_path("purelib"))')"
+     pip3 install --disable-pip-version-check --quiet --target "$SITE_PACKAGES" -r "$ROOT/computer/requirements.txt"
+diff --git a/scripts/airi-selftest b/scripts/airi-selftest
+index f894e5b..ebab34e 100644
+--- a/scripts/airi-selftest
++++ b/scripts/airi-selftest
+@@ -4,7 +4,8 @@ import json, os, subprocess, time, urllib.request, concurrent.futures
+ from pathlib import Path
+ BASE=os.environ.get('AIRIPC_STATUS_URL','http://127.0.0.1:9010/status').rsplit('/status',1)[0]
+ ROOT=Path(os.environ.get('AIRIPC_WORKSPACE_ROOT','/home/user/airi')).expanduser()
+-ENV={**os.environ,'DISPLAY':os.environ.get('DISPLAY',':99')}
++ENV={**os.environ,'DISPLAY':os.environ.get('DISPLAY',':99'),
++     'PLAYWRIGHT_BROWSERS_PATH':os.environ.get('PLAYWRIGHT_BROWSERS_PATH',str(ROOT/'.cache/ms-playwright'))}
+ def get(path):
+     last=None
+     for attempt in range(8):
+@@ -26,7 +27,7 @@ def ctl(*args):
+     p=subprocess.run(['/bin/sh',str(ROOT/'scripts/airi-control'),*args],env=ENV,text=True,capture_output=True,timeout=45)
+     return p.returncode,p.stdout.strip(),p.stderr.strip()
+ def ensure_browser():
+-    cache=Path.home()/'.cache'/'ms-playwright'
++    cache=Path(ENV['PLAYWRIGHT_BROWSERS_PATH']).expanduser()
+     if any(cache.glob('chromium-*/chrome-linux*/chrome')): return True
+     py=ROOT/'.venv/bin/python'
+     try:
+diff --git a/scripts/airi-supervisor b/scripts/airi-supervisor
+index dba81f8..16deb5a 100644
+--- a/scripts/airi-supervisor
++++ b/scripts/airi-supervisor
+@@ -1,4 +1,7 @@
+ #!/bin/sh
+ set -eu
+-BASE=/home/user/airi
+-exec "$BASE/.venv/bin/python" "$BASE/computer/control_plane/supervisor.py" "$@"
++SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
++BASE="${AIRIPC_WORKSPACE_ROOT:-${AIRI_WORKSPACE_ROOT:-$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)}}"
++export AIRIPC_WORKSPACE_ROOT="$BASE"
++VENV="${AIRIPC_VENV:-$BASE/.venv}"
++exec "$VENV/bin/python" "$BASE/computer/control_plane/supervisor.py" "$@"
+diff --git a/tests/test_runtime_reliability.py b/tests/test_runtime_reliability.py
+new file mode 100644
+index 0000000..0e52b55
+--- /dev/null
++++ b/tests/test_runtime_reliability.py
+@@ -0,0 +1,253 @@
++import io
++import json
++import os
++from pathlib import Path
++import re
++import subprocess
++import sys
++from unittest.mock import patch
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'computer'))
++from control_plane import maintenance, supervisor
++from control_plane.log_tail import read_log_tail
++
++
++class Response(io.BytesIO):
++    status = 200
++
++
++@pytest.mark.parametrize('payload', [
++    {'ready': False}, {'ready': True, 'checks': {'gui': False}},
++    {'ready': 'true'}, [], {'ok': True},
++])
++def test_maintenance_rejects_unhealthy_200_response(monkeypatch, payload):
++    monkeypatch.setattr(maintenance.urllib.request, 'urlopen', lambda *a, **kw: Response(json.dumps(payload).encode()))
++    assert maintenance.MaintenanceManager()._probe_url('http://localhost/ready')['ok'] is False
++
++
++def test_maintenance_accepts_ready_body(monkeypatch):
++    monkeypatch.setattr(maintenance.urllib.request, 'urlopen', lambda *a, **kw: Response(b'{"ready":true,"checks":{"gui":true}}'))
++    assert maintenance.MaintenanceManager()._probe_url('http://localhost/ready')['ok'] is True
++
++
++@pytest.mark.parametrize('level', ['wrong', -1, 0, 6, 1.5, True])
++def test_invalid_recovery_level_returns_error(level):
++    result = maintenance.MaintenanceManager().recover(level)
++    assert result['ok'] is False and '1..5' in result['error']
++
++
++def test_auto_recovery_of_healthy_system_is_noop(monkeypatch):
++    manager = maintenance.MaintenanceManager()
++    monkeypatch.setattr(manager, 'run', lambda: {'overall_ok': True})
++    assert manager.recover('auto')['noop'] is True
++
++
++def test_restart_uses_safe_argv_and_custom_workspace(tmp_path, monkeypatch):
++    root = tmp_path / 'runtime with spaces; touch INJECTED'
++    monkeypatch.setenv('AIRIPC_WORKSPACE_ROOT', str(root))
++    monkeypatch.setattr(maintenance, 'save_json', lambda *a: None)
++    manager = maintenance.MaintenanceManager()
++    monkeypatch.setattr(manager, 'run', lambda: {'overall_ok': False})
++    calls = []
++    monkeypatch.setattr(maintenance.subprocess, 'Popen', lambda args, **kw: calls.append((args, kw)))
++    result = manager.recover(2)
++    assert result['ok'] is True
++    args, options = calls[0]
++    assert args == ['/bin/sh', str(root / 'computer/start.sh')]
++    assert options['cwd'] == str(root)
++    assert options['env']['AIRI_FORCE_RESTART'] == '1'
++    assert options['env']['AIRIPC_WORKSPACE_ROOT'] == str(root)
++    assert not (tmp_path / 'INJECTED').exists()
++
++
++def test_maintenance_uses_custom_port_and_probes_display(tmp_path, monkeypatch):
++    monkeypatch.setenv('AIRIPC_WORKSPACE_ROOT', str(tmp_path))
++    monkeypatch.setenv('AIRI_PORT', '9123')
++    monkeypatch.setenv('DISPLAY', ':117')
++    monkeypatch.setattr(maintenance, 'save_json', lambda *a: None)
++    calls = []
++    def run(args, **kw):
++        calls.append(args)
++        return subprocess.CompletedProcess(args, 0)
++    monkeypatch.setattr(maintenance.subprocess, 'run', run)
++    manager = maintenance.MaintenanceManager()
++    urls = []
++    monkeypatch.setattr(manager, '_probe_url', lambda url: urls.append(url) or {'ok': True})
++    manager.run()
++    assert urls == ['http://127.0.0.1:9123/status', 'http://127.0.0.1:9123/ready']
++    assert calls[1] == ['xdpyinfo', '-display', ':117']
++    assert '9123' in calls[0][-1]
++
++
++@pytest.mark.parametrize('payload', ['not json', '{"ready":false}', '{"ready":true,"checks":{"source_match":false}}'])
++def test_supervisor_rejects_false_readiness(monkeypatch, tmp_path, payload):
++    manager = supervisor.Supervisor(str(tmp_path))
++    monkeypatch.setattr(manager, '_run', lambda *a: subprocess.CompletedProcess([], 0, payload, ''))
++    assert manager.http_probe('http://localhost/ready')['ok'] is False
++
++
++def test_supervisor_observes_workspace_and_expected_source(monkeypatch, tmp_path):
++    monkeypatch.setenv('AIRIPC_WORKSPACE_ROOT', str(tmp_path))
++    monkeypatch.setenv('AIRI_EXPECTED_SHA', 'current')
++    manager = supervisor.Supervisor()
++    assert manager.base == tmp_path
++    for sha, expected in [('stale', False), ('current', True)]:
++        payload = json.dumps({'ready': True, 'checks': {'source_match': True}, 'source_sha': sha})
++        monkeypatch.setattr(manager, '_run', lambda *a: subprocess.CompletedProcess([], 0, payload, ''))
++        assert manager.http_probe('http://localhost/ready')['ok'] is expected
++
++
++def test_log_tail_reads_bounded_suffix_and_handles_utf8(tmp_path):
++    log = tmp_path / 'large.log'
++    suffix = 'à🙂fine\n' * 10000
++    log.write_bytes(b'old output\n' * 500000 + suffix.encode())
++    reads = []
++    original_open = Path.open
++    class TrackingFile:
++        def __init__(self, stream): self.stream = stream
++        def __enter__(self): return self
++        def __exit__(self, *args): self.stream.close()
++        def seek(self, *args): return self.stream.seek(*args)
++        def read(self, size=-1):
++            reads.append(size)
++            return self.stream.read(size)
++    with patch.object(Path, 'open', lambda path, *a, **kw: TrackingFile(original_open(path, *a, **kw))):
++        assert read_log_tail(log) == suffix[-20000:]
++    assert reads == [80000]
++    log.write_bytes(b'prefix\xffinvalid\n')
++    assert read_log_tail(log).endswith('\ufffdinvalid\n')
++
++
++def test_dependency_probe_does_not_import_gui_before_display(tmp_path):
++    text = (ROOT / 'computer/start.sh').read_text()
++    expression = re.search(r"-c '([^'\n]*pyautogui[^'\n]*)'", text).group(1)
++    for name in ('fastapi', 'uvicorn', 'pyautogui', 'pytesseract', 'PIL', 'playwright'):
++        (tmp_path / f'{name}.py').write_text('raise RuntimeError("GUI import requires display")\n')
++    env = dict(os.environ, PYTHONPATH=str(tmp_path))
++    env.pop('DISPLAY', None)
++    result = subprocess.run([sys.executable, '-c', expression], env=env, cwd=tmp_path,
++                            text=True, capture_output=True, timeout=10)
++    assert result.returncode == 0, result.stderr
++
++
++@pytest.mark.parametrize('observed_display,expected', [(':199', True), (':99', False), (None, False)])
++def test_contract_readiness_checks_configured_display(monkeypatch, observed_display, expected):
++    import contract_server
++    monkeypatch.setenv('DISPLAY', ':199')
++    monkeypatch.setenv('AIRI_EXPECTED_SHA', 'source')
++    monkeypatch.setenv('AIRI_BOOTSTRAP_SHA', 'source')
++    monkeypatch.setattr(contract_server._legacy, 'status', lambda: {
++        'ok': True, 'gui_available': True, 'resolution': '1280x800', 'display': observed_display})
++    class Browser:
++        def status(self): return {'available': True, 'open': True}
++    monkeypatch.setattr(contract_server._legacy, 'browser', lambda: Browser())
++    ready = contract_server._ready_payload()
++    assert ready['checks']['gui'] is expected
++    assert ready['ready'] is expected
++
++
++def test_limited_search_is_deterministic(monkeypatch, tmp_path):
++    import coding
++    monkeypatch.setattr(coding, 'ROOT', tmp_path)
++    monkeypatch.setattr(coding, 'safe_path', lambda path: Path(path))
++    # Create z before a to reproduce unsorted filesystem traversal.
++    (tmp_path / 'z.py').write_text('VALUE = 1\n')
++    (tmp_path / 'a.py').write_text('VALUE = 2\n')
++    result = coding.search('VALUE', str(tmp_path), limit=1)
++    assert result['matches'] == [{'path': 'a.py', 'line': 1, 'text': 'VALUE = 2'}]
++    assert result['truncated'] is True
++
++
++def test_project_index_excludes_cache_binary_large_files_and_stale_entries(monkeypatch, tmp_path):
++    from control_plane import project_index
++    monkeypatch.setattr(project_index, 'ROOT', tmp_path)
++    monkeypatch.setattr(project_index, 'load_json', lambda name, default: default)
++    monkeypatch.setattr(project_index, 'save_json', lambda *a: None)
++    (tmp_path / 'app.py').write_text('def useful(): pass\n')
++    cache=tmp_path/'.cache/browser'; cache.mkdir(parents=True)
++    (cache/'cached.py').write_text('def cached(): pass\n')
++    (tmp_path/'binary').write_bytes(b'\0not source')
++    (tmp_path/'.mcp_token').write_text('runtime credential')
++    (tmp_path/'.env.local').write_text('runtime configuration')
++    with (tmp_path/'large.txt').open('wb') as stream: stream.truncate(project_index.MAX_INDEX_FILE_BYTES+1)
++    index=project_index.ProjectIndex()
++    for key in ('files','symbols','dependencies'):
++        index.state[key]['.cache/browser/stale.py'] = {} if key=='files' else []
++    result=index.refresh()
++    assert result['files']==1
++    assert set(index.state['files'])=={'app.py'}
++    assert set(index.state['symbols'])=={'app.py'}
++    assert index.search('useful')==[{'path':'app.py','symbol':'useful'}]
++
++
++def test_context_pack_reads_only_budget_and_bounds_invalid_utf8(monkeypatch, tmp_path):
++    from control_plane import project_index
++    monkeypatch.setattr(project_index, 'ROOT', tmp_path)
++    monkeypatch.setattr(project_index, 'load_json', lambda name, default: default)
++    monkeypatch.setattr(project_index, 'save_json', lambda *a: None)
++    target=tmp_path/'large.txt'
++    target.write_bytes(b'\xff'*100)
++    index=project_index.ProjectIndex()
++    index.state['files']={'large.txt':{}}
++    index.state['symbols']={'large.txt':[]}
++    reads=[]
++    original_open=Path.open
++    class TrackingFile:
++        def __init__(self,stream): self.stream=stream
++        def __enter__(self): return self
++        def __exit__(self,*a): self.stream.close()
++        def read(self,size=-1): reads.append(size); return self.stream.read(size)
++    with patch.object(Path,'open',lambda path,*a,**kw: TrackingFile(original_open(path,*a,**kw))):
++        pack=index.context_pack('large',max_bytes=3)
++    assert reads==[3]
++    assert pack['bytes']==3 and pack['files'][0]['content']=='\ufffd'
++
++
++def test_project_index_does_not_follow_symlinks_outside_workspace(monkeypatch, tmp_path):
++    from control_plane import project_index
++    root=tmp_path/'workspace'; root.mkdir()
++    outside=tmp_path/'outside.py'; outside.write_text('def secret(): pass\n')
++    (root/'link.py').symlink_to(outside)
++    monkeypatch.setattr(project_index,'ROOT',root)
++    monkeypatch.setattr(project_index,'load_json',lambda name,default: default)
++    monkeypatch.setattr(project_index,'save_json',lambda *a: None)
++    index=project_index.ProjectIndex()
++    assert index.refresh()['files']==0
++    index.state['files']={'link.py':{}}
++    assert index.context_pack('link')['files']==[]
++
++
++def test_desktop_selftest_reuses_bootstrap_browser_cache(monkeypatch, tmp_path):
++    import runpy
++    import subprocess
++    monkeypatch.setenv('AIRIPC_WORKSPACE_ROOT',str(tmp_path))
++    monkeypatch.delenv('PLAYWRIGHT_BROWSERS_PATH',raising=False)
++    binary=tmp_path/'.cache/ms-playwright/chromium-123/chrome-linux64/chrome'
++    binary.parent.mkdir(parents=True); binary.write_text('browser fixture')
++    def unexpected_install(*args,**kwargs):
++        raise AssertionError('Existing bootstrap cache must avoid a browser download')
++    monkeypatch.setattr(subprocess,'run',unexpected_install)
++    script=runpy.run_path(str(Path(__file__).resolve().parents[1]/'scripts/airi-selftest'))
++    assert script['ensure_browser']() is True
++
++
++def test_desktop_selftest_install_honors_configured_cache(monkeypatch, tmp_path):
++    import runpy
++    import subprocess
++    cache=tmp_path/'custom browser cache'
++    monkeypatch.setenv('AIRIPC_WORKSPACE_ROOT',str(tmp_path))
++    monkeypatch.setenv('PLAYWRIGHT_BROWSERS_PATH',str(cache))
++    calls=[]
++    def install(args,**kwargs):
++        calls.append((args,kwargs)); return subprocess.CompletedProcess(args,0)
++    monkeypatch.setattr(subprocess,'run',install)
++    script=runpy.run_path(str(Path(__file__).resolve().parents[1]/'scripts/airi-selftest'))
++    assert script['ensure_browser']() is True
++    assert len(calls)==1
++    args,kwargs=calls[0]
++    assert args==[str(tmp_path/'.venv/bin/python'),'-m','playwright','install','chromium']
++    assert kwargs['env']['PLAYWRIGHT_BROWSERS_PATH']==str(cache)
++    assert kwargs['cwd']==str(tmp_path)
