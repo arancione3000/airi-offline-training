@@ -1,8 +1,8 @@
 diff --git a/.ai/PROJECT_MEMORY.md b/.ai/PROJECT_MEMORY.md
-index 3ff3548..712207a 100644
+index 3ff3548..99c15ef 100644
 --- a/.ai/PROJECT_MEMORY.md
 +++ b/.ai/PROJECT_MEMORY.md
-@@ -442,3 +442,13 @@ User requests faster training. Main c24c66f/run37127825887 spends11–13min per
+@@ -442,3 +442,16 @@ User requests faster training. Main c24c66f/run37127825887 spends11–13min per
  ## 2026-10-03 — Protected rollback step adaptation and widening hysteresis
  
  User requests a fix for excessive scards. Scope: recovery policy/LR persistence, Phase5 tests, production-shadow contract and diagnostic report. Read-only state a00bb69a/checkpoint8d184426 has33,478,285 accepted tokens, repetition .236422 versus hard .237721. The prepared bundle works (~5s), but3/14 latest live attempts accepted. Diagnosed: rejected LR halving is undone by the1/128 floor; accepted path also restores that floor; one tolerated success doubles rescue batch. Allow protected-only bounded adaptation down to1/2048; retain accepted LR; require two same-batch/LR non-worsening NLL/repetition successes before widening. Legacy entry/healthy paths, anchor/gates/objectives/token accounting unchanged. Snapshots in /tmp/airi-rejection-snapshot.281 passed/1 optional skip, compile/diff checks passed. Paired read-only current-checkpoint diagnostics (3seeds,16k,batch128): LR1/128 and1/512 each1/3 accepted;1/2048 2/3 accepted. One lower-LR sample still rejected, gains tiny, replay sample not full live data; overlapping timing excluded. No sustained acceptance, language recovery or100k/hour claim. Raw evidence and reproduction: reports/generalist-adaptive-recovery. Publish/check/activate via normal workflows; never manually edit generalist-state.
@@ -16,12 +16,15 @@ index 3ff3548..712207a 100644
 +Public publication blocked: GitHub returned HTTP 403, repository above size quota. Private runtime main received the fixes. Preserve the public diff as state/patches/airi-pc-bootstrap-runtime-20261010.patch in the private repository; do not claim public main updated or delete history to force publication.
 +
 +2026-10-10: Browser-cache follow-up scope: airi-selftest, reliability tests and evidence. Snapshot before edits. First local pytest invocation could not start because its transient venv was absent; restored all edits to snapshot before reapplying. Actual cache/configured-install checks passed with standard-library harness. Complete native CI38057870170 passed139 tests, coding, GUI/MCP and supervisor recovery. Source unchanged outside declared paths. Current runtime provider restored and readiness passed; later control commands timed out, so native follow-up deployment/readback remains pending. Publish full public diff in public training repo without changing frozen active training branch or deleting bootstrap history.
++
++
++2026-10-10 — Operational repair: scope computer/requirements.txt, scripts/airi-coding-selftest, tests/test_runtime_reliability.py and status/report/patch documentation. Snapshot retained before edits. Found missing test HTTP clients and live self-test state pollution; isolate self-test into owned temporary workspace and preserve real tasks/memory/recovery on success/failure. Frozen dialogue training branch remains unchanged.
 diff --git a/AIRI_RUNTIME_RELIABILITY.md b/AIRI_RUNTIME_RELIABILITY.md
 new file mode 100644
-index 0000000..f93e670
+index 0000000..370c118
 --- /dev/null
 +++ b/AIRI_RUNTIME_RELIABILITY.md
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,29 @@
 +# AIRI-PC runtime reliability — 2026-10-10
 +
 +Maintenance and supervision now validate readiness response bodies, check actual display availability, respect the workspace and virtual environment, reject invalid recovery levels, and launch restarts without shell interpolation. The contract accepts the configured display only when the observed desktop matches it. Startup probes installed GUI packages without importing them before Xvfb starts.
@@ -42,6 +45,15 @@ index 0000000..f93e670
 +Cold restore exposed a diagnostic bug: airi-selftest searched HOME/.cache while startup installed Chromium in the workspace cache. The self-test now shares the startup/browser cache and respects an explicit PLAYWRIGHT_BROWSERS_PATH, including paths containing spaces. Two regression cases were added. Cache guard and configured-install checks passed locally; complete native workflow1390fdbc3a3ef365bdc7f19653bb8458e7f93327 passed (139 Python tests plus coding, GUI/MCP and real server recovery): https://github.com/arancione3000/airi-pc/actions/runs/38057870170.
 +
 +The current provider workspace was restored from private backupa57fb4edf077fccf64ea8d8a43a475e2906e12a5:184 file hashes and213 Git objects verified. Its startup completed and readiness/status GUI/browser/MCP/source checks returned true. Direct provider commands subsequently timed out; deployment/readback of this diagnostic follow-up on that host is pending. The autonomous GitHub training cycle is independent of this provider connection.
++
++
++## Operational defects corrected — 2026-10-10
++
++Declared scope: computer/requirements.txt, scripts/airi-coding-selftest, tests/test_runtime_reliability.py and operational documentation/public patch. Added httpx/httpx2/requests to bootstrap dependencies, so test clients no longer require manual installation. Coding self-test now runs in an owned temporary workspace, cleans it on success/failure and never deletes the existing live diagnostic folder or overwrites user task/recovery/memory. Two regression tests verify preservation of real state and propagation of child failure.
++
++Native verification: pip check passed;141 tests passed in14.56s;33 graphical/browser/MCP/coding/services checks passed, ALL=True and wrapper exit0. Readiness passed. Old diagnostic task/recovery leftovers were backed up and finished only after matching the exact fixture goal and scope; real user tasks were untouched. Post-test task_active=false and recovery_active=false.
++
++Persistence remains honestly blocked: native private Git origin has no usable Git authentication, so remote_sha=null and persistent=false. Connected GitHub publication by the assistant works, but it does not install standalone Git credentials in the desktop. Original public repository remains over quota; complete patch is published separately without deleting history. Frozen training branch remains unchanged. Current numerical progress5760 new updates /4499.53s compute; last assessment7/16 dialogue vs1/16 baseline but13/28 legacy vs15/28 baseline, so overall improvement and production qualification are not established.
 diff --git a/computer/contract_server.py b/computer/contract_server.py
 index 64bab90..f33bcd5 100644
 --- a/computer/contract_server.py
@@ -624,6 +636,17 @@ index c5ca2e2..508d398 100644
 +
 +if __name__ == '__main__':
 +    raise SystemExit(main())
+diff --git a/computer/requirements.txt b/computer/requirements.txt
+index 97d5221..d6ca168 100644
+--- a/computer/requirements.txt
++++ b/computer/requirements.txt
+@@ -10,3 +10,6 @@ cryptography>=44
+ 
+ # Proof-gated MATHESIS-Ω runtime.
+ -r mathesis/requirements.txt
++httpx
++httpx2
++requests
 diff --git a/computer/start.sh b/computer/start.sh
 index 491ce11..1100595 100644
 --- a/computer/start.sh
@@ -646,6 +669,42 @@ index 491ce11..1100595 100644
      command -v pip3 >/dev/null 2>&1 || { echo 'AIRI_START_NO_PIP3' >&2; exit 2; }
      SITE_PACKAGES="$($PYTHON_BIN -c 'import sysconfig; print(sysconfig.get_path("purelib"))')"
      pip3 install --disable-pip-version-check --quiet --target "$SITE_PACKAGES" -r "$ROOT/computer/requirements.txt"
+diff --git a/scripts/airi-coding-selftest b/scripts/airi-coding-selftest
+index 50d60d4..f7afaf7 100644
+--- a/scripts/airi-coding-selftest
++++ b/scripts/airi-coding-selftest
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ from __future__ import annotations
+-import json, shutil, subprocess, tempfile
++import json, os, shutil, subprocess, tempfile
+ from pathlib import Path
+ import sys
+ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'computer'))
+@@ -13,7 +13,7 @@ TEST_ROOT = ROOT / '.ai' / 'coding-selftest-project'
+ def run(cmd, cwd):
+     return subprocess.run(['/bin/bash','-lc',cmd],cwd=str(cwd),text=True,capture_output=True,check=False)
+ 
+-def main():
++def _run_isolated_checks():
+     if TEST_ROOT.exists(): shutil.rmtree(TEST_ROOT)
+     TEST_ROOT.mkdir(parents=True)
+     results={}
+@@ -67,4 +67,13 @@ def main():
+     shutil.rmtree(TEST_ROOT,ignore_errors=True)
+     return 0 if all(results.values()) else 1
+ 
+-if __name__=='__main__': raise SystemExit(main())
++def main():
++    # Each invocation owns its workspace; never touch live tasks or memory.
++    with tempfile.TemporaryDirectory(prefix='airi-coding-selftest-') as isolated:
++        env = dict(os.environ, AIRIPC_WORKSPACE_ROOT=isolated)
++        result = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--isolated'],
++                                env=env, check=False, timeout=150)
++        return result.returncode
++
++if __name__=='__main__':
++    raise SystemExit(_run_isolated_checks() if sys.argv[1:] == ['--isolated'] else main())
 diff --git a/scripts/airi-selftest b/scripts/airi-selftest
 index f894e5b..ebab34e 100644
 --- a/scripts/airi-selftest
@@ -685,10 +744,10 @@ index dba81f8..16deb5a 100644
 +exec "$VENV/bin/python" "$BASE/computer/control_plane/supervisor.py" "$@"
 diff --git a/tests/test_runtime_reliability.py b/tests/test_runtime_reliability.py
 new file mode 100644
-index 0000000..0e52b55
+index 0000000..ed7277b
 --- /dev/null
 +++ b/tests/test_runtime_reliability.py
-@@ -0,0 +1,253 @@
+@@ -0,0 +1,288 @@
 +import io
 +import json
 +import os
@@ -942,3 +1001,38 @@ index 0000000..0e52b55
 +    assert args==[str(tmp_path/'.venv/bin/python'),'-m','playwright','install','chromium']
 +    assert kwargs['env']['PLAYWRIGHT_BROWSERS_PATH']==str(cache)
 +    assert kwargs['cwd']==str(tmp_path)
++
++
++def test_coding_selftest_preserves_existing_operational_state(tmp_path):
++    workspace = tmp_path / 'live workspace'
++    sentinels = {
++        '.ai/task_state.json': '{"goal":"real task","active":true}',
++        '.ai/state/recovery.json': '{"status":"active","goal":"real recovery"}',
++        '.ai/PROJECT_MEMORY.md': '# Real memory\n',
++        '.ai/coding-selftest-project/user-file.txt': 'existing user data',
++    }
++    for name, content in sentinels.items():
++        target = workspace / name
++        target.parent.mkdir(parents=True, exist_ok=True)
++        target.write_text(content)
++    result = subprocess.run([sys.executable, str(ROOT / 'scripts/airi-coding-selftest')],
++                            env=dict(os.environ, AIRIPC_WORKSPACE_ROOT=str(workspace)),
++                            text=True, capture_output=True, timeout=160)
++    assert result.returncode == 0, result.stdout + result.stderr
++    assert json.loads(result.stdout)['ALL'] is True
++    assert {name: (workspace / name).read_text() for name in sentinels} == sentinels
++
++
++def test_coding_selftest_propagates_failure_and_removes_owned_workspace(monkeypatch):
++    import runpy
++    script = runpy.run_path(str(ROOT / 'scripts/airi-coding-selftest'))
++    owned = []
++    def fail(args, **kwargs):
++        isolated = Path(kwargs['env']['AIRIPC_WORKSPACE_ROOT'])
++        assert isolated.is_dir()
++        owned.append(isolated)
++        assert args[-1] == '--isolated'
++        return subprocess.CompletedProcess(args, 2)
++    monkeypatch.setattr(subprocess, 'run', fail)
++    assert script['main']() == 2
++    assert owned and not owned[0].exists()
