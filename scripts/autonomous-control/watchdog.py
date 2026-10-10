@@ -9,7 +9,7 @@ BRANCH = 'overnight-training-v1'
 COMMIT = 'f4bb6c14a9be26adaa45c50b5db2638867a8df44'
 WORKFLOW = 'airi-overnight-background.yml'
 EXPERIMENTS={WORKFLOW:(BRANCH,COMMIT,None),
-    'airi-transfer-background.yml':('compositional-learning-v2','41b312a338348b7b78bd9fdc56b51085614a4e08',None),
+    'airi-transfer-background.yml':('dialogue-cycle-20261010','d00bf9770884295c8f17877c97ab711cda743401',None),
     'airi-focused-background.yml':('focused-learning-v1','bd98259560582bb64258a1a8c7a6c0c0f0c90dfd',None),
     'airi-noon-background.yml':('morning-dialogue-v1','6cc1ea287133b671ab73b5504350fd33ebb483fd',1791547200.0),
     'airi-evolving-background.yml':('evolving-context-v1','6c6c72dea5b7512cb45ec174ee69510674b7bb1f',None),
