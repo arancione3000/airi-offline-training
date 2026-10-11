@@ -1,0 +1,35 @@
+name: AIRI authorized deadline continuation
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI compositional native learning, AIRI offline conversation probe]
+    types: [completed]
+  schedule:
+    - cron: '7,27,47 * * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-single-deadline-extension-20261012
+  cancel-in-progress: false
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      AIRI_FROZEN_SOURCE: ${{ github.workspace }}/source-cycle
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: b57a808b2158f52622c2dc3f5a58a7b1b3160ed6
+          path: source-cycle
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify bounded one-time continuation
+        run: python -m unittest discover -s tests/deadline-extension -v
+      - name: Wait for probe and current cycle then continue until 14:00 Rome
+        run: python scripts/deadline-extension/extend.py | tee -a "$GITHUB_STEP_SUMMARY"
