@@ -39,7 +39,7 @@ class TransferTests(unittest.TestCase):
   self.assertEqual(reward(m),reward(changed));self.assertFalse(improved(m,changed))
   self.assertFalse(improved(m,{**changed,'legacy_correct':13,'foundation_correct':16}))
  def test_exact_finite_compute_budget(self):
-  c=dict(elapsed_training_seconds=43199,phase=2,completed_steps=run.SPEC['start_step'],conversation_updates=0)
+  c=dict(elapsed_training_seconds=run.SPEC['maximum_training_seconds']-1,phase=2,completed_steps=run.SPEC['start_step'],conversation_updates=0)
   self.assertTrue(run.needs_training(c));c['elapsed_training_seconds']+=1
   self.assertFalse(run.needs_training(c))
  def test_blocked_examples_do_not_enter_training(self):
@@ -59,10 +59,13 @@ class TransferTests(unittest.TestCase):
    self.assertEqual(langs,{'it','en'})
   for bad in (-1,True,1.5):self.assertRaises(ValueError,run.sampling_group,bad)
  def test_exact_seed_and_new_finite_ledger(self):
-  self.assertEqual(run.SPEC['migration_source_release'],'airi-offline-49971-37998439310-1-2')
-  self.assertEqual(run.SPEC['start_step'],49971)
+  self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
+  self.assertEqual(run.SPEC['maximum_training_seconds'],14400)
+  self.assertEqual(run.SPEC['migration_source_fingerprint'],'51ca7244f1b30be3a15d3592c41188fc3f971311165d1611083bcd8f2bc6c840')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'d00bf9770884295c8f17877c97ab711cda743401')
+  self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
-  c=dict(completed_steps=49972,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
+  c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
   self.assertTrue(run.needs_training(c));c['completed_steps']+=1
   self.assertRaises(ValueError,run.needs_training,c)
 if __name__=='__main__':unittest.main()
