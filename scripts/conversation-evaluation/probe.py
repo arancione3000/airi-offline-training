@@ -2,7 +2,7 @@
 import argparse,json,os,sys,time
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-sys.path.insert(0,str(HERE.parent/'stable-training'))
+sys.path.insert(0,str(HERE.parent/'transfer-training'))
 import torch
 from generalist_lm.runtime import GeneralistRuntime
 from session import sha256_file
