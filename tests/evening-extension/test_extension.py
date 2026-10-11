@@ -57,6 +57,14 @@ class Fake:
         self.calls.append((path, payload))
 
 class ExtensionTests(unittest.TestCase):
+    def test_completion_trigger_matches_frozen_workflow_name(self):
+        source_root = Path(os.environ.get('AIRI_FROZEN_SOURCE', str(Path(__file__).resolve().parents[3] / 'airi-cycle-20261011-pm')))
+        training = (source_root / '.github/workflows/airi-transfer-background.yml').read_text()
+        name = next(line.removeprefix('name: ').strip() for line in training.splitlines() if line.startswith('name: '))
+        workflow = (Path(__file__).resolve().parents[2] / '.github/workflows/airi-evening-extension.yml').read_text()
+        trigger = next(line.split('workflows: [', 1)[1].split(']', 1)[0] for line in workflow.splitlines() if 'workflows: [' in line)
+        self.assertIn(name, [item.strip() for item in trigger.split(',')])
+
     def test_waits_without_mutation_or_training_overlap(self):
         client = Fake()
         self.assertEqual(extension.tick(client)['action'], 'waiting_for_current_cycle')

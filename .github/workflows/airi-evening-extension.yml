@@ -2,7 +2,7 @@ name: AIRI authorized evening continuation
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [AIRI dialogue-focused training, AIRI offline conversation probe]
+    workflows: [AIRI compositional native learning, AIRI offline conversation probe]
     types: [completed]
   schedule:
     - cron: '7,27,47 * * * *'
