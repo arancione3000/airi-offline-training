@@ -1,29 +1,29 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 129599,
+  "start_step": 151884,
   "max_steps": 1000000,
-  "pilot_step": 129599,
-  "migration_source_release": "airi-offline-129599-38137184439-1-1",
-  "migration_source_fingerprint": "917dee2511c1d30be8b2be9d784850d16b0daab55d503614f6b0ce6b3f87b92e",
+  "pilot_step": 151884,
+  "migration_source_release": "airi-offline-151884-38162435535-1-2",
+  "migration_source_fingerprint": "eda81e8c7453e00b63e937e89da74d91f2c9693a880b7464b764122e8bf06635",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     }
   ],
   "optimizer_policy": "preserve AdamW moments and RNG; explicit lower LR at migration and phase changes",
-  "schedule": "Four-hour offline sequel; same data and sampling; constant final LR/KL; preserve native weights, Adam and RNG; separate fresh compute ledger; previous champion retained externally; repeated final probes excluded from selection.",
+  "schedule": "Four-hour offline sequel; same data and sampling; predeclared lower LR 1e-6 and KL 1.0 after development stagnation; preserve native weights, Adam and RNG; separate fresh compute ledger; previous champion retained externally; repeated final probes excluded from selection.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
@@ -42,15 +42,14 @@
   },
   "maximum_training_seconds": 14400,
   "extension": {
-    "request": "thomas-new-cycle-20261011-afternoon",
-    "source_sha": "b766a3d7ab8c5e0db1a9058d7c5b789f09568418",
-    "source_branch": "dialogue-extra4h-20261011",
-    "source_run": 38137184439,
-    "seed_release": "airi-offline-129599-38137184439-1-1",
-    "seed_step": 129599,
-    "index_sha256": "68265e117be5b31e945926ce08ea3b587577aca87045b198eeb42783184e0f4c",
-    "additional_training_seconds": 14400,
-    "seed_selection": "retained development champion from completed cycle; final probes excluded from selection"
+    "request": "thomas-test-then-extra4h-20261011-evening",
+    "source_sha": "cda908aa80818d4ece8f230e13cde07bf6553b47",
+    "source_branch": "dialogue-cycle-20261011-pm",
+    "source_run": 38162435535,
+    "seed_release": "airi-offline-151884-38162435535-1-2",
+    "seed_step": 151884,
+    "index_sha256": "2dc38fc9ef264d21ab0b5e52231e361a18a030d48b88f7c1b8f2f3f9af0d842f",
+    "additional_training_seconds": 14400
   },
-  "fingerprint": "eda81e8c7453e00b63e937e89da74d91f2c9693a880b7464b764122e8bf06635"
+  "fingerprint": "6e564c5078590974970d8507e30f1ecafd9b2b4a14158da1ae919d2d385fdbe9"
 }
