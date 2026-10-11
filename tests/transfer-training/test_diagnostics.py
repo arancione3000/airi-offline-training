@@ -61,11 +61,12 @@ class TransferTests(unittest.TestCase):
  def test_exact_seed_and_new_finite_ledger(self):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
   self.assertEqual(run.SPEC['maximum_training_seconds'],14400)
-  self.assertEqual(run.SPEC['migration_source_fingerprint'],'51ca7244f1b30be3a15d3592c41188fc3f971311165d1611083bcd8f2bc6c840')
-  self.assertEqual(run.SPEC['extension']['source_sha'],'d00bf9770884295c8f17877c97ab711cda743401')
+  self.assertEqual(run.SPEC['migration_source_fingerprint'],'917dee2511c1d30be8b2be9d784850d16b0daab55d503614f6b0ce6b3f87b92e')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'b766a3d7ab8c5e0db1a9058d7c5b789f09568418')
   self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
   c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
   self.assertTrue(run.needs_training(c));c['completed_steps']+=1
   self.assertRaises(ValueError,run.needs_training,c)
 if __name__=='__main__':unittest.main()
+
