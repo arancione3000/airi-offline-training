@@ -1,0 +1,35 @@
+name: AIRI authorized evening continuation
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI dialogue-focused training, AIRI offline conversation probe]
+    types: [completed]
+  schedule:
+    - cron: '7,27,47 * * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-single-evening-extension-20261011
+  cancel-in-progress: false
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      AIRI_FROZEN_SOURCE: ${{ github.workspace }}/source-cycle
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: cda908aa80818d4ece8f230e13cde07bf6553b47
+          path: source-cycle
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify bounded one-time continuation
+        run: python -m unittest discover -s tests/evening-extension -v
+      - name: Wait for probe and current cycle then launch four hours
+        run: python scripts/evening-extension/extend.py | tee -a "$GITHUB_STEP_SUMMARY"
