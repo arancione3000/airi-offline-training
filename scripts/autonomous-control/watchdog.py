@@ -10,6 +10,7 @@ COMMIT = 'f4bb6c14a9be26adaa45c50b5db2638867a8df44'
 WORKFLOW = 'airi-overnight-background.yml'
 EXPERIMENTS={WORKFLOW:(BRANCH,COMMIT,None),
     'airi-transfer-background.yml':('dialogue-cycle-20261012-evening','e90640138a3d3734f8e08a6b60f91e680a3737af',None),
+    'airi-adaptive-background.yml':('dialogue-adaptive-cycle-20261012','191549ab6ee83feb66041fa0f59e57ba5f814551',None),
     'airi-focused-background.yml':('focused-learning-v1','bd98259560582bb64258a1a8c7a6c0c0f0c90dfd',None),
     'airi-noon-background.yml':('morning-dialogue-v1','6cc1ea287133b671ab73b5504350fd33ebb483fd',1791547200.0),
     'airi-evolving-background.yml':('evolving-context-v1','6c6c72dea5b7512cb45ec174ee69510674b7bb1f',None),
@@ -18,6 +19,7 @@ EXPERIMENTS={WORKFLOW:(BRANCH,COMMIT,None),
 
 TRAINING_PATHS = {
     '.github/workflows/airi-transfer-background.yml',
+    '.github/workflows/airi-adaptive-background.yml',
     '.github/workflows/airi-focused-background.yml',
     '.github/workflows/airi-noon-background.yml',
     '.github/workflows/airi-evolving-background.yml',
@@ -120,3 +122,4 @@ def main():
     print(json.dumps(recover(Client(args.repository),args.run_id,args.dry_run)))
 
 if __name__=='__main__':main()
+

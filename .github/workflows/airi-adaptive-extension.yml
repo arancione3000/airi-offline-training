@@ -1,0 +1,29 @@
+name: AIRI adaptive champion continuation
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI compositional native learning]
+    types: [completed]
+  schedule:
+    - cron: '9,29,49 * * * *'
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: airi-adaptive-champion-extension-20261012
+  cancel-in-progress: false
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify one-time adaptive continuation
+        run: python -m unittest discover -s tests/adaptive-extension -v
+      - name: Wait for the current chain and launch adaptive search
+        run: python scripts/adaptive-extension/extend.py | tee -a "$GITHUB_STEP_SUMMARY"

@@ -63,4 +63,9 @@ class WatchdogTests(unittest.TestCase):
         self.assertFalse(w.transient('ValueError: checkpoint missing'))
         for code in [429,500,502,503,504]:self.assertTrue(w.transient(f'HTTP {code}'))
 
+    def test_adaptive_experiment_is_registered_exactly(self):
+        self.assertEqual(w.EXPERIMENTS['airi-adaptive-background.yml'],
+            ('dialogue-adaptive-cycle-20261012','191549ab6ee83feb66041fa0f59e57ba5f814551',None))
+        self.assertIn('.github/workflows/airi-adaptive-background.yml',w.TRAINING_PATHS)
+
 if __name__=='__main__':unittest.main()
