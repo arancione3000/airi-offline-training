@@ -73,7 +73,8 @@ def terminal_source(client):
 def tick(client):
     target=client.api('git/ref/heads/'+TARGET_BRANCH)
     if target['object']['sha']!=TARGET_SHA:raise ValueError('adaptive branch changed')
-    prior=list(client.pages(f'actions/workflows/{TARGET_WORKFLOW}/runs?branch={TARGET_BRANCH}','workflow_runs'))
+    prior=[r for r in client.pages(f'actions/workflows/{TARGET_WORKFLOW}/runs?branch={TARGET_BRANCH}','workflow_runs')
+           if r.get('name')!='AIRI transfer preflight' and r.get('display_title')!='AIRI transfer preflight']
     if prior:return {'action':'already_started','run_id':max(prior,key=lambda r:r['id'])['id']}
     source=terminal_source(client)
     if source['action']!='terminal_verified':return source

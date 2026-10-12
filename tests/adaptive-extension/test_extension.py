@@ -50,5 +50,8 @@ class ExtensionTests(unittest.TestCase):
  def test_existing_target_run_prevents_duplicate(self):
   c=self.ready();c.target=[{'id':30,'status':'in_progress'}]
   self.assertEqual(e.tick(c),{'action':'already_started','run_id':30})
+ def test_preflight_does_not_block_future_training(self):
+  c=self.ready();c.target=[{'id':29,'name':'AIRI transfer preflight','display_title':'AIRI transfer preflight','status':'completed','conclusion':'success'}]
+  self.assertEqual(e.tick(c)['action'],'dispatched')
 
 if __name__=='__main__':unittest.main()
