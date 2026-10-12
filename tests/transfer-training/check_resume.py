@@ -18,6 +18,7 @@ with tempfile.TemporaryDirectory() as tmp:
  path=Path(tmp)/'champion';rng=random.Random(42);ar=random.Random(43)
  save_session(r,o,rng,ar,dict(completed_steps=27444),path,fingerprint='recovery-check')
  restored,oo,payload=restore_session(path,f,fingerprint='recovery-check')
+ saved_champion_parameters=[p.detach().clone() for p in restored.model.parameters()]
  train_step(r.model,ref.model,o,ids,labels,ids,labels)
  train_step(restored.model,ref.model,oo,ids,labels,ids,labels)
  assert all(torch.equal(a,b) for a,b in zip(r.model.parameters(),restored.model.parameters()))
@@ -25,11 +26,10 @@ with tempfile.TemporaryDirectory() as tmp:
  print('Native champion + Adam recovery: next update bitwise identical; sampler RNG retained.')
 
  # A rollback restores the saved model and Adam while retaining the later exploration stream.
- champion_parameters=[p.detach().clone() for p in restored.model.parameters()]
  rng.random();ar.random();torch.rand(3)
  expected_rng=rng.getstate();expected_ar=ar.getstate();expected_torch=torch.get_rng_state().clone()
  rolled,rolled_opt,_=restore_champion(path,f,rng,ar,fingerprint='recovery-check')
- assert all(torch.equal(a,b) for a,b in zip(champion_parameters,rolled.model.parameters()))
+ assert all(torch.equal(a,b) for a,b in zip(saved_champion_parameters,rolled.model.parameters()))
  assert rng.getstate()==expected_rng and ar.getstate()==expected_ar and torch.equal(torch.get_rng_state(),expected_torch)
  assert rolled_opt.state_dict()['state']
  print('Champion rollback restores model/Adam and keeps the later exploration stream.')
