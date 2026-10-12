@@ -6,7 +6,7 @@ spec=importlib.util.spec_from_file_location('extension',path);e=importlib.util.m
 class Fake:
  def __init__(self):
   self.source=[dict(id=20,run_attempt=1,path=e.TRAINING_PATH,head_branch=e.SOURCE_BRANCH,head_sha=e.SOURCE_SHA,status='in_progress',conclusion=None)]
-  self.target=[];self.active=[];self.calls=[]
+  self.target=[{'id':19,'name':'AIRI transfer preflight','display_title':'AIRI transfer preflight','head_sha':e.TARGET_SHA,'status':'completed','conclusion':'success'}];self.active=[];self.calls=[]
   self.result=dict(counters=dict(elapsed_training_seconds=14400.1,completed_steps=150000),next_action=None,maximum_training_seconds=14400,production_qualified=False,live_promoted=False)
   self.index=dict(fingerprint=e.SOURCE_FP,completed_steps=150000,archives=[{},{}])
   self.release=dict(tag_name='airi-offline-150000-20-1-1',target_commitish=e.SOURCE_SHA,draft=False,prerelease=True,assets=[dict(name='FINAL_RESULT.json',id=1,size=1),dict(name='AIRI_TRAINING_CHECKPOINT_150000.json',id=2,size=1)])
@@ -51,7 +51,16 @@ class ExtensionTests(unittest.TestCase):
   c=self.ready();c.target=[{'id':30,'status':'in_progress'}]
   self.assertEqual(e.tick(c),{'action':'already_started','run_id':30})
  def test_preflight_does_not_block_future_training(self):
-  c=self.ready();c.target=[{'id':29,'name':'AIRI transfer preflight','display_title':'AIRI transfer preflight','status':'completed','conclusion':'success'}]
+  c=self.ready();c.target=[{'id':29,'name':'AIRI transfer preflight','display_title':'AIRI transfer preflight','head_sha':e.TARGET_SHA,'status':'completed','conclusion':'success'}]
   self.assertEqual(e.tick(c)['action'],'dispatched')
+
+class PreflightTests(unittest.TestCase):
+ def test_missing_or_failed_preflight_prevents_training(self):
+  for target in ([],[{'id':19,'name':'AIRI transfer preflight','status':'completed','conclusion':'failure','head_sha':e.TARGET_SHA}]):
+   c=Fake();c.target=target
+   self.assertEqual(e.tick(c)['action'],'waiting_for_successful_preflight')
+ def test_old_training_workflow_prevents_overlap(self):
+  c=Fake();c.source[0].update(status='completed',conclusion='success');c.active=[{'path':'.github/workflows/'+e.SOURCE_WORKFLOW}]
+  self.assertEqual(e.tick(c)['action'],'waiting_for_training_slot')
 
 if __name__=='__main__':unittest.main()

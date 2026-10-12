@@ -10,12 +10,12 @@ SOURCE_BRANCH='dialogue-cycle-20261012-evening'
 SOURCE_SHA='e90640138a3d3734f8e08a6b60f91e680a3737af'
 SOURCE_FP='4db0b3b1211018b5d0c84dd0a63b982296312d43f9294855e12727b4a6d92469'
 SOURCE_SECONDS=14400
-TARGET_BRANCH='dialogue-adaptive-cycle-20261012'
-TARGET_SHA='d391e02f825563cf495111d5ebf51f9911ef69c9'
-TARGET_FP='631b6c0dbb98769df41b271b4d1ec4de73ba00172949b00f44b3a5394972b5f5'
+TARGET_BRANCH='dialogue-human-data-20261012'
+TARGET_SHA='f657b6feee509a0b116173eece35b5ca18188b55'
+TARGET_FP='a18d404c04b25d62597c682c52d1203447bcbe323e37a612b2b186b0e8d0a54f'
 SEED_RELEASE='airi-offline-129599-38137184439-1-1'
 SOURCE_WORKFLOW='airi-transfer-background.yml'
-TARGET_WORKFLOW='airi-adaptive-background.yml'
+TARGET_WORKFLOW='airi-human-background.yml'
 CONTROLLER='airi-adaptive-extension.yml'
 ACTIVE={'in_progress','queued','requested','waiting','pending'}
 TRAINING_PATH='.github/workflows/'+TARGET_WORKFLOW
@@ -73,13 +73,16 @@ def terminal_source(client):
 def tick(client):
     target=client.api('git/ref/heads/'+TARGET_BRANCH)
     if target['object']['sha']!=TARGET_SHA:raise ValueError('adaptive branch changed')
+    all_target=list(client.pages(f'actions/workflows/{TARGET_WORKFLOW}/runs?branch={TARGET_BRANCH}','workflow_runs'))
+    preflights=[r for r in all_target if r.get('name')=='AIRI transfer preflight' or r.get('display_title')=='AIRI transfer preflight']
     prior=[r for r in client.pages(f'actions/workflows/{TARGET_WORKFLOW}/runs?branch={TARGET_BRANCH}','workflow_runs')
            if r.get('name')!='AIRI transfer preflight' and r.get('display_title')!='AIRI transfer preflight']
     if prior:return {'action':'already_started','run_id':max(prior,key=lambda r:r['id'])['id']}
+    if not any(r.get('head_sha')==TARGET_SHA and r.get('status')=='completed' and r.get('conclusion')=='success' for r in preflights):return {'action':'waiting_for_successful_preflight'}
     source=terminal_source(client)
     if source['action']!='terminal_verified':return source
     for status in sorted(ACTIVE):
-        if any(workflow_path(r)==TRAINING_PATH for r in client.pages(f'actions/runs?status={status}','workflow_runs')):
+        if any(workflow_path(r) in {TRAINING_PATH,'.github/workflows/'+SOURCE_WORKFLOW,'.github/workflows/airi-adaptive-background.yml'} for r in client.pages(f'actions/runs?status={status}','workflow_runs')):
             return {'action':'waiting_for_training_slot'}
     client.api(f'actions/workflows/{TARGET_WORKFLOW}/dispatches',{'ref':TARGET_BRANCH,'inputs':{'checkpoint_release':SEED_RELEASE,'continuation':'0'}})
     return {'action':'dispatched','source_run':source['run_id'],'seed_release':SEED_RELEASE,'target_fingerprint':TARGET_FP}
