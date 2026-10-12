@@ -10,7 +10,16 @@ import run
 from composition_data import PREVIOUS_SEALED_VALUES
 from collections import Counter
 
+from unittest.mock import patch
+
 class TransferTests(unittest.TestCase):
+ def setUp(self):
+  clock=patch('run.time.time',return_value=1791806340);clock.start();self.addCleanup(clock.stop)
+ def test_stops_at_rome_deadline_even_with_unused_compute(self):
+  c=dict(elapsed_training_seconds=0.,phase=0,completed_steps=run.SPEC['start_step'],conversation_updates=0)
+  with patch('run.time.time',return_value=1791806399):self.assertTrue(run.needs_training(c))
+  with patch('run.time.time',return_value=1791806400):self.assertFalse(run.needs_training(c))
+  with patch('run.time.time',return_value=1791806500):self.assertFalse(run.needs_training(c))
  def test_values_and_prompts_of_final_set_are_sealed(self):
   train,test=build_composition();self.assertEqual(len(train),12288);self.assertEqual(len(test),64)
   targets={norm(r['expected']) for r in train}
@@ -60,9 +69,9 @@ class TransferTests(unittest.TestCase):
   for bad in (-1,True,1.5):self.assertRaises(ValueError,run.sampling_group,bad)
  def test_exact_seed_and_new_finite_ledger(self):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
-  self.assertEqual(run.SPEC['maximum_training_seconds'],14400)
-  self.assertEqual(run.SPEC['migration_source_fingerprint'],'eda81e8c7453e00b63e937e89da74d91f2c9693a880b7464b764122e8bf06635')
-  self.assertEqual(run.SPEC['extension']['source_sha'],'cda908aa80818d4ece8f230e13cde07bf6553b47')
+  self.assertEqual(run.SPEC['maximum_training_seconds'],86400)
+  self.assertEqual(run.SPEC['migration_source_fingerprint'],'6e564c5078590974970d8507e30f1ecafd9b2b4a14158da1ae919d2d385fdbe9')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'b57a808b2158f52622c2dc3f5a58a7b1b3160ed6')
   self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
   c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)

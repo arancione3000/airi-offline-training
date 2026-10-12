@@ -26,7 +26,7 @@ def validate_budget(counters):
 
 def needs_training(counters):
     validate_budget(counters)
-    return counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
+    return counters['elapsed_training_seconds']<SPEC['maximum_training_seconds'] and time.time()<SPEC['stop_at_epoch']
 
 def sampling_group(update):
     if not isinstance(update,int) or isinstance(update,bool) or update<0:
@@ -308,7 +308,7 @@ def main():
             sealed_samples.append({'messages':row['messages'][:-1],'expected':row['expected'],'response':response,'correct':exact_correct(response,row['expected']),'family':row['family'],'language':row['language']})
         counters['sealed_transfer']={'correct':sum(r['correct'] for r in sealed_samples),'probes':len(sealed_samples),'samples':sealed_samples,'scope':'final only; excluded from selection and adaptation'}
         counters['development_scope']='Repeated development checks; not an untouched final test.' 
-        counters['stop_reason']='four additional hours completed; original champion and offline sequel retained'
+        counters['stop_reason']='authorized deadline reached or finite compute cap; offline checkpoints retained'
         save()
         atomic_json(out/'FINAL_RESULT.json',{'counters':counters,'next_action':None,
                   'maximum_training_seconds':SPEC['maximum_training_seconds'],
