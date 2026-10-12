@@ -65,7 +65,7 @@ class WatchdogTests(unittest.TestCase):
 
     def test_adaptive_experiment_is_registered_exactly(self):
         self.assertEqual(w.EXPERIMENTS['airi-adaptive-background.yml'],
-            ('dialogue-adaptive-cycle-20261012','191549ab6ee83feb66041fa0f59e57ba5f814551',None))
+            ('dialogue-adaptive-cycle-20261012','3f2d252274e8d952f029c7dfa11b5618213bbcd2',None))
         self.assertIn('.github/workflows/airi-adaptive-background.yml',w.TRAINING_PATHS)
 
 if __name__=='__main__':unittest.main()
