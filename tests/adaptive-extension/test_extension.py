@@ -14,7 +14,7 @@ class Fake:
   self.calls.append((path,payload))
   if path.startswith('git/ref/heads/'):return {'object':{'sha':e.TARGET_SHA}}
   return None
- def pages(self,path,key):
+ def pages(self,path,key=None):
   if f'branch={e.SOURCE_BRANCH}' in path:return iter(copy.deepcopy(self.source))
   if f'branch={e.TARGET_BRANCH}' in path:return iter(copy.deepcopy(self.target))
   if path=='releases':return iter([copy.deepcopy(self.release)])

@@ -29,11 +29,11 @@ class Client:
         if payload is not None:args+=['--method',method,'--input','-']
         result=subprocess.run(args,input=None if payload is None else json.dumps(payload),capture_output=True,text=True,check=True,timeout=60)
         return json.loads(result.stdout) if result.stdout.strip() else None
-    def pages(self,path,key):
+    def pages(self,path,key=None):
         page=1
         while True:
             sep='&' if '?' in path else '?';value=self.api(path+sep+f'per_page=100&page={page}')
-            rows=value[key];yield from rows
+            rows=value[key] if key else value;yield from rows
             if len(rows)<100:break
             page+=1
     def asset(self,item):
@@ -53,7 +53,7 @@ def terminal_source(client):
     if latest.get('status')!='completed' or latest.get('conclusion')!='success':
         return {'action':'source_stopped_without_success'}
     pattern=re.compile(rf'airi-offline-[0-9]+-{latest["id"]}-{latest.get("run_attempt",1)}-[0-9]+')
-    for release in client.pages('releases','releases'):
+    for release in client.pages('releases'):
         assets={a['name']:a for a in release.get('assets',[])}
         final=assets.get('FINAL_RESULT.json')
         indexes=[a for n,a in assets.items() if re.fullmatch(r'AIRI_TRAINING_CHECKPOINT_[0-9]+\.json',n)]
