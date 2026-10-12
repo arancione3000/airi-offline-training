@@ -70,6 +70,11 @@ class TransferTests(unittest.TestCase):
   self.assertEqual(training_focus(m),'context')
   self.assertEqual([recovery_lr_factor(i) for i in range(5)],[1.,.5,.25,.25,.25])
   for bad in (-1,True):self.assertRaises(ValueError,recovery_lr_factor,bad)
+ def test_boundary_does_not_penalize_an_already_selected_step(self):
+  counters={'completed_steps':10,'selected_at_step':10}
+  self.assertFalse(run.selection_needed(counters,force=True))
+  self.assertTrue(run.selection_needed(counters,force=False))
+  counters['completed_steps']=11;self.assertTrue(run.selection_needed(counters,force=True))
  def test_exact_seed_and_new_finite_ledger(self):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
   self.assertEqual(run.SPEC['maximum_training_seconds'],14400)

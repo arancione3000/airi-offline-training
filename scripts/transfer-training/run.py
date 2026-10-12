@@ -42,6 +42,10 @@ def sampling_group(update,focus='balanced'):
     if focus not in SAMPLING_SCHEDULES:raise ValueError('invalid training focus')
     return SAMPLING_SCHEDULES[focus][update%16]
 
+def selection_needed(counters,*,force=False):
+    """Avoid penalizing a candidate twice when evaluation and a boundary coincide."""
+    return not (force and counters.get('selected_at_step')==counters.get('completed_steps'))
+
 def main():
     import torch
     from torch.nn import functional as F
@@ -237,6 +241,7 @@ def main():
             if old!=path and old!=best_path:shutil.rmtree(old)
     def select_candidate(reason,*,force=False):
         nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds
+        if not selection_needed(counters,force=force):return 'already_selected'
         assessment=evaluate(runtime);counters['last_candidate_assessment']=assessment
         counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
         champion=counters['champion'];accepted=quality_improved(champion,assessment)
@@ -255,6 +260,7 @@ def main():
         counters['last_assessment']=counters['champion']
         counters['selection_history'].append({'step':counters['completed_steps'],'reason':reason,'action':action,'focus':counters['training_focus'],'effective_learning_rate':counters['effective_learning_rate']})
         if action in {'accepted','rolled_back'}:
+            counters['selected_at_step']=counters['completed_steps']
             counters['best_release']=publisher.release_tag(counters['completed_steps'])
             save(champion=True);last_save_seconds=counters['elapsed_training_seconds']
         return action
