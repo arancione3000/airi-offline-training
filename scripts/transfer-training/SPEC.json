@@ -36,7 +36,7 @@
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "09ab11643285977c0572e29cdbce6e16cc43923c42063a71841e4fe628f366a6",
+    "run.py": "1443fcaee874c3bea8b7d45414cdd2884b8f92d821265d2f3861fd464a2010eb",
     "session.py": "1325b6bfa05de2ea8b62843325cdf099fde9fb242ab751e73341c309f43c004e",
     "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624",
     "human_data.py": "ffd2ae6359e6dc5e226148192b3aeddf049fd7dd40e7e9ffa3ad97e3781b21de"
@@ -96,5 +96,5 @@
     },
     "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
   },
-  "fingerprint": "a18d404c04b25d62597c682c52d1203447bcbe323e37a612b2b186b0e8d0a54f"
+  "fingerprint": "0f41bfa305583852fc6fdbac19a8799ed63bf382d709148a0cb033a8abb62766"
 }

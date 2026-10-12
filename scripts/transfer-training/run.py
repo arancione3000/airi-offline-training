@@ -64,6 +64,7 @@ def main():
 
     parser=argparse.ArgumentParser()
     parser.add_argument('--release',required=True)
+    parser.add_argument('--corpus-audit-only',action='store_true')
     parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--seconds',type=int,default=10800)
     args=parser.parse_args()
@@ -168,6 +169,11 @@ def main():
     # Validation includes complete history and targets at 1024, no 128-token truncation.
     validation=[encode(r) for r in heldout]
     human_validation=[encode(r) for r in external_development]
+    if args.corpus_audit_only:
+        counts={split:{lang:sum(r['language']==lang for r in rows) for lang in ('it','en')} for split,rows in corpus.items()}
+        for row in human_rows:encode(row)
+        print(json.dumps({'phase':'verified real corpus audit','source_release':args.release,'human_counts':counts,'combined_human_training_rows':len(human_rows),'combined_multiturn_rows':sum(len(r['messages'])>2 for r in human_rows),'development_used':len(external_development),'final_used':len(external_final),'optimizer_updates':0,'live_promoted':False}),flush=True)
+        return
     def evaluate(runtime):
         runtime.model.eval();nll={};samples=[];human_nll={}
         with torch.no_grad():
