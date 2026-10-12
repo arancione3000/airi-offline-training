@@ -66,6 +66,9 @@ jobs:
           git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
       - name: Verify real native optimizer recovery
         run: python tests/transfer-training/check_resume.py
+      - name: Audit real source corpus and held-out separation
+        if: inputs.preflight_only == 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds 60 --corpus-audit-only
       - name: Train, evaluate and save bounded chunk
         id: train
         if: inputs.preflight_only != 'true'
