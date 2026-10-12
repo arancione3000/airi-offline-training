@@ -1,0 +1,39 @@
+{
+  "source": "OpenAssistant/oasst2",
+  "revision": "179dd21fc55192153d94adb0e0ce8f69e222bf75",
+  "source_sha256": "a9f240c4c77aa1378364f70d37e753c07ba284e247b019d700e1947a0e5da751",
+  "license": "Apache-2.0",
+  "attribution": "OpenAssistant contributors / LAION-AI; filtered derivative with original text unchanged",
+  "pins": {
+    "train": "2d4d347b0b97991cceeff85f2d3dafaeefad5aabd7b4339422c878dfb20e970e",
+    "development": "0c2e6f4b1c4a5a1a3def5a0e0f604b346075dc0d5db5cbe5592ffc9d1dac33ed",
+    "final": "e2e982c79a69391a57715c713a671784b3c7156e6c918207e729c553d86d3cd6"
+  },
+  "splits": {
+    "train": {
+      "rows": 918,
+      "languages": {
+        "en": 899,
+        "it": 19
+      },
+      "multiturn": 134
+    },
+    "development": {
+      "rows": 44,
+      "languages": {
+        "en": 42,
+        "it": 2
+      },
+      "multiturn": 1
+    },
+    "final": {
+      "rows": 49,
+      "languages": {
+        "en": 47,
+        "it": 2
+      },
+      "multiturn": 6
+    }
+  },
+  "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
+}

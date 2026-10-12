@@ -36,6 +36,12 @@ SAMPLING_SCHEDULES={
     'retention':('old-authored',)*5+('curated-dialogue',)*4+('composition',)*2+('verified-context',)*2+('native-replay',)*3,
 }
 
+# Human dialogue receives four out of sixteen update slots.
+for _focus,_schedule in list(SAMPLING_SCHEDULES.items()):
+    _slots=list(_schedule)
+    for _index in (0,4,8,12):_slots[_index]='human-dialogue'
+    SAMPLING_SCHEDULES[_focus]=tuple(_slots)
+
 def sampling_group(update,focus='balanced'):
     if not isinstance(update,int) or isinstance(update,bool) or update<0:
         raise ValueError('invalid update index')
@@ -107,12 +113,12 @@ def main():
     reference_digest=legacy_run.state_digest(reference.model)
     for parameter in reference.model.parameters(): parameter.requires_grad_(False)
     _,replay,anchors,_,human_rows=legacy_run.prepare(reference.tokenizer)
-    # This trial deliberately excludes long, multiturm and tiny-answer human rows.
-    # Structural filtering cannot certify semantic quality; authored rows carry most updates.
-    human_rows=[r for r in human_rows if len(r['messages'])==2
-                and 15<=len(r['messages'][-1]['content'])<=240
+    previous_human_text={norm(m['content']) for r in human_rows for m in r['messages']}
+    # Preserve complete human histories and answers, never truncate.
+    human_rows=[r for r in human_rows if 2<=len(r['messages'])<=6
+                and 12<=len(r['messages'][-1]['content'].encode('utf-8'))<=480
                 and len(reference.tokenizer.serialize_messages(r['messages'][:-1],add_generation_prompt=True))
-                    +len(reference.tokenizer.encode(r['messages'][-1]['content'],eos=True))<=512]
+                    +len(reference.tokenizer.encode(r['messages'][-1]['content'],eos=True))<=1024]
     blocked={norm(m['content']) for file in ['development.jsonl','test.jsonl']
              for line in (data/'data'/file).read_text().splitlines()
              for m in json.loads(line)['messages']}
@@ -140,7 +146,19 @@ def main():
     if not extra_train or not extra_heldout:raise ValueError('empty extra curriculum')
     if not authored or not heldout: raise ValueError('empty curriculum')
     all_heldout={norm(m['content']) for r in heldout for m in r['messages']}
-    human_rows=[r for r in human_rows if not any(norm(m['content']) in all_heldout for m in r['messages'])]
+    from human_data import load_corpus
+    human_directory=HERE.parents[1]/'data/oasst2'
+    corpus=load_corpus(human_directory,SPEC['human_corpus']['pins'],blocked|all_heldout|previous_human_text|{norm(m['content']) for r in authored for m in r['messages']})
+    external_development=[]
+    for lang in ('it','en'):
+        external_development += [r for r in corpus['development'] if r['language']==lang][:16]
+    external_final=[]
+    for lang in ('it','en'):
+        external_final += [r for r in corpus['final'] if r['language']==lang][:8]
+    corpus_heldout_text={norm(m['content']) for split in ('development','final') for r in corpus[split] for m in r['messages']}
+    human_rows=[r for r in human_rows if not any(norm(m['content']) in all_heldout|corpus_heldout_text for m in r['messages'])]
+    for r in human_rows:r['language']=r['provenance']['language']
+    human_rows+=corpus['train']
     def encode(row):
         ids,labels=encode_sft_example(SFTExample.from_dict(row),reference.tokenizer,1024,require_complete=True)
         scored=(labels!=-100).nonzero()
@@ -149,9 +167,19 @@ def main():
         return ids[:width].unsqueeze(0),labels[:width].unsqueeze(0)
     # Validation includes complete history and targets at 1024, no 128-token truncation.
     validation=[encode(r) for r in heldout]
+    human_validation=[encode(r) for r in external_development]
     def evaluate(runtime):
-        runtime.model.eval();nll={};samples=[]
+        runtime.model.eval();nll={};samples=[];human_nll={}
         with torch.no_grad():
+            for lang in ('it','en'):
+                total,count=0.,0
+                for row,(ids,labels) in zip(external_development,human_validation):
+                    if row['language']!=lang:continue
+                    logits=runtime.model(ids)['logits'][:,:-1,:]
+                    total+=float(F.cross_entropy(logits.reshape(-1,logits.shape[-1]),labels[:,1:].reshape(-1),reduction='sum'))
+                    count+=int((labels[:,1:]!=-100).sum())
+                if count:human_nll[lang]=total/count
+            if not human_nll:raise ValueError('no unseen human development examples')
             for lang in ['it','en']:
                 total,count=0.,0
                 for row,(ids,labels) in zip(heldout,validation):
@@ -183,7 +211,7 @@ def main():
         rates={f'{lang}:{task}':sum(s['correct'] for s in context if s['language']==lang and s['family']=='context-'+task)/sum(1 for s in context if s['language']==lang and s['family']=='context-'+task) for lang in ['it','en'] for task in ['name','location','topic','correction']}
         pairs={s['pair_id'] for s in context}
         pair_rate=sum(all(s['correct'] for s in context if s['pair_id']==pair) for pair in pairs)/len(pairs)
-        return {'training_diagnostic':{'scope':'in-sample only; excluded from reward and all generalization gates','correct':sum(x['correct'] for x in training_samples),'probes':len(training_samples),'nll':training_loss/training_tokens,'samples':training_samples},'foundation_correct':sum(s['correct'] for s in samples if s['family'].startswith('foundation-')),'foundation_probes':sum(1 for s in samples if s['family'].startswith('foundation-')),'context_rates':rates,'context_pair_rate':pair_rate,'dialogue_correct':sum(s['correct'] for s in samples if s['family'].startswith('extra-')),'nll':nll,'exact_correct':sum(s['correct'] for s in samples),'probes':len(samples),
+        return {'human_nll':human_nll,'human_development_rows':len(external_development),'training_diagnostic':{'scope':'in-sample only; excluded from reward and all generalization gates','correct':sum(x['correct'] for x in training_samples),'probes':len(training_samples),'nll':training_loss/training_tokens,'samples':training_samples},'foundation_correct':sum(s['correct'] for s in samples if s['family'].startswith('foundation-')),'foundation_probes':sum(1 for s in samples if s['family'].startswith('foundation-')),'context_rates':rates,'context_pair_rate':pair_rate,'dialogue_correct':sum(s['correct'] for s in samples if s['family'].startswith('extra-')),'nll':nll,'exact_correct':sum(s['correct'] for s in samples),'probes':len(samples),
                 'legacy_correct':sum(s['correct'] for s in samples if not s['family'].startswith(('extra-','context-','foundation-'))),
                 'repetition':sum(repetitive(s['response']) for s in samples)/len(samples),'samples':samples,
                 'scope':'narrow authored heldout tasks; not proof of general conversation'}
@@ -195,7 +223,7 @@ def main():
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
     counters=payload['counters']
     source_digest=sha256_file(checkpoint/'model/model.pt')
-    curriculum_sha=digest(authored+heldout+sealed_transfer)
+    curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
     if args.release==transport.SEED_TAG:
         # Preserve the native weights, Adam moments and RNG; only change explicit LR.
         counters={'completed_steps':SPEC['start_step'],'supervised_tokens':0,'reference_tokens':0,
@@ -203,7 +231,7 @@ def main():
                   'baseline':evaluate(runtime),'seed_model_sha256':source_digest,'elapsed_training_seconds':0.,
                   'phase':0,'stagnant_rounds':0,'best_release':transport.SEED_TAG,'precision':'fp32',
                   'foundation_examples':len(foundation_train),'foundation_heldout':len(foundation_heldout),'source_attempted_updates':payload['counters'].get('conversation_updates'),'source_training_seconds':payload['counters'].get('elapsed_training_seconds'),'composition_examples':len(composition_train),'sealed_transfer_probes':len(sealed_transfer),'new_authored_examples':len(extra_train),'new_heldout_examples':len(extra_heldout),
-                  'diagnostic_phase_changes':[],'curriculum_stage':0,'stage_changes':[],'reward_history':[],'rollbacks':0,'selection_history':[],'maximum_training_seconds':SPEC['maximum_training_seconds']}
+                  'diagnostic_phase_changes':[],'curriculum_stage':0,'stage_changes':[],'reward_history':[],'rollbacks':0,'selection_history':[],'human_examples':len(human_rows),'human_corpus_counts':{split:len(rows) for split,rows in corpus.items()},'maximum_training_seconds':SPEC['maximum_training_seconds']}
         counters['champion']=counters['baseline']
     else:
         if counters['curriculum_sha256']!=curriculum_sha:
@@ -223,6 +251,7 @@ def main():
     dataset=out/'AUTHORED_CURRICULUM.json';atomic_json(dataset,{'train':authored,'development':heldout,'sealed_transfer':sealed_transfer,'sha256':curriculum_sha})
     extras=[HERE/name for name in SPEC['script_sha256']]+[HERE/'SPEC.json',dataset]
     extras+=list((data/'data').glob('*.jsonl'))+[data/'CONVERSATION_TEST.json']
+    extras+=list(human_directory.glob('*'))
     publisher=transport.ReleasePublisher(root/'releases')
     # Cache the champion independently so ordinary periodic saves cannot delete it.
     if counters['best_release']==args.release:
@@ -268,12 +297,14 @@ def main():
     last_save_seconds=counters['elapsed_training_seconds']
     authored_by={lang:[r for r in authored if r['language']==lang and not r['family'].startswith(('extra-','context-','foundation-'))] for lang in ['it','en']}
     extra_by={lang:[r for r in extra_train if r['language']==lang] for lang in ['it','en']}
-    human_by={lang:[r for r in human_rows if r['provenance']['language']==lang] for lang in ['it','en']}
+    human_by={lang:[r for r in human_rows if r['language']==lang] for lang in ['it','en']}
     if any(not v for v in human_by.values()):raise ValueError('empty filtered human language')
     while needs_training(counters):
         update=counters['conversation_updates'];lang='it' if update%3!=1 else 'en'
         sample_group=sampling_group(update,counters['training_focus'])
-        if sample_group=='old-authored':
+        if sample_group=='human-dialogue':
+            batch=encode(rng.choice(human_by[lang]));group='human-dialogue-'+lang
+        elif sample_group=='old-authored':
             families=sorted({r['family'] for r in authored_by[lang]})
             family=rng.choice(families)
             batch=encode(rng.choice([r for r in authored_by[lang] if r['family']==family]));group='old-authored-'+lang
@@ -337,6 +368,7 @@ def main():
             response=runtime.chat(row['messages'][:-1],temperature=0,max_new_tokens=64)
             sealed_samples.append({'messages':row['messages'][:-1],'expected':row['expected'],'response':response,'correct':exact_correct(response,row['expected']),'family':row['family'],'language':row['language']})
         counters['sealed_transfer']={'correct':sum(r['correct'] for r in sealed_samples),'probes':len(sealed_samples),'samples':sealed_samples,'scope':'final only; excluded from selection and adaptation'}
+        counters['human_final']={'samples':[{'messages':r['messages'][:-1],'reference':r['expected'],'response':runtime.chat(r['messages'][:-1],temperature=0,max_new_tokens=128),'language':r['language']} for r in external_final],'scope':'Final-only unseen human conversations; qualitative review required; excluded from selection.'}
         counters['development_scope']='Repeated development checks; not an untouched final test.' 
         counters['stop_reason']='four additional hours completed; original champion and offline sequel retained'
         save()

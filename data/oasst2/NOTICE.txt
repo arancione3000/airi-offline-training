@@ -1,0 +1,8 @@
+OpenAssistant Conversations Dataset Release 2
+Source: https://huggingface.co/datasets/OpenAssistant/oasst2
+Revision: 179dd21fc55192153d94adb0e0ce8f69e222bf75
+Copyright and attribution: OpenAssistant contributors / LAION-AI.
+License: Apache License, Version 2.0.
+AIRI derivative: filtered human-reviewed, non-synthetic conversations with original text preserved.
+Selection and split construction performed on 12 October 2026.
+No author identifiers are reproduced apart from original message/tree IDs for provenance.

@@ -88,3 +88,20 @@ for _ in range(32):
 after=masked_loss()
 assert after<before*.75,(before,after)
 print('Real masked causal gradient smoke test: loss decreases by more than 25%.')
+
+# The frozen external corpus must also fit the actual native tokenizer exactly.
+from human_data import load_corpus,context_size
+import json
+corpus_path=Path(__file__).resolve().parents[2]/'data/oasst2'
+manifest=json.loads((corpus_path/'MANIFEST.json').read_text())
+corpus=load_corpus(corpus_path,manifest['pins'])
+for rows in corpus.values():
+ for row in rows:
+  ids,labels=encode_sft_example(SFTExample.from_dict(row),tok,1024,require_complete=True)
+  prompt=tok.serialize_messages(row['messages'][:-1],add_generation_prompt=True)
+  target=tok.encode(row['messages'][-1]['content'],eos=True)
+  assert len(prompt)+len(target)==context_size(row['messages'])
+  assert ids[:len(prompt)].tolist()==prompt
+  assert labels[:len(prompt)].tolist()==[-100]*len(prompt)
+  assert labels[len(prompt):len(prompt)+len(target)].tolist()==target
+print('Frozen human corpus fits native tokenizer; complete targets and histories verified.')

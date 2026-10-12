@@ -23,7 +23,7 @@
     }
   ],
   "optimizer_policy": "Preserve AdamW moments; restore champion model and optimizer after stagnation or at chunk boundaries; continue sampler and torch RNG streams; bounded rollback LR factors 1.0/0.5/0.25.",
-  "schedule": "Four-hour adaptive champion search; aggregate development metrics choose the weakest skill; candidates are accepted only through hard anti-regression gates; stagnant or boundary candidates restore the retained champion model and Adam state while continuing a distinct RNG stream; learning rate is reduced after rollback; final probes remain excluded from selection.",
+  "schedule": "Four-hour native human-conversation experiment with 25% real human dialogue updates; complete 1024-token histories; fixed verified OASST2 subset and prior OASST1 dialogues; tree/prompt-separated development and final; rollback keeps the selected champion and a distinct exploration stream.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
@@ -34,15 +34,16 @@
     "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
     "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
-    "policy.py": "54ca732f64b778b8b6ae21dd529b14d21fd8a52a1ae942ca35895893d8b8310e",
+    "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "d4c1b59e6bde57930b313bd8c0a4b892164cb3669a5101b962c003c1ace40eae",
+    "run.py": "09ab11643285977c0572e29cdbce6e16cc43923c42063a71841e4fe628f366a6",
     "session.py": "1325b6bfa05de2ea8b62843325cdf099fde9fb242ab751e73341c309f43c004e",
-    "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624"
+    "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624",
+    "human_data.py": "ffd2ae6359e6dc5e226148192b3aeddf049fd7dd40e7e9ffa3ad97e3781b21de"
   },
   "maximum_training_seconds": 14400,
   "extension": {
-    "request": "thomas-complete-adaptive-improvement-plan-20261012",
+    "request": "thomas-integrate-public-human-training-data-20261012",
     "source_sha": "e90640138a3d3734f8e08a6b60f91e680a3737af",
     "source_branch": "dialogue-cycle-20261012-evening",
     "seed_release": "airi-offline-129599-38137184439-1-1",
@@ -56,5 +57,44 @@
     0.5,
     0.25
   ],
-  "fingerprint": "631b6c0dbb98769df41b271b4d1ec4de73ba00172949b00f44b3a5394972b5f5"
+  "human_corpus": {
+    "source": "OpenAssistant/oasst2",
+    "revision": "179dd21fc55192153d94adb0e0ce8f69e222bf75",
+    "source_sha256": "a9f240c4c77aa1378364f70d37e753c07ba284e247b019d700e1947a0e5da751",
+    "license": "Apache-2.0",
+    "attribution": "OpenAssistant contributors / LAION-AI; filtered derivative with original text unchanged",
+    "pins": {
+      "train": "2d4d347b0b97991cceeff85f2d3dafaeefad5aabd7b4339422c878dfb20e970e",
+      "development": "0c2e6f4b1c4a5a1a3def5a0e0f604b346075dc0d5db5cbe5592ffc9d1dac33ed",
+      "final": "e2e982c79a69391a57715c713a671784b3c7156e6c918207e729c553d86d3cd6"
+    },
+    "splits": {
+      "train": {
+        "rows": 918,
+        "languages": {
+          "en": 899,
+          "it": 19
+        },
+        "multiturn": 134
+      },
+      "development": {
+        "rows": 44,
+        "languages": {
+          "en": 42,
+          "it": 2
+        },
+        "multiturn": 1
+      },
+      "final": {
+        "rows": 49,
+        "languages": {
+          "en": 47,
+          "it": 2
+        },
+        "multiturn": 6
+      }
+    },
+    "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
+  },
+  "fingerprint": "a18d404c04b25d62597c682c52d1203447bcbe323e37a612b2b186b0e8d0a54f"
 }
