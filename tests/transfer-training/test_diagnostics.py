@@ -62,7 +62,7 @@ class TransferTests(unittest.TestCase):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
   self.assertEqual(run.SPEC['maximum_training_seconds'],14400)
   self.assertEqual(run.SPEC['migration_source_fingerprint'],'917dee2511c1d30be8b2be9d784850d16b0daab55d503614f6b0ce6b3f87b92e')
-  self.assertEqual(run.SPEC['extension']['source_sha'],'b766a3d7ab8c5e0db1a9058d7c5b789f09568418')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'cda908aa80818d4ece8f230e13cde07bf6553b47')
   self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
   c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)

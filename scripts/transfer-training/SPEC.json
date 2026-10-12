@@ -10,16 +10,16 @@
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
-      "kl_weight": 1
+      "learning_rate": 1e-06,
+      "kl_weight": 1.0
     }
   ],
   "optimizer_policy": "preserve AdamW moments and RNG; explicit lower LR at migration and phase changes",
@@ -38,19 +38,20 @@
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
     "run.py": "abc0c160fbc4fd34519fe9ffc9d090c2fb47e7dce31a20eacad3e0ac9014409d",
     "session.py": "8125862513877e6e81f456df6c2fd9253a359defe837a21c7a8e95523ac771b6",
-    "transport.py": "200d5d8c9a5bea895063aca54fab21a82673d3b2c02e7d37bfb260b46c9bc847"
+    "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624"
   },
   "maximum_training_seconds": 14400,
   "extension": {
-    "request": "thomas-new-cycle-20261011-afternoon",
-    "source_sha": "b766a3d7ab8c5e0db1a9058d7c5b789f09568418",
-    "source_branch": "dialogue-extra4h-20261011",
-    "source_run": 38137184439,
+    "request": "thomas-continue-20261012-evening",
+    "source_sha": "cda908aa80818d4ece8f230e13cde07bf6553b47",
+    "source_branch": "dialogue-cycle-20261011-pm",
+    "source_run": 38162435535,
     "seed_release": "airi-offline-129599-38137184439-1-1",
     "seed_step": 129599,
     "index_sha256": "68265e117be5b31e945926ce08ea3b587577aca87045b198eeb42783184e0f4c",
     "additional_training_seconds": 14400,
-    "seed_selection": "retained development champion from completed cycle; final probes excluded from selection"
+    "seed_selection": "retained earlier development champion; latest cycle did not exceed it",
+    "reviewed_night_run": 38231891778
   },
-  "fingerprint": "eda81e8c7453e00b63e937e89da74d91f2c9693a880b7464b764122e8bf06635"
+  "fingerprint": "4db0b3b1211018b5d0c84dd0a63b982296312d43f9294855e12727b4a6d92469"
 }
