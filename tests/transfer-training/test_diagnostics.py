@@ -5,7 +5,7 @@ from composition_data import build_composition,sampling_pools,SEALED_VALUES,PROT
 from foundation_data import build_foundation
 from diagnostics import diagnostic_rows,recipe_phase
 from curriculum import norm
-from policy import reward,improved
+from policy import reward,improved,training_focus,recovery_lr_factor
 import run
 from composition_data import PREVIOUS_SEALED_VALUES
 from collections import Counter
@@ -58,11 +58,23 @@ class TransferTests(unittest.TestCase):
    langs={'it' if i%3!=1 else 'en' for i in range(48) if run.sampling_group(i)==group}
    self.assertEqual(langs,{'it','en'})
   for bad in (-1,True,1.5):self.assertRaises(ValueError,run.sampling_group,bad)
+ def test_adaptive_sampling_targets_weakness_and_keeps_replay(self):
+  expected={'context':{'verified-context':4},'dialogue':{'curated-dialogue':6},'foundation':{'composition':5},'retention':{'native-replay':3}}
+  for focus,minimum in expected.items():
+   counts=Counter(run.sampling_group(i,focus) for i in range(16))
+   self.assertEqual(sum(counts.values()),16);self.assertGreaterEqual(counts['native-replay'],2)
+   for group,count in minimum.items():self.assertEqual(counts[group],count)
+  self.assertRaises(ValueError,run.sampling_group,0,'unknown')
+ def test_weakest_skill_and_bounded_recovery_lr(self):
+  m=dict(context_rates={'it:name':0.,'en:name':0.},context_pair_rate=0.,legacy_correct=14,dialogue_correct=8,foundation_correct=8,foundation_probes=16,repetition=0.,nll=dict(it=1.,en=1.))
+  self.assertEqual(training_focus(m),'context')
+  self.assertEqual([recovery_lr_factor(i) for i in range(5)],[1.,.5,.25,.25,.25])
+  for bad in (-1,True):self.assertRaises(ValueError,recovery_lr_factor,bad)
  def test_exact_seed_and_new_finite_ledger(self):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
   self.assertEqual(run.SPEC['maximum_training_seconds'],14400)
   self.assertEqual(run.SPEC['migration_source_fingerprint'],'917dee2511c1d30be8b2be9d784850d16b0daab55d503614f6b0ce6b3f87b92e')
-  self.assertEqual(run.SPEC['extension']['source_sha'],'cda908aa80818d4ece8f230e13cde07bf6553b47')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'e90640138a3d3734f8e08a6b60f91e680a3737af')
   self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
   c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)

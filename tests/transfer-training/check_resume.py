@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-trai
 import torch
 from generalist_lm.runtime import GeneralistRuntime
 from generalist_lm.model import CausalTransformerLM,GeneralistLMConfig
-from session import train_step,save_session,restore_session
+from session import train_step,save_session,restore_session,restore_champion
 
 torch.set_num_threads(2);torch.manual_seed(12)
 c=GeneralistLMConfig(d_model=32,n_heads=2,n_layers=1,d_ff=64,context_length=32)
@@ -23,6 +23,16 @@ with tempfile.TemporaryDirectory() as tmp:
  assert all(torch.equal(a,b) for a,b in zip(r.model.parameters(),restored.model.parameters()))
  assert payload['sampler_rng']==rng.getstate()
  print('Native champion + Adam recovery: next update bitwise identical; sampler RNG retained.')
+
+ # A rollback restores the saved model and Adam while retaining the later exploration stream.
+ champion_parameters=[p.detach().clone() for p in restored.model.parameters()]
+ rng.random();ar.random();torch.rand(3)
+ expected_rng=rng.getstate();expected_ar=ar.getstate();expected_torch=torch.get_rng_state().clone()
+ rolled,rolled_opt,_=restore_champion(path,f,rng,ar,fingerprint='recovery-check')
+ assert all(torch.equal(a,b) for a,b in zip(champion_parameters,rolled.model.parameters()))
+ assert rng.getstate()==expected_rng and ar.getstate()==expected_ar and torch.equal(torch.get_rng_state(),expected_torch)
+ assert rolled_opt.state_dict()['state']
+ print('Champion rollback restores model/Adam and keeps the later exploration stream.')
 
 from context_curriculum import build_context
 from foundation_data import build_foundation

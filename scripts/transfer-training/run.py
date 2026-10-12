@@ -28,20 +28,26 @@ def needs_training(counters):
     validate_budget(counters)
     return counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
 
-def sampling_group(update):
+SAMPLING_SCHEDULES={
+    'balanced':('old-authored',)*6+('curated-dialogue',)*6+('composition',)*2+('verified-context','native-replay'),
+    'context':('old-authored',)*4+('curated-dialogue',)*4+('composition',)*2+('verified-context',)*4+('native-replay',)*2,
+    'dialogue':('old-authored',)*4+('curated-dialogue',)*6+('composition',)*2+('verified-context',)*2+('native-replay',)*2,
+    'foundation':('old-authored',)*4+('curated-dialogue',)*3+('composition',)*5+('verified-context',)*2+('native-replay',)*2,
+    'retention':('old-authored',)*5+('curated-dialogue',)*4+('composition',)*2+('verified-context',)*2+('native-replay',)*3,
+}
+
+def sampling_group(update,focus='balanced'):
     if not isinstance(update,int) or isinstance(update,bool) or update<0:
         raise ValueError('invalid update index')
-    slot=update%16
-    return ('old-authored' if slot<6 else 'curated-dialogue' if slot<12
-            else 'composition' if slot<14 else 'verified-context' if slot<15
-            else 'native-replay')
+    if focus not in SAMPLING_SCHEDULES:raise ValueError('invalid training focus')
+    return SAMPLING_SCHEDULES[focus][update%16]
 
 def main():
     import torch
     from torch.nn import functional as F
     from generalist_lm.runtime import GeneralistRuntime
     from generalist_lm.training import SFTExample, encode_sft_example
-    from session import atomic_json, sha256_file, save_session, restore_session, train_step
+    from session import atomic_json, sha256_file, save_session, restore_session, restore_champion, train_step
     from curriculum import build, digest, norm, exact_correct, repetitive, pilot_eligible, choose_winner
     import transport
     import legacy_run
@@ -193,14 +199,22 @@ def main():
                   'baseline':evaluate(runtime),'seed_model_sha256':source_digest,'elapsed_training_seconds':0.,
                   'phase':0,'stagnant_rounds':0,'best_release':transport.SEED_TAG,'precision':'fp32',
                   'foundation_examples':len(foundation_train),'foundation_heldout':len(foundation_heldout),'source_attempted_updates':payload['counters'].get('conversation_updates'),'source_training_seconds':payload['counters'].get('elapsed_training_seconds'),'composition_examples':len(composition_train),'sealed_transfer_probes':len(sealed_transfer),'new_authored_examples':len(extra_train),'new_heldout_examples':len(extra_heldout),
-                  'diagnostic_phase_changes':[],'curriculum_stage':0,'stage_changes':[],'reward_history':[],'rollbacks':0,'maximum_training_seconds':SPEC['maximum_training_seconds']}
+                  'diagnostic_phase_changes':[],'curriculum_stage':0,'stage_changes':[],'reward_history':[],'rollbacks':0,'selection_history':[],'maximum_training_seconds':SPEC['maximum_training_seconds']}
         counters['champion']=counters['baseline']
     else:
         if counters['curriculum_sha256']!=curriculum_sha:
             raise ValueError('curriculum mismatch')
         validate_budget(counters)
+    from policy import (improved as quality_improved,recover_best,recovery_lr_factor,
+                        reward,training_focus,unlocked_stage)
+    counters.setdefault('rollbacks',0);counters.setdefault('selection_history',[])
+    counters.setdefault('training_focus',training_focus(counters['champion']))
     recipe=SPEC['recipes'][counters['phase']]
-    for group in opt.param_groups:group['lr']=recipe['learning_rate']
+    def apply_learning_rate():
+        factor=recovery_lr_factor(counters['rollbacks'],tuple(SPEC.get('recovery_lr_factors',[1.,.5,.25])))
+        for parameter_group in opt.param_groups:parameter_group['lr']=recipe['learning_rate']*factor
+        counters['effective_learning_rate']=recipe['learning_rate']*factor
+    apply_learning_rate()
     out=root/'conversation-results';out.mkdir(exist_ok=True)
     dataset=out/'AUTHORED_CURRICULUM.json';atomic_json(dataset,{'train':authored,'development':heldout,'sealed_transfer':sealed_transfer,'sha256':curriculum_sha})
     extras=[HERE/name for name in SPEC['script_sha256']]+[HERE/'SPEC.json',dataset]
@@ -221,6 +235,29 @@ def main():
         if champion:best_path=path;best_fingerprint=SPEC['fingerprint']
         for old in out.glob('checkpoint-*'):
             if old!=path and old!=best_path:shutil.rmtree(old)
+    def select_candidate(reason,*,force=False):
+        nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds
+        assessment=evaluate(runtime);counters['last_candidate_assessment']=assessment
+        counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
+        champion=counters['champion'];accepted=quality_improved(champion,assessment)
+        counters['stagnant_rounds']=0 if accepted else counters['stagnant_rounds']+1
+        action='continue_candidate'
+        if accepted:
+            counters['champion']=assessment;action='accepted'
+            stage=unlocked_stage(assessment,counters['curriculum_stage'])
+            if stage!=counters['curriculum_stage']:
+                counters['curriculum_stage']=stage;counters['stage_changes'].append({'step':counters['completed_steps'],'stage':stage})
+        elif force or recover_best(counters['stagnant_rounds']):
+            runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+            counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
+            apply_learning_rate()
+        counters['training_focus']=training_focus(counters['champion'])
+        counters['last_assessment']=counters['champion']
+        counters['selection_history'].append({'step':counters['completed_steps'],'reason':reason,'action':action,'focus':counters['training_focus'],'effective_learning_rate':counters['effective_learning_rate']})
+        if action in {'accepted','rolled_back'}:
+            counters['best_release']=publisher.release_tag(counters['completed_steps'])
+            save(champion=True);last_save_seconds=counters['elapsed_training_seconds']
+        return action
     started=time.monotonic();next_action=None
     last_save_seconds=counters['elapsed_training_seconds']
     authored_by={lang:[r for r in authored if r['language']==lang and not r['family'].startswith(('extra-','context-','foundation-'))] for lang in ['it','en']}
@@ -229,7 +266,7 @@ def main():
     if any(not v for v in human_by.values()):raise ValueError('empty filtered human language')
     while needs_training(counters):
         update=counters['conversation_updates'];lang='it' if update%3!=1 else 'en'
-        sample_group=sampling_group(update)
+        sample_group=sampling_group(update,counters['training_focus'])
         if sample_group=='old-authored':
             families=sorted({r['family'] for r in authored_by[lang]})
             family=rng.choice(families)
@@ -264,36 +301,23 @@ def main():
             print(json.dumps({'step':counters['completed_steps'],'updates':update,'loss':stats['loss'],'phase':counters['phase']}),flush=True)
             if (update==16 or update%128==0) and needs_training(counters):publisher.progress({**counters,'status':'training','last_update':stats},args.release)
         if update%1024==0:
-            from policy import improved as quality_improved,recover_best,reward,unlocked_stage
-            assessment=evaluate(runtime);counters['last_assessment']=assessment
-            counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
-            champion=counters['champion']
-            improved=quality_improved(champion,assessment)
-            counters['stagnant_rounds']=0 if improved else counters['stagnant_rounds']+1
-            if improved:
-                counters['champion']=assessment
-                stage=unlocked_stage(assessment,counters['curriculum_stage'])
-                if stage!=counters['curriculum_stage']:
-                    counters['curriculum_stage']=stage
-                    counters['stage_changes'].append({'step':counters['completed_steps'],'stage':stage})
-                # Predict exact next release before serializing so resume retains champion.
-                counters['best_release']=publisher.release_tag(counters['completed_steps'])
-                save(champion=True);last_save_seconds=counters['elapsed_training_seconds']
+            select_candidate('periodic-development')
         # Memorization cannot lower LR. Three fixed phases depend on actual compute,
         # preserved across jobs, rather than correctness on oversampled examples.
         phase=recipe_phase(counters['elapsed_training_seconds'])
         if phase!=counters['phase']:
             counters['phase']=phase;recipe=SPEC['recipes'][phase]
-            for group in opt.param_groups:group['lr']=recipe['learning_rate']
+            apply_learning_rate()
             counters['diagnostic_phase_changes'].append({'step':counters['completed_steps'],'phase':phase,'reason':'predeclared compute schedule'})
         if counters['elapsed_training_seconds']-last_save_seconds>=3600:
             save();last_save_seconds=counters['elapsed_training_seconds']
         if update%16==0 and time.monotonic()-started>=args.seconds and needs_training(counters):
-            save();next_action={'release':publisher.next_release};break
+            select_candidate('chunk-boundary',force=True)
+            next_action={'release':publisher.next_release};break
     if legacy_run.state_digest(reference.model)!=reference_digest or any(p.grad is not None for p in reference.model.parameters()):
         raise ValueError('frozen reference changed')
     if next_action is None:
-        counters['last_assessment']=evaluate(runtime)
+        select_candidate('finite-budget-boundary',force=True)
         metrics=legacy_run.common_metrics(runtime)
         original=legacy_run.common_metrics(reference)
         from generalist_lm.research_cycle import _research_eligible

@@ -20,3 +20,21 @@ def unlocked_stage(m,current):
     return current
 
 def recover_best(stagnant_rounds):return stagnant_rounds>=2
+
+def training_focus(m):
+    """Choose the weakest measured development skill without reading final probes."""
+    context=(sum(m['context_rates'].values())/len(m['context_rates'])+m['context_pair_rate'])/2
+    skills={
+        'context':context,
+        'dialogue':m['dialogue_correct']/16,
+        'foundation':m.get('foundation_correct',0)/max(1,m.get('foundation_probes',16)),
+        'retention':m['legacy_correct']/28,
+    }
+    return min(skills,key=lambda name:(skills[name],name))
+
+def recovery_lr_factor(rollbacks,factors=(1.0,.5,.25)):
+    if not isinstance(rollbacks,int) or isinstance(rollbacks,bool) or rollbacks<0:
+        raise ValueError('invalid rollback count')
+    if not factors or any(not math.isfinite(x) or not 0<x<=1 for x in factors):
+        raise ValueError('invalid recovery learning-rate factors')
+    return factors[min(rollbacks,len(factors)-1)]

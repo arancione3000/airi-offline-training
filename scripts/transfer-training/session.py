@@ -69,3 +69,10 @@ def restore_session(path,optimizer_factory,*,fingerprint):
     _load_optimizer_checkpoint(optimizer,path/'optimizer.pt')
     torch.set_rng_state(payload['torch_rng'])
     return runtime,optimizer,payload
+
+def restore_champion(path,optimizer_factory,rng,anchor_rng,*,fingerprint):
+    """Restore model/Adam from the champion while continuing the exploration stream."""
+    sampler_state=rng.getstate();anchor_state=anchor_rng.getstate();torch_state=torch.get_rng_state()
+    runtime,optimizer,payload=restore_session(path,optimizer_factory,fingerprint=fingerprint)
+    rng.setstate(sampler_state);anchor_rng.setstate(anchor_state);torch.set_rng_state(torch_state)
+    return runtime,optimizer,payload

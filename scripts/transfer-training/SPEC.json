@@ -10,20 +10,20 @@
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 1e-06,
+      "learning_rate": 8e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 1e-06,
+      "learning_rate": 8e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 1e-06,
+      "learning_rate": 8e-07,
       "kl_weight": 1.0
     }
   ],
-  "optimizer_policy": "preserve AdamW moments and RNG; explicit lower LR at migration and phase changes",
-  "schedule": "Four-hour offline sequel; same data and sampling; constant final LR/KL; preserve native weights, Adam and RNG; separate fresh compute ledger; previous champion retained externally; repeated final probes excluded from selection.",
+  "optimizer_policy": "Preserve AdamW moments; restore champion model and optimizer after stagnation or at chunk boundaries; continue sampler and torch RNG streams; bounded rollback LR factors 1.0/0.5/0.25.",
+  "schedule": "Four-hour adaptive champion search; aggregate development metrics choose the weakest skill; candidates are accepted only through hard anti-regression gates; stagnant or boundary candidates restore the retained champion model and Adam state while continuing a distinct RNG stream; learning rate is reduced after rollback; final probes remain excluded from selection.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
@@ -34,24 +34,27 @@
     "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
     "legacy_run.py": "d98e3734c44208c4fe53ed6d3cc599badd320cc3cefaacf9bda7983fb58ca6a5",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
-    "policy.py": "1057cff5ee64c44b597db311e960bb06f3ef7a6a3026a457f424ac75f402d950",
+    "policy.py": "54ca732f64b778b8b6ae21dd529b14d21fd8a52a1ae942ca35895893d8b8310e",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "abc0c160fbc4fd34519fe9ffc9d090c2fb47e7dce31a20eacad3e0ac9014409d",
-    "session.py": "8125862513877e6e81f456df6c2fd9253a359defe837a21c7a8e95523ac771b6",
+    "run.py": "b10eee682568a81932c753ffab5dd57b66839c8b8447868a4ad779f93d593358",
+    "session.py": "1325b6bfa05de2ea8b62843325cdf099fde9fb242ab751e73341c309f43c004e",
     "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624"
   },
   "maximum_training_seconds": 14400,
   "extension": {
-    "request": "thomas-continue-20261012-evening",
-    "source_sha": "cda908aa80818d4ece8f230e13cde07bf6553b47",
-    "source_branch": "dialogue-cycle-20261011-pm",
-    "source_run": 38162435535,
+    "request": "thomas-complete-adaptive-improvement-plan-20261012",
+    "source_sha": "e90640138a3d3734f8e08a6b60f91e680a3737af",
+    "source_branch": "dialogue-cycle-20261012-evening",
     "seed_release": "airi-offline-129599-38137184439-1-1",
     "seed_step": 129599,
     "index_sha256": "68265e117be5b31e945926ce08ea3b587577aca87045b198eeb42783184e0f4c",
     "additional_training_seconds": 14400,
-    "seed_selection": "retained earlier development champion; latest cycle did not exceed it",
-    "reviewed_night_run": 38231891778
+    "seed_selection": "retained verified development champion; adaptive successor waits for the current chain to finish before dispatch"
   },
-  "fingerprint": "4db0b3b1211018b5d0c84dd0a63b982296312d43f9294855e12727b4a6d92469"
+  "recovery_lr_factors": [
+    1.0,
+    0.5,
+    0.25
+  ],
+  "fingerprint": "b564dbc0445b0d73233220c6915c032c34e403d087776b13324cbabc455edcbb"
 }
