@@ -28,6 +28,9 @@ class HumanTests(unittest.TestCase):
   r=dict(review_result=True,lang='it',role='assistant',rank=0,text='Una risposta umana.',labels={'quality':{'value':.8,'count':3}})
   self.assertTrue(quality_message(r))
   for change in ({'synthetic':True},{'deleted':True},{'model_name':'teacher'},{'rank':1},{'review_result':False},{'labels':{}}):self.assertFalse(quality_message({**r,**change}))
+ def test_archived_corpus_names_do_not_shadow_original_splits(self):
+  names=[p.name for p in (ROOT/'data/oasst2').glob('*')]+['train-1024.jsonl','development.jsonl','test.jsonl','CONVERSATION_TEST.json','AUTHORED_CURRICULUM.json']
+  self.assertEqual(len(names),len(set(names)))
  def test_runtime_overlap_is_removed(self):
   c=self.corpus();text=c['train'][0]['messages'][0]['content'];p=ROOT/'data/oasst2';pins=json.loads((p/'MANIFEST.json').read_text())['pins']
   filtered=load_corpus(p,pins,[norm(text)])

@@ -39,7 +39,7 @@
     "run.py": "1443fcaee874c3bea8b7d45414cdd2884b8f92d821265d2f3861fd464a2010eb",
     "session.py": "1325b6bfa05de2ea8b62843325cdf099fde9fb242ab751e73341c309f43c004e",
     "transport.py": "c30f988c116c2bb486034937268169f97b5054ff002fcf5c711cf3cdb3fc3624",
-    "human_data.py": "ffd2ae6359e6dc5e226148192b3aeddf049fd7dd40e7e9ffa3ad97e3781b21de"
+    "human_data.py": "2b26293af74816087c2723dae92b32626f98954fccc9ada65de8147ebc8840bc"
   },
   "maximum_training_seconds": 14400,
   "extension": {
@@ -96,5 +96,5 @@
     },
     "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
   },
-  "fingerprint": "0f41bfa305583852fc6fdbac19a8799ed63bf382d709148a0cb033a8abb62766"
+  "fingerprint": "3a6b456cc7fcf05e4ad30e18f82ef12dceb63b4842fe7af9c40ada60c54174f0"
 }

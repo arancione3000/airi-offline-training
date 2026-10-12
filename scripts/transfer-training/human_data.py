@@ -81,7 +81,7 @@ def prepare(raw):
 def load_corpus(directory,pins,blocked=()):
     directory=Path(directory);out={};blocked=set(blocked)
     for split in ('train','development','final'):
-        raw=(directory/(split+'.jsonl')).read_bytes()
+        raw=(directory/('human-'+split+'.jsonl')).read_bytes()
         if hashlib.sha256(raw).hexdigest()!=pins[split]:raise ValueError('human corpus digest mismatch: '+split)
         out[split]=[json.loads(s) for s in raw.splitlines()]
     # Exclude previous human training/validation prompts at runtime.
