@@ -1,0 +1,35 @@
+name: AIRI authorized fifty-hour continuation
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI human corpus learning]
+    types: [completed]
+  schedule:
+    - cron: '11,31,51 * * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-single-authorized-extra50h-20261013
+  cancel-in-progress: false
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      AIRI_FROZEN_SOURCE: ${{ github.workspace }}/source-cycle
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: 77533b890b86cff2099ee66e29a9b4479cf103e4
+          path: source-cycle
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify fifty-hour continuation and generated runner
+        run: python -m unittest discover -s tests/long50-extension -v
+      - name: Continue once after verified twelve-hour completion
+        run: python scripts/long50-extension/extend.py | tee -a "$GITHUB_STEP_SUMMARY"
