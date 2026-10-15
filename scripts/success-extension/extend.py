@@ -17,8 +17,8 @@ BRANCH = 'dialogue-success-transfer-20261015'
 REQUEST = 'thomas-selective-native-success-transfer-20261015'
 WORKFLOW = 'airi-success-background.yml'
 SOURCE_WORKFLOW = 'airi-human-background.yml'
-TEMPLATE_SHA = '2daaf642accd354eb21746f07fb153e7ffe9b7ec'
-TEMPLATE_BRANCH = 'morph-model-template-20261015'
+TEMPLATE_SHA = '23f944e09ce4f8ee29f6999cb0322ae9bc0459e4'
+TEMPLATE_BRANCH = 'morph-model-v2-template-20261015'
 PREFIX = 'scripts/transfer-training/'
 ACTIVE = {'in_progress', 'queued', 'requested', 'waiting', 'pending'}
 

@@ -234,7 +234,7 @@ def main():
     counters=payload['counters']
     source_digest=sha256_file(checkpoint/'model/model.pt')
     from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
-                              summary as bank_summary, retains_correct_answers)
+                              summary as bank_summary, retains_correct_answers, migrate_bank)
     eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
     if args.success_smoke_only:
         from success_smoke import real_checkpoint_smoke
@@ -245,6 +245,8 @@ def main():
     if source_fingerprint == SPEC['fingerprint'] and not bank_file.exists():
         raise ValueError('resumed success-transfer checkpoint has no committed bank')
     bank = (json.loads(bank_file.read_text()) if bank_file.exists() else empty_bank(SPEC['fingerprint']))
+    if bank_file.exists() and source_fingerprint!=SPEC['fingerprint']:
+        bank=migrate_bank(bank,eligible,source_fingerprint,SPEC['fingerprint'],runtime.config.vocab_size)
     validate_bank(bank,eligible,SPEC['fingerprint'],runtime.config.vocab_size)
     curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
     if args.release==transport.SEED_TAG:
@@ -282,9 +284,10 @@ def main():
     else:
         best_path=transport.load_release(counters['best_release'],root/'champion-cache')
         best_fingerprint=transport.SOURCE_FINGERPRINTS.get(counters['best_release'],SPEC['fingerprint'])
-    from morph_model import new_state, adopt, consolidate, model_record
+    from morph_model import inherit_state, adopt, consolidate, model_record
     from model_channel import Client as ModelClient, publish_current
-    counters.setdefault('morph',new_state(legacy_run.state_digest(runtime.model)))
+    if 'morph' not in counters:
+        counters['morph']=inherit_state(payload['counters'].get('morph'),legacy_run.state_digest(runtime.model))
     def load_protected_champion():
         stream=torch.get_rng_state()
         try:protected = GeneralistRuntime.from_checkpoint(best_path/'model')

@@ -68,6 +68,7 @@ def probe_rows(rows, round_number, limit=24):
 
 def empty_bank(fingerprint):
     return {'schema': SCHEMA, 'fingerprint': fingerprint, 'entries': {},
+            'source_fingerprints': [fingerprint],
             'harvests': 0, 'donations': 0, 'transfer_updates': 0}
 
 
@@ -76,6 +77,9 @@ def validate_bank(bank, rows, fingerprint, vocab_size=264):
         raise ValueError('success bank provenance mismatch')
     if len(bank['entries']) > CAPACITY:
         raise ValueError('success bank exceeds finite capacity')
+    allowed=bank.get('source_fingerprints',[fingerprint])
+    if fingerprint not in allowed or len(allowed)>CAPACITY+1:
+        raise ValueError('invalid success bank ancestry')
     for key, entry in bank['entries'].items():
         if key not in rows or row_key(entry['row']) != key or entry['row'] != rows[key]:
             raise ValueError('lesson is not an eligible training row')
@@ -96,10 +100,24 @@ def validate_bank(bank, rows, fingerprint, vocab_size=264):
                 raise ValueError('invalid verified donor distribution')
         source = entry['source']
         if (not isinstance(source['step'], int) or isinstance(source['step'], bool) or source['step'] < 0
-                or source['fingerprint'] != fingerprint or not re.fullmatch('[a-f0-9]{64}',source['model_sha256'])
+                or source['fingerprint'] not in allowed or not re.fullmatch('[a-f0-9]{64}',source['model_sha256'])
                 or entry['scope'] != 'authored training only'):
             raise ValueError('invalid donor lineage')
     return bank
+
+
+def migrate_bank(bank, rows, source_fingerprint, fingerprint, vocab_size=264):
+    """Carry authenticated donor provenance into a new authorized experiment.
+
+    Only still-eligible training rows survive. A newly held-out example cannot
+    enter training through an inherited bank. Original donor identities stay intact.
+    """
+    previous_rows={key:e['row'] for key,e in bank['entries'].items()}
+    validate_bank(bank,previous_rows,source_fingerprint,vocab_size)
+    result=copy.deepcopy(bank);result['fingerprint']=fingerprint
+    result['entries']={k:e for k,e in result['entries'].items() if k in rows and e['row']==rows[k]}
+    result['source_fingerprints']=sorted({fingerprint}|{e['source']['fingerprint'] for e in result['entries'].values()})
+    return validate_bank(result,rows,fingerprint,vocab_size)
 
 
 def priority(entry):

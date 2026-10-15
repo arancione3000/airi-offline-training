@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with:
-          ref: 2daaf642accd354eb21746f07fb153e7ffe9b7ec
+          ref: 23f944e09ce4f8ee29f6999cb0322ae9bc0459e4
           path: success-template
           persist-credentials: false
       - uses: actions/checkout@v4
