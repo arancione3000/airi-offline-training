@@ -52,6 +52,9 @@ def selection_needed(counters,*,force=False):
     """Avoid penalizing a candidate twice when evaluation and a boundary coincide."""
     return not (force and counters.get('selected_at_step')==counters.get('completed_steps'))
 
+def success_slot(update,sample_group,has_lessons):
+    return bool(has_lessons and update%8==2 and sample_group not in {'human-dialogue','native-replay'})
+
 def main():
     import torch
     from torch.nn import functional as F
@@ -65,6 +68,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--release',required=True)
     parser.add_argument('--corpus-audit-only',action='store_true')
+    parser.add_argument('--success-smoke-only',action='store_true')
     parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--seconds',type=int,default=10800)
     args=parser.parse_args()
@@ -229,6 +233,19 @@ def main():
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
     counters=payload['counters']
     source_digest=sha256_file(checkpoint/'model/model.pt')
+    from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
+                              summary as bank_summary, retains_correct_answers)
+    eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
+    if args.success_smoke_only:
+        from success_smoke import real_checkpoint_smoke
+        real_checkpoint_smoke(runtime,opt,checkpoint,eligible,encode,anchors,
+                              SPEC['fingerprint'],legacy_run.state_digest)
+        return
+    bank_file = checkpoint/'success_bank.json'
+    if source_fingerprint == SPEC['fingerprint'] and not bank_file.exists():
+        raise ValueError('resumed success-transfer checkpoint has no committed bank')
+    bank = (json.loads(bank_file.read_text()) if bank_file.exists() else empty_bank(SPEC['fingerprint']))
+    validate_bank(bank,eligible,SPEC['fingerprint'],runtime.config.vocab_size)
     curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
     if args.release==transport.SEED_TAG:
         # Preserve the native weights, Adam moments and RNG; only change explicit LR.
@@ -265,21 +282,42 @@ def main():
     else:
         best_path=transport.load_release(counters['best_release'],root/'champion-cache')
         best_fingerprint=transport.SOURCE_FINGERPRINTS.get(counters['best_release'],SPEC['fingerprint'])
+    def load_protected_champion():
+        protected = GeneralistRuntime.from_checkpoint(best_path/'model')
+        protected.model.eval()
+        for parameter in protected.model.parameters(): parameter.requires_grad_(False)
+        return protected
+    protected_champion = load_protected_champion()
     def save(*,champion=False):
         nonlocal best_path,best_fingerprint
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
         if path.exists():shutil.rmtree(path)
-        save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'])
+        counters['success_bank']=bank_summary(bank)
+        save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
         publisher.publish(path,extra_files=extras)
         if champion:best_path=path;best_fingerprint=SPEC['fingerprint']
         for old in out.glob('checkpoint-*'):
             if old!=path and old!=best_path:shutil.rmtree(old)
     def select_candidate(reason,*,force=False):
-        nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds
+        nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds,protected_champion
         if not selection_needed(counters,force=force):return 'already_selected'
         assessment=evaluate(runtime);counters['last_candidate_assessment']=assessment
         counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
-        champion=counters['champion'];accepted=quality_improved(champion,assessment)
+        champion=counters['champion']
+        accepted=quality_improved(champion,assessment) and retains_correct_answers(champion,assessment)
+        if not accepted:
+            # Mine training observations before destructive rollback. Eval rows are
+            # deliberately unavailable to harvest() and distill_step().
+            from success_transfer import harvest
+            donated = harvest(runtime,protected_champion,
+                              probe_rows(eligible,bank['harvests'],SPEC['success_transfer']['probe_rows']),
+                              encode,bank,eligible,
+                              {'step':counters['completed_steps'],'fingerprint':SPEC['fingerprint'],
+                               'model_sha256':legacy_run.state_digest(runtime.model),
+                               'runner_sha':os.environ.get('GITHUB_SHA','local')})
+            counters['success_bank']=bank_summary(bank)
+            counters['success_last_harvest']={'step':counters['completed_steps'],'donated_rows':donated}
+            print(json.dumps({'phase':'salvaged rejected native candidate',**counters['success_bank']}),flush=True)
         counters['stagnant_rounds']=0 if accepted else counters['stagnant_rounds']+1
         action='continue_candidate'
         if accepted:
@@ -298,6 +336,10 @@ def main():
             counters['selected_at_step']=counters['completed_steps']
             counters['best_release']=publisher.release_tag(counters['completed_steps'])
             save(champion=True);last_save_seconds=counters['elapsed_training_seconds']
+            if action == 'accepted':
+                del protected_champion
+                gc.collect()
+                protected_champion = load_protected_champion()
         return action
     started=time.monotonic();next_action=None
     last_save_seconds=counters['elapsed_training_seconds']
@@ -327,13 +369,28 @@ def main():
         else:
             group=['language-it','language-en','domains'][(update//16)%3]
             batch=rng.choice(replay[group])
+        lesson=None
+        # Preserve all human and native replay slots; at most 2/16 other slots
+        # replay archived improvements from any preceding native candidate.
+        if success_slot(update,sample_group,bank['entries']):
+            keys=sorted(bank['entries'])
+            lesson=bank['entries'][keys[(bank['transfer_updates'])%len(keys)]]
+            batch=encode(lesson['row']);group='success-transfer-'+lesson['row']['language']
         scored=(batch[1]!=-100).nonzero()
         width=int(scored[:,1].max())+1
         batch=tuple(v[:,:width] for v in batch)
         anchor=rng.choice(anchors)
         if not needs_training(counters):break
         tick=time.monotonic()
-        stats=train_step(runtime.model,reference.model,opt,*batch,*anchor,kl_weight=recipe['kl_weight'])
+        if lesson is None:
+            stats=train_step(runtime.model,reference.model,opt,*batch,*anchor,kl_weight=recipe['kl_weight'])
+        else:
+            from success_transfer import distill_step
+            stats=distill_step(runtime.model,protected_champion.model,opt,lesson,batch,anchor,
+                               lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
+                               lr_cap=SPEC['success_transfer']['lr_cap'])
+            bank['transfer_updates']+=1
+            counters['success_bank']=bank_summary(bank)
         counters['elapsed_training_seconds']+=time.monotonic()-tick
         counters['conversation_updates']+=1;counters['completed_steps']+=1
         counters['supervised_tokens']+=stats['supervised_tokens'];counters['reference_tokens']+=stats['reference_tokens']
@@ -376,7 +433,7 @@ def main():
         counters['sealed_transfer']={'correct':sum(r['correct'] for r in sealed_samples),'probes':len(sealed_samples),'samples':sealed_samples,'scope':'final only; excluded from selection and adaptation'}
         counters['human_final']={'samples':[{'messages':r['messages'][:-1],'reference':r['expected'],'response':runtime.chat(r['messages'][:-1],temperature=0,max_new_tokens=128),'language':r['language']} for r in external_final],'scope':'Final-only unseen human conversations; qualitative review required; excluded from selection.'}
         counters['development_scope']='Repeated development checks; not an untouched final test.' 
-        counters['stop_reason']='four additional hours completed; original champion and offline sequel retained'
+        counters['stop_reason']='finite selective-transfer experiment completed; independent quality gates retained'
         save()
         atomic_json(out/'FINAL_RESULT.json',{'counters':counters,'next_action':None,
                   'maximum_training_seconds':SPEC['maximum_training_seconds'],

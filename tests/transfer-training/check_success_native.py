@@ -1,0 +1,87 @@
+"""Real native transformer: salvage skill B from a donor that forgot skill A."""
+import copy
+import hashlib
+import json
+import random
+import sys
+import tempfile
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-training'))
+import torch
+from generalist_lm.model import CausalTransformerLM,GeneralistLMConfig
+from generalist_lm.runtime import GeneralistRuntime
+from generalist_lm.training import SFTExample,encode_sft_example
+from session import train_step,save_session,restore_champion
+from success_bank import catalog,empty_bank,validate_bank,row_key,summary
+from success_transfer import harvest,distill_step
+from curriculum import exact_correct
+
+torch.set_num_threads(2);torch.manual_seed(40)
+config=GeneralistLMConfig(d_model=32,n_heads=2,n_layers=1,d_ff=64,context_length=128)
+base=GeneralistRuntime(CausalTransformerLM(config),config)
+rows=[dict(messages=[dict(role='user',content=prompt),dict(role='assistant',content=answer)],
+           expected=answer,language='en',family=family,provenance='deterministic exact solver')
+      for prompt,answer,family in [('Write only: a','a','copy-a'),('Write only: b','b','copy-b')]]
+eligible=catalog(rows,[])
+def encode(row):
+    ids,labels=encode_sft_example(SFTExample.from_dict(row),base.tokenizer,128,require_complete=True)
+    width=int((labels!=-100).nonzero()[-1])+1
+    return ids[:width].unsqueeze(0),labels[:width].unsqueeze(0)
+def correct(runtime,row):
+    return exact_correct(runtime.chat(row['messages'][:-1],temperature=0,max_new_tokens=6),row['expected'])
+def freeze(runtime):
+    runtime.model.eval()
+    for p in runtime.model.parameters():p.requires_grad_(False)
+    return runtime
+def digest(model):
+    return hashlib.sha256(b''.join(p.detach().cpu().numpy().tobytes() for p in model.parameters())).hexdigest()
+
+def clone(runtime):
+    result=GeneralistRuntime(CausalTransformerLM(config),config)
+    result.model.load_state_dict(runtime.model.state_dict())
+    return result
+
+initial=freeze(clone(base));optimizer=torch.optim.AdamW(base.model.parameters(),lr=.003)
+for _ in range(100):train_step(base.model,initial.model,optimizer,*encode(rows[0]),*encode(rows[0]),kl_weight=0.)
+assert correct(base,rows[0]) and not correct(base,rows[1]),'base must have A but not B'
+champion=freeze(clone(base));champion_digest=digest(champion.model)
+donor=clone(base);optimizer=torch.optim.AdamW(donor.model.parameters(),lr=.003)
+for _ in range(100):train_step(donor.model,champion.model,optimizer,*encode(rows[1]),*encode(rows[1]),kl_weight=0.)
+assert correct(donor,rows[1]) and not correct(donor,rows[0]),'donor must improve B but lose A'
+bank=empty_bank('native-demo')
+harvest(donor,champion,rows,encode,bank,eligible,
+        dict(step=200,fingerprint='native-demo',model_sha256=digest(donor.model)),generation_limit=2)
+validate_bank(bank,eligible,'native-demo',config.vocab_size)
+assert bank['entries'][row_key(rows[1])]['whole_answer_gain']
+assert all(p['target'] in range(config.vocab_size) for e in bank['entries'].values() for p in e['positions'])
+student=clone(base);optimizer=torch.optim.AdamW(student.model.parameters(),lr=.001)
+lesson=bank['entries'][row_key(rows[1])]
+for _ in range(160):
+    stats=distill_step(student.model,champion.model,optimizer,lesson,encode(rows[1]),encode(rows[0]),lr_multiplier=1.,lr_cap=.001)
+    bank['transfer_updates']+=1
+assert correct(student,rows[0]) and correct(student,rows[1]),'selective student must retain A and acquire B'
+assert digest(champion.model)==champion_digest and all(p.grad is None for p in champion.model.parameters())
+
+with tempfile.TemporaryDirectory() as tmp:
+    path=Path(tmp)/'champion';rng=random.Random(4);ar=random.Random(5)
+    save_session(student,optimizer,rng,ar,{'completed_steps':360},path,fingerprint='native-demo',success_bank=bank)
+    restored,oo,_=restore_champion(path,lambda m:torch.optim.AdamW(m.parameters(),lr=.001),rng,ar,fingerprint='native-demo')
+    saved=json.loads((path/'success_bank.json').read_text())
+    validate_bank(saved,eligible,'native-demo',config.vocab_size)
+    assert saved==bank and correct(restored,rows[0]) and correct(restored,rows[1])
+    assert 'success_bank.json' in json.loads((path/'checkpoint.json').read_text())['files']
+    (path/'success_bank.json').write_text('{}')
+    try:restore_champion(path,lambda m:torch.optim.AdamW(m.parameters(),lr=.001),rng,ar,fingerprint='native-demo')
+    except ValueError:pass
+    else:raise AssertionError('corrupted lesson archive bypassed checkpoint integrity')
+
+# Catch causal off-by-one errors before an optimizer can update any parameter.
+bad=copy.deepcopy(lesson);bad['positions'][0]['position']=0
+before=digest(student.model)
+try:distill_step(student.model,champion.model,optimizer,bad,encode(rows[1]),encode(rows[0]))
+except ValueError:pass
+else:raise AssertionError('prompt/invalid teacher position accepted')
+assert digest(student.model)==before
+print(json.dumps({'native_complementary_skill_demo':'PASS','base':['A'],'discarded_donor':['B'],
+                  'consolidated_student':['A','B'],'bank':summary(bank),
+                  'scope':'two trained toy tasks in the native transformer; not proof of general chat'}))

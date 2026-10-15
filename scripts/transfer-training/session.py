@@ -37,7 +37,7 @@ def train_step(model,reference,optimizer,ids,labels,anchor_ids,anchor_labels,*,p
             'supervised_tokens':int((labels[:,1:]!=-100).sum()),'reference_tokens':count,
             'gradient_norm_before_clipping':float(norm),'objective':objective}
 
-def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint):
+def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,success_bank=None):
     path=Path(path)
     if path.exists():raise FileExistsError(f'checkpoint already exists: {path.name}')
     tmp=path.with_name(path.name+'.partial');tmp.mkdir(parents=True,exist_ok=False)
@@ -49,6 +49,7 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint):
     _save_optimizer_checkpoint(optimizer,tmp/'optimizer.pt')
     torch.save({'sampler_rng':rng.getstate(),'anchor_rng':anchor_rng.getstate(),
                 'torch_rng':torch.get_rng_state(),'counters':counters,'fingerprint':fingerprint},tmp/'resume.pt')
+    if success_bank is not None:atomic_json(tmp/'success_bank.json',success_bank)
     manifest={'fingerprint':fingerprint,'completed_steps':counters.get('completed_steps',0),
               'files':{str(p.relative_to(tmp)):sha256_file(p) for p in tmp.rglob('*') if p.is_file()}}
     atomic_json(tmp/'checkpoint.json',manifest)

@@ -77,9 +77,9 @@ class TransferTests(unittest.TestCase):
   counters['completed_steps']=11;self.assertTrue(run.selection_needed(counters,force=True))
  def test_exact_seed_and_new_finite_ledger(self):
   self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
-  self.assertEqual(run.SPEC['maximum_training_seconds'],180000)
-  self.assertEqual(run.SPEC['migration_source_fingerprint'],'6e98ceb314d5c373d935f1eeb65665483a97fc8c2b015737843abc4e88df42c0')
-  self.assertEqual(run.SPEC['extension']['source_sha'],'77533b890b86cff2099ee66e29a9b4479cf103e4')
+  self.assertEqual(run.SPEC['maximum_training_seconds'],3600)
+  self.assertEqual(run.SPEC['migration_source_fingerprint'],'7bb6a78ce1859ffdf8fe7a0db5b374cfddb5abace8a349a67be1538004f9856e')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'cf6e52928b7bd92d535928c7a10abb1beea66b8e')
   self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
   self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
   c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
