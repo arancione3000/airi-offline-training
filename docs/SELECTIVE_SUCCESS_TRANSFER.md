@@ -1,3 +1,25 @@
+# One evolving AIRI model
+
+The native model keeps the stable identity `airi-native`. Experimental candidates are temporary donors. The system stores verified training lessons before discarding a regressing candidate and tries to consolidate **one language/task family at a time into the current champion**. It does not copy an entire failed donor over the champion.
+
+Each transaction is bounded to 32 optimizer updates drawn from the same one-hour pilot ledger. Every attempted update counts, including rejected transactions. After a transaction, all original development gates and preservation of each previously correct development answer must pass. A failed transaction restores both champion weights and Adam, preserving previously accepted skills, the lesson bank, exploration RNG and spent compute. Repeated unsuccessful identical lessons receive a bounded backoff. A successful transaction advances the same model identity by one internal revision.
+
+## Stable access
+
+After an immutable selected checkpoint is uploaded completely, `models/AIRI_CURRENT.json` on branch `airi-model-current` is atomically updated with a GitHub contents SHA compare-and-swap. It names the same model identity, its revision, verified weight lineage, immutable checkpoint and hashes of all native model files. A candidate, partial upload, skipped revision or stale lineage cannot advance this reference. A rollback with unchanged champion weights does not move it.
+
+The channel is initialized by the first actual pilot save, not by the read-only preflight. The consumer command, with the project's native dependencies installed, is:
+
+```bash
+python scripts/transfer-training/chat_current.py --cache airi-current-cache
+```
+
+The consumer resolves and verifies the current native model automatically and checks for accepted revisions between messages, keeping conversation history. No manual release tag selection is required. Existing separate desktop/web applications are not silently rewired by adding this consumer. The model remains experimental and its general conversation quality is not established.
+
+The old authorized fifty-hour chain remains frozen. This version replaces the pending **same one-hour pilot**, rather than adding another training budget. The automatic controller requires a successful preflight at the exact new template commit, waits for the verified fifty-hour terminal, creates the successor once, and disables itself at the end of that pilot. It does not authorize infinite compute or promise indefinite improvement.
+
+---
+
 # Selective success transfer for AIRI
 
 A rejected native candidate can improve some outputs and regress on others. Before rollback, this runner mines a rotating, stratified sample from the **existing authored training set only**, and stores better gold-token distributions in `success_bank.json`. The checkpoint manifest covers this file along with the native weights and Adam state. Rollback restores weights and Adam but retains the bank in memory; later checkpoints and jobs restore the accumulated lessons.
