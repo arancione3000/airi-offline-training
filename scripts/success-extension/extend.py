@@ -8,12 +8,12 @@ import re
 import subprocess
 from urllib.parse import quote
 
-SOURCE_BRANCH = 'dialogue-success-transfer-20261015'
+SOURCE_BRANCH = 'dialogue-human-extra50h-20261013'
 SOURCE_SHA = 'cf6e52928b7bd92d535928c7a10abb1beea66b8e'
 SOURCE_FP = '7bb6a78ce1859ffdf8fe7a0db5b374cfddb5abace8a349a67be1538004f9856e'
 SOURCE_SECONDS = 180000
 EXTRA_SECONDS = 3600
-BRANCH = 'dialogue-human-extra50h-20261013'
+BRANCH = 'dialogue-success-transfer-20261015'
 REQUEST = 'thomas-selective-native-success-transfer-20261015'
 WORKFLOW = 'airi-success-background.yml'
 SOURCE_WORKFLOW = 'airi-human-background.yml'

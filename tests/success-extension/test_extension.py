@@ -48,6 +48,13 @@ class Fake:
     def asset(self,item):return copy.deepcopy(self.result if item['id']==1 else self.index)
 
 class ControllerTests(unittest.TestCase):
+    def test_source_and_destination_match_authorized_deployment(self):
+        self.assertEqual(e.SOURCE_BRANCH,'dialogue-human-extra50h-20261013')
+        self.assertEqual(e.BRANCH,'dialogue-success-transfer-20261015')
+        self.assertNotEqual(e.SOURCE_BRANCH,e.BRANCH)
+        self.assertEqual(e.SOURCE_WORKFLOW,'airi-human-background.yml')
+        self.assertEqual(e.WORKFLOW,'airi-success-background.yml')
+
     def test_source_completion_rejects_invalid_provenance_and_partial_budget(self):
         for change in ['partial','nan','infinite','continued','fp','duplicate','wrongsha','live','draft']:
             result,index,release,run=fixture()
