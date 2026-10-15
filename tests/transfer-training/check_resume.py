@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-trai
 import torch
 from generalist_lm.runtime import GeneralistRuntime
 from generalist_lm.model import CausalTransformerLM,GeneralistLMConfig
-from session import train_step,save_session,restore_session
+from session import train_step,save_session,restore_session,restore_champion
 
 torch.set_num_threads(2);torch.manual_seed(12)
 c=GeneralistLMConfig(d_model=32,n_heads=2,n_layers=1,d_ff=64,context_length=32)
@@ -18,11 +18,21 @@ with tempfile.TemporaryDirectory() as tmp:
  path=Path(tmp)/'champion';rng=random.Random(42);ar=random.Random(43)
  save_session(r,o,rng,ar,dict(completed_steps=27444),path,fingerprint='recovery-check')
  restored,oo,payload=restore_session(path,f,fingerprint='recovery-check')
+ saved_champion_parameters=[p.detach().clone() for p in restored.model.parameters()]
  train_step(r.model,ref.model,o,ids,labels,ids,labels)
  train_step(restored.model,ref.model,oo,ids,labels,ids,labels)
  assert all(torch.equal(a,b) for a,b in zip(r.model.parameters(),restored.model.parameters()))
  assert payload['sampler_rng']==rng.getstate()
  print('Native champion + Adam recovery: next update bitwise identical; sampler RNG retained.')
+
+ # A rollback restores the saved model and Adam while retaining the later exploration stream.
+ rng.random();ar.random();torch.rand(3)
+ expected_rng=rng.getstate();expected_ar=ar.getstate();expected_torch=torch.get_rng_state().clone()
+ rolled,rolled_opt,_=restore_champion(path,f,rng,ar,fingerprint='recovery-check')
+ assert all(torch.equal(a,b) for a,b in zip(saved_champion_parameters,rolled.model.parameters()))
+ assert rng.getstate()==expected_rng and ar.getstate()==expected_ar and torch.equal(torch.get_rng_state(),expected_torch)
+ assert rolled_opt.state_dict()['state']
+ print('Champion rollback restores model/Adam and keeps the later exploration stream.')
 
 from context_curriculum import build_context
 from foundation_data import build_foundation
@@ -78,3 +88,20 @@ for _ in range(32):
 after=masked_loss()
 assert after<before*.75,(before,after)
 print('Real masked causal gradient smoke test: loss decreases by more than 25%.')
+
+# The frozen external corpus must also fit the actual native tokenizer exactly.
+from human_data import load_corpus,context_size
+import json
+corpus_path=Path(__file__).resolve().parents[2]/'data/oasst2'
+manifest=json.loads((corpus_path/'MANIFEST.json').read_text())
+corpus=load_corpus(corpus_path,manifest['pins'])
+for rows in corpus.values():
+ for row in rows:
+  ids,labels=encode_sft_example(SFTExample.from_dict(row),tok,1024,require_complete=True)
+  prompt=tok.serialize_messages(row['messages'][:-1],add_generation_prompt=True)
+  target=tok.encode(row['messages'][-1]['content'],eos=True)
+  assert len(prompt)+len(target)==context_size(row['messages'])
+  assert ids[:len(prompt)].tolist()==prompt
+  assert labels[:len(prompt)].tolist()==[-100]*len(prompt)
+  assert labels[len(prompt):len(prompt)+len(target)].tolist()==target
+print('Frozen human corpus fits native tokenizer; complete targets and histories verified.')

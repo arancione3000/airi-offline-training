@@ -33,6 +33,19 @@ def gh(*args):
     return subprocess.check_output(['gh', *map(str, args)], text=True).strip()
 
 
+def finalize_release(tag, repo, *, attempts=4, pause=time.sleep):
+    """Retry publication of the already uploaded immutable checkpoint."""
+    if attempts < 1:
+        raise ValueError('at least one publication attempt required')
+    for attempt in range(attempts):
+        try:
+            return gh('release', 'edit', tag, '--repo', repo, '--draft=false', '--latest=false')
+        except subprocess.CalledProcessError:
+            if attempt + 1 == attempts:
+                raise
+            pause(2 ** attempt)
+
+
 def best_effort_upload(upload, *, attempts=4, pause=time.sleep):
     """Retry non-critical telemetry without aborting model training."""
     if attempts < 1:
@@ -213,7 +226,7 @@ class ReleasePublisher:
            'Offline experiment only. No live promotion. SHA256 index committed after assets.', '--draft', '--prerelease')
         gh('release', 'upload', tag, *[dest / x['name'] for x in archives], '--repo', repo)
         gh('release', 'upload', tag, index, '--repo', repo)
-        gh('release', 'edit', tag, '--repo', repo, '--draft=false', '--latest=false')
+        finalize_release(tag, repo)
         self.next_release = tag
         # Bounded local disk use; previously committed releases remain available.
         shutil.rmtree(dest)
