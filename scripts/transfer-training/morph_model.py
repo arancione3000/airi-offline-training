@@ -12,6 +12,16 @@ def new_state(weights_digest):
             'round': 0, 'attempted_updates': 0, 'skills': {}, 'history': []}
 
 
+def inherit_state(previous, weights_digest):
+    if previous is None:
+        return new_state(weights_digest)
+    if (previous['schema']!=1 or previous['model_id']!=MODEL_ID
+            or previous['weights_digest']!=weights_digest or not isinstance(previous['revision'],int)
+            or isinstance(previous['revision'],bool) or previous['revision']<0):
+        raise ValueError('cannot reset or attach a different AIRI model lineage')
+    return copy.deepcopy(previous)
+
+
 def adopt(state, weights_digest, *, step, reason):
     if weights_digest == state['weights_digest']:
         raise ValueError('unchanged weights cannot become a new model revision')

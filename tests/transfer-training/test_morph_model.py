@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-training'))
-from morph_model import new_state,adopt,consolidate,model_record,MODEL_ID
+from morph_model import new_state,inherit_state,adopt,consolidate,model_record,MODEL_ID
 from model_channel import publish_current,transition,validate,BRANCH,PATH
 from chat_current import validate_selected_model
 
@@ -37,6 +37,14 @@ class FakeChannel:
 
 
 class MorphTests(unittest.TestCase):
+    def test_new_training_cycle_inherits_identity_revision_and_skills(self):
+        state=new_state('a'*64);adopt(state,'b'*64,step=20,reason='verified skill')
+        state['skills']['en:copy']={'attempts':3};state['attempted_updates']=40
+        inherited=inherit_state(state,'b'*64)
+        self.assertEqual(inherited,state);self.assertIsNot(inherited,state)
+        self.assertEqual(inherited['revision'],1);self.assertEqual(inherited['attempted_updates'],40)
+        self.assertRaises(ValueError,inherit_state,state,'c'*64)
+
     def test_failed_skill_restores_weights_and_adam_but_not_spent_budget(self):
         model={'A':True,'B':False};optimizer={'moment':5};spent=[];state=new_state('a'*64)
         old_model=copy.deepcopy(model);old_optimizer=copy.deepcopy(optimizer)

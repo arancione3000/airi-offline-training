@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-training'))
 from success_bank import (catalog,row_key,empty_bank,remember,validate_bank,summary,
-                          retains_correct_answers,probe_rows,CAPACITY)
+                          retains_correct_answers,probe_rows,CAPACITY,migrate_bank)
 
 def row(prompt='copy a',answer='a',language='en',family='foundation-copy'):
     return dict(messages=[dict(role='user',content=prompt),dict(role='assistant',content=answer)],
@@ -18,6 +18,16 @@ def donation(r,step=1,gain=.3):
             'whole_answer_gain':False,'scope':'authored training only'}
 
 class SuccessBankTests(unittest.TestCase):
+    def test_cycle_migration_retains_donors_but_excludes_newly_heldout_rows(self):
+        a,b=row(),row('copy b','b');old=catalog([a,b],[]);bank=empty_bank('test')
+        remember(bank,donation(a),old);remember(bank,donation(b),old)
+        eligible=catalog([a,b],[b])
+        next_bank=migrate_bank(bank,eligible,'test','next',3)
+        self.assertEqual(set(next_bank['entries']),{row_key(a)})
+        self.assertEqual(next_bank['entries'][row_key(a)]['source']['fingerprint'],'test')
+        self.assertEqual(next_bank['fingerprint'],'next')
+        self.assertRaises(ValueError,migrate_bank,bank,eligible,'wrong','next',3)
+
     def test_transfer_slots_preserve_human_and_native_replay_for_every_focus(self):
         import run
         for focus in run.SAMPLING_SCHEDULES:
