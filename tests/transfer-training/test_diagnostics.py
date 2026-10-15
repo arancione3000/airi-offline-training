@@ -5,8 +5,10 @@ from composition_data import build_composition,sampling_pools,SEALED_VALUES,PROT
 from foundation_data import build_foundation
 from diagnostics import diagnostic_rows,recipe_phase
 from curriculum import norm
-from policy import reward,improved
+from policy import reward,improved,training_focus,recovery_lr_factor
 import run
+from composition_data import PREVIOUS_SEALED_VALUES
+from collections import Counter
 
 class TransferTests(unittest.TestCase):
  def test_values_and_prompts_of_final_set_are_sealed(self):
@@ -37,11 +39,51 @@ class TransferTests(unittest.TestCase):
   self.assertEqual(reward(m),reward(changed));self.assertFalse(improved(m,changed))
   self.assertFalse(improved(m,{**changed,'legacy_correct':13,'foundation_correct':16}))
  def test_exact_finite_compute_budget(self):
-  c=dict(elapsed_training_seconds=43199,phase=2,completed_steps=run.SPEC['start_step'],conversation_updates=0)
+  c=dict(elapsed_training_seconds=run.SPEC['maximum_training_seconds']-1,phase=2,completed_steps=run.SPEC['start_step'],conversation_updates=0)
   self.assertTrue(run.needs_training(c));c['elapsed_training_seconds']+=1
   self.assertFalse(run.needs_training(c))
  def test_blocked_examples_do_not_enter_training(self):
   train,test=build_composition();blocked=[norm(train[0]['messages'][-2]['content'])]
   filtered,_=build_composition(blocked)
   self.assertTrue(all(norm(m['content']) not in blocked for r in filtered for m in r['messages']))
+ def test_new_cycle_excludes_previous_final_values(self):
+  train,sealed=build_composition()
+  self.assertFalse(set(SEALED_VALUES)&set(PREVIOUS_SEALED_VALUES))
+  self.assertFalse({norm(r['expected']) for r in train}&{norm(v) for v in PREVIOUS_SEALED_VALUES})
+  self.assertEqual({r['expected'] for r in sealed},set(SEALED_VALUES))
+ def test_dialogue_cycle_preserves_replay_and_both_languages(self):
+  counts=Counter(run.sampling_group(i) for i in range(48))
+  self.assertEqual(counts['human-dialogue'],12);self.assertGreaterEqual(counts['native-replay'],3)
+  for group in counts:
+   langs={'it' if i%3!=1 else 'en' for i in range(48) if run.sampling_group(i)==group}
+   self.assertEqual(langs,{'it','en'})
+  for bad in (-1,True,1.5):self.assertRaises(ValueError,run.sampling_group,bad)
+ def test_adaptive_sampling_targets_weakness_and_keeps_replay(self):
+  expected={'context':{'verified-context':4},'dialogue':{'curated-dialogue':6},'foundation':{'composition':5},'retention':{'native-replay':3}}
+  for focus,minimum in expected.items():
+   counts=Counter(run.sampling_group(i,focus) for i in range(16))
+   self.assertEqual(sum(counts.values()),16);self.assertGreaterEqual(counts['native-replay'],2)
+   for group,count in minimum.items():self.assertGreaterEqual(counts[group],max(1,count-2))
+  self.assertRaises(ValueError,run.sampling_group,0,'unknown')
+ def test_weakest_skill_and_bounded_recovery_lr(self):
+  m=dict(context_rates={'it:name':0.,'en:name':0.},context_pair_rate=0.,legacy_correct=14,dialogue_correct=8,foundation_correct=8,foundation_probes=16,repetition=0.,nll=dict(it=1.,en=1.))
+  self.assertEqual(training_focus(m),'context')
+  self.assertEqual([recovery_lr_factor(i) for i in range(5)],[1.,.5,.25,.25,.25])
+  for bad in (-1,True):self.assertRaises(ValueError,recovery_lr_factor,bad)
+ def test_boundary_does_not_penalize_an_already_selected_step(self):
+  counters={'completed_steps':10,'selected_at_step':10}
+  self.assertFalse(run.selection_needed(counters,force=True))
+  self.assertTrue(run.selection_needed(counters,force=False))
+  counters['completed_steps']=11;self.assertTrue(run.selection_needed(counters,force=True))
+ def test_exact_seed_and_new_finite_ledger(self):
+  self.assertEqual(run.SPEC['migration_source_release'],run.SPEC['extension']['seed_release'])
+  self.assertEqual(run.SPEC['maximum_training_seconds'],3600)
+  self.assertEqual(run.SPEC['migration_source_fingerprint'],'7bb6a78ce1859ffdf8fe7a0db5b374cfddb5abace8a349a67be1538004f9856e')
+  self.assertEqual(run.SPEC['extension']['source_sha'],'cf6e52928b7bd92d535928c7a10abb1beea66b8e')
+  self.assertEqual(run.SPEC['start_step'],run.SPEC['extension']['seed_step'])
+  self.assertNotEqual(run.SPEC['fingerprint'],run.SPEC['migration_source_fingerprint'])
+  c=dict(completed_steps=run.SPEC['start_step']+1,conversation_updates=1,elapsed_training_seconds=0.,phase=0)
+  self.assertTrue(run.needs_training(c));c['completed_steps']+=1
+  self.assertRaises(ValueError,run.needs_training,c)
 if __name__=='__main__':unittest.main()
+

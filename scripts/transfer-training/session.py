@@ -37,7 +37,7 @@ def train_step(model,reference,optimizer,ids,labels,anchor_ids,anchor_labels,*,p
             'supervised_tokens':int((labels[:,1:]!=-100).sum()),'reference_tokens':count,
             'gradient_norm_before_clipping':float(norm),'objective':objective}
 
-def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint):
+def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,success_bank=None):
     path=Path(path)
     if path.exists():raise FileExistsError(f'checkpoint already exists: {path.name}')
     tmp=path.with_name(path.name+'.partial');tmp.mkdir(parents=True,exist_ok=False)
@@ -49,6 +49,7 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint):
     _save_optimizer_checkpoint(optimizer,tmp/'optimizer.pt')
     torch.save({'sampler_rng':rng.getstate(),'anchor_rng':anchor_rng.getstate(),
                 'torch_rng':torch.get_rng_state(),'counters':counters,'fingerprint':fingerprint},tmp/'resume.pt')
+    if success_bank is not None:atomic_json(tmp/'success_bank.json',success_bank)
     manifest={'fingerprint':fingerprint,'completed_steps':counters.get('completed_steps',0),
               'files':{str(p.relative_to(tmp)):sha256_file(p) for p in tmp.rglob('*') if p.is_file()}}
     atomic_json(tmp/'checkpoint.json',manifest)
@@ -68,4 +69,11 @@ def restore_session(path,optimizer_factory,*,fingerprint):
     optimizer=optimizer_factory(runtime.model)
     _load_optimizer_checkpoint(optimizer,path/'optimizer.pt')
     torch.set_rng_state(payload['torch_rng'])
+    return runtime,optimizer,payload
+
+def restore_champion(path,optimizer_factory,rng,anchor_rng,*,fingerprint):
+    """Restore model/Adam from the champion while continuing the exploration stream."""
+    sampler_state=rng.getstate();anchor_state=anchor_rng.getstate();torch_state=torch.get_rng_state()
+    runtime,optimizer,payload=restore_session(path,optimizer_factory,fingerprint=fingerprint)
+    rng.setstate(sampler_state);anchor_rng.setstate(anchor_state);torch.set_rng_state(torch_state)
     return runtime,optimizer,payload

@@ -1,0 +1,38 @@
+name: AIRI selective transfer controller
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI human corpus learning, AIRI selective skill consolidation]
+    types: [completed]
+  schedule:
+    - cron: '11,31,51 * * * *'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-single-selective-transfer-20261015
+  cancel-in-progress: false
+jobs:
+  continue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      AIRI_SUCCESS_TEMPLATE: ${{ github.workspace }}/success-template
+      AIRI_FROZEN_SOURCE: ${{ github.workspace }}/source-cycle
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: f6e627f3202828a3295e99a4177687aaac4549e6
+          path: success-template
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: cf6e52928b7bd92d535928c7a10abb1beea66b8e
+          path: source-cycle
+          persist-credentials: false
+      - name: Verify bounded controller and exact template
+        run: python -m unittest discover -s tests/success-extension -v
+      - name: Wait for completion or start the verified native pilot
+        run: python scripts/success-extension/extend.py
