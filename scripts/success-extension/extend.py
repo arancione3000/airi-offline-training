@@ -17,8 +17,8 @@ BRANCH = 'dialogue-success-transfer-20261015'
 REQUEST = 'thomas-selective-native-success-transfer-20261015'
 WORKFLOW = 'airi-success-background.yml'
 SOURCE_WORKFLOW = 'airi-human-background.yml'
-TEMPLATE_SHA = 'f6e627f3202828a3295e99a4177687aaac4549e6'
-TEMPLATE_BRANCH = 'success-transfer-template-20261015'
+TEMPLATE_SHA = '2daaf642accd354eb21746f07fb153e7ffe9b7ec'
+TEMPLATE_BRANCH = 'morph-model-template-20261015'
 PREFIX = 'scripts/transfer-training/'
 ACTIVE = {'in_progress', 'queued', 'requested', 'waiting', 'pending'}
 
@@ -119,7 +119,9 @@ def build_files(source, terminal, index, release, source_run, template=None):
     spec=json.loads(template[PREFIX+'SPEC.json'])
     if (spec['success_transfer']['request'] != REQUEST
             or spec['success_transfer']['source_sha'] != SOURCE_SHA
-            or spec['maximum_training_seconds'] != EXTRA_SECONDS):
+            or spec['maximum_training_seconds'] != EXTRA_SECONDS
+            or spec.get('morph_model',{}).get('model_id') != 'airi-native'
+            or spec['morph_model'].get('same_optimizer_budget') is not True):
         raise ValueError('wrong selective transfer template')
     for name,digest in spec['script_sha256'].items():
         if sha(template[PREFIX+name]) != digest:

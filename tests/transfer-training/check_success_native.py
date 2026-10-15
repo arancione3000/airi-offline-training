@@ -85,3 +85,39 @@ assert digest(student.model)==before
 print(json.dumps({'native_complementary_skill_demo':'PASS','base':['A'],'discarded_donor':['B'],
                   'consolidated_student':['A','B'],'bank':summary(bank),
                   'scope':'two trained toy tasks in the native transformer; not proof of general chat'}))
+
+# Exercise the exact automatic per-skill transaction used by the real runner.
+from morph_model import new_state,adopt,consolidate
+morph=clone(base);morph_opt=torch.optim.AdamW(morph.model.parameters(),lr=.002)
+state=new_state(digest(morph.model));spent=[]
+initial_model=copy.deepcopy(morph.model.state_dict());initial_opt=copy.deepcopy(morph_opt.state_dict())
+def learn(entry):
+    distill_step(morph.model,champion.model,morph_opt,entry,encode(entry['row']),encode(rows[0]),lr_multiplier=1.,lr_cap=.002)
+    spent.append(1)
+def restore_initial():
+    morph.model.load_state_dict(initial_model);morph_opt.load_state_dict(initial_opt)
+def assess():return {'A':correct(morph,rows[0]),'B':correct(morph,rows[1])}
+identity=id(morph.model)
+result=consolidate(state,bank,{'A':True,'B':False},train=learn,evaluate=assess,restore=restore_initial,
+                   can_train=lambda:True,can_adopt=lambda before,after:after['A'] and after['B'],
+                   step=lambda:len(spent),max_updates=64)
+assert result['action']=='skill_accepted',(result,assess())
+adopt(state,digest(morph.model),step=len(spent),reason='native verified skill B')
+assert id(morph.model)==identity and state['model_id']=='airi-native' and state['revision']==1
+accepted_model=copy.deepcopy(morph.model.state_dict());accepted_opt=copy.deepcopy(morph_opt.state_dict())
+def restore_accepted():
+    morph.model.load_state_dict(accepted_model);morph_opt.load_state_dict(accepted_opt)
+# An update with no new verified capability is rejected; A+B remain intact.
+before_digest=digest(morph.model)
+result=consolidate(state,bank,assess(),train=learn,evaluate=assess,restore=restore_accepted,
+                   can_train=lambda:True,can_adopt=lambda before,after:any(not before[k] and after[k] for k in before),
+                   step=lambda:len(spent),max_updates=4)
+assert result['action']=='skill_rejected' and digest(morph.model)==before_digest and assess()=={'A':True,'B':True}
+actual=morph_opt.state_dict()
+for key,values in accepted_opt['state'].items():
+    for name,value in values.items():
+        assert torch.equal(actual['state'][key][name],value) if torch.is_tensor(value) else actual['state'][key][name]==value
+assert len(spent)==68 and state['attempted_updates']==68
+print(json.dumps({'native_single_model_transaction':'PASS','identity':state['model_id'],'revision':state['revision'],
+                  'verified_capabilities':['A','B'],'rejected_attempt_restores_weights_and_adam':True,
+                  'all_attempted_updates_counted':len(spent)}))

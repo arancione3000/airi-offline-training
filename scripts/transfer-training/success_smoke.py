@@ -9,6 +9,8 @@ from generalist_lm.runtime import GeneralistRuntime
 from session import train_step, save_session, restore_session
 from success_bank import empty_bank, validate_bank, summary, row_key
 from success_transfer import harvest, distill_step
+from morph_model import new_state,consolidate,model_record
+from chat_current import validate_selected_model
 
 
 def real_checkpoint_smoke(donor, optimizer, checkpoint, eligible, encode, anchors, fingerprint, state_digest):
@@ -52,9 +54,32 @@ def real_checkpoint_smoke(donor, optimizer, checkpoint, eligible, encode, anchor
         validate_bank(recovered,eligible,fingerprint,student.config.vocab_size)
         if recovered != bank or state_digest(restored.model) != state_digest(student.model):
             raise AssertionError('native bank/checkpoint restart mismatch')
+        # Validate the stable reader on the exact native model files, including
+        # its configuration; this test never writes the public model channel.
+        manifest=json.loads((path/'checkpoint.json').read_text())
+        ledger=new_state(state_digest(student.model))
+        record=model_record(ledger,release='airi-offline-32-smoke-1-1',fingerprint=fingerprint,step=32,
+                            model_files={n:d for n,d in manifest['files'].items() if n.startswith('model/')})
+        validate_selected_model(path,record)
+        before_transaction=state_digest(student.model)
+        def learn(entry):
+            distill_step(student.model,champion.model,optimizer,entry,encode(entry['row']),anchor,
+                         lr_multiplier=1.,lr_cap=1e-5)
+        def restore_transaction():
+            nonlocal student,optimizer
+            student,optimizer,_=restore_session(path,lambda m:torch.optim.AdamW(m.parameters(),lr=1e-5),fingerprint=fingerprint)
+        result=consolidate(ledger,bank,{},train=learn,evaluate=lambda:{},restore=restore_transaction,
+                           can_train=lambda:True,can_adopt=lambda before,after:False,
+                           step=lambda:36,max_updates=4)
+        if result['action']!='skill_rejected' or state_digest(student.model)!=before_transaction:
+            raise AssertionError('actual native skill transaction failed to preserve prior weights')
+        if ledger['attempted_updates']!=4:
+            raise AssertionError('discarded native updates disappeared from compute ledger')
     print(json.dumps({'phase':'real native selective transfer integration PASS',
                       'checkpoint':str(checkpoint),'parameters':sum(p.numel() for p in student.model.parameters()),
                       'initial_transfer_loss':losses[0],'final_transfer_loss':losses[-1],
-                      'bank':summary(bank),'champion_unchanged':True,'optimizer_updates':32,
+                      'bank':summary(bank),'champion_unchanged':True,'optimizer_updates':36,
+                      'single_model_identity':record['model_id'],'transaction_rollback_verified':True,
+                      'stable_reader_integrity_verified':True,
                       'scope':'ephemeral gradient and restart check; not evidence of conversational improvement',
                       'live_promoted':False}),flush=True)

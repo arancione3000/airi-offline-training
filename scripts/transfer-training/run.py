@@ -282,8 +282,13 @@ def main():
     else:
         best_path=transport.load_release(counters['best_release'],root/'champion-cache')
         best_fingerprint=transport.SOURCE_FINGERPRINTS.get(counters['best_release'],SPEC['fingerprint'])
+    from morph_model import new_state, adopt, consolidate, model_record
+    from model_channel import Client as ModelClient, publish_current
+    counters.setdefault('morph',new_state(legacy_run.state_digest(runtime.model)))
     def load_protected_champion():
-        protected = GeneralistRuntime.from_checkpoint(best_path/'model')
+        stream=torch.get_rng_state()
+        try:protected = GeneralistRuntime.from_checkpoint(best_path/'model')
+        finally:torch.set_rng_state(stream)
         protected.model.eval()
         for parameter in protected.model.parameters(): parameter.requires_grad_(False)
         return protected
@@ -295,7 +300,16 @@ def main():
         counters['success_bank']=bank_summary(bank)
         save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
         publisher.publish(path,extra_files=extras)
-        if champion:best_path=path;best_fingerprint=SPEC['fingerprint']
+        if champion:
+            best_path=path;best_fingerprint=SPEC['fingerprint']
+            state=counters['morph']
+            if legacy_run.state_digest(runtime.model)!=state['weights_digest']:
+                raise ValueError('stable identity must reference the selected champion weights')
+            record=model_record(state,release=publisher.next_release,fingerprint=SPEC['fingerprint'],
+                                step=counters['completed_steps'],
+                                model_files={n:d for n,d in json.loads((path/'checkpoint.json').read_text())['files'].items() if n.startswith('model/')})
+            # Publish the pointer only after its immutable checkpoint is complete.
+            counters['model_channel']=publish_current(ModelClient(os.environ['GITHUB_REPOSITORY']),record,os.environ['GITHUB_SHA'])
         for old in out.glob('checkpoint-*'):
             if old!=path and old!=best_path:shutil.rmtree(old)
     def select_candidate(reason,*,force=False):
@@ -321,26 +335,64 @@ def main():
         counters['stagnant_rounds']=0 if accepted else counters['stagnant_rounds']+1
         action='continue_candidate'
         if accepted:
+            adopt(counters['morph'],legacy_run.state_digest(runtime.model),
+                  step=counters['completed_steps'],reason='independently verified candidate')
             counters['champion']=assessment;action='accepted'
-            stage=unlocked_stage(assessment,counters['curriculum_stage'])
-            if stage!=counters['curriculum_stage']:
-                counters['curriculum_stage']=stage;counters['stage_changes'].append({'step':counters['completed_steps'],'stage':stage})
         elif force or recover_best(counters['stagnant_rounds']):
             runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
             counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
             apply_learning_rate()
+            def restore_transaction():
+                nonlocal runtime,opt
+                runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+                apply_learning_rate()
+            def learn_lesson(entry):
+                from success_transfer import distill_step
+                tick=time.monotonic()
+                stats=distill_step(runtime.model,protected_champion.model,opt,entry,encode(entry['row']),
+                                   rng.choice(anchors),lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
+                                   lr_cap=SPEC['success_transfer']['lr_cap'])
+                counters['elapsed_training_seconds']+=time.monotonic()-tick
+                counters['conversation_updates']+=1;counters['completed_steps']+=1
+                counters['supervised_tokens']+=stats['supervised_tokens'];counters['reference_tokens']+=stats['reference_tokens']
+                bank['transfer_updates']+=1
+                group='morph-consolidation-'+entry['row']['language']
+                counters.setdefault('updates_by_group',{})[group]=counters.setdefault('updates_by_group',{}).get(group,0)+1
+            result=consolidate(counters['morph'],bank,champion,train=learn_lesson,
+                               evaluate=lambda:evaluate(runtime),restore=restore_transaction,
+                               can_train=lambda:needs_training(counters),
+                               can_adopt=lambda a,b:quality_improved(a,b) and retains_correct_answers(a,b),
+                               step=lambda:counters['completed_steps'],
+                               max_updates=SPEC['morph_model']['updates_per_skill'])
+            counters['last_consolidation']={k:v for k,v in result.items() if k!='assessment'}
+            if result['action']=='skill_accepted':
+                adopt(counters['morph'],legacy_run.state_digest(runtime.model),
+                      step=counters['completed_steps'],reason='selective consolidation: '+result['skill'])
+                counters['champion']=result['assessment'];action='consolidated'
+                print(json.dumps({'phase':'single AIRI model acquired verified skill',
+                                  'model_id':counters['morph']['model_id'],'revision':counters['morph']['revision'],
+                                  'skill':result['skill']}),flush=True)
+        if action in {'accepted','consolidated'}:
+            stage=unlocked_stage(counters['champion'],counters['curriculum_stage'])
+            if stage!=counters['curriculum_stage']:
+                counters['curriculum_stage']=stage;counters['stage_changes'].append({'step':counters['completed_steps'],'stage':stage})
         counters['training_focus']=training_focus(counters['champion'])
         counters['last_assessment']=counters['champion']
         counters['selection_history'].append({'step':counters['completed_steps'],'reason':reason,'action':action,'focus':counters['training_focus'],'effective_learning_rate':counters['effective_learning_rate']})
-        if action in {'accepted','rolled_back'}:
+        if action in {'accepted','rolled_back','consolidated'}:
             counters['selected_at_step']=counters['completed_steps']
             counters['best_release']=publisher.release_tag(counters['completed_steps'])
             save(champion=True);last_save_seconds=counters['elapsed_training_seconds']
-            if action == 'accepted':
+            if action in {'accepted','consolidated'}:
                 del protected_champion
                 gc.collect()
                 protected_champion = load_protected_champion()
         return action
+    # Initialize the stable model once; later rollback saves leave its pointer
+    # untouched. Updating the same identity never requires a manual checkpoint swap.
+    if args.release==transport.SEED_TAG:
+        counters['best_release']=publisher.release_tag(counters['completed_steps'])
+        save(champion=True)
     started=time.monotonic();next_action=None
     last_save_seconds=counters['elapsed_training_seconds']
     authored_by={lang:[r for r in authored if r['language']==lang and not r['family'].startswith(('extra-','context-','foundation-'))] for lang in ['it','en']}

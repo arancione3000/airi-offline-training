@@ -45,6 +45,8 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,su
         'production_qualified':False,'role':'offline-conversation-training-checkpoint',
         'fingerprint':fingerprint,'attempted_supervised_tokens':counters.get('supervised_tokens',0),
         'accepted_live_tokens':0,'completed_steps':counters.get('completed_steps',0),
+        'model_id':counters.get('morph',{}).get('model_id','airi-native'),
+        'model_revision':counters.get('morph',{}).get('revision',0),
     })
     _save_optimizer_checkpoint(optimizer,tmp/'optimizer.pt')
     torch.save({'sampler_rng':rng.getstate(),'anchor_rng':anchor_rng.getstate(),

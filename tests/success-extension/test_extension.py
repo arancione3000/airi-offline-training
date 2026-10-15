@@ -125,6 +125,8 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(after['start_step'],400000);self.assertEqual(after['maximum_training_seconds'],3600)
         self.assertEqual(after['migration_source_fingerprint'],e.SOURCE_FP)
         self.assertEqual(after['script_sha256'],spec['script_sha256'])
+        self.assertEqual(after['morph_model']['model_id'],'airi-native')
+        self.assertTrue(after['morph_model']['same_optimizer_budget'])
         self.assertEqual(after['extension']['template_sha'],e.TEMPLATE_SHA)
         changed=dict(t);changed[e.PREFIX+'success_bank.py']+=b'\n# changed'
         self.assertRaises(ValueError,e.build_files,source,result,index,release,run,changed)
