@@ -1,10 +1,10 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 363597,
+  "start_step": 402895,
   "max_steps": 1000000,
-  "pilot_step": 363597,
-  "migration_source_release": "airi-offline-363597-38789001313-1-3",
+  "pilot_step": 402895,
+  "migration_source_release": "airi-offline-402895-38849120142-1-7",
   "migration_source_fingerprint": "7bb6a78ce1859ffdf8fe7a0db5b374cfddb5abace8a349a67be1538004f9856e",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
@@ -52,10 +52,12 @@
     "request": "thomas-selective-native-success-transfer-20261015",
     "source_sha": "cf6e52928b7bd92d535928c7a10abb1beea66b8e",
     "source_branch": "dialogue-human-extra50h-20261013",
-    "seed_release": "airi-offline-363597-38789001313-1-3",
-    "seed_step": 363597,
+    "source_run": 38849120142,
+    "seed_release": "airi-offline-402895-38849120142-1-7",
+    "seed_step": 402895,
+    "index_sha256": "fabe83918af237a1c239888a23558575f4a5a45d1e3ae35fb5b006177baf7773",
     "additional_training_seconds": 3600,
-    "seed_selection": "development branch preflight seed; production experiment will be re-pinned to verified fifty-hour terminal by controller"
+    "template_sha": "23f944e09ce4f8ee29f6999cb0322ae9bc0459e4"
   },
   "recovery_lr_factors": [
     1,
@@ -123,5 +125,5 @@
     "same_optimizer_budget": true,
     "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
   },
-  "fingerprint": "332a90d7984aba787cd9450eba02ab547244ae5f882ff9a08cba52f111624c82"
+  "fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee"
 }
