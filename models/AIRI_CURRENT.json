@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "model_id": "airi-native",
+  "revision": 0,
+  "weights_digest": "3eeb573f2332f4c8cb59365f49709840292aa4d3e96d901c56657ae001602f77",
+  "parent_weights_digest": null,
+  "checkpoint_release": "airi-offline-402895-38896349855-1-1",
+  "fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee",
+  "completed_steps": 402895,
+  "model_file_sha256": "3bcf533c235546e34f307adedfdbf3f1192c808925e9aa5b423e024c72b57887",
+  "model_files": {
+    "model/model-shard-00002-of-00007-9cf985ec175f.pt": "9cf985ec175f962e43e8e59b8d0eb27f1d641220146534f33be9724766a5d059",
+    "model/model-shard-00005-of-00007-e93f90736b7d.pt": "e93f90736b7d0ea5788cb9a1abc7bc6be9bc4d80d64d5116f43529bbffe4c2b2",
+    "model/tokenizer.json": "1099cf0cd718706212492967cb607034ef5fa8321a3e81125a106761b2d247f3",
+    "model/model-shard-00006-of-00007-c0b89ac1228a.pt": "c0b89ac1228a2629b2254ba64b1adaeb130ad24f73a34d4b98276f261b6adf12",
+    "model/metadata.json": "1f3ffa02b22fc6d212fbb3d9dce5578412273e6ba1dbeec76c835c248dca44cd",
+    "model/model.pt": "3bcf533c235546e34f307adedfdbf3f1192c808925e9aa5b423e024c72b57887",
+    "model/config.json": "184993b3295d4d9d11383e4366cbfbe15713efc6928c029cf23d6b4664423b33",
+    "model/model-shard-00001-of-00007-edc47afa3959.pt": "edc47afa395996cced30f4473b9a2155c9ad7035ba4346f22be296ba9fa020f7",
+    "model/model-shard-00004-of-00007-30319822aab2.pt": "30319822aab2110521211ed9faeeb53dbc3ac439f5bfa183b7e21198f37e336d",
+    "model/model-shard-00003-of-00007-5f5aea19acc9.pt": "5f5aea19acc9b84fda7d6d9a799b03b9b1fa137316335c9fa988bbe6c763a697",
+    "model/model-shard-00007-of-00007-1f0da3618f96.pt": "1f0da3618f96aa62d9a29ee9b6abda037da64b0f400fd26500a26bcc1048d4c7"
+  },
+  "scope": "verified offline champion",
+  "production_qualified": false,
+  "live_promoted": false
+}
