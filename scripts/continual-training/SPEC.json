@@ -1,0 +1,174 @@
+{
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
+  "start_step": 406524,
+  "max_steps": 1000000,
+  "pilot_step": 406524,
+  "migration_source_release": "airi-offline-406524-38897262942-1-3",
+  "migration_source_fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee",
+  "precision": "fp32",
+  "torch_version": "2.14.1+cpu",
+  "recipes": [
+    {
+      "learning_rate": 2e-06,
+      "kl_weight": 1.0
+    },
+    {
+      "learning_rate": 2e-06,
+      "kl_weight": 1.0
+    },
+    {
+      "learning_rate": 2e-06,
+      "kl_weight": 1.0
+    }
+  ],
+  "optimizer_policy": "Native weights and model identity retained; explicit fresh Adam for each independent plasticity trial. Gold training-only conversational memory, current-champion KL and original native replay; no change to independent quality gates.",
+  "schedule": "At most six optimizer hours, 24 independent development evaluations or six consecutive rejections. Checkpoint candidates across job boundaries; rotate three declared recipes, probe at most two smaller weight steps under the same gates, retain bank and champion on rejection, then stop on stagnation.",
+  "promotion": "offline only; no live promotion; original final gates unchanged",
+  "script_sha256": {
+    "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
+    "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
+    "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
+    "continual_learning.py": "cc4a32cb3ca180003ee1bd0c366f3d13254d8c5917155e5464cef0ab35938a57",
+    "continual_smoke.py": "5a35d884c89f6e77fa158b29346fb25b0324940dd76d7df30458a3ca333c8dc3",
+    "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
+    "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
+    "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
+    "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
+    "human_data.py": "2b26293af74816087c2723dae92b32626f98954fccc9ada65de8147ebc8840bc",
+    "legacy_run.py": "954b8ad04187f345d0f0f06d8a52bf0256d24e60a4d9b9cb7c59ace5983501ff",
+    "model_channel.py": "006364236b071727c38b617f4272846ac772065c7b260e80bd97117b9a92766f",
+    "morph_model.py": "872089f167c4ba00e93a87bab7524595bb27a1ffd320a6f78fe2bb5085331206",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
+    "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
+    "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
+    "run.py": "e052fd7d3ed8bffb9f5582ffceca059378fbfcee8ab8a9ad8f0917d43f20fb1c",
+    "session.py": "39896884f19dc00ce2dc13c95019e4813792b187e12fb043e246d8fc63a59027",
+    "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
+    "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
+    "success_transfer.py": "03c997ce79e9d0332387f7918449a74b043122171ab8b466976195e6daf987ef",
+    "transport.py": "dca66c0258b4846dff81367624427763ec7ad7ee4581bfb27774d93fbbbf3d2c"
+  },
+  "maximum_training_seconds": 21600,
+  "extension": {
+    "request": "thomas-repair-continuous-learning-20261017",
+    "source_sha": "50ea0f6a5f836638267eb57faac9354f9a3883b2",
+    "source_branch": "dialogue-success-transfer-20261015",
+    "seed_release": "airi-offline-406524-38897262942-1-3",
+    "seed_step": 406524,
+    "additional_training_seconds": 21600,
+    "source_budget": 3600,
+    "seed_selection": "verified terminal of completed selective consolidation pilot; exact lineage and bank retained"
+  },
+  "recovery_lr_factors": [
+    1,
+    0.5,
+    0.25
+  ],
+  "human_corpus": {
+    "source": "OpenAssistant/oasst2",
+    "revision": "179dd21fc55192153d94adb0e0ce8f69e222bf75",
+    "source_sha256": "a9f240c4c77aa1378364f70d37e753c07ba284e247b019d700e1947a0e5da751",
+    "license": "Apache-2.0",
+    "attribution": "OpenAssistant contributors / LAION-AI; filtered derivative with original text unchanged",
+    "pins": {
+      "train": "2d4d347b0b97991cceeff85f2d3dafaeefad5aabd7b4339422c878dfb20e970e",
+      "development": "0c2e6f4b1c4a5a1a3def5a0e0f604b346075dc0d5db5cbe5592ffc9d1dac33ed",
+      "final": "e2e982c79a69391a57715c713a671784b3c7156e6c918207e729c553d86d3cd6"
+    },
+    "splits": {
+      "train": {
+        "rows": 918,
+        "languages": {
+          "en": 899,
+          "it": 19
+        },
+        "multiturn": 134
+      },
+      "development": {
+        "rows": 44,
+        "languages": {
+          "en": 42,
+          "it": 2
+        },
+        "multiturn": 1
+      },
+      "final": {
+        "rows": 49,
+        "languages": {
+          "en": 47,
+          "it": 2
+        },
+        "multiturn": 6
+      }
+    },
+    "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
+  },
+  "success_transfer": {
+    "schema": 1,
+    "probe_rows": 24,
+    "capacity": 64,
+    "positions_per_row": 8,
+    "lr_multiplier": 1.0,
+    "lr_cap": 1e-05,
+    "archive": "success_bank.json",
+    "source_sha": "50ea0f6a5f836638267eb57faac9354f9a3883b2",
+    "source_fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee",
+    "source_budget": 3600,
+    "request": "thomas-repair-continuous-learning-20261017"
+  },
+  "morph_model": {
+    "model_id": "airi-native",
+    "updates_per_skill": 64,
+    "scope": "one skill transaction from champion; preserve all original gates and each previously correct development answer",
+    "channel_branch": "airi-model-current",
+    "channel_path": "models/AIRI_CURRENT.json",
+    "same_optimizer_budget": true,
+    "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
+  },
+  "continual_learning": {
+    "evaluation_updates": 256,
+    "maximum_rejections": 6,
+    "maximum_evaluations": 24,
+    "profiles": [
+      {
+        "learning_rate": 2e-06,
+        "retention_weight": 2.0,
+        "champion_kl_weight": 2.0
+      },
+      {
+        "learning_rate": 1e-05,
+        "retention_weight": 4.0,
+        "champion_kl_weight": 4.0
+      },
+      {
+        "learning_rate": 5e-07,
+        "retention_weight": 8.0,
+        "champion_kl_weight": 8.0
+      }
+    ],
+    "interpolation_alphas": [
+      0.5,
+      0.25
+    ],
+    "sampling_schedule": [
+      "human-dialogue",
+      "curated-dialogue",
+      "human-dialogue",
+      "old-authored",
+      "human-dialogue",
+      "curated-dialogue",
+      "human-dialogue",
+      "verified-context",
+      "human-dialogue",
+      "curated-dialogue",
+      "human-dialogue",
+      "composition",
+      "human-dialogue",
+      "curated-dialogue",
+      "human-dialogue",
+      "native-replay"
+    ]
+  },
+  "fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56"
+}

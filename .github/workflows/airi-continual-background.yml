@@ -1,0 +1,96 @@
+name: AIRI continual learning repair
+run-name: ${{ inputs.preflight_only == 'true' && 'AIRI continual learning preflight' || 'AIRI continual learning trial' }}
+on:
+  workflow_dispatch:
+    inputs:
+      checkpoint_release:
+        description: Verified checkpoint release
+        required: true
+        default: airi-offline-406524-38897262942-1-3
+        type: string
+      preflight_only:
+        description: Verify runtime without loading or training a checkpoint
+        default: 'false'
+        type: string
+      continuation:
+        description: Finite total job counter
+        default: '0'
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ${{ inputs.preflight_only == 'true' && 'airi-continual-learning-preflight' || 'airi-offline-background-training' }}
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      AIRI_EXPERIMENT_SPEC: scripts/continual-training/SPEC.json
+      GH_TOKEN: ${{ github.token }}
+      CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
+      CONTINUATION: ${{ inputs.continuation }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '10800' }}
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate finite inputs
+        run: |
+          python - <<'PY'
+          import os,re
+          assert re.fullmatch(r'airi-offline-[A-Za-z0-9._-]+',os.environ['CHECKPOINT_RELEASE'])
+          assert re.fullmatch(r'[0-9]{1,2}',os.environ['CONTINUATION']) and int(os.environ['CONTINUATION'])<32
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore immutable source
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: d078e718dfba0d68babd31de90fa55c0beac1951
+          path: source
+          persist-credentials: false
+      - name: Restore immutable native reference
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
+          path: background-work/context-trial
+          persist-credentials: false
+      - name: Verify runner and install exact CPU runtime
+        run: |
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/transfer-training -v
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy>=2,<3'
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+      - name: Verify real native optimizer recovery
+        run: |
+          python tests/transfer-training/check_resume.py
+          python tests/transfer-training/check_success_native.py
+          python tests/transfer-training/check_continual_native.py
+      - name: Audit real source corpus and held-out separation
+        if: inputs.preflight_only == 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds 60 --learning-smoke-only
+      - name: Train, evaluate and save bounded chunk
+        id: train
+        if: inputs.preflight_only != 'true'
+        run: |
+          python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
+      - name: Leave continuation to the checkpoint controller
+        if: inputs.preflight_only != 'true'
+        env:
+          NEXT_ACTION: ${{ steps.train.outputs.next_action }}
+        run: |
+          python - <<'PYCODE'
+          import json,os
+          action=json.loads(os.environ['NEXT_ACTION'])
+          print('Finite experiment stopped.' if action is None else 'Verified checkpoint ready for the single continuation controller.')
+          PYCODE
+      - name: Record result
+        if: inputs.preflight_only != 'true'
+        env:
+          SAVED_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+        run: |
+          printf 'Offline saved checkpoint: %s\nNo live promotion.\n' "$SAVED_RELEASE" >> "$GITHUB_STEP_SUMMARY"

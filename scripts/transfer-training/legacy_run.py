@@ -28,7 +28,7 @@ def select_dialogues(rows,blocked):
     # Exclude exact normalized held-out text in every role, including user prompts.
     return [r for r in rows if not any(norm(m['content']) in blocked for m in r['messages'])]
 
-def prepare(tokenizer):
+def prepare(tokenizer, *, include_dialogue_batches=True):
     assert sha256_file(DATA/'data/train-1024.jsonl')==EXPECTED_DATA
     rows=[json.loads(x) for x in (DATA/'data/train-1024.jsonl').read_text().splitlines()]
     assert len(rows)==10564
@@ -60,7 +60,7 @@ def prepare(tokenizer):
     def encode(values,length):
         return [tuple(v.unsqueeze(0) for v in encode_sft_example(x,tokenizer,length,require_complete=True)) for x in values]
     deck=list(range(len(dialogues)));random.Random(71025).shuffle(deck)
-    return encode(dialogues,1024),{g:encode(v,1024) for g,v in groups.items()},encode(anchors,128),deck,rows
+    return (encode(dialogues,1024) if include_dialogue_batches else []),{g:encode(v,1024) for g,v in groups.items()},encode(anchors,128),deck,rows
 
 def common_metrics(runtime):
     # Comparable target budget; restore real context after every evaluation.

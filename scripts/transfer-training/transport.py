@@ -217,14 +217,20 @@ class ReleasePublisher:
                         z.write(p, str(Path('experiment') / Path(p).name))
             archives.append({'name': archive.name, 'sha256': digest(archive), 'bytes': archive.stat().st_size})
         index = dest / f'AIRI_TRAINING_CHECKPOINT_{step:05d}.json'
-        index.write_text(json.dumps({'completed_steps': step, 'fingerprint': FINGERPRINT,
+        descriptor={'completed_steps': step, 'fingerprint': FINGERPRINT,
                                     'archives': archives, 'production_qualified': False,
-                                    'live_promoted': False}, indent=2))
+                                    'live_promoted': False}
+        state=checkpoint/'AIRI_RUN_STATE.json'
+        if state.exists():
+            sidecar=dest/state.name;shutil.copy2(state,sidecar)
+            descriptor['run_state']={'name':sidecar.name,'sha256':digest(sidecar),'bytes':sidecar.stat().st_size}
+        index.write_text(json.dumps(descriptor, indent=2))
         repo = os.environ['GITHUB_REPOSITORY']
         gh('release', 'create', tag, '--repo', repo, '--target', os.environ['GITHUB_SHA'],
            '--title', f'AIRI offline checkpoint {step}', '--notes',
            'Offline experiment only. No live promotion. SHA256 index committed after assets.', '--draft', '--prerelease')
         gh('release', 'upload', tag, *[dest / x['name'] for x in archives], '--repo', repo)
+        if state.exists():gh('release','upload',tag,dest/state.name,'--repo',repo)
         gh('release', 'upload', tag, index, '--repo', repo)
         finalize_release(tag, repo)
         self.next_release = tag

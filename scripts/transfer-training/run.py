@@ -12,7 +12,9 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SPEC = json.loads((HERE/'SPEC.json').read_text())
+SPEC_PATH = Path(os.environ.get('AIRI_EXPERIMENT_SPEC', str(HERE/'SPEC.json'))).resolve()
+SPEC = json.loads(SPEC_PATH.read_text())
+LEARNING = SPEC.get('continual_learning')
 
 def validate_budget(counters):
     value=counters['elapsed_training_seconds']
@@ -26,7 +28,9 @@ def validate_budget(counters):
 
 def needs_training(counters):
     validate_budget(counters)
-    return counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
+    search=counters.get('learning_search',{})
+    return (not search.get('stopped',False)
+            and counters['elapsed_training_seconds']<SPEC['maximum_training_seconds'])
 
 SAMPLING_SCHEDULES={
     'balanced':('old-authored',)*6+('curated-dialogue',)*6+('composition',)*2+('verified-context','native-replay'),
@@ -69,6 +73,7 @@ def main():
     parser.add_argument('--release',required=True)
     parser.add_argument('--corpus-audit-only',action='store_true')
     parser.add_argument('--success-smoke-only',action='store_true')
+    parser.add_argument('--learning-smoke-only',action='store_true')
     parser.add_argument('--root',type=Path,required=True)
     parser.add_argument('--seconds',type=int,default=10800)
     args=parser.parse_args()
@@ -77,6 +82,9 @@ def main():
     for name,expected in SPEC['script_sha256'].items():
         if sha256_file(HERE/name)!=expected:
             raise ValueError('conversation experiment script changed: '+name)
+    if LEARNING:
+        from continual_learning import validate_configuration
+        validate_configuration(SPEC)
     root=args.root.resolve();root.mkdir(parents=True,exist_ok=True)
     transport.SPEC=SPEC
     transport.FINGERPRINT=SPEC['fingerprint']
@@ -115,9 +123,12 @@ def main():
         raise ValueError('native reference changed')
     torch.set_num_threads(2)
     reference=GeneralistRuntime.from_checkpoint(legacy_run.PARENT)
+    if LEARNING:
+        from continual_learning import cache_tokenizer
+        cache_tokenizer(reference.tokenizer)
     reference_digest=legacy_run.state_digest(reference.model)
     for parameter in reference.model.parameters(): parameter.requires_grad_(False)
-    _,replay,anchors,_,human_rows=legacy_run.prepare(reference.tokenizer)
+    _,replay,anchors,_,human_rows=legacy_run.prepare(reference.tokenizer,include_dialogue_batches=False)
     previous_human_text={norm(m['content']) for r in human_rows for m in r['messages']}
     # Preserve complete human histories and answers, never truncate.
     human_rows=[r for r in human_rows if 2<=len(r['messages'])<=6
@@ -229,6 +240,7 @@ def main():
     factory=lambda model:torch.optim.AdamW(model.parameters(),lr=recipe['learning_rate'],weight_decay=.01)
     source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
     runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint)
+    if LEARNING:cache_tokenizer(runtime.tokenizer)
     rng,anchor_rng=random.Random(),random.Random()
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
     counters=payload['counters']
@@ -236,6 +248,11 @@ def main():
     from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
                               summary as bank_summary, retains_correct_answers, migrate_bank)
     eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
+    if args.learning_smoke_only:
+        from continual_smoke import real_learning_smoke
+        real_learning_smoke(runtime,opt,checkpoint,reference,eligible,human_rows,
+                            encode,anchors,evaluate,legacy_run.state_digest)
+        return
     if args.success_smoke_only:
         from success_smoke import real_checkpoint_smoke
         real_checkpoint_smoke(runtime,opt,checkpoint,eligible,encode,anchors,
@@ -266,15 +283,29 @@ def main():
                         reward,training_focus,unlocked_stage)
     counters.setdefault('rollbacks',0);counters.setdefault('selection_history',[])
     counters.setdefault('training_focus',training_focus(counters['champion']))
+    if LEARNING:
+        counters.setdefault('learning_search',{'consecutive_rejections':0,'evaluations':0,
+                            'accepted_updates':0,'stopped':False,'history':[]})
+        if args.release==transport.SEED_TAG:
+            # The champion's durable Adam remains in its source checkpoint. A
+            # fresh, explicit exploration state avoids inherited stale moments.
+            opt=factory(runtime.model)
+            counters['learning_search']['optimizer_policy']='fresh Adam per independent trial; source champion Adam retained for rollback'
     recipe=SPEC['recipes'][counters['phase']]
     def apply_learning_rate():
+        if LEARNING:
+            from continual_learning import profile_index
+            profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+            for parameter_group in opt.param_groups:parameter_group['lr']=profile['learning_rate']
+            counters['effective_learning_rate']=profile['learning_rate']
+            return
         factor=recovery_lr_factor(counters['rollbacks'],tuple(SPEC.get('recovery_lr_factors',[1.,.5,.25])))
         for parameter_group in opt.param_groups:parameter_group['lr']=recipe['learning_rate']*factor
         counters['effective_learning_rate']=recipe['learning_rate']*factor
     apply_learning_rate()
     out=root/'conversation-results';out.mkdir(exist_ok=True)
     dataset=out/'AUTHORED_CURRICULUM.json';atomic_json(dataset,{'train':authored,'development':heldout,'sealed_transfer':sealed_transfer,'sha256':curriculum_sha})
-    extras=[HERE/name for name in SPEC['script_sha256']]+[HERE/'SPEC.json',dataset]
+    extras=[HERE/name for name in SPEC['script_sha256']]+[SPEC_PATH,dataset]
     extras+=list((data/'data').glob('*.jsonl'))+[data/'CONVERSATION_TEST.json']
     extras+=list(human_directory.glob('*'))
     publisher=transport.ReleasePublisher(root/'releases')
@@ -294,14 +325,32 @@ def main():
         finally:torch.set_rng_state(stream)
         protected.model.eval()
         for parameter in protected.model.parameters(): parameter.requires_grad_(False)
+        if LEARNING:cache_tokenizer(protected.tokenizer)
         return protected
     protected_champion = load_protected_champion()
+    if LEARNING:
+        from continual_learning import retention_rows,verified_memories
+        memory_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
+        memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
+        counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
+                                     'scope':'eligible authored training only; no evaluation answers'}
     def save(*,champion=False):
         nonlocal best_path,best_fingerprint
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
         if path.exists():shutil.rmtree(path)
         counters['success_bank']=bank_summary(bank)
         save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
+        if LEARNING:
+            state={'fingerprint':SPEC['fingerprint'],'completed_steps':counters['completed_steps'],
+                   'elapsed_training_seconds':counters['elapsed_training_seconds'],
+                   'maximum_training_seconds':SPEC['maximum_training_seconds'],
+                   'continue':needs_training(counters),'job_index':int(os.environ.get('CONTINUATION','0')),
+                   'model_id':counters['morph']['model_id'],'revision':counters['morph']['revision'],
+                   'search':counters['learning_search'],'production_qualified':False,'live_promoted':False}
+            atomic_json(path/'AIRI_RUN_STATE.json',state)
+            manifest=json.loads((path/'checkpoint.json').read_text())
+            manifest['files']['AIRI_RUN_STATE.json']=sha256_file(path/'AIRI_RUN_STATE.json')
+            atomic_json(path/'checkpoint.json',manifest)
         publisher.publish(path,extra_files=extras)
         if champion:
             best_path=path;best_fingerprint=SPEC['fingerprint']
@@ -316,12 +365,35 @@ def main():
         for old in out.glob('checkpoint-*'):
             if old!=path and old!=best_path:shutil.rmtree(old)
     def select_candidate(reason,*,force=False):
-        nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds,protected_champion
+        nonlocal runtime,opt,best_path,best_fingerprint,last_save_seconds,protected_champion,memory_rows,memory_by
         if not selection_needed(counters,force=force):return 'already_selected'
         assessment=evaluate(runtime);counters['last_candidate_assessment']=assessment
         counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
         champion=counters['champion']
         accepted=quality_improved(champion,assessment) and retains_correct_answers(champion,assessment)
+        if LEARNING:
+            from continual_learning import rejection_reasons, try_interpolations
+            search=counters['learning_search'];search['evaluations']+=1
+            report={'step':counters['completed_steps'],'learning_rate':counters['effective_learning_rate'],
+                    'reasons':rejection_reasons(champion,assessment),'interpolation':None}
+            if not accepted:
+                blended=try_interpolations(runtime.model,protected_champion.model,
+                    evaluate=lambda:evaluate(runtime),
+                    acceptable=lambda value:quality_improved(champion,value) and retains_correct_answers(champion,value),
+                    alphas=LEARNING['interpolation_alphas'])
+                report['interpolation']=blended['alpha'];report['interpolation_probes']=blended['probes']
+                if blended['alpha'] is not None:
+                    assessment=blended['assessment'];accepted=True
+                    # A merged parameter path has no exact Adam trajectory.
+                    opt=factory(runtime.model);apply_learning_rate()
+            report['accepted']=accepted
+            search['history'].append(report);search['history']=search['history'][-64:]
+            search['consecutive_rejections']=0 if accepted else search['consecutive_rejections']+1
+            search['accepted_updates']+=int(accepted)
+            search['stopped']=(search['consecutive_rejections']>=LEARNING['maximum_rejections']
+                               or search['evaluations']>=LEARNING['maximum_evaluations'])
+            print(json.dumps({'phase':'independent continual-learning decision',**report}),flush=True)
+            if accepted:apply_learning_rate()
         if not accepted:
             # Mine training observations before destructive rollback. Eval rows are
             # deliberately unavailable to harvest() and distill_step().
@@ -341,19 +413,21 @@ def main():
             adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                   step=counters['completed_steps'],reason='independently verified candidate')
             counters['champion']=assessment;action='accepted'
-        elif force or recover_best(counters['stagnant_rounds']):
+        elif LEARNING or force or recover_best(counters['stagnant_rounds']):
             runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+            if LEARNING:opt=factory(runtime.model)
             counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
             apply_learning_rate()
             def restore_transaction():
                 nonlocal runtime,opt
                 runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+                if LEARNING:opt=factory(runtime.model)
                 apply_learning_rate()
             def learn_lesson(entry):
                 from success_transfer import distill_step
                 tick=time.monotonic()
                 stats=distill_step(runtime.model,protected_champion.model,opt,entry,encode(entry['row']),
-                                   rng.choice(anchors),lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
+                                   rng.choice(memory_by[entry['row']['language']]) if LEARNING else rng.choice(anchors),lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
                                    lr_cap=SPEC['success_transfer']['lr_cap'])
                 counters['elapsed_training_seconds']+=time.monotonic()-tick
                 counters['conversation_updates']+=1;counters['completed_steps']+=1
@@ -372,6 +446,12 @@ def main():
                 adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                       step=counters['completed_steps'],reason='selective consolidation: '+result['skill'])
                 counters['champion']=result['assessment'];action='consolidated'
+                if LEARNING:
+                    search=counters['learning_search']
+                    search['consecutive_rejections']=0;search['accepted_updates']+=1
+                    search['stopped']=search['evaluations']>=LEARNING['maximum_evaluations']
+                    search['history'][-1]['consolidated']=True
+                    apply_learning_rate()
                 print(json.dumps({'phase':'single AIRI model acquired verified skill',
                                   'model_id':counters['morph']['model_id'],'revision':counters['morph']['revision'],
                                   'skill':result['skill']}),flush=True)
@@ -390,6 +470,11 @@ def main():
                 del protected_champion
                 gc.collect()
                 protected_champion = load_protected_champion()
+                if LEARNING:
+                    memory_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
+                    memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
+                    counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
+                                                 'scope':'certified correct eligible training answers; no evaluation answers'}
         return action
     # Initialize the stable model once; later rollback saves leave its pointer
     # untouched. Updating the same identity never requires a manual checkpoint swap.
@@ -404,7 +489,8 @@ def main():
     if any(not v for v in human_by.values()):raise ValueError('empty filtered human language')
     while needs_training(counters):
         update=counters['conversation_updates'];lang='it' if update%3!=1 else 'en'
-        sample_group=sampling_group(update,counters['training_focus'])
+        sample_group=(LEARNING['sampling_schedule'][update%16] if LEARNING
+                      else sampling_group(update,counters['training_focus']))
         if sample_group=='human-dialogue':
             batch=encode(rng.choice(human_by[lang]));group='human-dialogue-'+lang
         elif sample_group=='old-authored':
@@ -438,10 +524,18 @@ def main():
         if not needs_training(counters):break
         tick=time.monotonic()
         if lesson is None:
-            stats=train_step(runtime.model,reference.model,opt,*batch,*anchor,kl_weight=recipe['kl_weight'])
+            if LEARNING:
+                from continual_learning import continual_step,profile_index
+                profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+                memories=[memory_by[l][anchor_rng.randrange(len(memory_by[l]))] for l in ('it','en')]
+                stats=continual_step(runtime.model,protected_champion.model,reference.model,opt,batch,memories,anchor,
+                                     retention_weight=profile['retention_weight'],
+                                     champion_kl_weight=profile['champion_kl_weight'])
+            else:stats=train_step(runtime.model,reference.model,opt,*batch,*anchor,kl_weight=recipe['kl_weight'])
         else:
             from success_transfer import distill_step
-            stats=distill_step(runtime.model,protected_champion.model,opt,lesson,batch,anchor,
+            stats=distill_step(runtime.model,protected_champion.model,opt,lesson,batch,
+                               rng.choice(memory_by[lesson['row']['language']]) if LEARNING else anchor,
                                lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
                                lr_cap=SPEC['success_transfer']['lr_cap'])
             bank['transfer_updates']+=1
@@ -455,7 +549,7 @@ def main():
             atomic_json(out/'PROGRESS.json',{**counters,'status':'training','last_update':stats,'live_promoted':False})
             print(json.dumps({'step':counters['completed_steps'],'updates':update,'loss':stats['loss'],'phase':counters['phase']}),flush=True)
             if (update==16 or update%128==0) and needs_training(counters):publisher.progress({**counters,'status':'training','last_update':stats},args.release)
-        if update%1024==0:
+        if update%(LEARNING['evaluation_updates'] if LEARNING else 1024)==0:
             select_candidate('periodic-development')
         # Memorization cannot lower LR. Three fixed phases depend on actual compute,
         # preserved across jobs, rather than correctness on oversampled examples.
@@ -467,7 +561,11 @@ def main():
         if counters['elapsed_training_seconds']-last_save_seconds>=3600:
             save();last_save_seconds=counters['elapsed_training_seconds']
         if update%16==0 and time.monotonic()-started>=args.seconds and needs_training(counters):
-            select_candidate('chunk-boundary',force=True)
+            if LEARNING:
+                # A job boundary is not evidence of a failed learning trial.
+                # Save the unselected candidate and its separate champion ref.
+                save()
+            else:select_candidate('chunk-boundary',force=True)
             next_action={'release':publisher.next_release};break
     if legacy_run.state_digest(reference.model)!=reference_digest or any(p.grad is not None for p in reference.model.parameters()):
         raise ValueError('frozen reference changed')
@@ -488,7 +586,9 @@ def main():
         counters['sealed_transfer']={'correct':sum(r['correct'] for r in sealed_samples),'probes':len(sealed_samples),'samples':sealed_samples,'scope':'final only; excluded from selection and adaptation'}
         counters['human_final']={'samples':[{'messages':r['messages'][:-1],'reference':r['expected'],'response':runtime.chat(r['messages'][:-1],temperature=0,max_new_tokens=128),'language':r['language']} for r in external_final],'scope':'Final-only unseen human conversations; qualitative review required; excluded from selection.'}
         counters['development_scope']='Repeated development checks; not an untouched final test.' 
-        counters['stop_reason']='finite selective-transfer experiment completed; independent quality gates retained'
+        counters['stop_reason']=('stagnation/evaluation limit reached; selected champion retained'
+                                 if counters.get('learning_search',{}).get('stopped')
+                                 else 'finite selective-transfer experiment completed; independent quality gates retained')
         save()
         atomic_json(out/'FINAL_RESULT.json',{'counters':counters,'next_action':None,
                   'maximum_training_seconds':SPEC['maximum_training_seconds'],

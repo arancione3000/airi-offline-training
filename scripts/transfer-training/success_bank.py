@@ -39,7 +39,9 @@ def catalog(training, forbidden):
             continue
         # Human references and self-generated labels need a separate verifier.
         provenance = row.get('provenance', '')
-        if not isinstance(provenance, str) or not provenance.startswith(('authored', 'deterministic')):
+        if not isinstance(provenance, str) or not provenance.startswith((
+                'authored', 'deterministic',
+                'assistant-authored reviewed examples; deterministic variations; not student self-labels')):
             continue
         result[row_key(row)] = copy.deepcopy(row)
     if not result:

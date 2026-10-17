@@ -10,6 +10,10 @@ on:
       - 'tests/expanded-training/**'
       - 'scripts/conversation-training/**'
       - 'tests/conversation-training/**'
+      - 'scripts/continual-training/**'
+      - 'tests/continual-training/**'
+      - '.github/workflows/airi-continual-controller.yml'
+      - '.github/workflows/airi-continual-background.yml'
       - 'scripts/transfer-training/**'
       - 'tests/transfer-training/**'
       - '.github/workflows/airi-transfer-background.yml'
@@ -74,3 +78,5 @@ jobs:
       - run: python -m py_compile scripts/focused-training/*.py
       - run: python -m unittest discover -s tests/transfer-training -v
       - run: python -m py_compile scripts/transfer-training/*.py
+      - run: python -m unittest discover -s tests/continual-training -v
+      - run: python -m py_compile scripts/continual-training/*.py

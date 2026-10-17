@@ -1,0 +1,29 @@
+name: AIRI continual learning controller
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [AIRI continual learning repair]
+    types: [completed]
+  schedule:
+    - cron: '17,47 * * * *'
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: airi-single-continual-learning-20261017
+  cancel-in-progress: false
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify checkpoint controller
+        run: python -m unittest discover -s tests/continual-training -v
+      - name: Resume the same finite experiment
+        run: python scripts/continual-training/control.py
