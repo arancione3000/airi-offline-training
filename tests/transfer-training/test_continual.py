@@ -9,9 +9,27 @@ from continual_learning import retention_rows,profile_index,validate_configurati
 from success_bank import catalog,prompt_key
 from curriculum import build
 from extra_dialogues import build_extra
+from unittest.mock import patch
+import run as runner
 
 
 class ContinualTests(unittest.TestCase):
+    def test_archived_lessons_receive_slots_without_replacing_human_or_native_replay(self):
+        root=Path(__file__).resolve().parents[2]
+        spec=json.loads((root/'scripts/continual-training/SPEC.json').read_text())
+        cfg=spec['continual_learning'];schedule=cfg['sampling_schedule']
+        with patch.object(runner,'LEARNING',cfg):
+            actual=[i for i,g in enumerate(schedule) if runner.success_slot(i,g,True)]
+            self.assertEqual(actual,cfg['success_transfer_slots'])
+            self.assertEqual(len(actual),2)
+            for i,g in enumerate(schedule):
+                if g in {'human-dialogue','native-replay'}:
+                    self.assertFalse(runner.success_slot(i,g,True))
+                self.assertFalse(runner.success_slot(i,g,False))
+        bad=copy.deepcopy(spec);bad['continual_learning']['success_transfer_slots']=[0,15]
+        bad.pop('fingerprint');bad['fingerprint']=hashlib.sha256(json.dumps(bad,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+        self.assertRaises(ValueError,validate_configuration,bad)
+
     def test_reviewed_dialogue_can_donate_but_evaluation_and_human_references_cannot(self):
         authored,heldout=build();extra,development=build_extra(old_validation=heldout)
         foreign=copy.deepcopy(extra[0]);foreign['provenance']={'dataset':'unverified human'}

@@ -51,6 +51,12 @@ def validate_configuration(spec):
     allowed={'human-dialogue','curated-dialogue','old-authored','verified-context','composition','native-replay'}
     if len(schedule)!=16 or set(schedule)-allowed or schedule.count('human-dialogue')<4 or 'native-replay' not in schedule:
         raise ValueError('invalid protected sampling schedule')
+    slots=value.get('success_transfer_slots',[])
+    if (not isinstance(slots,list) or len(slots)>2
+            or any(not isinstance(i,int) or isinstance(i,bool) or not 0<=i<16 for i in slots)
+            or len(set(slots))!=len(slots)
+            or any(schedule[i] in {'human-dialogue','native-replay'} for i in slots)):
+        raise ValueError('archived lesson slots overlap protected replay or are invalid')
     return value
 
 

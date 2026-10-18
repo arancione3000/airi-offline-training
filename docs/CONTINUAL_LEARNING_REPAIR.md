@@ -1,3 +1,17 @@
+# Nuovo ciclo selettivo — 18 ottobre 2026
+
+Il ciclo del17ottobre ha accettato il primo consolidamento (revisione1, dialoghi3/16→4/16, tutte le vecchie risposte corrette conservate), poi si è fermato dopo6rifiuti. Finale indipendente0/64 e chat libera ancora incoerente: nessuna qualificazione production/live.
+
+Su nuova richiesta esplicita, il seguito parte dal terminale immutabile `airi-offline-408572-39057187476-1-9`, fingerprint `10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56`, step408572, conservando revisione1 e banca eleggibile. Nuovo budget esplicito massimo6ore di ottimizzatore,48decisioni o12rifiuti consecutivi,32job; nessun ciclo aggiuntivo automatico.
+
+Correzione: i vecchi slot di banca2/10 cadevano entrambi su `human-dialogue`, quindi il replay ordinario delle lezioni era sempre escluso. Ora la SPEC dichiara slot3/11 e la validazione vieta collisioni con dialoghi umani e replay nativo.8slotumani/16 e1nativo restano protetti;2/16 usano la banca, se non vuota. Test di regressione sull'intero periodo e su banca vuota/collisioni.
+
+Valutazione ogni64update conteggiati, anziché256; profili LR5e-7/1e-7/2e-6 e replay/KL8/8/4. È un tentativo motivato dalle regressioni osservate, non una garanzia di apprendimento. Interpolazioni e consolidamenti mantengono i gate originali e ogni vecchia risposta di sviluppo corretta. Nessuna risposta dei test diventa dato di training, nessun LLM esterno. Rete invariata.
+
+Ramo congelato `dialogue-selective-replay-20261018`; stesso workflow e unico controller aggiornato a questo ramo. Prima avvio: CI e preflight effimero sul checkpoint reale. Il lettore segue il canale stabile; le console storiche non sono riconfigurate.
+
+---
+
 # Native continual learning repair — 17 October 2026
 
 The completed fifty-hour run and one-hour selective-transfer pilot retained the

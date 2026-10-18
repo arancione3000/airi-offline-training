@@ -57,7 +57,8 @@ def selection_needed(counters,*,force=False):
     return not (force and counters.get('selected_at_step')==counters.get('completed_steps'))
 
 def success_slot(update,sample_group,has_lessons):
-    return bool(has_lessons and update%8==2 and sample_group not in {'human-dialogue','native-replay'})
+    slots=LEARNING.get('success_transfer_slots',(2,10)) if LEARNING else (2,10)
+    return bool(has_lessons and update%16 in slots and sample_group not in {'human-dialogue','native-replay'})
 
 def main():
     import torch

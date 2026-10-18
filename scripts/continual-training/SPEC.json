@@ -1,35 +1,35 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 406524,
+  "start_step": 408572,
   "max_steps": 1000000,
-  "pilot_step": 406524,
-  "migration_source_release": "airi-offline-406524-38897262942-1-3",
-  "migration_source_fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee",
+  "pilot_step": 408572,
+  "migration_source_release": "airi-offline-408572-39057187476-1-9",
+  "migration_source_fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 2e-06,
+      "learning_rate": 5e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
+      "learning_rate": 5e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 2e-06,
+      "learning_rate": 5e-07,
       "kl_weight": 1.0
     }
   ],
   "optimizer_policy": "Native weights and model identity retained; explicit fresh Adam for each independent plasticity trial. Gold training-only conversational memory, current-champion KL and original native replay; no change to independent quality gates.",
-  "schedule": "At most six optimizer hours, 24 independent development evaluations or six consecutive rejections. Checkpoint candidates across job boundaries; rotate three declared recipes, probe at most two smaller weight steps under the same gates, retain bank and champion on rejection, then stop on stagnation.",
+  "schedule": "New authorized cycle from revision 1: at most six optimizer hours, 48 development decisions or 12 consecutive rejections. Evaluate every 64 counted updates. Two unprotected slots per sixteen replay archived lessons; preserve all eight human and one native slots. Same independent adoption gates.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
     "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
-    "continual_learning.py": "cc4a32cb3ca180003ee1bd0c366f3d13254d8c5917155e5464cef0ab35938a57",
+    "continual_learning.py": "b1bb4fa7b2c2b5e78a737024632ba0abbc8b8ae4bf8ca10eddc92dd2a100f23a",
     "continual_smoke.py": "5a35d884c89f6e77fa158b29346fb25b0324940dd76d7df30458a3ca333c8dc3",
     "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
     "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
@@ -42,7 +42,7 @@
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "e052fd7d3ed8bffb9f5582ffceca059378fbfcee8ab8a9ad8f0917d43f20fb1c",
+    "run.py": "b86c097aa1c9b0392749103c640417552a64b6d56771c5c66807458b13b29c20",
     "session.py": "39896884f19dc00ce2dc13c95019e4813792b187e12fb043e246d8fc63a59027",
     "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
     "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
@@ -51,14 +51,14 @@
   },
   "maximum_training_seconds": 21600,
   "extension": {
-    "request": "thomas-repair-continuous-learning-20261017",
-    "source_sha": "50ea0f6a5f836638267eb57faac9354f9a3883b2",
-    "source_branch": "dialogue-success-transfer-20261015",
-    "seed_release": "airi-offline-406524-38897262942-1-3",
-    "seed_step": 406524,
+    "request": "thomas-continue-selective-learning-20261018",
+    "source_sha": "c062e370f69b326d71c0831c91cdfb39af525fe4",
+    "source_branch": "dialogue-continual-repair-20261017",
+    "seed_release": "airi-offline-408572-39057187476-1-9",
+    "seed_step": 408572,
     "additional_training_seconds": 21600,
-    "source_budget": 3600,
-    "seed_selection": "verified terminal of completed selective consolidation pilot; exact lineage and bank retained"
+    "source_budget": 21600,
+    "seed_selection": "verified terminal after first accepted revision; retain revision 1, exact weights and eligible bank; new explicitly authorized finite cycle"
   },
   "recovery_lr_factors": [
     1,
@@ -112,10 +112,10 @@
     "lr_multiplier": 1.0,
     "lr_cap": 1e-05,
     "archive": "success_bank.json",
-    "source_sha": "50ea0f6a5f836638267eb57faac9354f9a3883b2",
-    "source_fingerprint": "75bd63410a0f6f26fd6da2af6814c468031431e9c53fc5d1d6144ff47be89aee",
-    "source_budget": 3600,
-    "request": "thomas-repair-continuous-learning-20261017"
+    "source_sha": "c062e370f69b326d71c0831c91cdfb39af525fe4",
+    "source_fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56",
+    "source_budget": 21600,
+    "request": "thomas-continue-selective-learning-20261018"
   },
   "morph_model": {
     "model_id": "airi-native",
@@ -127,24 +127,24 @@
     "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
   },
   "continual_learning": {
-    "evaluation_updates": 256,
-    "maximum_rejections": 6,
-    "maximum_evaluations": 24,
+    "evaluation_updates": 64,
+    "maximum_rejections": 12,
+    "maximum_evaluations": 48,
     "profiles": [
-      {
-        "learning_rate": 2e-06,
-        "retention_weight": 2.0,
-        "champion_kl_weight": 2.0
-      },
-      {
-        "learning_rate": 1e-05,
-        "retention_weight": 4.0,
-        "champion_kl_weight": 4.0
-      },
       {
         "learning_rate": 5e-07,
         "retention_weight": 8.0,
         "champion_kl_weight": 8.0
+      },
+      {
+        "learning_rate": 1e-07,
+        "retention_weight": 8.0,
+        "champion_kl_weight": 8.0
+      },
+      {
+        "learning_rate": 2e-06,
+        "retention_weight": 4.0,
+        "champion_kl_weight": 4.0
       }
     ],
     "interpolation_alphas": [
@@ -168,7 +168,11 @@
       "curated-dialogue",
       "human-dialogue",
       "native-replay"
+    ],
+    "success_transfer_slots": [
+      3,
+      11
     ]
   },
-  "fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56"
+  "fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117"
 }
