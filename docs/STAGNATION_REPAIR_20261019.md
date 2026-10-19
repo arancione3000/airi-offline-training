@@ -27,7 +27,11 @@ Data, architecture, learning-rate profiles and loss weights are unchanged in the
 
 Superseded run [39205173885](https://github.com/arancione3000/airi-offline-training/actions/runs/39205173885) was cancelled after durable checkpoints were preserved. The new seed is `airi-offline-410108-39205173885-1-2`, fingerprint `83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042`: revision 1, 25 archived lessons, 256 attempted updates and 245.6749 optimizer seconds in that superseded experiment. Its weights, configuration and tokenizer hashes match the verified champion; checkpoint metadata differs as expected. The OPTIMIZER archive SHA256 is `8a3fde450d9971096fa3ec12981be12a74b5e4e44c25d3eb00ff0afec079218c`. Using this latest seed preserves the additional archived lesson instead of reverting to the older 24-lesson seed.
 
-A second preflight and the actual training launch from this updated seed are recorded separately once verified. No claim of a newly accepted model is made here.
+The updated-seed preflight [39206739668](https://github.com/arancione3000/airi-offline-training/actions/runs/39206739668) passed on exact training commit `36938f17bded11370de48f4204655ab4fcc058eb`; the same commit passed branch and main CI. It was fast-forwarded to main after verification. The new experiment fingerprint is `ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b`.
+
+Training [39244699157](https://github.com/arancione3000/airi-offline-training/actions/runs/39244699157) was started after the user requested continuation at 13:26 Europe/Rome. Its native checks passed and its training step is running. The scheduled/completion-triggered controller was re-enabled; manual controller run [39244748628](https://github.com/arancione3000/airi-offline-training/actions/runs/39244748628) passed and retained the active job. The frozen training branch is `dialogue-persistent-exploration-20261019`.
+
+No new champion or conversational improvement has been verified in this new cycle. The local isolated diagnostic was observed through 128 updates; its planned 256-update result was not recovered after the session interruption, so completion of that diagnostic is not claimed.
 
 ## Reproduce the isolated diagnostic
 
@@ -41,3 +45,7 @@ python scripts/transfer-training/diagnose_stagnation.py \
 ```
 
 Use the Oct18 terminal MODEL archive (SHA256 `ba3ef42287182c8c6e399fc8515d07cb5f89cf9346d241a99bb530ef6dcf0050`) and its FINAL_RESULT for the reported baseline. The diagnostic never publishes weights or updates the stable model channel.
+
+## First verified new-cycle progress
+
+The initial durable checkpoint is `airi-offline-410108-39244699157-1-1`. Subsequent telemetry `AIRI_PROGRESS_39244699157.json`, attached to the migration seed release, was downloaded and SHA256-verified (`a84a3504748680936c7827e4878d54249ab6a7fc7ad8dc4a5eb80f0eb1d72118`). It reports step410124,16 new optimizer updates,18.942468 optimizer seconds,25 retained lessons,33 archived token positions,zero development decisions and zero adoptions. This confirms actual optimizer progress and successful lesson-bank migration, not a new conversational achievement. The controller's observed action was `active_job_retained`.
