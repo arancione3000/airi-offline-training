@@ -54,7 +54,8 @@ def sampling_group(update,focus='balanced'):
 
 def selection_needed(counters,*,force=False):
     """Avoid penalizing a candidate twice when evaluation and a boundary coincide."""
-    return not (force and counters.get('selected_at_step')==counters.get('completed_steps'))
+    return not (force and not counters.get('exploration_pending',False)
+                and counters.get('selected_at_step')==counters.get('completed_steps'))
 
 def success_slot(update,sample_group,has_lessons):
     slots=LEARNING.get('success_transfer_slots',(2,10)) if LEARNING else (2,10)
@@ -291,7 +292,7 @@ def main():
             # The champion's durable Adam remains in its source checkpoint. A
             # fresh, explicit exploration state avoids inherited stale moments.
             opt=factory(runtime.model)
-            counters['learning_search']['optimizer_policy']='fresh Adam per independent trial; source champion Adam retained for rollback'
+            counters['learning_search']['optimizer_policy']='preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation'
     recipe=SPEC['recipes'][counters['phase']]
     def apply_learning_rate():
         if LEARNING:
@@ -372,9 +373,10 @@ def main():
         counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
         champion=counters['champion']
         accepted=quality_improved(champion,assessment) and retains_correct_answers(champion,assessment)
+        rollback_candidate=False
         if LEARNING:
-            from continual_learning import rejection_reasons, try_interpolations
-            search=counters['learning_search'];search['evaluations']+=1
+            from continual_learning import rejection_reasons, try_interpolations, record_decision
+            search=counters['learning_search']
             report={'step':counters['completed_steps'],'learning_rate':counters['effective_learning_rate'],
                     'reasons':rejection_reasons(champion,assessment),'interpolation':None}
             if not accepted:
@@ -388,11 +390,11 @@ def main():
                     # A merged parameter path has no exact Adam trajectory.
                     opt=factory(runtime.model);apply_learning_rate()
             report['accepted']=accepted
+            decision=record_decision(search,LEARNING,counters['conversation_updates'],accepted,force=force)
+            report.update(decision)
+            rollback_candidate=decision['rollback']
+            counters['exploration_pending']=decision['exploration_pending']
             search['history'].append(report);search['history']=search['history'][-64:]
-            search['consecutive_rejections']=0 if accepted else search['consecutive_rejections']+1
-            search['accepted_updates']+=int(accepted)
-            search['stopped']=(search['consecutive_rejections']>=LEARNING['maximum_rejections']
-                               or search['evaluations']>=LEARNING['maximum_evaluations'])
             print(json.dumps({'phase':'independent continual-learning decision',**report}),flush=True)
             if accepted:apply_learning_rate()
         if not accepted:
@@ -414,7 +416,7 @@ def main():
             adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                   step=counters['completed_steps'],reason='independently verified candidate')
             counters['champion']=assessment;action='accepted'
-        elif LEARNING or force or recover_best(counters['stagnant_rounds']):
+        elif (rollback_candidate if LEARNING else force or recover_best(counters['stagnant_rounds'])):
             runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
             if LEARNING:opt=factory(runtime.model)
             counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
@@ -443,6 +445,10 @@ def main():
                                step=lambda:counters['completed_steps'],
                                max_updates=SPEC['morph_model']['updates_per_skill'])
             counters['last_consolidation']={k:v for k,v in result.items() if k!='assessment'}
+            if LEARNING:
+                # Consolidation is a separate transaction, not part of the next
+                # candidate's learning horizon.
+                counters['learning_search']['trial_start_update']=counters['conversation_updates']
             if result['action']=='skill_accepted':
                 adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                       step=counters['completed_steps'],reason='selective consolidation: '+result['skill'])
@@ -463,6 +469,8 @@ def main():
         counters['training_focus']=training_focus(counters['champion'])
         counters['last_assessment']=counters['champion']
         counters['selection_history'].append({'step':counters['completed_steps'],'reason':reason,'action':action,'focus':counters['training_focus'],'effective_learning_rate':counters['effective_learning_rate']})
+        if action=='continue_candidate':
+            counters['selected_at_step']=counters['completed_steps']
         if action in {'accepted','rolled_back','consolidated'}:
             counters['selected_at_step']=counters['completed_steps']
             counters['best_release']=publisher.release_tag(counters['completed_steps'])

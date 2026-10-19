@@ -35,6 +35,12 @@ def validate_configuration(spec):
     integer('evaluation_updates',64,1024)
     if value['evaluation_updates']%16:raise ValueError('evaluation must align with update ledger')
     integer('maximum_rejections',1,12);integer('maximum_evaluations',1,64)
+    if 'trial_updates' in value:
+        integer('trial_updates',64,8192)
+        if value['trial_updates'] % value['evaluation_updates']:
+            raise ValueError('trial must contain complete evaluation intervals')
+        if value['trial_updates'] < value['evaluation_updates']:
+            raise ValueError('trial shorter than evaluation interval')
     if not 60<=spec['maximum_training_seconds']<=21600:
         raise ValueError('unbounded continual experiment')
     profiles=value['profiles']
@@ -58,6 +64,34 @@ def validate_configuration(spec):
             or any(schedule[i] in {'human-dialogue','native-replay'} for i in slots)):
         raise ValueError('archived lesson slots overlap protected replay or are invalid')
     return value
+
+
+def record_decision(search, config, update, accepted, *, force=False):
+    """Separate a failed promotion check from a failed learning trajectory.
+
+    Intermediate failures preserve both candidate weights and Adam. Only a
+    complete bounded trial counts toward the rejection limit/profile rotation.
+    The caller must restore the champion when rollback is returned, including
+    at the global evaluation or compute limit. All state is checkpointed.
+    """
+    start=search.setdefault('trial_start_update',0)
+    if not isinstance(update,int) or isinstance(update,bool) or update<start:
+        raise ValueError('invalid exploration update ledger')
+    search['evaluations']+=1
+    finished=force or update-start>=config.get('trial_updates',config['evaluation_updates'])
+    if accepted:
+        search['consecutive_rejections']=0
+        search['accepted_updates']+=1
+        search['trial_start_update']=update
+    elif finished:
+        search['consecutive_rejections']+=1
+        search['rejected_trials']=search.get('rejected_trials',0)+1
+        search['trial_start_update']=update
+    search['stopped']=(search['consecutive_rejections']>=config['maximum_rejections']
+                       or search['evaluations']>=config['maximum_evaluations'])
+    rollback=not accepted and (finished or search['stopped'])
+    return {'rollback':rollback,'trial_complete':finished,
+            'trial_updates':update-start,'exploration_pending':not accepted and not rollback}
 
 
 def try_interpolations(model, champion, *, evaluate, acceptable, alphas=(.5,.25)):

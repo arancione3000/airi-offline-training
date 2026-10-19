@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts/autonomous-control'))
 from watchdog import transient
 
-BRANCH='dialogue-retention-retry-20261019'
+BRANCH='dialogue-persistent-exploration-20261019'
 WORKFLOW='airi-continual-background.yml'
 CONTROLLER='airi-continual-controller.yml'
 TITLE='AIRI continual learning trial'

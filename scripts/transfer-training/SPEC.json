@@ -29,7 +29,7 @@
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
     "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
-    "continual_learning.py": "b1bb4fa7b2c2b5e78a737024632ba0abbc8b8ae4bf8ca10eddc92dd2a100f23a",
+    "continual_learning.py": "57982f59799968ec21779364803d1236ab767d4cf6eee788fef7b1572a847939",
     "continual_smoke.py": "5a35d884c89f6e77fa158b29346fb25b0324940dd76d7df30458a3ca333c8dc3",
     "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
     "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
@@ -42,7 +42,7 @@
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "b86c097aa1c9b0392749103c640417552a64b6d56771c5c66807458b13b29c20",
+    "run.py": "6d1c8eb3dcfb3c64dc72a1f874571ebefa1d9f7a1580f2b12ee7e76cc716b0e9",
     "session.py": "39896884f19dc00ce2dc13c95019e4813792b187e12fb043e246d8fc63a59027",
     "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
     "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
@@ -125,5 +125,5 @@
     "same_optimizer_budget": true,
     "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
   },
-  "fingerprint": "2427d992edfd507712ba779cfb1218c3a1975d054a78a599577e9e45e5e37c95"
+  "fingerprint": "c4e741be6d89ec5967577385da3471bc441816f512e966b40b8bb3a8dbb28610"
 }

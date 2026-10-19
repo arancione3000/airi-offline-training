@@ -78,3 +78,32 @@ def encoded_memory(row):return torch.tensor([[row['key'],12,13]]),torch.tensor([
 selected=verified_memories(SimpleNamespace(model=CausalMemory()),rows,encoded_memory)
 assert [r['key'] for r in selected]==[1,2]
 print('Full-answer training-memory certificate rejects partial teacher-forced hits.')
+
+# A failed promotion check cannot erase the real Adam trajectory. Persist and
+# reload it halfway through a trial, then compare to uninterrupted training.
+from continual_learning import record_decision
+import io
+torch.manual_seed(91)
+linear=torch.nn.Linear(2,1)
+base=copy.deepcopy(linear.state_dict())
+adam=torch.optim.AdamW(linear.parameters(),lr=.01)
+cfg=dict(evaluation_updates=64,trial_updates=512,maximum_rejections=3,maximum_evaluations=48)
+search=dict(evaluations=0,consecutive_rejections=0,accepted_updates=0,stopped=False)
+def simple_step(model,optimizer):
+    optimizer.zero_grad();((model(torch.ones(1,2))-1)**2).sum().backward();optimizer.step()
+for _ in range(64):simple_step(linear,adam)
+decision=record_decision(search,cfg,64,False)
+assert decision['exploration_pending'] and not decision['rollback']
+assert all(int(v['step'])==64 for v in adam.state.values())
+buffer=io.BytesIO();torch.save(dict(model=linear.state_dict(),adam=adam.state_dict(),search=search),buffer)
+buffer.seek(0);saved=torch.load(buffer,weights_only=True)
+resumed=torch.nn.Linear(2,1);resumed.load_state_dict(saved['model'])
+resumed_adam=torch.optim.AdamW(resumed.parameters(),lr=.01);resumed_adam.load_state_dict(saved['adam'])
+for _ in range(64):simple_step(linear,adam);simple_step(resumed,resumed_adam)
+assert all(torch.equal(v,resumed.state_dict()[k]) for k,v in linear.state_dict().items())
+assert all(int(v['step'])==128 for v in resumed_adam.state.values())
+assert record_decision(saved['search'],cfg,128,False)['exploration_pending']
+assert record_decision(saved['search'],cfg,128,False,force=True)['rollback']
+resumed.load_state_dict(base)
+assert all(torch.equal(v,resumed.state_dict()[k]) for k,v in base.items())
+print('Pending exploration preserves exact Adam continuation; final failed candidate restores champion.')
