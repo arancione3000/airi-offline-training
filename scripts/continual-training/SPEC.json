@@ -1,11 +1,11 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 409852,
+  "start_step": 410108,
   "max_steps": 1000000,
-  "pilot_step": 409852,
-  "migration_source_release": "airi-offline-409852-39122983713-1-13",
-  "migration_source_fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117",
+  "pilot_step": 410108,
+  "migration_source_release": "airi-offline-410108-39205173885-1-2",
+  "migration_source_fingerprint": "83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
@@ -52,13 +52,13 @@
   "maximum_training_seconds": 21600,
   "extension": {
     "request": "thomas-diagnose-and-fix-stagnation-20261019",
-    "source_sha": "88a6ef41ab6aaf5b62c069c8b0771d279ebfb477",
-    "source_branch": "dialogue-selective-replay-20261018",
-    "seed_release": "airi-offline-409852-39122983713-1-13",
-    "seed_step": 409852,
+    "source_sha": "a8434e92c9813a8bf3c90397cb76f067f8098aa4",
+    "source_branch": "dialogue-retention-retry-20261019",
+    "seed_release": "airi-offline-410108-39205173885-1-2",
+    "seed_step": 410108,
     "additional_training_seconds": 21600,
     "source_budget": 21600,
-    "seed_selection": "verified terminal, revision 1 and 24 eligible lessons; explicit new finite trial after twelve rejected candidates"
+    "seed_selection": "Last complete champion checkpoint before superseding stalled cycle; weights/config/tokenizer match revision1; preserve all25 archived lessons"
   },
   "recovery_lr_factors": [
     1,
@@ -112,8 +112,8 @@
     "lr_multiplier": 1.0,
     "lr_cap": 1e-05,
     "archive": "success_bank.json",
-    "source_sha": "88a6ef41ab6aaf5b62c069c8b0771d279ebfb477",
-    "source_fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117",
+    "source_sha": "a8434e92c9813a8bf3c90397cb76f067f8098aa4",
+    "source_fingerprint": "83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042",
     "source_budget": 21600,
     "request": "thomas-continue-native-learning-20261019"
   },
@@ -176,5 +176,5 @@
     ],
     "trial_updates": 512
   },
-  "fingerprint": "4a33d6b2060605ddd6b2d22504463224dd8e5e0c9ad7abc5392ed969b949eeca"
+  "fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b"
 }
