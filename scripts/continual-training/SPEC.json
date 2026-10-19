@@ -1,29 +1,29 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 408572,
+  "start_step": 409852,
   "max_steps": 1000000,
-  "pilot_step": 408572,
-  "migration_source_release": "airi-offline-408572-39057187476-1-9",
-  "migration_source_fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56",
+  "pilot_step": 409852,
+  "migration_source_release": "airi-offline-409852-39122983713-1-13",
+  "migration_source_fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 5e-07,
+      "learning_rate": 1e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 5e-07,
+      "learning_rate": 1e-07,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 5e-07,
+      "learning_rate": 1e-07,
       "kl_weight": 1.0
     }
   ],
   "optimizer_policy": "Native weights and model identity retained; explicit fresh Adam for each independent plasticity trial. Gold training-only conversational memory, current-champion KL and original native replay; no change to independent quality gates.",
-  "schedule": "New authorized cycle from revision 1: at most six optimizer hours, 48 development decisions or 12 consecutive rejections. Evaluate every 64 counted updates. Two unprotected slots per sixteen replay archived lessons; preserve all eight human and one native slots. Same independent adoption gates.",
+  "schedule": "New authorized cycle from unchanged revision 1 and 24 eligible lessons. At most six optimizer hours,48 development decisions or12 consecutive rejections. Same64-update evaluations and archived replay slots3/11; stronger gold replay and KL16 with smaller learning rates; at most3 interpolation probes under unchanged gates.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
@@ -51,14 +51,14 @@
   },
   "maximum_training_seconds": 21600,
   "extension": {
-    "request": "thomas-continue-selective-learning-20261018",
-    "source_sha": "c062e370f69b326d71c0831c91cdfb39af525fe4",
-    "source_branch": "dialogue-continual-repair-20261017",
-    "seed_release": "airi-offline-408572-39057187476-1-9",
-    "seed_step": 408572,
+    "request": "thomas-continue-native-learning-20261019",
+    "source_sha": "88a6ef41ab6aaf5b62c069c8b0771d279ebfb477",
+    "source_branch": "dialogue-selective-replay-20261018",
+    "seed_release": "airi-offline-409852-39122983713-1-13",
+    "seed_step": 409852,
     "additional_training_seconds": 21600,
     "source_budget": 21600,
-    "seed_selection": "verified terminal after first accepted revision; retain revision 1, exact weights and eligible bank; new explicitly authorized finite cycle"
+    "seed_selection": "verified terminal, revision 1 and 24 eligible lessons; explicit new finite trial after twelve rejected candidates"
   },
   "recovery_lr_factors": [
     1,
@@ -112,10 +112,10 @@
     "lr_multiplier": 1.0,
     "lr_cap": 1e-05,
     "archive": "success_bank.json",
-    "source_sha": "c062e370f69b326d71c0831c91cdfb39af525fe4",
-    "source_fingerprint": "10962b6cf3c5449f3594168e00c791aa1b11f32d805467f8d5fefce656d9bb56",
+    "source_sha": "88a6ef41ab6aaf5b62c069c8b0771d279ebfb477",
+    "source_fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117",
     "source_budget": 21600,
-    "request": "thomas-continue-selective-learning-20261018"
+    "request": "thomas-continue-native-learning-20261019"
   },
   "morph_model": {
     "model_id": "airi-native",
@@ -132,24 +132,25 @@
     "maximum_evaluations": 48,
     "profiles": [
       {
-        "learning_rate": 5e-07,
-        "retention_weight": 8.0,
-        "champion_kl_weight": 8.0
-      },
-      {
         "learning_rate": 1e-07,
-        "retention_weight": 8.0,
-        "champion_kl_weight": 8.0
+        "retention_weight": 16.0,
+        "champion_kl_weight": 16.0
       },
       {
-        "learning_rate": 2e-06,
-        "retention_weight": 4.0,
-        "champion_kl_weight": 4.0
+        "learning_rate": 2.5e-07,
+        "retention_weight": 16.0,
+        "champion_kl_weight": 16.0
+      },
+      {
+        "learning_rate": 5e-07,
+        "retention_weight": 16.0,
+        "champion_kl_weight": 16.0
       }
     ],
     "interpolation_alphas": [
       0.5,
-      0.25
+      0.25,
+      0.125
     ],
     "sampling_schedule": [
       "human-dialogue",
@@ -174,5 +175,5 @@
       11
     ]
   },
-  "fingerprint": "000401bc9a0b227d1e252f56ae480ef5209c5ed77129b3556022121c30626117"
+  "fingerprint": "83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042"
 }

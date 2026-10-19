@@ -1,3 +1,13 @@
+# Seguito con ripasso più forte — 19 ottobre 2026
+
+Il ciclo selettivo18ottobre è terminato correttamente allo step409852 dopo1280update e1245.602392053secondi di ottimizzatore;12rifiuti e0adozioni, revisione1 invariata. Dialoghi4/16, legacy15/28, foundation4/16, contesto0, finale0/64. Banca18→24lezioni: osservazioni di training, non progresso di chat. Terminale `airi-offline-409852-39122983713-1-13`; FINAL_RESULT SHA256c0b447aaa6263dfaf6ed965a61af9ef6f2e35efe31cb20e3e01b2de8233fdfe4, AIRI_RUN_STATE SHA256de27b708b4fbe96cea1292221a2b57a373e0d68261f8178d0719d46500e0e2b2 verificati.
+
+Thomas ha richiesto un nuovo seguito. Si conservano pesi/revisione1, banca eleggibile24 e storico. Nuovo ramo `dialogue-retention-retry-20261019`; massimo21600secondi di ottimizzatore,48decisioni,12rifiuti consecutivi e32job. Nessun rinnovo infinito. Ripasso supervisionato e KL al champion16, profili LR1e-7/2.5e-7/5e-7; interpolazioni.5/.25/.125 con gli stessi gate. È una nuova ipotesi di conservazione dei successi, non una garanzia. Scheduler, dati e codice del gradiente invariati; slot banca3/11 e memoria278 restano. Tutte le precedenti risposte di sviluppo corrette devono rimanere; finali mai usati come target. Production/live false.
+
+La rete non è ancora capace di chat affidabile. Ripetere il calcolo da solo non ne dimostra il miglioramento. Nel nuovo seguito i controlli nativi di runtime/ripristino e l'integrità del checkpoint si ripetono nel job; non si attribuisce alla nuova configurazione un nuovo preflight effimero già riuscito. Il preflight sullo stesso identico champion e codice era passato il18ottobre (39122192809).
+
+---
+
 # Nuovo ciclo selettivo — 18 ottobre 2026
 
 Il ciclo del17ottobre ha accettato il primo consolidamento (revisione1, dialoghi3/16→4/16, tutte le vecchie risposte corrette conservate), poi si è fermato dopo6rifiuti. Finale indipendente0/64 e chat libera ancora incoerente: nessuna qualificazione production/live.

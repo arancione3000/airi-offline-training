@@ -10,7 +10,7 @@ permissions:
   contents: read
   actions: write
 concurrency:
-  group: airi-single-continual-learning-20261018
+  group: airi-single-continual-learning-20261019
   cancel-in-progress: false
 jobs:
   resume:
