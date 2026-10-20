@@ -1,11 +1,11 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 410108,
+  "start_step": 413500,
   "max_steps": 1000000,
-  "pilot_step": 410108,
-  "migration_source_release": "airi-offline-410108-39205173885-1-2",
-  "migration_source_fingerprint": "83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042",
+  "pilot_step": 413500,
+  "migration_source_release": "airi-offline-413500-39297128288-1-3",
+  "migration_source_fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
@@ -22,14 +22,14 @@
       "kl_weight": 1.0
     }
   ],
-  "optimizer_policy": "Keep candidate weights and Adam across intermediate failed promotion checks and job boundaries. Roll back only at a complete 512-update trial, explicit finalization or global limit. Stable champion and quality gates unchanged.",
-  "schedule": "Bounded stagnation repair: evaluate every64 updates without erasing the trajectory;512 acquisition updates per trial. At most48 development decisions,12 rejected complete trials or21600 optimizer seconds. Consolidation remains a separate guarded transaction. Same data, learning rates and retention weights as preceding trial to isolate the control-flow correction.",
+  "optimizer_policy": "512-update candidate trajectories; ordinary acquisition and archived/consolidation replay share active gold and champion-KL weights plus certified Italian/English memories. Unchanged promotion gates; fresh Adam only at declared transaction boundaries.",
+  "schedule": "New authorized finite cycle from413500: align archived and consolidation replay with active bilingual retention profile. Same data,architecture,learning rates,512-update horizon and48-decision/21600-optimizer-second limits. Archive growth is not conversational qualification.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
     "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
-    "continual_learning.py": "57982f59799968ec21779364803d1236ab767d4cf6eee788fef7b1572a847939",
+    "continual_learning.py": "f6cf0119bc0e44ac6e38e658f11dfc220aecc0a4f03d92c73651dca6233ef76f",
     "continual_smoke.py": "5a35d884c89f6e77fa158b29346fb25b0324940dd76d7df30458a3ca333c8dc3",
     "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
     "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
@@ -42,23 +42,23 @@
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "6d1c8eb3dcfb3c64dc72a1f874571ebefa1d9f7a1580f2b12ee7e76cc716b0e9",
+    "run.py": "f3a6601d811834f5f024a9c42d913c07e775e46ad89e2121ef96d492ed18fae4",
     "session.py": "39896884f19dc00ce2dc13c95019e4813792b187e12fb043e246d8fc63a59027",
     "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
     "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
-    "success_transfer.py": "03c997ce79e9d0332387f7918449a74b043122171ab8b466976195e6daf987ef",
+    "success_transfer.py": "4d2978513ac16ea9492601707ce16cd4a96f0e6d0f90b7f3d2fc8ba234b992d0",
     "transport.py": "dca66c0258b4846dff81367624427763ec7ad7ee4581bfb27774d93fbbbf3d2c"
   },
   "maximum_training_seconds": 21600,
   "extension": {
-    "request": "thomas-diagnose-and-fix-stagnation-20261019",
-    "source_sha": "a8434e92c9813a8bf3c90397cb76f067f8098aa4",
-    "source_branch": "dialogue-retention-retry-20261019",
-    "seed_release": "airi-offline-410108-39205173885-1-2",
-    "seed_step": 410108,
+    "request": "thomas-continue-native-training-20261020",
+    "source_sha": "36938f17bded11370de48f4204655ab4fcc058eb",
+    "source_branch": "dialogue-persistent-exploration-20261019",
+    "seed_release": "airi-offline-413500-39297128288-1-3",
+    "seed_step": 413500,
     "additional_training_seconds": 21600,
     "source_budget": 21600,
-    "seed_selection": "Last complete champion checkpoint before superseding stalled cycle; weights/config/tokenizer match revision1; preserve all25 archived lessons"
+    "seed_selection": "Verified terminal,3392 attempted updates,48 negative development checks,zero adoptions; preserve revision1 and all64 eligible lessons"
   },
   "recovery_lr_factors": [
     1,
@@ -112,10 +112,10 @@
     "lr_multiplier": 1.0,
     "lr_cap": 1e-05,
     "archive": "success_bank.json",
-    "source_sha": "a8434e92c9813a8bf3c90397cb76f067f8098aa4",
-    "source_fingerprint": "83d593500a25541237b5608bf296c1ac7e6356ffccce71038e5b682094bb0042",
+    "source_sha": "36938f17bded11370de48f4204655ab4fcc058eb",
+    "source_fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b",
     "source_budget": 21600,
-    "request": "thomas-continue-native-learning-20261019"
+    "request": "thomas-continue-native-training-20261020"
   },
   "morph_model": {
     "model_id": "airi-native",
@@ -176,5 +176,5 @@
     ],
     "trial_updates": 512
   },
-  "fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b"
+  "fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf"
 }

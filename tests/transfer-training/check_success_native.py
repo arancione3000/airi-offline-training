@@ -86,6 +86,41 @@ print(json.dumps({'native_complementary_skill_demo':'PASS','base':['A'],'discard
                   'consolidated_student':['A','B'],'bank':summary(bank),
                   'scope':'two trained toy tasks in the native transformer; not proof of general chat'}))
 
+# Confirm the real weighted archive objective uses BOTH retention histories,
+# including their shifted target masks, in one atomic optimizer step.
+from torch.nn import functional as F
+from generalist_lm.training import causal_training_objective,reference_kl_loss
+weighted=clone(student);weighted_opt=torch.optim.AdamW(weighted.model.parameters(),lr=0.)
+batch=encode(rows[1]);memories=[encode(r) for r in rows]
+with torch.no_grad():
+    positions=[p['position'] for p in lesson['positions']]
+    logits=weighted.model(batch[0])['logits'][0,torch.tensor(positions)-1].float()
+    teacher=torch.tensor([p['probabilities'] for p in lesson['positions']],dtype=logits.dtype)
+    teacher=teacher/teacher.sum(-1,keepdim=True)
+    expected=F.cross_entropy(logits,torch.tensor([p['target'] for p in lesson['positions']]))
+    expected+=.5*F.kl_div(logits.log_softmax(-1),teacher,reduction='batchmean')
+    for ids,labels in memories:
+        logits=weighted.model(ids)['logits'];gold,_=causal_training_objective(logits,labels,ids,
+            repetition_unlikelihood_weight=.05,eos_loss_weight=1.2)
+        kl,_=reference_kl_loss(logits,champion.model(ids)['logits'],labels)
+        expected+=(16*gold+16*kl)/2
+    expected/=17
+stats=distill_step(weighted.model,champion.model,weighted_opt,lesson,batch,memories[0],
+                   memories=memories,retention_weight=16,champion_kl_weight=16,lr_multiplier=1.,lr_cap=.001)
+assert abs(stats['loss']-float(expected))<1e-5,(stats['loss'],float(expected))
+assert stats['retention_examples']==2 and stats['retention_weight']==16
+assert stats['supervised_tokens']==len(positions)+sum(int((labels[:,1:]!=-100).sum()) for _,labels in memories)
+assert all(int(v['step'])==1 for v in weighted_opt.state.values())
+before=digest(weighted.model);moments=copy.deepcopy(weighted_opt.state_dict())
+for bad_weight in [float('nan'),-1,0,True]:
+    try:distill_step(weighted.model,champion.model,weighted_opt,lesson,batch,memories[0],retention_weight=bad_weight)
+    except ValueError:pass
+    else:raise AssertionError('invalid transfer retention accepted')
+    assert digest(weighted.model)==before
+for key,values in moments['state'].items():
+    for name,value in values.items():assert torch.equal(value,weighted_opt.state_dict()['state'][key][name])
+print('Weighted bilingual archive objective matches causal reference; one Adam update; invalid weights preserve state.')
+
 # Exercise the exact automatic per-skill transaction used by the real runner.
 from morph_model import new_state,adopt,consolidate
 morph=clone(base);morph_opt=torch.optim.AdamW(morph.model.parameters(),lr=.002)

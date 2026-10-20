@@ -5,7 +5,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-training'))
-from continual_learning import retention_rows,profile_index,validate_configuration,rejection_reasons
+from continual_learning import retention_rows,profile_index,validate_configuration,rejection_reasons,transfer_replay_options
 from success_bank import catalog,prompt_key
 from curriculum import build
 from extra_dialogues import build_extra
@@ -14,6 +14,27 @@ import run as runner
 
 
 class ContinualTests(unittest.TestCase):
+    def test_archive_replay_uses_active_profile_and_both_languages(self):
+        import random
+        config=dict(profiles=[dict(retention_weight=4,champion_kl_weight=8),
+                             dict(retention_weight=16,champion_kl_weight=16)])
+        options=transfer_replay_options(config,dict(consecutive_rejections=1),
+                                       dict(it=['italian'],en=['english']),random.Random(4))
+        self.assertEqual(options,dict(memories=['italian','english'],retention_weight=16,champion_kl_weight=16))
+        self.assertRaises(ValueError,transfer_replay_options,config,dict(consecutive_rejections=0),
+                          dict(it=['italian'],en=[]),random.Random(4))
+        # Both ordinary archived slots and separate consolidation transactions
+        # must actually pass the shared protection options to the optimizer.
+        import ast
+        module=ast.parse(Path(runner.__file__).read_text())
+        calls=[n for n in ast.walk(module) if isinstance(n,ast.Call)
+               and isinstance(n.func,ast.Name) and n.func.id=='distill_step']
+        self.assertEqual(len(calls),2)
+        for call in calls:
+            self.assertTrue(any(k.arg is None and isinstance(k.value,ast.Call)
+                                and isinstance(k.value.func,ast.Name) and k.value.func.id=='transfer_options'
+                                for k in call.keywords))
+
     def test_archived_lessons_receive_slots_without_replacing_human_or_native_replay(self):
         root=Path(__file__).resolve().parents[2]
         spec=json.loads((root/'scripts/continual-training/SPEC.json').read_text())

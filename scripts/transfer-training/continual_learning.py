@@ -176,6 +176,15 @@ def profile_index(rejections, count):
     return rejections % count
 
 
+def transfer_replay_options(config, search, memory_by, rng):
+    """Archive replay and consolidation must honor the active retention profile."""
+    profile=config['profiles'][profile_index(search['consecutive_rejections'],len(config['profiles']))]
+    if any(not memory_by.get(lang) for lang in ('it','en')):
+        raise ValueError('transfer replay requires certified bilingual memories')
+    return dict(memories=[memory_by[lang][rng.randrange(len(memory_by[lang]))] for lang in ('it','en')],
+                retention_weight=profile['retention_weight'],champion_kl_weight=profile['champion_kl_weight'])
+
+
 def rejection_reasons(before, after):
     """Explain a failed gate without using its examples as training targets."""
     from policy import improved

@@ -54,10 +54,17 @@ def harvest(candidate, champion, rows, encode, bank, eligible, source, *, genera
     return len(proposals)
 
 
-def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multiplier=5., lr_cap=1e-6):
+def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multiplier=5., lr_cap=1e-6,
+                 memories=None, retention_weight=.5, champion_kl_weight=1.):
     """Learn selected donor tokens while replaying supervised champion anchors."""
     frozen_independent(model, champion)
-    ids, labels = batch; anchor_ids, anchor_labels = anchor
+    if any(isinstance(w,bool) or not isinstance(w,(int,float)) or not math.isfinite(w) or w<=0
+           for w in (retention_weight,champion_kl_weight)):
+        raise ValueError('invalid supervised transfer retention weights')
+    if memories is not None and not memories:
+        raise ValueError('transfer retention memories cannot be empty')
+    replay=[anchor] if memories is None else list(memories)
+    ids, labels = batch
     positions = [p['position'] for p in entry['positions']]
     for token in entry['positions']:
         position = token['position']
@@ -72,12 +79,21 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
     target = torch.tensor([p['target'] for p in entry['positions']])
     ce = F.cross_entropy(logits, target)
     kd = F.kl_div(logits.log_softmax(-1), teacher, reduction='batchmean')
-    anchor_logits = model(anchor_ids)['logits']
-    anchor_ce, objective = causal_training_objective(anchor_logits, anchor_labels, anchor_ids,
-                                                     repetition_unlikelihood_weight=.05, eos_loss_weight=1.2)
-    with torch.no_grad(): protected = champion(anchor_ids)['logits']
-    retention, count = reference_kl_loss(anchor_logits, protected, anchor_labels)
-    loss = ce + .5 * kd + .5 * anchor_ce + retention
+    loss = ce + .5 * kd
+    count=0;supervised=len(positions);retention_total=0.;anchor_ce_total=0.
+    for anchor_ids,anchor_labels in replay:
+        anchor_logits = model(anchor_ids)['logits']
+        anchor_ce, objective = causal_training_objective(anchor_logits, anchor_labels, anchor_ids,
+                                                         repetition_unlikelihood_weight=.05, eos_loss_weight=1.2)
+        with torch.no_grad(): protected = champion(anchor_ids)['logits']
+        retention, tokens = reference_kl_loss(anchor_logits, protected, anchor_labels)
+        loss = loss + (retention_weight * anchor_ce + champion_kl_weight * retention)/len(replay)
+        retention_total+=float(retention.detach())/len(replay)
+        anchor_ce_total+=float(anchor_ce.detach())/len(replay)
+        count+=tokens;supervised+=int((anchor_labels[:,1:]!=-100).sum())
+    # Legacy callers retain their exact objective. Continual callers use the
+    # supervised acquisition/replay normalization with their active profile.
+    if memories is not None:loss=loss/(1.+retention_weight)
     if not bool(torch.isfinite(loss)):
         raise RuntimeError('non-finite transfer loss; no optimizer update')
     loss.backward()
@@ -91,6 +107,7 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
     finally:
         for group, lr in zip(optimizer.param_groups, previous_lrs): group['lr'] = lr
     return {'loss': float(loss.detach()), 'ce': float(ce.detach()), 'kl': float(kd.detach()),
-            'retention_kl': float(retention.detach()), 'supervised_tokens': len(positions) + int((anchor_labels[:, 1:] != -100).sum()),
+            'retention_kl': retention_total, 'retention_ce': anchor_ce_total, 'supervised_tokens': supervised,
             'reference_tokens': count, 'gradient_norm_before_clipping': float(norm), 'objective': objective,
+            'retention_weight':retention_weight,'champion_kl_weight':champion_kl_weight,'retention_examples':len(replay),
             'method': 'selected native donor tokens + supervised replay + champion KL'}

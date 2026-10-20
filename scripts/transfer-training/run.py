@@ -336,6 +336,10 @@ def main():
         memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
         counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
                                      'scope':'eligible authored training only; no evaluation answers'}
+    def transfer_options():
+        if not LEARNING:return {}
+        from continual_learning import transfer_replay_options
+        return transfer_replay_options(LEARNING,counters['learning_search'],memory_by,anchor_rng)
     def save(*,champion=False):
         nonlocal best_path,best_fingerprint
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
@@ -431,11 +435,13 @@ def main():
                 tick=time.monotonic()
                 stats=distill_step(runtime.model,protected_champion.model,opt,entry,encode(entry['row']),
                                    rng.choice(memory_by[entry['row']['language']]) if LEARNING else rng.choice(anchors),lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
-                                   lr_cap=SPEC['success_transfer']['lr_cap'])
+                                   lr_cap=SPEC['success_transfer']['lr_cap'],**transfer_options())
                 counters['elapsed_training_seconds']+=time.monotonic()-tick
                 counters['conversation_updates']+=1;counters['completed_steps']+=1
                 counters['supervised_tokens']+=stats['supervised_tokens'];counters['reference_tokens']+=stats['reference_tokens']
                 bank['transfer_updates']+=1
+                counters['last_transfer_retention']={k:stats[k] for k in
+                    ('retention_weight','champion_kl_weight','retention_examples')}
                 group='morph-consolidation-'+entry['row']['language']
                 counters.setdefault('updates_by_group',{})[group]=counters.setdefault('updates_by_group',{}).get(group,0)+1
             result=consolidate(counters['morph'],bank,champion,train=learn_lesson,
@@ -546,8 +552,10 @@ def main():
             stats=distill_step(runtime.model,protected_champion.model,opt,lesson,batch,
                                rng.choice(memory_by[lesson['row']['language']]) if LEARNING else anchor,
                                lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
-                               lr_cap=SPEC['success_transfer']['lr_cap'])
+                               lr_cap=SPEC['success_transfer']['lr_cap'],**transfer_options())
             bank['transfer_updates']+=1
+            counters['last_transfer_retention']={k:stats[k] for k in
+                ('retention_weight','champion_kl_weight','retention_examples')}
             counters['success_bank']=bank_summary(bank)
         counters['elapsed_training_seconds']+=time.monotonic()-tick
         counters['conversation_updates']+=1;counters['completed_steps']+=1
