@@ -1,0 +1,13 @@
+# Native training continuation — 21 October 2026
+
+The bilingual-transfer cycle completed at checkpoint `airi-offline-416892-39395900911-1-7`, fingerprint `f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf`. FINAL_RESULT SHA256: `6bcfb62af4a165535e26968b9612d11c856bf4514c5b5ebae64b219fbecf630c`; AIRI_RUN_STATE SHA256: `0970c6c9111d20c4adcaff7f798fe35298c34da5905cc5dd78579e7074f3512f`. Both were downloaded and verified before continuing.
+
+It performed 3,392 updates and 3,708.932653 optimizer seconds. All 48 development checks failed; six complete exploration trials were rejected. There were zero adoptions, so the approved model remains revision 1, with legacy 15/28, dialogue 4/16, foundation 4/16, total 23/92. Final compositional probes remained 0/64. The last candidate improved human-development English NLL to 3.085773 from 3.377343 while losing old answers (legacy 11, dialogue 2). The stronger bilingual archive objective was applied at gold/KL weights 16/16 with two memories; it has not produced an accepted conversational improvement in this cycle.
+
+All 64 eligible archived lessons survive in the terminal checkpoint, holding 103 token positions and four whole-answer training observations. These observations are not four independently acquired skills. The model architecture is still fixed; this experiment does not implement autonomous structural growth.
+
+The user requested another continuation on 21 October. The new frozen branch is `dialogue-long-trajectory-20261021`. The verified terminal is the exact migration seed. The new fingerprint is `c3cfbecdd1b5c425446f95dd5a95755010907e42a1b386eed63820db49d008cb`.
+
+This bounded experiment changes the candidate learning horizon from 512 to 1,024 updates, keeping intermediate development checks every 64 updates. The maximum is 64 development decisions, 12 complete rejected trials, 21,600 optimizer seconds, or 32 jobs. Data, native runtime, learning rates, bilingual retention, archive objective and original promotion gates are unchanged. Testing a longer trajectory is an experiment, not a guarantee of learning or a claim that forgetting has been solved.
+
+Validation: all 56 transfer tests and seven controller tests pass. The exact new configuration passed fingerprint validation. A direct horizon check confirmed that negative intermediate checks preserve the candidate until update 1,024, then trigger the bounded rollback. All executable script hashes still match the previously verified native implementation. The actual training job also repeats native optimizer/recovery checks before updating weights.

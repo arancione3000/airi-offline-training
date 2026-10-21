@@ -6,7 +6,7 @@ on:
       checkpoint_release:
         description: Verified checkpoint release
         required: true
-        default: airi-offline-413500-39297128288-1-3
+        default: airi-offline-416892-39395900911-1-7
         type: string
       preflight_only:
         description: Verify runtime without loading or training a checkpoint

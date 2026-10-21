@@ -1,11 +1,11 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 413500,
+  "start_step": 416892,
   "max_steps": 1000000,
-  "pilot_step": 413500,
-  "migration_source_release": "airi-offline-413500-39297128288-1-3",
-  "migration_source_fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b",
+  "pilot_step": 416892,
+  "migration_source_release": "airi-offline-416892-39395900911-1-7",
+  "migration_source_fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
@@ -22,8 +22,8 @@
       "kl_weight": 1.0
     }
   ],
-  "optimizer_policy": "512-update candidate trajectories; ordinary acquisition and archived/consolidation replay share active gold and champion-KL weights plus certified Italian/English memories. Unchanged promotion gates; fresh Adam only at declared transaction boundaries.",
-  "schedule": "New authorized finite cycle from413500: align archived and consolidation replay with active bilingual retention profile. Same data,architecture,learning rates,512-update horizon and48-decision/21600-optimizer-second limits. Archive growth is not conversational qualification.",
+  "optimizer_policy": "Preserve candidate weights and Adam for1024-update trajectories; evaluate every64 updates and retain active bilingual gold/KL protection in acquisition and archived replay. Same verified champion and original adoption gates.",
+  "schedule": "New user-authorized continuation from416892:1024-update exploration horizon instead of512,64 development decisions or21600 optimizer seconds maximum. Same native architecture,data,learning rates and retention weights. This is a bounded longer-trajectory experiment,not autonomous architecture growth or evidence of conversational improvement.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
@@ -51,14 +51,14 @@
   },
   "maximum_training_seconds": 21600,
   "extension": {
-    "request": "thomas-continue-native-training-20261020",
-    "source_sha": "36938f17bded11370de48f4204655ab4fcc058eb",
-    "source_branch": "dialogue-persistent-exploration-20261019",
-    "seed_release": "airi-offline-413500-39297128288-1-3",
-    "seed_step": 413500,
+    "request": "thomas-continue-cycle-20261021",
+    "source_sha": "5e2f598829477b6ddec267f7c2f3609e6f063a41",
+    "source_branch": "dialogue-bilingual-transfer-20261020",
+    "seed_release": "airi-offline-416892-39395900911-1-7",
+    "seed_step": 416892,
     "additional_training_seconds": 21600,
     "source_budget": 21600,
-    "seed_selection": "Verified terminal,3392 attempted updates,48 negative development checks,zero adoptions; preserve revision1 and all64 eligible lessons"
+    "seed_selection": "Verified completed terminal:3392 attempted updates,48 negative checks,zero adoptions; revision1 and64 lessons with103 token positions preserved"
   },
   "recovery_lr_factors": [
     1,
@@ -112,10 +112,10 @@
     "lr_multiplier": 1.0,
     "lr_cap": 1e-05,
     "archive": "success_bank.json",
-    "source_sha": "36938f17bded11370de48f4204655ab4fcc058eb",
-    "source_fingerprint": "ca314a40de4a37ae9c3f6b667bc3b589dbecfc5dd2ca93d43ff39d174434b22b",
+    "source_sha": "5e2f598829477b6ddec267f7c2f3609e6f063a41",
+    "source_fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf",
     "source_budget": 21600,
-    "request": "thomas-continue-native-training-20261020"
+    "request": "thomas-continue-cycle-20261021"
   },
   "morph_model": {
     "model_id": "airi-native",
@@ -129,7 +129,7 @@
   "continual_learning": {
     "evaluation_updates": 64,
     "maximum_rejections": 12,
-    "maximum_evaluations": 48,
+    "maximum_evaluations": 64,
     "profiles": [
       {
         "learning_rate": 1e-07,
@@ -174,7 +174,7 @@
       3,
       11
     ],
-    "trial_updates": 512
+    "trial_updates": 1024
   },
-  "fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf"
+  "fingerprint": "c3cfbecdd1b5c425446f95dd5a95755010907e42a1b386eed63820db49d008cb"
 }
