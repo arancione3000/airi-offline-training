@@ -10,6 +10,9 @@ from continual_learning import continual_step, retention_rows, verified_memories
 
 def real_learning_smoke(runtime, inherited_optimizer, checkpoint, reference, eligible,
                         human_rows, encode, anchors, evaluate, state_digest):
+    if hasattr(runtime.model,'_airi_head_features'):
+        from fast_head_smoke import real_head_smoke
+        return real_head_smoke(runtime,checkpoint,reference,eligible,human_rows,encode,anchors,evaluate,state_digest)
     champion=GeneralistRuntime.from_checkpoint(checkpoint/'model')
     cache_tokenizer(champion.tokenizer)
     champion.model.eval()

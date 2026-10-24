@@ -5,11 +5,17 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/transfer-training'))
-from continual_learning import record_decision
+from continual_learning import record_decision,evaluation_due
 from run import selection_needed
 
 
 class ExplorationTests(unittest.TestCase):
+    def test_large_evaluation_interval_survives_consolidation_offset(self):
+        counters=dict(conversation_updates=4160,last_development_update=4160)
+        counters['conversation_updates']=5120
+        self.assertFalse(evaluation_due(counters,1024))
+        counters['conversation_updates']=5184
+        self.assertTrue(evaluation_due(counters,1024))
     def setUp(self):
         self.cfg=dict(evaluation_updates=64,trial_updates=512,
                       maximum_rejections=3,maximum_evaluations=48)

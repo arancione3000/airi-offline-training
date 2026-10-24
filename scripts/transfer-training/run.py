@@ -15,6 +15,7 @@ HERE = Path(__file__).resolve().parent
 SPEC_PATH = Path(os.environ.get('AIRI_EXPERIMENT_SPEC', str(HERE/'SPEC.json'))).resolve()
 SPEC = json.loads(SPEC_PATH.read_text())
 LEARNING = SPEC.get('continual_learning')
+FAST_HEAD = bool(LEARNING and LEARNING.get('training_mode')=='cached_head')
 
 def validate_budget(counters):
     value=counters['elapsed_training_seconds']
@@ -130,6 +131,9 @@ def main():
         cache_tokenizer(reference.tokenizer)
     reference_digest=legacy_run.state_digest(reference.model)
     for parameter in reference.model.parameters(): parameter.requires_grad_(False)
+    if FAST_HEAD:
+        from fast_head import configure_head,install_feature_cache,head_summary
+        install_feature_cache(reference.model,cache_bytes=64*1024*1024)
     _,replay,anchors,_,human_rows=legacy_run.prepare(reference.tokenizer,include_dialogue_batches=False)
     previous_human_text={norm(m['content']) for r in human_rows for m in r['messages']}
     # Preserve complete human histories and answers, never truncate.
@@ -166,7 +170,10 @@ def main():
     all_heldout={norm(m['content']) for r in heldout for m in r['messages']}
     from human_data import load_corpus
     human_directory=HERE.parents[1]/'data/oasst2'
-    corpus=load_corpus(human_directory,SPEC['human_corpus']['pins'],blocked|all_heldout|previous_human_text|{norm(m['content']) for r in authored for m in r['messages']})
+    acquisition_blocked=blocked|all_heldout|{norm(m['content']) for r in authored for m in r['messages']}
+    reviewed_only=bool(LEARNING and LEARNING.get('human_training_scope')=='reviewed_only')
+    corpus=load_corpus(human_directory,SPEC['human_corpus']['pins'],acquisition_blocked|previous_human_text,
+                       training_blocked=acquisition_blocked if reviewed_only else None)
     external_development=[]
     for lang in ('it','en'):
         external_development += [r for r in corpus['development'] if r['language']==lang][:16]
@@ -176,7 +183,7 @@ def main():
     corpus_heldout_text={norm(m['content']) for split in ('development','final') for r in corpus[split] for m in r['messages']}
     human_rows=[r for r in human_rows if not any(norm(m['content']) in all_heldout|corpus_heldout_text for m in r['messages'])]
     for r in human_rows:r['language']=r['provenance']['language']
-    human_rows+=corpus['train']
+    human_rows=corpus['train'] if reviewed_only else human_rows+corpus['train']
     def encode(row):
         ids,labels=encode_sft_example(SFTExample.from_dict(row),reference.tokenizer,1024,require_complete=True)
         scored=(labels!=-100).nonzero()
@@ -239,9 +246,18 @@ def main():
                 'repetition':sum(repetitive(s['response']) for s in samples)/len(samples),'samples':samples,
                 'scope':'narrow authored heldout tasks; not proof of general conversation'}
     recipe=SPEC['recipes'][0]
-    factory=lambda model:torch.optim.AdamW(model.parameters(),lr=recipe['learning_rate'],weight_decay=.01)
+    def factory(model):
+        if FAST_HEAD:
+            configure_head(model,cache_bytes=LEARNING['feature_cache_mebibytes']*1024*1024)
+            model._airi_projection_rank_requested=LEARNING.get('protected_head_rank',0)
+        optimizer=torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=recipe['learning_rate'],weight_decay=.01)
+        if FAST_HEAD and LEARNING.get('protected_head_rank',0):
+            from fast_head import attach_projection
+            attach_projection(optimizer,model)
+        return optimizer
     source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
-    runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint)
+    runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint,
+        load_optimizer=not (FAST_HEAD and args.release==transport.SEED_TAG))
     if LEARNING:cache_tokenizer(runtime.tokenizer)
     rng,anchor_rng=random.Random(),random.Random()
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
@@ -250,7 +266,7 @@ def main():
     from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
                               summary as bank_summary, retains_correct_answers, migrate_bank)
     eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
-    if args.learning_smoke_only:
+    if args.learning_smoke_only or (FAST_HEAD and args.success_smoke_only):
         from continual_smoke import real_learning_smoke
         real_learning_smoke(runtime,opt,checkpoint,reference,eligible,human_rows,
                             encode,anchors,evaluate,legacy_run.state_digest)
@@ -269,7 +285,8 @@ def main():
     validate_bank(bank,eligible,SPEC['fingerprint'],runtime.config.vocab_size)
     curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
     if args.release==transport.SEED_TAG:
-        # Preserve the native weights, Adam moments and RNG; only change explicit LR.
+        # Preserve native weights and RNG. Cached-head migration intentionally starts
+        # fresh, head-only Adam; subsequent resumes restore that exact optimizer.
         counters={'completed_steps':SPEC['start_step'],'supervised_tokens':0,'reference_tokens':0,
                   'conversation_updates':0,'curriculum_sha256':curriculum_sha,
                   'baseline':evaluate(runtime),'seed_model_sha256':source_digest,'elapsed_training_seconds':0.,
@@ -293,6 +310,8 @@ def main():
             # fresh, explicit exploration state avoids inherited stale moments.
             opt=factory(runtime.model)
             counters['learning_search']['optimizer_policy']='preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation'
+    if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
+    counters['human_acquisition_scope']='reviewed corpus only' if reviewed_only else 'legacy plus reviewed corpus'
     recipe=SPEC['recipes'][counters['phase']]
     def apply_learning_rate():
         if LEARNING:
@@ -327,6 +346,7 @@ def main():
         finally:torch.set_rng_state(stream)
         protected.model.eval()
         for parameter in protected.model.parameters(): parameter.requires_grad_(False)
+        if FAST_HEAD:install_feature_cache(protected.model,cache_bytes=64*1024*1024)
         if LEARNING:cache_tokenizer(protected.tokenizer)
         return protected
     protected_champion = load_protected_champion()
@@ -336,6 +356,12 @@ def main():
         memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
         counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
                                      'scope':'eligible authored training only; no evaluation answers'}
+    def protect_current_head():
+        if FAST_HEAD and LEARNING.get('protected_head_rank',0):
+            from fast_head import configure_projection
+            configure_projection(runtime.model,protected_champion.model,memory_rows,encode,
+                                 rank=LEARNING['protected_head_rank'])
+    protect_current_head()
     def transfer_options():
         if not LEARNING:return {}
         from continual_learning import transfer_replay_options
@@ -345,6 +371,7 @@ def main():
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
         if path.exists():shutil.rmtree(path)
         counters['success_bank']=bank_summary(bank)
+        if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
         save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
         if LEARNING:
             state={'fingerprint':SPEC['fingerprint'],'completed_steps':counters['completed_steps'],
@@ -423,12 +450,14 @@ def main():
         elif (rollback_candidate if LEARNING else force or recover_best(counters['stagnant_rounds'])):
             runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
             if LEARNING:opt=factory(runtime.model)
+            protect_current_head()
             counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
             apply_learning_rate()
             def restore_transaction():
                 nonlocal runtime,opt
                 runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
                 if LEARNING:opt=factory(runtime.model)
+                protect_current_head()
                 apply_learning_rate()
             def learn_lesson(entry):
                 from success_transfer import distill_step
@@ -475,6 +504,7 @@ def main():
         counters['training_focus']=training_focus(counters['champion'])
         counters['last_assessment']=counters['champion']
         counters['selection_history'].append({'step':counters['completed_steps'],'reason':reason,'action':action,'focus':counters['training_focus'],'effective_learning_rate':counters['effective_learning_rate']})
+        counters['last_development_update']=counters['conversation_updates']
         if action=='continue_candidate':
             counters['selected_at_step']=counters['completed_steps']
         if action in {'accepted','rolled_back','consolidated'}:
@@ -490,6 +520,7 @@ def main():
                     memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
                     counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
                                                  'scope':'certified correct eligible training answers; no evaluation answers'}
+                    protect_current_head()
         return action
     # Initialize the stable model once; later rollback saves leave its pointer
     # untouched. Updating the same identity never requires a manual checkpoint swap.
@@ -507,6 +538,9 @@ def main():
         sample_group=(LEARNING['sampling_schedule'][update%16] if LEARNING
                       else sampling_group(update,counters['training_focus']))
         if sample_group=='human-dialogue':
+            if LEARNING:
+                from continual_learning import acquisition_language
+                lang=acquisition_language(LEARNING,human_by,rng,lang)
             batch=encode(rng.choice(human_by[lang]));group='human-dialogue-'+lang
         elif sample_group=='old-authored':
             families=sorted({r['family'] for r in authored_by[lang]})
@@ -540,9 +574,9 @@ def main():
         tick=time.monotonic()
         if lesson is None:
             if LEARNING:
-                from continual_learning import continual_step,profile_index
+                from continual_learning import continual_step,profile_index,retention_memories
                 profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
-                memories=[memory_by[l][anchor_rng.randrange(len(memory_by[l]))] for l in ('it','en')]
+                memories=retention_memories(LEARNING,memory_by,anchor_rng)
                 stats=continual_step(runtime.model,protected_champion.model,reference.model,opt,batch,memories,anchor,
                                      retention_weight=profile['retention_weight'],
                                      champion_kl_weight=profile['champion_kl_weight'])
@@ -563,10 +597,12 @@ def main():
         counters.setdefault('updates_by_group',{})[group]=counters.setdefault('updates_by_group',{}).get(group,0)+1
         update=counters['conversation_updates']
         if update%16==0:
+            if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
             atomic_json(out/'PROGRESS.json',{**counters,'status':'training','last_update':stats,'live_promoted':False})
             print(json.dumps({'step':counters['completed_steps'],'updates':update,'loss':stats['loss'],'phase':counters['phase']}),flush=True)
             if (update==16 or update%128==0) and needs_training(counters):publisher.progress({**counters,'status':'training','last_update':stats},args.release)
-        if update%(LEARNING['evaluation_updates'] if LEARNING else 1024)==0:
+        from continual_learning import evaluation_due
+        if (evaluation_due(counters,LEARNING['evaluation_updates']) if LEARNING else update%1024==0):
             select_candidate('periodic-development')
         # Memorization cannot lower LR. Three fixed phases depend on actual compute,
         # preserved across jobs, rather than correctness on oversampled examples.

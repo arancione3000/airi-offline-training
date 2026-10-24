@@ -35,6 +35,14 @@ class HumanTests(unittest.TestCase):
   c=self.corpus();text=c['train'][0]['messages'][0]['content'];p=ROOT/'data/oasst2';pins=json.loads((p/'MANIFEST.json').read_text())['pins']
   filtered=load_corpus(p,pins,[norm(text)])
   self.assertTrue(all(norm(m['content'])!=norm(text) for rows in filtered.values() for r in rows for m in r['messages']))
+ def test_reviewed_replacement_can_reuse_old_training_but_never_evaluation(self):
+  c=self.corpus();row=c['train'][0];text=norm(row['messages'][0]['content'])
+  p=ROOT/'data/oasst2';pins=json.loads((p/'MANIFEST.json').read_text())['pins']
+  legacy=load_corpus(p,pins,[text]);reviewed=load_corpus(p,pins,[text],training_blocked=[])
+  self.assertNotIn(row,legacy['train']);self.assertIn(row,reviewed['train'])
+  self.assertEqual(legacy['development'],reviewed['development']);self.assertEqual(legacy['final'],reviewed['final'])
+  reserved={norm(m['content']) for split in ('development','final') for r in reviewed[split] for m in r['messages']}
+  self.assertFalse({norm(m['content']) for r in reviewed['train'] for m in r['messages']} & reserved)
  def test_sampling_actually_reaches_human_data_both_languages(self):
   for focus in run.SAMPLING_SCHEDULES:
    self.assertEqual(Counter(run.sampling_group(i,focus) for i in range(16))['human-dialogue'],4)

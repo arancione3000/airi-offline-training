@@ -28,6 +28,24 @@ def validate_configuration(spec):
     if spec['fingerprint']!=expected:
         raise ValueError('continual experiment fingerprint mismatch')
     value=spec['continual_learning']
+    mode=value.get('training_mode','full')
+    if mode not in {'full','cached_head'}:raise ValueError('unsupported native training mode')
+    if value.get('human_training_scope','legacy_and_reviewed') not in {'legacy_and_reviewed','reviewed_only'}:
+        raise ValueError('invalid human training scope')
+    if mode=='cached_head':
+        cache=value.get('feature_cache_mebibytes')
+        if not isinstance(cache,int) or isinstance(cache,bool) or not 16<=cache<=512:
+            raise ValueError('invalid bounded native feature cache')
+        if value.get('human_training_scope')!='reviewed_only':
+            raise ValueError('cached head experiment requires reviewed conversational acquisition')
+    if value.get('human_language_policy','legacy_ratio') not in {'legacy_ratio','sqrt_corpus'}:
+        raise ValueError('invalid reviewed language sampling')
+    examples=value.get('retention_examples_per_language',1)
+    if not isinstance(examples,int) or isinstance(examples,bool) or not 1<=examples<=8:
+        raise ValueError('invalid bounded retention batch')
+    rank=value.get('protected_head_rank',0)
+    if not isinstance(rank,int) or isinstance(rank,bool) or not 0<=rank<=48 or (rank and mode!='cached_head'):
+        raise ValueError('invalid native head protection rank')
     def integer(name, low, high):
         n=value[name]
         if not isinstance(n,int) or isinstance(n,bool) or not low<=n<=high:
@@ -101,16 +119,22 @@ def try_interpolations(model, champion, *, evaluate, acceptable, alphas=(.5,.25)
     A merged candidate must start a fresh optimizer trajectory at the caller.
     """
     import torch
-    original={k:v.detach().clone() for k,v in model.state_dict().items()}
-    base=champion.state_dict();accepted=False;probes=0
-    if original.keys()!=base.keys() or any(original[k].shape!=base[k].shape for k in base):
+    state=model.state_dict();base=champion.state_dict();accepted=False;probes=0
+    if state.keys()!=base.keys() or any(state[k].shape!=base[k].shape for k in base):
         raise ValueError('interpolation requires the exact same native architecture')
+    names=list(state)
+    if hasattr(model,'_airi_head_features'):
+        if any(not torch.equal(state[k],base[k]) for k in state if k!='lm_head.weight'):
+            raise ValueError('head interpolation requires identical frozen backbones')
+        names=['lm_head.weight']
+    original={k:state[k].detach().clone() for k in names}
     try:
         for alpha in alphas:
             if not isinstance(alpha,(int,float)) or isinstance(alpha,bool) or not math.isfinite(alpha) or not 0<alpha<1:
                 raise ValueError('invalid interpolation factor')
             with torch.no_grad():
-                for name, value in model.state_dict().items():
+                for name in names:
+                    value=state[name]
                     value.copy_(torch.lerp(base[name],original[name],alpha) if value.is_floating_point() else original[name])
             assessment=evaluate();probes+=1
             if acceptable(assessment):
@@ -118,7 +142,9 @@ def try_interpolations(model, champion, *, evaluate, acceptable, alphas=(.5,.25)
                 return {'alpha':alpha,'probes':probes,'assessment':assessment}
         return {'alpha':None,'probes':probes,'assessment':None}
     finally:
-        if not accepted:model.load_state_dict(original)
+        if not accepted:
+            with torch.no_grad():
+                for name in names:state[name].copy_(original[name])
 
 
 def retention_rows(rows, *, per_family=2):
@@ -179,10 +205,21 @@ def profile_index(rejections, count):
 def transfer_replay_options(config, search, memory_by, rng):
     """Archive replay and consolidation must honor the active retention profile."""
     profile=config['profiles'][profile_index(search['consecutive_rejections'],len(config['profiles']))]
-    if any(not memory_by.get(lang) for lang in ('it','en')):
-        raise ValueError('transfer replay requires certified bilingual memories')
-    return dict(memories=[memory_by[lang][rng.randrange(len(memory_by[lang]))] for lang in ('it','en')],
+    return dict(memories=retention_memories(config,memory_by,rng),
                 retention_weight=profile['retention_weight'],champion_kl_weight=profile['champion_kl_weight'])
+
+
+def retention_memories(config,memory_by,rng):
+    if any(not memory_by.get(lang) for lang in ('it','en')):
+        raise ValueError('retention requires certified bilingual memories')
+    return [memory_by[lang][rng.randrange(len(memory_by[lang]))]
+            for lang in ('it','en') for _ in range(config.get('retention_examples_per_language',1))]
+
+
+def evaluation_due(counters,interval):
+    update=counters['conversation_updates'];last=counters.get('last_development_update',0)
+    if not 0<=last<=update:raise ValueError('invalid evaluation update ledger')
+    return update-last>=interval
 
 
 def rejection_reasons(before, after):
@@ -274,3 +311,12 @@ def continual_step(model, champion, reference, optimizer, batch, memories, ancho
             'supervised_tokens': supervised, 'reference_tokens': reference_tokens,
             'gradient_norm_before_clipping': float(norm),
             'method': 'gold conversational replay + current champion KL + native replay'}
+
+
+def acquisition_language(config,pools,rng,fallback):
+    """Give a small reviewed language more exposure without repeating it 2/3 times."""
+    if config.get('human_language_policy','legacy_ratio')=='legacy_ratio':return fallback
+    languages=sorted(pools)
+    if not languages or any(not pools[lang] for lang in languages):
+        raise ValueError('empty reviewed acquisition language')
+    return rng.choices(languages,weights=[math.sqrt(len(pools[lang])) for lang in languages],k=1)[0]

@@ -14,6 +14,30 @@ import run as runner
 
 
 class ContinualTests(unittest.TestCase):
+    def test_small_reviewed_language_is_not_repeated_as_majority(self):
+        from continual_learning import acquisition_language
+        import random
+        config=dict(human_language_policy='sqrt_corpus');pools=dict(it=[0]*18,en=[0]*848)
+        rng=random.Random(54);saved=rng.getstate()
+        deck=[acquisition_language(config,pools,rng,'it') for _ in range(10000)]
+        self.assertTrue(1100<deck.count('it')<1500)
+        rng.setstate(saved)
+        self.assertEqual(deck[:100],[acquisition_language(config,pools,rng,'it') for _ in range(100)])
+        self.assertEqual(acquisition_language({},pools,rng,'it'),'it')
+
+    def test_cached_head_configuration_is_bounded_and_reviewed(self):
+        root=Path(__file__).resolve().parents[2]
+        source=json.loads((root/'scripts/continual-training/SPEC.json').read_text())
+        def checked(change):
+            spec=copy.deepcopy(source);spec['continual_learning'].update(change)
+            spec.pop('fingerprint');spec['fingerprint']=hashlib.sha256(json.dumps(spec,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+            return spec
+        valid=dict(training_mode='cached_head',human_training_scope='reviewed_only',feature_cache_mebibytes=256,
+                   retention_examples_per_language=4)
+        self.assertTrue(validate_configuration(checked(valid)))
+        for change in [dict(feature_cache_mebibytes=1024),dict(feature_cache_mebibytes=True),
+                       dict(human_training_scope='legacy_and_reviewed'),dict(retention_examples_per_language=100)]:
+            self.assertRaises(ValueError,validate_configuration,checked({**valid,**change}))
     def test_archive_replay_uses_active_profile_and_both_languages(self):
         import random
         config=dict(profiles=[dict(retention_weight=4,champion_kl_weight=8),

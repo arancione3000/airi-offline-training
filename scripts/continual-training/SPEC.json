@@ -1,49 +1,51 @@
 {
   "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
   "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
-  "start_step": 416892,
+  "start_step": 421180,
   "max_steps": 1000000,
-  "pilot_step": 416892,
-  "migration_source_release": "airi-offline-416892-39395900911-1-7",
-  "migration_source_fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf",
+  "pilot_step": 421180,
+  "migration_source_release": "airi-offline-421180-39614174241-1-2",
+  "migration_source_fingerprint": "c3cfbecdd1b5c425446f95dd5a95755010907e42a1b386eed63820db49d008cb",
   "precision": "fp32",
   "torch_version": "2.14.1+cpu",
   "recipes": [
     {
-      "learning_rate": 1e-07,
+      "learning_rate": 0.0001,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 1e-07,
+      "learning_rate": 0.0001,
       "kl_weight": 1.0
     },
     {
-      "learning_rate": 1e-07,
+      "learning_rate": 0.0001,
       "kl_weight": 1.0
     }
   ],
-  "optimizer_policy": "Preserve candidate weights and Adam for1024-update trajectories; evaluate every64 updates and retain active bilingual gold/KL protection in acquisition and archived replay. Same verified champion and original adoption gates.",
-  "schedule": "New user-authorized continuation from416892:1024-update exploration horizon instead of512,64 development decisions or21600 optimizer seconds maximum. Same native architecture,data,learning rates and retention weights. This is a bounded longer-trajectory experiment,not autonomous architecture growth or evidence of conversational improvement.",
+  "optimizer_policy": "Explicit one-time migration to head-only Adam (36864 trainable weights), preserving native body weights and RNG; exact head Adam resume thereafter. Candidate/Adam persist within4096-update trials; independent gates and bounded rollback retained.",
+  "schedule": "CPU-native cached output-head experiment: reviewed-only conversational acquisition, square-root language sampling, eight bilingual retention memories/update, and protected training feature projection. Evaluate after1024 new updates; stop after24 decisions,6 failed full trials,21600 optimizer seconds or32 jobs. No external model or API teacher; no evidence of autonomous general architecture growth or general chat qualification.",
   "promotion": "offline only; no live promotion; original final gates unchanged",
   "script_sha256": {
     "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
     "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
     "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
-    "continual_learning.py": "f6cf0119bc0e44ac6e38e658f11dfc220aecc0a4f03d92c73651dca6233ef76f",
-    "continual_smoke.py": "5a35d884c89f6e77fa158b29346fb25b0324940dd76d7df30458a3ca333c8dc3",
+    "continual_learning.py": "9d9c54b21e38879688996add253047fab1418ec08ea7300f2c577a9b4b631ff3",
+    "continual_smoke.py": "7b8a4a9502abca3f1b413bcc35a7aa36b63abf68cf9900e2f53ad75f1420953d",
     "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
     "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
     "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
+    "fast_head.py": "49c8a9790152fdc16ad5f7aa7a001080b24a093409d2949501b5179840e64f49",
+    "fast_head_smoke.py": "989297dd3d5620a90334b4a9bae33afad5553c1f481daedea3c3929363f06d69",
     "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
-    "human_data.py": "2b26293af74816087c2723dae92b32626f98954fccc9ada65de8147ebc8840bc",
+    "human_data.py": "1babf762560c4705cd9ebd55bb46b34c39c840e3abdbc34321aaecb5a0b558b5",
     "legacy_run.py": "954b8ad04187f345d0f0f06d8a52bf0256d24e60a4d9b9cb7c59ace5983501ff",
     "model_channel.py": "006364236b071727c38b617f4272846ac772065c7b260e80bd97117b9a92766f",
     "morph_model.py": "872089f167c4ba00e93a87bab7524595bb27a1ffd320a6f78fe2bb5085331206",
     "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
     "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
     "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
-    "run.py": "f3a6601d811834f5f024a9c42d913c07e775e46ad89e2121ef96d492ed18fae4",
-    "session.py": "39896884f19dc00ce2dc13c95019e4813792b187e12fb043e246d8fc63a59027",
+    "run.py": "116595aa4a1c19d26c4e89f30f5c70746053155653846bc7af95e4d29011a68d",
+    "session.py": "08794452843ae9a506aa27b0feae2b4ea0f68d246ad3a2179fb1f3ff453c6762",
     "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
     "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
     "success_transfer.py": "4d2978513ac16ea9492601707ce16cd4a96f0e6d0f90b7f3d2fc8ba234b992d0",
@@ -51,14 +53,14 @@
   },
   "maximum_training_seconds": 21600,
   "extension": {
-    "request": "thomas-continue-cycle-20261021",
-    "source_sha": "5e2f598829477b6ddec267f7c2f3609e6f063a41",
-    "source_branch": "dialogue-bilingual-transfer-20261020",
-    "seed_release": "airi-offline-416892-39395900911-1-7",
-    "seed_step": 416892,
+    "request": "thomas-concrete-cpu-learning-repair-20261025",
+    "source_sha": "711147a21dd5b680419c34bb8f9c0d0dfe162ef1",
+    "source_branch": "dialogue-long-trajectory-20261021",
+    "seed_release": "airi-offline-421180-39614174241-1-2",
+    "seed_step": 421180,
     "additional_training_seconds": 21600,
     "source_budget": 21600,
-    "seed_selection": "Verified completed terminal:3392 attempted updates,48 negative checks,zero adoptions; revision1 and64 lessons with103 token positions preserved"
+    "seed_selection": "Verified terminal:4288 attempted updates,64 failed checks,4 rejected trials,zero adoptions; stable revision1 and64 training lessons retained"
   },
   "recovery_lr_factors": [
     1,
@@ -102,7 +104,7 @@
         "multiturn": 6
       }
     },
-    "note": "Tree and normalized user-prompt groups disjoint; final excluded from selection. Additional runtime overlap filtering removes old training examples. Human labels do not guarantee factual correctness."
+    "note": "Reviewed OASST2 only for new conversational acquisition; legacy unreviewed OASST1 removed. Runtime training replacement may reuse reviewed old TRAIN examples; original evaluation/final filtering unchanged. Raw tree/prompt/text disjointness and native authored held-out blocking remain. Runtime pool866:18it,848en; square-root language sampling. Human review does not guarantee factual correctness."
   },
   "success_transfer": {
     "schema": 1,
@@ -110,12 +112,12 @@
     "capacity": 64,
     "positions_per_row": 8,
     "lr_multiplier": 1.0,
-    "lr_cap": 1e-05,
+    "lr_cap": 0.0001,
     "archive": "success_bank.json",
-    "source_sha": "5e2f598829477b6ddec267f7c2f3609e6f063a41",
-    "source_fingerprint": "f44900e6a319abd44305b4f97ffbb6823202ec61426d1bc2d07f02892e7b65cf",
+    "source_sha": "711147a21dd5b680419c34bb8f9c0d0dfe162ef1",
+    "source_fingerprint": "c3cfbecdd1b5c425446f95dd5a95755010907e42a1b386eed63820db49d008cb",
     "source_budget": 21600,
-    "request": "thomas-continue-cycle-20261021"
+    "request": "thomas-concrete-cpu-learning-repair-20261025"
   },
   "morph_model": {
     "model_id": "airi-native",
@@ -127,30 +129,29 @@
     "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
   },
   "continual_learning": {
-    "evaluation_updates": 64,
-    "maximum_rejections": 12,
-    "maximum_evaluations": 64,
+    "evaluation_updates": 1024,
+    "maximum_rejections": 6,
+    "maximum_evaluations": 24,
     "profiles": [
       {
-        "learning_rate": 1e-07,
+        "learning_rate": 0.0001,
         "retention_weight": 16.0,
         "champion_kl_weight": 16.0
       },
       {
-        "learning_rate": 2.5e-07,
+        "learning_rate": 3e-05,
         "retention_weight": 16.0,
         "champion_kl_weight": 16.0
       },
       {
-        "learning_rate": 5e-07,
+        "learning_rate": 1e-05,
         "retention_weight": 16.0,
         "champion_kl_weight": 16.0
       }
     ],
     "interpolation_alphas": [
       0.5,
-      0.25,
-      0.125
+      0.25
     ],
     "sampling_schedule": [
       "human-dialogue",
@@ -174,7 +175,13 @@
       3,
       11
     ],
-    "trial_updates": 1024
+    "trial_updates": 4096,
+    "training_mode": "cached_head",
+    "feature_cache_mebibytes": 256,
+    "human_training_scope": "reviewed_only",
+    "human_language_policy": "sqrt_corpus",
+    "retention_examples_per_language": 4,
+    "protected_head_rank": 48
   },
-  "fingerprint": "c3cfbecdd1b5c425446f95dd5a95755010907e42a1b386eed63820db49d008cb"
+  "fingerprint": "4a84e4305fa12d529642ea73949b9026cdf8065f3f6f58bedf089bd644de8a76"
 }

@@ -6,7 +6,7 @@ on:
       checkpoint_release:
         description: Verified checkpoint release
         required: true
-        default: airi-offline-416892-39395900911-1-7
+        default: airi-offline-421180-39614174241-1-2
         type: string
       preflight_only:
         description: Verify runtime without loading or training a checkpoint
@@ -31,7 +31,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
       CONTINUATION: ${{ inputs.continuation }}
-      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '60' || '10800' }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '300' || '10800' }}
       PYTHONPATH: ${{ github.workspace }}/source/computer
     steps:
       - uses: actions/checkout@v4
@@ -70,6 +70,7 @@ jobs:
           python tests/transfer-training/check_resume.py
           python tests/transfer-training/check_success_native.py
           python tests/transfer-training/check_continual_native.py
+          python tests/transfer-training/check_fast_head.py
       - name: Audit real source corpus and held-out separation
         if: inputs.preflight_only == 'true'
         run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds 60 --learning-smoke-only

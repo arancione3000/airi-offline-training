@@ -78,7 +78,7 @@ def prepare(raw):
     splits['train']=[r for r in splits['train'] if not any(norm(m['content']) in excluded for m in r['messages'])]
     return splits
 
-def load_corpus(directory,pins,blocked=()):
+def load_corpus(directory,pins,blocked=(),*,training_blocked=None):
     directory=Path(directory);out={};blocked=set(blocked)
     for split in ('train','development','final'):
         raw=(directory/('human-'+split+'.jsonl')).read_bytes()
@@ -86,6 +86,12 @@ def load_corpus(directory,pins,blocked=()):
         out[split]=[json.loads(s) for s in raw.splitlines()]
     # Exclude previous human training/validation prompts at runtime.
     for split in out:
-        out[split]=[r for r in out[split] if not any(norm(m['content']) in blocked for m in r['messages'])]
+        excluded=blocked if split!='train' or training_blocked is None else set(training_blocked)
+        out[split]=[r for r in out[split] if not any(norm(m['content']) in excluded for m in r['messages'])]
+    # Even a separately filtered training replacement cannot reuse a remaining
+    # development/final message. This never relaxes held-out separation.
+    if training_blocked is not None:
+        heldout={norm(m['content']) for split in ('development','final') for r in out[split] for m in r['messages']}
+        out['train']=[r for r in out['train'] if not any(norm(m['content']) in heldout for m in r['messages'])]
     if not out['train'] or not out['development']:raise ValueError('empty human corpus after overlap removal')
     return out

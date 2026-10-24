@@ -1,0 +1,282 @@
+{
+  "scope": "isolated local trials; exact development gates; champion serves as both reference and retention teacher, unlike original native-anchor production replay; never promoted",
+  "records": {
+    "ablation": [
+      {
+        "lr": 1e-05,
+        "updates": 256,
+        "optimizer_seconds": 55.380335733998436,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.372557422879139
+          },
+          "nll": {
+            "it": 1.2136184576846183,
+            "en": 1.048694713588698
+          },
+          "legacy_correct": 15,
+          "dialogue_correct": 4,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "lr": 1e-05,
+        "updates": 1024,
+        "optimizer_seconds": 156.3374182789962,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.362918083326739
+          },
+          "nll": {
+            "it": 1.209643404135659,
+            "en": 1.0466227249442566
+          },
+          "legacy_correct": 15,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "lr": 3e-05,
+        "updates": 256,
+        "optimizer_seconds": 9.310542962001819,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.3635483162764612
+          },
+          "nll": {
+            "it": 1.2097270225068322,
+            "en": 1.0457202905391934
+          },
+          "legacy_correct": 15,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "lr": 3e-05,
+        "updates": 1024,
+        "optimizer_seconds": 43.642026768997994,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.3395839384393944
+          },
+          "nll": {
+            "it": 1.1986632065971081,
+            "en": 1.0403751211159038
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "lr": 0.0001,
+        "updates": 256,
+        "optimizer_seconds": 7.8346135029980815,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.3369165025948746
+          },
+          "nll": {
+            "it": 1.196820877396893,
+            "en": 1.0360602628452937
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "lr": 0.0001,
+        "updates": 1024,
+        "optimizer_seconds": 31.238754676995768,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.2924678935969514
+          },
+          "nll": {
+            "it": 1.1681509193728612,
+            "en": 1.0257567875043019
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      }
+    ],
+    "projection": [
+      {
+        "protected_rank": 8,
+        "lr": 0.0001,
+        "updates": 1024,
+        "optimizer_seconds": 124.6072198679999,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.3000350024818714
+          },
+          "nll": {
+            "it": 1.1758300495375158,
+            "en": 1.0309141243259354
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "protected_rank": 16,
+        "lr": 0.0001,
+        "updates": 1024,
+        "optimizer_seconds": 47.444758794998506,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.306506007635352
+          },
+          "nll": {
+            "it": 1.1788477280070773,
+            "en": 1.0342442611068698
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      },
+      {
+        "protected_rank": 32,
+        "lr": 0.0001,
+        "updates": 1024,
+        "optimizer_seconds": 27.622620235006707,
+        "accepted": false,
+        "assessment": {
+          "human_nll": {
+            "en": 3.319111645477838
+          },
+          "nll": {
+            "it": 1.187109017243531,
+            "en": 1.03756212536688
+          },
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "foundation_correct": 4,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "repetition": 0.0
+        }
+      }
+    ]
+  }
+}

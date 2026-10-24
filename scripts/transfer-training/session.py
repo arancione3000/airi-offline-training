@@ -41,13 +41,16 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,su
     path=Path(path)
     if path.exists():raise FileExistsError(f'checkpoint already exists: {path.name}')
     tmp=path.with_name(path.name+'.partial');tmp.mkdir(parents=True,exist_ok=False)
-    runtime.save_checkpoint(tmp/'model',metadata={
+    model_info=runtime.save_checkpoint(tmp/'model',metadata={
         'production_qualified':False,'role':'offline-conversation-training-checkpoint',
         'fingerprint':fingerprint,'attempted_supervised_tokens':counters.get('supervised_tokens',0),
         'accepted_live_tokens':0,'completed_steps':counters.get('completed_steps',0),
         'model_id':counters.get('morph',{}).get('model_id','airi-native'),
         'model_revision':counters.get('morph',{}).get('revision',0),
     })
+    model_info['parameters']=sum(p.numel() for p in runtime.model.parameters())
+    model_info['trainable_parameters']=sum(p.numel() for p in runtime.model.parameters() if p.requires_grad)
+    atomic_json(tmp/'model/metadata.json',model_info)
     _save_optimizer_checkpoint(optimizer,tmp/'optimizer.pt')
     torch.save({'sampler_rng':rng.getstate(),'anchor_rng':anchor_rng.getstate(),
                 'torch_rng':torch.get_rng_state(),'counters':counters,'fingerprint':fingerprint},tmp/'resume.pt')
@@ -58,7 +61,7 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,su
     tmp.replace(path)
     return manifest
 
-def restore_session(path,optimizer_factory,*,fingerprint):
+def restore_session(path,optimizer_factory,*,fingerprint,load_optimizer=True):
     path=Path(path);manifest=json.loads((path/'checkpoint.json').read_text())
     if manifest['fingerprint']!=fingerprint:raise ValueError('checkpoint provenance mismatch')
     for name,digest in manifest['files'].items():
@@ -69,7 +72,7 @@ def restore_session(path,optimizer_factory,*,fingerprint):
     if payload['fingerprint']!=fingerprint:raise ValueError('resume provenance mismatch')
     runtime=GeneralistRuntime.from_checkpoint(path/'model')
     optimizer=optimizer_factory(runtime.model)
-    _load_optimizer_checkpoint(optimizer,path/'optimizer.pt')
+    if load_optimizer:_load_optimizer_checkpoint(optimizer,path/'optimizer.pt')
     torch.set_rng_state(payload['torch_rng'])
     return runtime,optimizer,payload
 
