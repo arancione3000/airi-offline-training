@@ -1,0 +1,35 @@
+{
+  "run_id": 40139417255,
+  "source_sha": "52b13ba6da8d70fd9aae3fb0bfe587bff5d01bf8",
+  "conclusion": "success",
+  "benchmark": {
+    "phase": "real native cached head benchmark PASS",
+    "visible_cpus": 4,
+    "torch_threads": 2,
+    "strategy": {
+      "mode": "cached_native_head",
+      "trainable_parameters": 36864,
+      "total_parameters": 50164416,
+      "protected_feature_rank": 48,
+      "feature_cache": {
+        "hits": 126,
+        "misses": 4,
+        "bytes": 143864,
+        "entries": 4,
+        "invalidations": 0,
+        "max_bytes": 268435456
+      }
+    },
+    "full_8_updates_seconds": 10.279543686000011,
+    "head_8_updates_seconds": 0.4732655189999946,
+    "head_warm_24_updates_seconds": 0.26718809699997337,
+    "cold_inclusive_optimizer_speedup": 21.720457699349378,
+    "repeated_batch_optimizer_speedup": 115.4191799869105,
+    "training_task_initial_nll": 3.483478307723999,
+    "training_task_final_nll": 3.352991819381714,
+    "native_export_exact": true,
+    "champion_unchanged": true,
+    "scope": "same bounded reviewed training batch,objective and CPU; optimizer timing excludes load/evaluation; not end-to-end throughput or general conversation",
+    "live_promoted": false
+  }
+}

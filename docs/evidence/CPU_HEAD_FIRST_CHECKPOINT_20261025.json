@@ -1,0 +1,86 @@
+{
+  "run_id": 40139709413,
+  "checkpoint": "airi-offline-422812-40139709413-1-2",
+  "fingerprint": "4a84e4305fa12d529642ea73949b9026cdf8065f3f6f58bedf089bd644de8a76",
+  "run_state_sha256": "5bcf70d7f57c2e1216c3486f5e02848ccbf51e4153b5660c121a5d4d62b1afa7",
+  "optimizer_archive_sha256": "9e6a0ec11d649348e73a3f949056dd3ea8e953156161c8e16f3ff2fdd0a45cc3",
+  "optimizer_archive_bytes": 6082193,
+  "completed_steps": 422812,
+  "updates": 1632,
+  "optimizer_seconds": 217.74321230900057,
+  "stable_revision": 1,
+  "accepted_updates": 0,
+  "search": {
+    "consecutive_rejections": 0,
+    "evaluations": 1,
+    "accepted_updates": 0,
+    "stopped": false,
+    "history": [
+      {
+        "step": 422204,
+        "learning_rate": 0.0001,
+        "reasons": [
+          "legacy_correct_regressed",
+          "previously_correct_answer_lost"
+        ],
+        "interpolation": null,
+        "interpolation_probes": 2,
+        "accepted": false,
+        "rollback": false,
+        "trial_complete": false,
+        "trial_updates": 1024,
+        "exploration_pending": true
+      }
+    ],
+    "optimizer_policy": "preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation",
+    "trial_start_update": 0
+  },
+  "champion": {
+    "human_nll": {
+      "en": 3.377343427776339
+    },
+    "nll": {
+      "it": 1.2156030304669299,
+      "en": 1.0502217835226846
+    },
+    "legacy_correct": 15,
+    "dialogue_correct": 4,
+    "foundation_correct": 4,
+    "exact_correct": 23,
+    "probes": 92,
+    "context_pair_rate": 0.0,
+    "repetition": 0.0
+  },
+  "first_candidate": {
+    "human_nll": {
+      "en": 3.351440242348162
+    },
+    "nll": {
+      "it": 1.1868665467327602,
+      "en": 1.0346342359853116
+    },
+    "legacy_correct": 14,
+    "dialogue_correct": 4,
+    "foundation_correct": 4,
+    "exact_correct": 22,
+    "probes": 92,
+    "context_pair_rate": 0.0,
+    "repetition": 0.0
+  },
+  "training_strategy": {
+    "mode": "cached_native_head",
+    "trainable_parameters": 36864,
+    "total_parameters": 50164416,
+    "protected_feature_rank": 48,
+    "feature_cache": {
+      "hits": 15602,
+      "misses": 1478,
+      "bytes": 78426656,
+      "entries": 1478,
+      "invalidations": 0,
+      "max_bytes": 268435456
+    }
+  },
+  "continue_training": true,
+  "resume_policy": "same pending candidate and exact head Adam; first failure is not a full4096-update trial"
+}

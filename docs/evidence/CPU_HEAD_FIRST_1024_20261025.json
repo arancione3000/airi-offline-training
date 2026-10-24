@@ -1,0 +1,60 @@
+{
+  "observed_at_utc": "2026-10-24T22:51:34.321625+00:00",
+  "run_id": 40139709413,
+  "scope": "mutable progress snapshot before first independent development decision; not a quality promotion",
+  "source_progress_sha256": "814face0a3378dec523a3438079dd1bf682f0f65b08ae777b86356322519c829",
+  "metrics": {
+    "completed_steps": 422204,
+    "conversation_updates": 1024,
+    "human_examples": 866,
+    "human_acquisition_scope": "reviewed corpus only",
+    "training_strategy": {
+      "mode": "cached_native_head",
+      "trainable_parameters": 36864,
+      "total_parameters": 50164416,
+      "protected_feature_rank": 48,
+      "feature_cache": {
+        "hits": 9120,
+        "misses": 1227,
+        "bytes": 61572224,
+        "entries": 1227,
+        "invalidations": 0,
+        "max_bytes": 268435456
+      }
+    },
+    "elapsed_training_seconds": 165.87911403700002,
+    "last_transfer_retention": {
+      "retention_weight": 16.0,
+      "champion_kl_weight": 16.0,
+      "retention_examples": 8
+    },
+    "updates_by_group": {
+      "human-dialogue-en": 445,
+      "curated-dialogue-en": 86,
+      "success-transfer-it": 50,
+      "curated-dialogue-it": 170,
+      "verified-context-en": 22,
+      "success-transfer-en": 78,
+      "human-dialogue-it": 67,
+      "language-it": 22,
+      "verified-context-it": 42,
+      "language-en": 21,
+      "domains": 21
+    },
+    "success_bank": {
+      "lessons": 64,
+      "verified_whole_answer_gains": 7,
+      "verified_token_positions": 92,
+      "harvests": 187,
+      "donations": 197,
+      "transfer_updates": 3794,
+      "scope": "training observations; not proof of generalization"
+    }
+  },
+  "search": {
+    "evaluations": 0,
+    "accepted_updates": 0,
+    "consecutive_rejections": 0
+  },
+  "revision": 1
+}

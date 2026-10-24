@@ -36,4 +36,19 @@ Il nuovo ciclo è un esperimento di adattamento economico della testa, non una r
 
 ## Verifica remota
 
-In attesa del preflight GitHub Actions sul codice pubblicato e dell'avvio verificato. I risultati remoti saranno aggiunti qui dopo l'esecuzione.
+[Preflight 40139417255](https://github.com/arancione3000/airi-offline-training/actions/runs/40139417255): **successo**, commit `52b13ba6da8d70fd9aae3fb0bfe587bff5d01bf8`. Anche sul runner reale passano tutti i controlli nativi. Quattro CPU visibili, due thread Torch. Sullo stesso piccolo lotto: 8 aggiornamenti completi 10,2795 s, testa con cache inizialmente vuota 0,4733 s, rapporto **21,72**. La NLL del compito di TRAIN scende da 3,4835 a 3,3530. Esportazione nativa esatta e campione immutato. [JSON misurato](evidence/CPU_HEAD_REMOTE_PREFLIGHT_20261025.json). Restano i limiti di interpretazione descritti sopra: non è una misura end-to-end né una promozione di qualità.
+
+[Training reale 40139709413](https://github.com/arancione3000/airi-offline-training/actions/runs/40139709413) avviato sul ramo congelato e sullo stesso commit. Controller riabilitato e verifica manuale [40139726630](https://github.com/arancione3000/airi-offline-training/actions/runs/40139726630): successo, 7 test e azione `active_job_retained`, senza duplicare il job di training. Prima telemetria reale: **1.024 aggiornamenti**, passo **422204**, **165,879 s di ottimizzazione**. Corpus effettivo 866 righe revisionate. Dei 512 aggiornamenti umani, 445 inglesi e 67 italiani; ripasso sempre 8 esempi e pesi 16/16 anche nei trasferimenti. Testa 36.864 parametri, rango protetto 48; cache 9.120 hit, 1.227 miss, 61.572.224 byte su 268.435.456, zero invalidazioni. Banca iniziale conservata: 64 lezioni, 92 posizioni e 7 guadagni su risposte intere di TRAIN. [Snapshot](evidence/CPU_HEAD_FIRST_1024_20261025.json).
+
+La telemetria precede il primo controllo indipendente: revision1, zero adozioni a quel punto. Questi aggiornamenti dimostrano che il ciclo gira e modifica i pesi; non dimostrano ancora una conversazione migliore.
+
+Il vecchio controller orario `airi-evolving-controller.yml`, fissato all’esperimento storico `evolving-context-v1`, è stato disabilitato per evitare ulteriori controlli inutili e mantenere un solo controller di apprendimento corrente. Il controller `airi-continual-controller.yml` rimane attivo.
+
+
+### Esito del primo job completo e continuazione automatica
+
+Il job 40139709413 è terminato con **successo**, salvando il checkpoint `airi-offline-422812-40139709413-1-2`: **1.632 aggiornamenti**, **217,743 s di ottimizzazione**. Indice, stato e archivio di ripresa sono stati scaricati e verificati con SHA256. [Dati del checkpoint](evidence/CPU_HEAD_FIRST_CHECKPOINT_20261025.json).
+
+Al controllo dopo 1.024 aggiornamenti la NLL umana inglese passa da 3,377343 a 3,351440; le NLL native italiane/inglesi da 1,215603/1,050222 a 1,186867/1,034634. Tuttavia il candidato passa da 15 a 14 risposte legacy corrette; dialoghi 4/16 e fondamenti 4/16 invariati. Risultato complessivo candidato 22/92 contro 23/92 del campione. Anche le due interpolazioni vengono respinte. **Zero adozioni, campione approvato invariato alla revisione 1.** Il miglioramento delle loss non viene presentato come migliore conversazione.
+
+Il tentativo da 4.096 aggiornamenti non è ancora completo: pesi candidati e Adam vengono conservati al confine del job. Il controller, attivato dall’evento `workflow_run` e senza una nuova chiamata a ChatGPT, ha avviato [la continuazione 40140414835](https://github.com/arancione3000/airi-offline-training/actions/runs/40140414835). [Controllo automatico 40140402847](https://github.com/arancione3000/airi-offline-training/actions/runs/40140402847): successo, ripresa dello stesso checkpoint verificato, continuazione 1. Al momento della verifica il nuovo job era nella fase di training dopo aver superato i controlli nativi.
