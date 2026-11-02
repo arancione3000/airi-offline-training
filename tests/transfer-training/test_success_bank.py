@@ -30,11 +30,15 @@ class SuccessBankTests(unittest.TestCase):
 
     def test_transfer_slots_preserve_human_and_native_replay_for_every_focus(self):
         import run
+        from collections import Counter
         for focus in run.SAMPLING_SCHEDULES:
-            selected=[i for i in range(48) if run.success_slot(i,run.sampling_group(i,focus),True)]
+            schedule=run.SAMPLING_SCHEDULES[focus]
+            selected=[i for i in range(48) if run.success_slot(i,run.sampling_group(i,focus),True,schedule=schedule)]
             self.assertLessEqual(len(selected),6)
             self.assertTrue(selected)
             self.assertTrue(all(run.sampling_group(i,focus) not in {'human-dialogue','native-replay'} for i in selected))
+            counts=Counter(run.sampling_group(i,focus) for i in range(16) if i not in selected)
+            self.assertTrue(all(counts[g]>=1 for g in set(schedule)))
         self.assertFalse(run.success_slot(2,'old-authored',False))
 
     def test_heldout_prompt_cannot_become_training_lesson_even_with_changed_answer(self):

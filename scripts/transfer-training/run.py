@@ -16,6 +16,15 @@ SPEC_PATH = Path(os.environ.get('AIRI_EXPERIMENT_SPEC', str(HERE/'SPEC.json'))).
 SPEC = json.loads(SPEC_PATH.read_text())
 LEARNING = SPEC.get('continual_learning')
 FAST_HEAD = bool(LEARNING and LEARNING.get('training_mode')=='cached_head')
+FAST_PREFIX = bool(LEARNING and LEARNING.get('training_mode')=='cached_prefix')
+CACHED_TRAINING = FAST_HEAD or FAST_PREFIX
+
+def training_strategy(model):
+    if FAST_PREFIX:
+        from prefix_tuning import prefix_summary
+        return prefix_summary(model)
+    from fast_head import head_summary
+    return head_summary(model)
 
 def validate_budget(counters):
     value=counters['elapsed_training_seconds']
@@ -58,9 +67,13 @@ def selection_needed(counters,*,force=False):
     return not (force and not counters.get('exploration_pending',False)
                 and counters.get('selected_at_step')==counters.get('completed_steps'))
 
-def success_slot(update,sample_group,has_lessons):
+def success_slot(update,sample_group,has_lessons,*,schedule=None):
+    from continual_learning import nonstarving_replay_slots
+    if schedule is None:
+        schedule=LEARNING['sampling_schedule'] if LEARNING else SAMPLING_SCHEDULES['balanced']
     slots=LEARNING.get('success_transfer_slots',(2,10)) if LEARNING else (2,10)
-    return bool(has_lessons and update%16 in slots and sample_group not in {'human-dialogue','native-replay'})
+    return bool(has_lessons and schedule[update%16]==sample_group
+                and update%16 in nonstarving_replay_slots(schedule,slots))
 
 def main():
     import torch
@@ -131,7 +144,7 @@ def main():
         cache_tokenizer(reference.tokenizer)
     reference_digest=legacy_run.state_digest(reference.model)
     for parameter in reference.model.parameters(): parameter.requires_grad_(False)
-    if FAST_HEAD:
+    if CACHED_TRAINING:
         from fast_head import configure_head,install_feature_cache,head_summary
         install_feature_cache(reference.model,cache_bytes=64*1024*1024)
     _,replay,anchors,_,human_rows=legacy_run.prepare(reference.tokenizer,include_dialogue_batches=False)
@@ -247,6 +260,9 @@ def main():
                 'scope':'narrow authored heldout tasks; not proof of general conversation'}
     recipe=SPEC['recipes'][0]
     def factory(model):
+        if FAST_PREFIX:
+            from prefix_tuning import configure_prefix
+            configure_prefix(model,cache_bytes=LEARNING['feature_cache_mebibytes']*1024*1024)
         if FAST_HEAD:
             configure_head(model,cache_bytes=LEARNING['feature_cache_mebibytes']*1024*1024)
             model._airi_projection_rank_requested=LEARNING.get('protected_head_rank',0)
@@ -257,7 +273,7 @@ def main():
         return optimizer
     source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
     runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint,
-        load_optimizer=not (FAST_HEAD and args.release==transport.SEED_TAG))
+        load_optimizer=not (CACHED_TRAINING and args.release==transport.SEED_TAG))
     if LEARNING:cache_tokenizer(runtime.tokenizer)
     rng,anchor_rng=random.Random(),random.Random()
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
@@ -266,7 +282,7 @@ def main():
     from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
                               summary as bank_summary, retains_correct_answers, migrate_bank)
     eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
-    if args.learning_smoke_only or (FAST_HEAD and args.success_smoke_only):
+    if args.learning_smoke_only or (CACHED_TRAINING and args.success_smoke_only):
         from continual_smoke import real_learning_smoke
         real_learning_smoke(runtime,opt,checkpoint,reference,eligible,human_rows,
                             encode,anchors,evaluate,legacy_run.state_digest)
@@ -285,8 +301,8 @@ def main():
     validate_bank(bank,eligible,SPEC['fingerprint'],runtime.config.vocab_size)
     curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
     if args.release==transport.SEED_TAG:
-        # Preserve native weights and RNG. Cached-head migration intentionally starts
-        # fresh, head-only Adam; subsequent resumes restore that exact optimizer.
+        # Preserve native weights and RNG. A cached-training migration explicitly
+        # starts fresh Adam for its exact scope; later resumes restore that Adam.
         counters={'completed_steps':SPEC['start_step'],'supervised_tokens':0,'reference_tokens':0,
                   'conversation_updates':0,'curriculum_sha256':curriculum_sha,
                   'baseline':evaluate(runtime),'seed_model_sha256':source_digest,'elapsed_training_seconds':0.,
@@ -310,7 +326,7 @@ def main():
             # fresh, explicit exploration state avoids inherited stale moments.
             opt=factory(runtime.model)
             counters['learning_search']['optimizer_policy']='preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation'
-    if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
+    if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
     counters['human_acquisition_scope']='reviewed corpus only' if reviewed_only else 'legacy plus reviewed corpus'
     recipe=SPEC['recipes'][counters['phase']]
     def apply_learning_rate():
@@ -346,7 +362,7 @@ def main():
         finally:torch.set_rng_state(stream)
         protected.model.eval()
         for parameter in protected.model.parameters(): parameter.requires_grad_(False)
-        if FAST_HEAD:install_feature_cache(protected.model,cache_bytes=64*1024*1024)
+        if CACHED_TRAINING:install_feature_cache(protected.model,cache_bytes=64*1024*1024)
         if LEARNING:cache_tokenizer(protected.tokenizer)
         return protected
     protected_champion = load_protected_champion()
@@ -371,7 +387,7 @@ def main():
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
         if path.exists():shutil.rmtree(path)
         counters['success_bank']=bank_summary(bank)
-        if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
+        if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
         save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
         if LEARNING:
             state={'fingerprint':SPEC['fingerprint'],'completed_steps':counters['completed_steps'],
@@ -535,8 +551,9 @@ def main():
     if any(not v for v in human_by.values()):raise ValueError('empty filtered human language')
     while needs_training(counters):
         update=counters['conversation_updates'];lang='it' if update%3!=1 else 'en'
-        sample_group=(LEARNING['sampling_schedule'][update%16] if LEARNING
-                      else sampling_group(update,counters['training_focus']))
+        schedule=(LEARNING['sampling_schedule'] if LEARNING
+                  else SAMPLING_SCHEDULES[counters['training_focus']])
+        sample_group=schedule[update%16]
         if sample_group=='human-dialogue':
             if LEARNING:
                 from continual_learning import acquisition_language
@@ -560,9 +577,9 @@ def main():
             group=['language-it','language-en','domains'][(update//16)%3]
             batch=rng.choice(replay[group])
         lesson=None
-        # Preserve all human and native replay slots; at most 2/16 other slots
-        # replay archived improvements from any preceding native candidate.
-        if success_slot(update,sample_group,bank['entries']):
+        # Preserve human/native replay and at least one acquisition per group;
+        # only surplus requested slots replay archived native improvements.
+        if success_slot(update,sample_group,bank['entries'],schedule=schedule):
             keys=sorted(bank['entries'])
             lesson=bank['entries'][keys[(bank['transfer_updates'])%len(keys)]]
             batch=encode(lesson['row']);group='success-transfer-'+lesson['row']['language']
@@ -597,7 +614,7 @@ def main():
         counters.setdefault('updates_by_group',{})[group]=counters.setdefault('updates_by_group',{}).get(group,0)+1
         update=counters['conversation_updates']
         if update%16==0:
-            if FAST_HEAD:counters['training_strategy']=head_summary(runtime.model)
+            if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
             atomic_json(out/'PROGRESS.json',{**counters,'status':'training','last_update':stats,'live_promoted':False})
             print(json.dumps({'step':counters['completed_steps'],'updates':update,'loss':stats['loss'],'phase':counters['phase']}),flush=True)
             if (update==16 or update%128==0) and needs_training(counters):publisher.progress({**counters,'status':'training','last_update':stats},args.release)
@@ -624,7 +641,15 @@ def main():
         raise ValueError('frozen reference changed')
     if next_action is None:
         select_candidate('finite-budget-boundary',force=True)
-        metrics=legacy_run.common_metrics(runtime)
+        if FAST_PREFIX:
+            # Original final metrics temporarily use the original 128-token
+            # context. Run the native forward while that configuration is
+            # active; cached training resumes only after it is restored.
+            from prefix_tuning import native_evaluation
+            with native_evaluation(runtime.model):
+                metrics=legacy_run.common_metrics(runtime)
+        else:
+            metrics=legacy_run.common_metrics(runtime)
         original=legacy_run.common_metrics(reference)
         from generalist_lm.research_cycle import _research_eligible
         from generalist_lm.phase5_diagnostics import degeneration_gate

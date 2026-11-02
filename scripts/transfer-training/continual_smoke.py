@@ -36,7 +36,7 @@ def real_learning_smoke(runtime, inherited_optimizer, checkpoint, reference, eli
             logits=runtime.model(batch[0])['logits'][:,:-1]
             return float(F.cross_entropy(logits.reshape(-1,logits.shape[-1]),batch[1][:,1:].reshape(-1)))
     before=evaluate(runtime);initial=loss()
-    optimizer=torch.optim.AdamW(runtime.model.parameters(),lr=1e-5,weight_decay=.01)
+    optimizer=torch.optim.AdamW([p for p in runtime.model.parameters() if p.requires_grad],lr=1e-5,weight_decay=.01)
     for _ in range(32):
         continual_step(runtime.model,champion.model,reference.model,optimizer,batch,memories,anchors[0],
                        retention_weight=2.,champion_kl_weight=2.)
