@@ -1,0 +1,99 @@
+name: AIRI native context learning
+run-name: ${{ inputs.preflight_only == 'true' && 'AIRI context preflight' || 'AIRI finite context learning' }}
+on:
+  workflow_dispatch:
+    inputs:
+      checkpoint_release:
+        description: Verified terminal or same-experiment checkpoint release
+        required: true
+        default: airi-offline-446076-40140414835-1-7
+        type: string
+      preflight_only:
+        description: Verify native learning and export without publishing weights
+        default: 'false'
+        type: string
+      continuation:
+        description: Finite job counter from zero through three
+        default: '0'
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ${{ inputs.preflight_only == 'true' && 'airi-context-learning-preflight' || 'airi-offline-background-training' }}
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      AIRI_EXPERIMENT_SPEC: scripts/context-learning/SPEC.json
+      GH_TOKEN: ${{ github.token }}
+      CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
+      CONTINUATION: ${{ inputs.continuation }}
+      PREFLIGHT_ONLY: ${{ inputs.preflight_only }}
+      CHUNK_SECONDS: ${{ inputs.continuation == '0' && '300' || inputs.continuation == '3' && '10800' || '1100' }}
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate finite experiment and frozen branch
+        run: |
+          python - <<'PY'
+          import json,os,re
+          spec=json.load(open(os.environ['AIRI_EXPERIMENT_SPEC']))
+          assert re.fullmatch(r'airi-offline-[A-Za-z0-9._-]+',os.environ['CHECKPOINT_RELEASE'])
+          assert re.fullmatch(r'[0-3]',os.environ['CONTINUATION'])
+          assert int(os.environ['CONTINUATION'])<spec['job_limit']
+          assert os.environ['PREFLIGHT_ONLY'] in {'true','false'}
+          assert os.environ['GITHUB_REF_TYPE']=='branch'
+          assert os.environ['GITHUB_REF_NAME']==spec['frozen_runner_branch']
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore immutable native source
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: d078e718dfba0d68babd31de90fa55c0beac1951
+          path: source
+          persist-credentials: false
+      - name: Restore immutable native reference
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
+          path: background-work/context-trial
+          persist-credentials: false
+      - name: Verify orchestration and install exact CPU runtime
+        run: |
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/transfer-training -v
+          python -m unittest discover -s tests/context-learning -v
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy>=2,<3'
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+      - name: Verify native gradients, optimizer recovery and exact export
+        run: |
+          python tests/transfer-training/check_resume.py
+          python tests/transfer-training/check_success_native.py
+          python tests/transfer-training/check_continual_native.py
+          python tests/transfer-training/check_prefix_tuning.py
+          python tests/transfer-training/check_prefix_integration.py
+      - name: Preflight on verified real checkpoint
+        if: inputs.preflight_only == 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds 60 --learning-smoke-only
+      - name: Train, evaluate and commit bounded checkpoint
+        id: train
+        if: inputs.preflight_only != 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
+      - name: Continue only verified state on the same frozen commit
+        if: inputs.preflight_only != 'true'
+        env:
+          NEXT_ACTION: ${{ steps.train.outputs.next_action }}
+        run: python scripts/context-learning/continue.py
+      - name: Record saved offline result
+        if: inputs.preflight_only != 'true'
+        env:
+          SAVED_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+        run: |
+          printf 'Offline checkpoint: %s\nOriginal quality gates retained. No production promotion.\n' "$SAVED_RELEASE" >> "$GITHUB_STEP_SUMMARY"

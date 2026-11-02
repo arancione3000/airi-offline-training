@@ -12,6 +12,9 @@ on:
       - 'tests/conversation-training/**'
       - 'scripts/continual-training/**'
       - 'tests/continual-training/**'
+      - 'scripts/context-learning/**'
+      - 'tests/context-learning/**'
+      - '.github/workflows/airi-context-background.yml'
       - '.github/workflows/airi-continual-controller.yml'
       - '.github/workflows/airi-continual-background.yml'
       - 'scripts/transfer-training/**'
@@ -80,3 +83,5 @@ jobs:
       - run: python -m py_compile scripts/transfer-training/*.py
       - run: python -m unittest discover -s tests/continual-training -v
       - run: python -m py_compile scripts/continual-training/*.py
+      - run: python -m unittest discover -s tests/context-learning -v
+      - run: python -m py_compile scripts/context-learning/*.py

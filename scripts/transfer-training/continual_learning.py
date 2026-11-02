@@ -6,6 +6,25 @@ only a training constraint; the independent development gates still decide.
 import math
 
 
+def nonstarving_replay_slots(schedule, requested_slots):
+    """Allow archive replay only from surplus acquisition slots.
+
+    Keep human/native replay intact and retain at least one ordinary update
+    for every other group in each complete schedule. Requested slots are
+    opportunities, not a requirement to replace the last example of a skill.
+    """
+    from collections import Counter
+    remaining = Counter(schedule)
+    selected = []
+    for index in sorted(requested_slots):
+        group = schedule[index]
+        if group in {'human-dialogue', 'native-replay'} or remaining[group] <= 1:
+            continue
+        selected.append(index)
+        remaining[group] -= 1
+    return tuple(selected)
+
+
 def cache_tokenizer(tokenizer, *, capacity=16384):
     """Cache pure encodings, returning fresh lists so callers cannot poison them."""
     from functools import lru_cache
@@ -29,15 +48,15 @@ def validate_configuration(spec):
         raise ValueError('continual experiment fingerprint mismatch')
     value=spec['continual_learning']
     mode=value.get('training_mode','full')
-    if mode not in {'full','cached_head'}:raise ValueError('unsupported native training mode')
+    if mode not in {'full','cached_head','cached_prefix'}:raise ValueError('unsupported native training mode')
     if value.get('human_training_scope','legacy_and_reviewed') not in {'legacy_and_reviewed','reviewed_only'}:
         raise ValueError('invalid human training scope')
-    if mode=='cached_head':
+    if mode in {'cached_head','cached_prefix'}:
         cache=value.get('feature_cache_mebibytes')
         if not isinstance(cache,int) or isinstance(cache,bool) or not 16<=cache<=512:
             raise ValueError('invalid bounded native feature cache')
         if value.get('human_training_scope')!='reviewed_only':
-            raise ValueError('cached head experiment requires reviewed conversational acquisition')
+            raise ValueError('cached training requires reviewed conversational acquisition')
     if value.get('human_language_policy','legacy_ratio') not in {'legacy_ratio','sqrt_corpus'}:
         raise ValueError('invalid reviewed language sampling')
     examples=value.get('retention_examples_per_language',1)
@@ -123,10 +142,11 @@ def try_interpolations(model, champion, *, evaluate, acceptable, alphas=(.5,.25)
     if state.keys()!=base.keys() or any(state[k].shape!=base[k].shape for k in base):
         raise ValueError('interpolation requires the exact same native architecture')
     names=list(state)
-    if hasattr(model,'_airi_head_features'):
-        if any(not torch.equal(state[k],base[k]) for k in state if k!='lm_head.weight'):
-            raise ValueError('head interpolation requires identical frozen backbones')
-        names=['lm_head.weight']
+    if hasattr(model,'_airi_head_features') or hasattr(model,'_airi_prefix_features'):
+        cache=getattr(model,'_airi_prefix_features',None)
+        names=list(cache.trainable_names) if cache else ['lm_head.weight']
+        if any(not torch.equal(state[k],base[k]) for k in state if k not in names):
+            raise ValueError('cached interpolation requires identical frozen backbones')
     original={k:state[k].detach().clone() for k in names}
     try:
         for alpha in alphas:

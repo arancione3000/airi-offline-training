@@ -59,14 +59,22 @@ class ContinualTests(unittest.TestCase):
                                 and isinstance(k.value.func,ast.Name) and k.value.func.id=='transfer_options'
                                 for k in call.keywords))
 
-    def test_archived_lessons_receive_slots_without_replacing_human_or_native_replay(self):
+    def test_full_archive_cannot_remove_the_only_foundation_and_authored_updates(self):
         root=Path(__file__).resolve().parents[2]
         spec=json.loads((root/'scripts/continual-training/SPEC.json').read_text())
         cfg=spec['continual_learning'];schedule=cfg['sampling_schedule']
         with patch.object(runner,'LEARNING',cfg):
             actual=[i for i,g in enumerate(schedule) if runner.success_slot(i,g,True)]
-            self.assertEqual(actual,cfg['success_transfer_slots'])
-            self.assertEqual(len(actual),2)
+            # The historical recipe requested precisely the only two
+            # acquisition slots for these groups. A populated bank must no
+            # longer erase either skill from all future training cycles.
+            self.assertEqual(cfg['success_transfer_slots'],[3,11])
+            self.assertEqual(actual,[])
+            for group in ('old-authored','composition'):
+                updates=[i for i in range(48) if schedule[i%16]==group
+                         and not runner.success_slot(i,group,True)]
+                self.assertEqual(len(updates),3)
+                self.assertEqual({'it' if i%3!=1 else 'en' for i in updates},{'it','en'})
             for i,g in enumerate(schedule):
                 if g in {'human-dialogue','native-replay'}:
                     self.assertFalse(runner.success_slot(i,g,True))
@@ -74,6 +82,22 @@ class ContinualTests(unittest.TestCase):
         bad=copy.deepcopy(spec);bad['continual_learning']['success_transfer_slots']=[0,15]
         bad.pop('fingerprint');bad['fingerprint']=hashlib.sha256(json.dumps(bad,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         self.assertRaises(ValueError,validate_configuration,bad)
+
+    def test_archive_replay_uses_surplus_slots_and_keeps_every_acquisition_group(self):
+        from collections import Counter
+        schedule=['human-dialogue']*4+['native-replay']+['composition']*2+['verified-context']*2+['curated-dialogue']*7
+        cfg=dict(sampling_schedule=schedule,success_transfer_slots=[5,6])
+        with patch.object(runner,'LEARNING',cfg):
+            # Both requested slots belong to composition. Replacing both
+            # would starve it even though each looked individually redundant.
+            effective=['archive' if runner.success_slot(i,g,True) else g
+                       for i,g in enumerate(schedule)]
+            self.assertEqual(effective[5:7],['archive','composition'])
+            counts=Counter(effective)
+            self.assertEqual(counts['human-dialogue'],4)
+            self.assertEqual(counts['native-replay'],1)
+            self.assertTrue(all(counts[g]>=1 for g in set(schedule)))
+            self.assertEqual([runner.success_slot(i,g,False) for i,g in enumerate(schedule)],[False]*16)
 
     def test_reviewed_dialogue_can_donate_but_evaluation_and_human_references_cannot(self):
         authored,heldout=build();extra,development=build_extra(old_validation=heldout)
