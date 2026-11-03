@@ -1,0 +1,204 @@
+{
+  "scope": "bounded local development experiments; no general conversation qualification or live adoption; source model untouched",
+  "torch_version": "2.14.1+cpu",
+  "baseline": {
+    "exact_correct": 23,
+    "probes": 92,
+    "context_correct": 0,
+    "native_nll": {
+      "it": 1.215602964288681,
+      "en": 1.050221499319978
+    },
+    "human_nll": {
+      "en": 3.37734333410667
+    }
+  },
+  "experiments": [
+    {
+      "evidence_file": "paired-prefix-256.json",
+      "mode": "head",
+      "steps": 256,
+      "seed": 20261102,
+      "learning_rate": 3e-05,
+      "retention_weight": 4.0,
+      "retention_examples_per_language": 4,
+      "schedule": [
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "composition",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "old-authored",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "composition",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "native-replay"
+      ],
+      "selected_spec_fingerprint": null,
+      "trainable_parameters": 36864,
+      "after": {
+        "exact_correct": 23,
+        "probes": 92,
+        "legacy_correct": 15,
+        "dialogue_correct": 4,
+        "foundation_correct": 4,
+        "context_rates": {
+          "it:name": 0.0,
+          "it:location": 0.0,
+          "it:topic": 0.0,
+          "it:correction": 0.0,
+          "en:name": 0.0,
+          "en:location": 0.0,
+          "en:topic": 0.0,
+          "en:correction": 0.0
+        },
+        "context_pair_rate": 0.0,
+        "nll": {
+          "it": 1.2071457435634372,
+          "en": 1.044241619692903
+        },
+        "human_nll": {
+          "en": 3.373881153272953
+        },
+        "repetition": 0.0
+      },
+      "lost_answers": [],
+      "gained_answers": [],
+      "original_development_gate_accepted": false,
+      "native_export_exact": true,
+      "source_checkpoint_unchanged": true
+    },
+    {
+      "evidence_file": "paired-prefix-256.json",
+      "mode": "prefix",
+      "steps": 256,
+      "seed": 20261102,
+      "learning_rate": 3e-05,
+      "retention_weight": 4.0,
+      "retention_examples_per_language": 4,
+      "schedule": [
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "composition",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "old-authored",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "composition",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "native-replay"
+      ],
+      "selected_spec_fingerprint": null,
+      "trainable_parameters": 74304,
+      "after": {
+        "exact_correct": 22,
+        "probes": 92,
+        "legacy_correct": 14,
+        "dialogue_correct": 4,
+        "foundation_correct": 4,
+        "context_rates": {
+          "it:name": 0.0,
+          "it:location": 0.0,
+          "it:topic": 0.0,
+          "it:correction": 0.0,
+          "en:name": 0.0,
+          "en:location": 0.0,
+          "en:topic": 0.0,
+          "en:correction": 0.0
+        },
+        "context_pair_rate": 0.0,
+        "nll": {
+          "it": 1.2031154773920014,
+          "en": 1.0338112433466424
+        },
+        "human_nll": {
+          "en": 3.3489140275799474
+        },
+        "repetition": 0.0
+      },
+      "lost_answers": [
+        0
+      ],
+      "gained_answers": [],
+      "original_development_gate_accepted": false,
+      "native_export_exact": true,
+      "source_checkpoint_unchanged": true
+    },
+    {
+      "evidence_file": "exact-spec-prefix-256.json",
+      "mode": "prefix",
+      "steps": 256,
+      "seed": 20261102,
+      "learning_rate": 0.0001,
+      "retention_weight": 4.0,
+      "retention_examples_per_language": 2,
+      "schedule": [
+        "human-dialogue",
+        "verified-context",
+        "composition",
+        "old-authored",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "native-replay",
+        "human-dialogue",
+        "verified-context",
+        "composition",
+        "old-authored",
+        "human-dialogue",
+        "verified-context",
+        "curated-dialogue",
+        "native-replay"
+      ],
+      "selected_spec_fingerprint": "e23f49a0ac9777f876639498cd6aafe7842ae2d82f31d6cfd1728b2961aed646",
+      "trainable_parameters": 74304,
+      "after": {
+        "exact_correct": 20,
+        "probes": 92,
+        "legacy_correct": 14,
+        "dialogue_correct": 2,
+        "foundation_correct": 4,
+        "context_rates": {
+          "it:name": 0.0,
+          "it:location": 0.0,
+          "it:topic": 0.0,
+          "it:correction": 0.0,
+          "en:name": 0.0,
+          "en:location": 0.0,
+          "en:topic": 0.0,
+          "en:correction": 0.0
+        },
+        "context_pair_rate": 0.0,
+        "nll": {
+          "it": 1.1893344755634592,
+          "en": 1.0180153253824493
+        },
+        "human_nll": {
+          "en": 3.2856204019432935
+        },
+        "repetition": 0.0
+      },
+      "lost_answers": [
+        0,
+        62,
+        64
+      ],
+      "gained_answers": [],
+      "original_development_gate_accepted": false,
+      "native_export_exact": true,
+      "source_checkpoint_unchanged": true
+    }
+  ]
+}

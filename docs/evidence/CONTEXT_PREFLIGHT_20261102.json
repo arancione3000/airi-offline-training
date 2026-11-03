@@ -1,0 +1,43 @@
+{
+  "run_id": 41517578143,
+  "commit": "d3f5039c35953625b059263d0be08f70adc74a01",
+  "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/41517578143",
+  "conclusion": "success",
+  "checks": [
+    {
+      "phase": "real objective training task measured",
+      "initial_nll": 0.0006072383257560432,
+      "final_nll": 0.000600460625719279
+    },
+    {
+      "phase": "real native continual objective PASS",
+      "parameters": 50164416,
+      "optimizer_updates": 32,
+      "initial_training_task_nll": 0.0006072383257560432,
+      "final_training_task_nll": 0.000600460625719279,
+      "development_before": {
+        "legacy_correct": 15,
+        "dialogue_correct": 4,
+        "foundation_correct": 4,
+        "human_nll": {
+          "en": 3.37734333410667
+        }
+      },
+      "development_after": {
+        "legacy_correct": 15,
+        "dialogue_correct": 4,
+        "foundation_correct": 4,
+        "human_nll": {
+          "en": 3.3774294680506998
+        }
+      },
+      "development_rejection_reasons": [
+        "no_sufficient_independent_gain_or_other_gate"
+      ],
+      "training_retention_rows": 278,
+      "champion_unchanged": true,
+      "scope": "ephemeral optimizer/integrity experiment; training-task gain is not general conversation",
+      "live_promoted": false
+    }
+  ]
+}

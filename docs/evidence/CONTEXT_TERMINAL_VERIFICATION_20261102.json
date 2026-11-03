@@ -1,0 +1,176 @@
+{
+  "release": "airi-offline-449276-41523612006-1-3",
+  "source_commit": "d3f5039c35953625b059263d0be08f70adc74a01",
+  "published_at": "2026-11-02T21:09:04Z",
+  "fingerprint": "e23f49a0ac9777f876639498cd6aafe7842ae2d82f31d6cfd1728b2961aed646",
+  "completed_steps": 449276,
+  "attempted_updates": 3200,
+  "optimizer_seconds": 823.908087855,
+  "decisions": 12,
+  "accepted_updates": 1,
+  "revision": 2,
+  "stop_reason": "stagnation/evaluation limit reached; selected champion retained",
+  "continue": false,
+  "automatic_job_chain": [
+    {
+      "id": 41518404434,
+      "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/41518404434"
+    },
+    {
+      "id": 41520044217,
+      "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/41520044217"
+    },
+    {
+      "id": 41523612006,
+      "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/41523612006"
+    }
+  ],
+  "baseline": {
+    "human_nll": {
+      "en": 3.377343427776339
+    },
+    "nll": {
+      "it": 1.2156030304669299,
+      "en": 1.0502217835226846
+    },
+    "exact_correct": 23,
+    "probes": 92,
+    "legacy_correct": 15,
+    "dialogue_correct": 4,
+    "foundation_correct": 4,
+    "context_rates": {
+      "it:name": 0.0,
+      "it:location": 0.0,
+      "it:topic": 0.0,
+      "it:correction": 0.0,
+      "en:name": 0.0,
+      "en:location": 0.0,
+      "en:topic": 0.0,
+      "en:correction": 0.0
+    },
+    "context_pair_rate": 0.0,
+    "repetition": 0.0
+  },
+  "champion": {
+    "human_nll": {
+      "en": 3.330514180726109
+    },
+    "nll": {
+      "it": 1.2069149980955376,
+      "en": 1.0378273821893786
+    },
+    "exact_correct": 23,
+    "probes": 92,
+    "legacy_correct": 15,
+    "dialogue_correct": 4,
+    "foundation_correct": 4,
+    "context_rates": {
+      "it:name": 0.0,
+      "it:location": 0.0,
+      "it:topic": 0.0,
+      "it:correction": 0.0,
+      "en:name": 0.0,
+      "en:location": 0.0,
+      "en:topic": 0.0,
+      "en:correction": 0.0
+    },
+    "context_pair_rate": 0.0,
+    "repetition": 0.0
+  },
+  "correctness_changes": [],
+  "sealed_transfer": {
+    "correct": 0,
+    "probes": 64,
+    "scope": "final only; excluded from selection and adaptation"
+  },
+  "native_final_gates": {
+    "retention": [
+      false,
+      "candidate regressed in target-token domain: language"
+    ],
+    "degeneration": [
+      false,
+      "token entropy collapsed"
+    ]
+  },
+  "previous_native_final_gates": {
+    "retention": [
+      false,
+      "candidate regressed in held-out target-token accuracy"
+    ],
+    "degeneration": [
+      false,
+      "token entropy collapsed"
+    ]
+  },
+  "development_nll_improvement_percent": {
+    "it": 0.7147096670246922,
+    "en": 1.180169896279648
+  },
+  "human_nll_improvement_percent": {
+    "en": 1.3865704821455622
+  },
+  "verification": {
+    "downloaded_json_assets_sha256_and_size": true,
+    "hash_committed_runstate": true,
+    "archive_descriptors_match_remote_digests": true,
+    "archive_bytes_downloaded": false,
+    "model_pointer_revision_and_digest_match_final_morph": true
+  },
+  "production_qualified": false,
+  "live_promoted": false,
+  "verified_at": "2026-11-03",
+  "release_url": "https://github.com/arancione3000/airi-offline-training/releases/tag/airi-offline-449276-41523612006-1-3",
+  "rollback_count": 3,
+  "completed_rejected_trials": 2,
+  "terminal_partial_trial_rolled_back": true,
+  "accepted_decisions": [
+    {
+      "step": 446588,
+      "learning_rate": 0.0001,
+      "interpolation": 0.25,
+      "accepted": true,
+      "trial_updates": 512
+    }
+  ],
+  "archived_index": {
+    "completed_steps": 449276,
+    "fingerprint": "e23f49a0ac9777f876639498cd6aafe7842ae2d82f31d6cfd1728b2961aed646",
+    "archives": [
+      {
+        "name": "AIRI_TRAINING_449276_MODEL.zip",
+        "sha256": "200647efe6ef039bbe96fbdb940b1416acec7f6ceac6c88b6f0f6002351595cc",
+        "bytes": 169730940
+      },
+      {
+        "name": "AIRI_TRAINING_449276_OPTIMIZER.zip",
+        "sha256": "1c35375d53ba810488cc1868a9272f1901716d0da44736bedf099201b1ed8f89",
+        "bytes": 5822402
+      }
+    ],
+    "production_qualified": false,
+    "live_promoted": false,
+    "run_state": {
+      "name": "AIRI_RUN_STATE.json",
+      "sha256": "c4b3dfb83c38bb6bc29f5e703bde21c8ab7ea2255ec156e6b24accf6146f1a3f",
+      "bytes": 6032
+    }
+  },
+  "downloaded_json_assets": {
+    "AIRI_RUN_STATE.json": {
+      "bytes": 6032,
+      "sha256": "c4b3dfb83c38bb6bc29f5e703bde21c8ab7ea2255ec156e6b24accf6146f1a3f",
+      "url": "https://github.com/arancione3000/airi-offline-training/releases/download/airi-offline-449276-41523612006-1-3/AIRI_RUN_STATE.json"
+    },
+    "AIRI_TRAINING_CHECKPOINT_449276.json": {
+      "bytes": 694,
+      "sha256": "2c70d483b15d7ba74fb511d696c3bd7a8092817866ebc9fa3ef13e811493f9f4",
+      "url": "https://github.com/arancione3000/airi-offline-training/releases/download/airi-offline-449276-41523612006-1-3/AIRI_TRAINING_CHECKPOINT_449276.json"
+    },
+    "FINAL_RESULT.json": {
+      "bytes": 362396,
+      "sha256": "5032b18fa7c1217bf8986c72d0c69d4a97bc47e82896607fb912b799177bf95e",
+      "url": "https://github.com/arancione3000/airi-offline-training/releases/download/airi-offline-449276-41523612006-1-3/FINAL_RESULT.json"
+    }
+  }
+}

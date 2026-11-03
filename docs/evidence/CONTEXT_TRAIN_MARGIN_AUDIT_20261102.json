@@ -1,0 +1,650 @@
+{
+  "scope": "certified authored TRAIN examples only; no evaluation answer is a retention target",
+  "training_candidates": 282,
+  "certified": 278,
+  "by_language": {
+    "en": 134,
+    "it": 144
+  },
+  "by_family": {
+    "extra-dialogue": 152,
+    "extra-memory": 4,
+    "foundation-dialogue": 56,
+    "memory": 4,
+    "phrase-en-0": 2,
+    "phrase-en-1": 2,
+    "phrase-en-10": 2,
+    "phrase-en-11": 2,
+    "phrase-en-12": 2,
+    "phrase-en-13": 2,
+    "phrase-en-14": 2,
+    "phrase-en-15": 2,
+    "phrase-en-2": 2,
+    "phrase-en-3": 2,
+    "phrase-en-5": 2,
+    "phrase-en-6": 2,
+    "phrase-en-7": 2,
+    "phrase-en-8": 2,
+    "phrase-en-9": 2,
+    "phrase-it-0": 2,
+    "phrase-it-1": 2,
+    "phrase-it-10": 2,
+    "phrase-it-11": 2,
+    "phrase-it-12": 2,
+    "phrase-it-13": 2,
+    "phrase-it-14": 2,
+    "phrase-it-15": 2,
+    "phrase-it-2": 2,
+    "phrase-it-3": 2,
+    "phrase-it-4": 2,
+    "phrase-it-5": 2,
+    "phrase-it-6": 2,
+    "phrase-it-7": 2,
+    "phrase-it-8": 2,
+    "phrase-it-9": 2
+  },
+  "greetings": [
+    {
+      "row_key": "24ad69ac3cebb6283cfa85c67b1ac472e5fe24a6be627ac770532a97d0e38378",
+      "language": "en",
+      "family": "phrase-en-0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Please: Hello!"
+        },
+        {
+          "role": "assistant",
+          "content": "Hello! How are you?"
+        }
+      ],
+      "expected": "Hello! How are you?",
+      "minimum_margin": 8.69601058959961,
+      "first_token_margin": 9.215423583984375,
+      "tokens": 18
+    },
+    {
+      "row_key": "42fa596f81525ac98c8c3d8a9fcdc5bd2fcc85bdbea4c694910bf3fb91dfb5a8",
+      "language": "en",
+      "family": "phrase-en-0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello!"
+        },
+        {
+          "role": "assistant",
+          "content": "Hello! How are you?"
+        }
+      ],
+      "expected": "Hello! How are you?",
+      "minimum_margin": 8.599428176879883,
+      "first_token_margin": 8.989754676818848,
+      "tokens": 18
+    },
+    {
+      "row_key": "06a14ada9c3f96acebdacace3bced9c4fa320bca1ac8bbf3a48952647376b405",
+      "language": "it",
+      "family": "phrase-it-0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Per favore: Ciao!"
+        },
+        {
+          "role": "assistant",
+          "content": "Ciao! Come stai?"
+        }
+      ],
+      "expected": "Ciao! Come stai?",
+      "minimum_margin": 8.907062530517578,
+      "first_token_margin": 10.280296325683594,
+      "tokens": 15
+    },
+    {
+      "row_key": "084f9cc5a1c2d77e8b23324a7b369a8ab45e04068f2299e3dc34e8a62100e712",
+      "language": "it",
+      "family": "phrase-it-0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Airi, Ciao!"
+        },
+        {
+          "role": "assistant",
+          "content": "Ciao! Come stai?"
+        }
+      ],
+      "expected": "Ciao! Come stai?",
+      "minimum_margin": 8.805659294128418,
+      "first_token_margin": 10.205236434936523,
+      "tokens": 15
+    }
+  ],
+  "lowest_margin": {
+    "it": [
+      {
+        "row_key": "7814ed2794fcb742e471d46f803a1a3136c7852f4254a3a474383233555e124b",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Possiamo parlare di musica?"
+          },
+          {
+            "role": "assistant",
+            "content": "Che musica ascolti?"
+          },
+          {
+            "role": "user",
+            "content": "Ascolto musica tranquilla."
+          },
+          {
+            "role": "assistant",
+            "content": "La ascolti mentre studi o per rilassarti?"
+          }
+        ],
+        "expected": "La ascolti mentre studi o per rilassarti?",
+        "minimum_margin": 6.916016578674316,
+        "first_token_margin": 6.916016578674316,
+        "tokens": 29
+      },
+      {
+        "row_key": "4881c2d645d4ceb498c7e213fc980730d3a898f4a825c22c8ebedbfd02df2388",
+        "language": "it",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Non cambiare argomento."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene, restiamo su questo argomento."
+          }
+        ],
+        "expected": "Va bene, restiamo su questo argomento.",
+        "minimum_margin": 6.994052886962891,
+        "first_token_margin": 8.751441955566406,
+        "tokens": 29
+      },
+      {
+        "row_key": "2e65cccb1ab1fd5cab582ec0ced7c05040884b9c1d99aabea394564d986b47e2",
+        "language": "it",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Senti, Non cambiare argomento."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene, restiamo su questo argomento."
+          }
+        ],
+        "expected": "Va bene, restiamo su questo argomento.",
+        "minimum_margin": 7.0146331787109375,
+        "first_token_margin": 9.18332290649414,
+        "tokens": 29
+      },
+      {
+        "row_key": "51c3591f4ae2cdd9bcc1ae3d282288595462c6bba1632e3ff6e17c5a35075d37",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi interessa parlare di musica."
+          },
+          {
+            "role": "assistant",
+            "content": "Che musica ascolti?"
+          },
+          {
+            "role": "user",
+            "content": "Ascolto musica tranquilla."
+          },
+          {
+            "role": "assistant",
+            "content": "La ascolti mentre studi o per rilassarti?"
+          }
+        ],
+        "expected": "La ascolti mentre studi o per rilassarti?",
+        "minimum_margin": 7.276412487030029,
+        "first_token_margin": 7.276412487030029,
+        "tokens": 29
+      },
+      {
+        "row_key": "497ffb4a22bc1c4d11f89cddbfdabb73c61464e3c692f9906129dd80b728f2ef",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Non so rispondere alla tua domanda."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene, possiamo partire da qualcosa di più semplice."
+          }
+        ],
+        "expected": "Va bene, possiamo partire da qualcosa di più semplice.",
+        "minimum_margin": 7.284600734710693,
+        "first_token_margin": 8.223272323608398,
+        "tokens": 41
+      },
+      {
+        "row_key": "24ca606152a865c72be997a862d4c1fc12b0b7fcd6094e8f3ee6fac4ae6cf008",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi interessa parlare di disegno."
+          },
+          {
+            "role": "assistant",
+            "content": "Che cosa ti piace disegnare?"
+          },
+          {
+            "role": "user",
+            "content": "Mi piace disegnare animali."
+          },
+          {
+            "role": "assistant",
+            "content": "Quale animale vorresti disegnare adesso?"
+          }
+        ],
+        "expected": "Quale animale vorresti disegnare adesso?",
+        "minimum_margin": 7.46885871887207,
+        "first_token_margin": 7.46885871887207,
+        "tokens": 29
+      },
+      {
+        "row_key": "29822eb9934fa5dce6f25dd73f54641091c421b6d01ef3db8038b6c5066ffab3",
+        "language": "it",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ehi Airi, Raccontami qualcosa di semplice."
+          },
+          {
+            "role": "assistant",
+            "content": "Un piccolo gatto si addormentò vicino alla finestra."
+          }
+        ],
+        "expected": "Un piccolo gatto si addormentò vicino alla finestra.",
+        "minimum_margin": 7.496389389038086,
+        "first_token_margin": 9.181341171264648,
+        "tokens": 40
+      },
+      {
+        "row_key": "b0acd2187538f2404b67fb6cc685ac741de3de56636462805864448c1d4d9a0b",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Voglio una spiegazione più corta."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene. Quale punto vuoi chiarire?"
+          }
+        ],
+        "expected": "Va bene. Quale punto vuoi chiarire?",
+        "minimum_margin": 7.560568332672119,
+        "first_token_margin": 9.345266342163086,
+        "tokens": 28
+      },
+      {
+        "row_key": "0dc3370f3d33b217d6679c39c6e1307fbf0f26df43f1541ed846acda277025c1",
+        "language": "it",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, Dove vivono i pesci?"
+          },
+          {
+            "role": "assistant",
+            "content": "I pesci vivono nell’acqua."
+          }
+        ],
+        "expected": "I pesci vivono nell’acqua.",
+        "minimum_margin": 7.660511016845703,
+        "first_token_margin": 7.660511016845703,
+        "tokens": 27
+      },
+      {
+        "row_key": "cf4116839f9cf0ff977a1ce3631784ffc098ada7b8c9d3bde3f6200987719dab",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei discutere di manga."
+          },
+          {
+            "role": "assistant",
+            "content": "Quale manga stai leggendo?"
+          },
+          {
+            "role": "user",
+            "content": "Un manga di avventura."
+          },
+          {
+            "role": "assistant",
+            "content": "Ti piace soprattutto la storia o il disegno?"
+          }
+        ],
+        "expected": "Ti piace soprattutto la storia o il disegno?",
+        "minimum_margin": 7.665236473083496,
+        "first_token_margin": 7.8162641525268555,
+        "tokens": 33
+      },
+      {
+        "row_key": "3dc7837893187e18b05d04ff5cb948e4ecd448327b71597de06d1dcb679bb39f",
+        "language": "it",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ehi Airi, Dove vivono i pesci?"
+          },
+          {
+            "role": "assistant",
+            "content": "I pesci vivono nell’acqua."
+          }
+        ],
+        "expected": "I pesci vivono nell’acqua.",
+        "minimum_margin": 7.68992280960083,
+        "first_token_margin": 8.141283988952637,
+        "tokens": 27
+      },
+      {
+        "row_key": "8bb3ebf90c0e7aed26f7a1d7cdce7b71a7b5f22f3ae5bea0938466bae23df72b",
+        "language": "it",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei discutere di disegno."
+          },
+          {
+            "role": "assistant",
+            "content": "Che cosa ti piace disegnare?"
+          },
+          {
+            "role": "user",
+            "content": "Mi piace disegnare animali."
+          },
+          {
+            "role": "assistant",
+            "content": "Quale animale vorresti disegnare adesso?"
+          }
+        ],
+        "expected": "Quale animale vorresti disegnare adesso?",
+        "minimum_margin": 7.721991539001465,
+        "first_token_margin": 7.721991539001465,
+        "tokens": 29
+      }
+    ],
+    "en": [
+      {
+        "row_key": "5f9d6466310bbe10893a09b8a677cc2b13bed7855a760153344fe21bc194bca4",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Listen, I like reading manga."
+          },
+          {
+            "role": "assistant",
+            "content": "What kind of manga do you like?"
+          }
+        ],
+        "expected": "What kind of manga do you like?",
+        "minimum_margin": 5.444243431091309,
+        "first_token_margin": 7.980337142944336,
+        "tokens": 25
+      },
+      {
+        "row_key": "3b28e3233d17b9c4c3e35d331b2008ec52711b1929314cd0860395e3088bc9e8",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, I like reading manga."
+          },
+          {
+            "role": "assistant",
+            "content": "What kind of manga do you like?"
+          }
+        ],
+        "expected": "What kind of manga do you like?",
+        "minimum_margin": 5.711386203765869,
+        "first_token_margin": 7.855608940124512,
+        "tokens": 25
+      },
+      {
+        "row_key": "3f1d68f95a9c7d6f54d17ec313d48bbc58eee3d738daf27b5738eadedf6e85ae",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "I feel happy!"
+          },
+          {
+            "role": "assistant",
+            "content": "That is great! What makes you happy?"
+          }
+        ],
+        "expected": "That is great! What makes you happy?",
+        "minimum_margin": 5.798788547515869,
+        "first_token_margin": 8.149118423461914,
+        "tokens": 28
+      },
+      {
+        "row_key": "63096140c1981e1dea292ba27dc93b17d4495e6fa7e81c930ee00c470b6a8fb1",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hey Airi, I feel happy!"
+          },
+          {
+            "role": "assistant",
+            "content": "That is great! What makes you happy?"
+          }
+        ],
+        "expected": "That is great! What makes you happy?",
+        "minimum_margin": 5.815929889678955,
+        "first_token_margin": 8.511270523071289,
+        "tokens": 28
+      },
+      {
+        "row_key": "5df1d63c39e56824350bdc30a5383993166817f555719ef5b4d261ef65244b34",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Can we talk about drawing?"
+          },
+          {
+            "role": "assistant",
+            "content": "What do you enjoy drawing?"
+          },
+          {
+            "role": "user",
+            "content": "I like drawing animals."
+          },
+          {
+            "role": "assistant",
+            "content": "Which animal would you like to draw now?"
+          }
+        ],
+        "expected": "Which animal would you like to draw now?",
+        "minimum_margin": 6.473110675811768,
+        "first_token_margin": 8.378170013427734,
+        "tokens": 31
+      },
+      {
+        "row_key": "25b7df7d84932bb71e3614ed70265e2275a85b11870c090c73246c32287aa767",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "I do not know how to answer your question."
+          },
+          {
+            "role": "assistant",
+            "content": "That is okay. We can start with something simpler."
+          }
+        ],
+        "expected": "That is okay. We can start with something simpler.",
+        "minimum_margin": 6.830122470855713,
+        "first_token_margin": 8.18397331237793,
+        "tokens": 35
+      },
+      {
+        "row_key": "1a4c63b070a656bbbe877f224c38f9759cef4bebcb7112d7cf1b3fc8175b163b",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Can we talk about games?"
+          },
+          {
+            "role": "assistant",
+            "content": "What do you enjoy playing?"
+          },
+          {
+            "role": "user",
+            "content": "I like exploration games."
+          },
+          {
+            "role": "assistant",
+            "content": "Do you prefer exploring alone or with friends?"
+          }
+        ],
+        "expected": "Do you prefer exploring alone or with friends?",
+        "minimum_margin": 6.876668930053711,
+        "first_token_margin": 8.231086730957031,
+        "tokens": 32
+      },
+      {
+        "row_key": "50e728672f113c1ee5738462f5bed580f2c1e531defb345c7d78addb5df52da9",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am interested in games."
+          },
+          {
+            "role": "assistant",
+            "content": "What do you enjoy playing?"
+          },
+          {
+            "role": "user",
+            "content": "I like exploration games."
+          },
+          {
+            "role": "assistant",
+            "content": "Do you prefer exploring alone or with friends?"
+          }
+        ],
+        "expected": "Do you prefer exploring alone or with friends?",
+        "minimum_margin": 6.927779674530029,
+        "first_token_margin": 8.487821578979492,
+        "tokens": 32
+      },
+      {
+        "row_key": "4e4843236496a56e0462a5d604cd6d85206f89224ea68e20382a48c2df3e3503",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, Would you like to talk?"
+          },
+          {
+            "role": "assistant",
+            "content": "Of course. What would you like to talk about?"
+          }
+        ],
+        "expected": "Of course. What would you like to talk about?",
+        "minimum_margin": 6.963436603546143,
+        "first_token_margin": 8.393455505371094,
+        "tokens": 33
+      },
+      {
+        "row_key": "0504d28a2cbd232f5e88b68c883c27cccb11dc0259f384001c27689d1e080286",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, I am glad we talked."
+          },
+          {
+            "role": "assistant",
+            "content": "I am glad. What did you enjoy about the conversation?"
+          }
+        ],
+        "expected": "I am glad. What did you enjoy about the conversation?",
+        "minimum_margin": 7.039834022521973,
+        "first_token_margin": 8.14382553100586,
+        "tokens": 35
+      },
+      {
+        "row_key": "20f3ed995a4b3672dca799cf03113273d56b460a1d933e6bb0ab351bc37a7afd",
+        "language": "en",
+        "family": "extra-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, What is an umbrella used for?"
+          },
+          {
+            "role": "assistant",
+            "content": "An umbrella protects you from the rain."
+          }
+        ],
+        "expected": "An umbrella protects you from the rain.",
+        "minimum_margin": 7.057828426361084,
+        "first_token_margin": 9.136165618896484,
+        "tokens": 30
+      },
+      {
+        "row_key": "ac1bea4a35eafd0243f4b38048ea4881500dec8890c3b775f142ddfe745e0b23",
+        "language": "en",
+        "family": "foundation-dialogue",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Airi, Can you listen without giving advice?"
+          },
+          {
+            "role": "assistant",
+            "content": "Of course. Tell me, I am listening."
+          }
+        ],
+        "expected": "Of course. Tell me, I am listening.",
+        "minimum_margin": 7.058833122253418,
+        "first_token_margin": 7.541635036468506,
+        "tokens": 26
+      }
+    ]
+  }
+}

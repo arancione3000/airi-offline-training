@@ -1,0 +1,5218 @@
+{
+  "scope": "paired isolated native checkpoint diagnostic with original ancestral reference and native replay; not production qualification or sealed-test evidence",
+  "checkpoint": "/workspace/airi-experiment/checkpoint/checkpoint/model",
+  "source_files": {
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model.pt": "015933343c8a93b196e4d38d9c2a41e9add3d40fd66f0ec61dcc2db8ddad9178",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00001-of-00007-8dbf7484b75d.pt": "8dbf7484b75d067b9775f31510ea903e6715942302b0413d070cc08eda0c61df",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00002-of-00007-0944c21e10f3.pt": "0944c21e10f3020dde2c4cda6e29ed696596eb47aad7b5340dfa2eeab354493c",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00003-of-00007-1bd7fbc12a85.pt": "1bd7fbc12a851529149c058877a863e179ab3a3cf4b0400c571a18da2f4dad24",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00004-of-00007-70cb8325b006.pt": "70cb8325b006f655a6812cde8b35e17d8df9ef25f93515b072b936c49412133a",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00005-of-00007-19614836a89b.pt": "19614836a89b58c2c59c7ef889beb91fa9588538073f09b9e39e34b5f76f0eb5",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00006-of-00007-ddd9414a7a5f.pt": "ddd9414a7a5f8690975f789ea2420c50fdc68fe50930c67bee973e9af679b1a8",
+    "/workspace/airi-experiment/checkpoint/checkpoint/model/model-shard-00007-of-00007-3c7f081d750c.pt": "3c7f081d750c8e60397edbc96f997ea7f9c8b4bb64ad17f6691eaa84376a7d99"
+  },
+  "seed": 20261102,
+  "torch_version": "2.14.1+cpu",
+  "steps": 256,
+  "learning_rate": 3e-05,
+  "retention_weight": 4.0,
+  "schedule": [
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "composition",
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "old-authored",
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "composition",
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "native-replay"
+  ],
+  "heldout_training_overlap": false,
+  "baseline": {
+    "human_nll": {
+      "en": 3.37734333410667
+    },
+    "human_development_rows": 16,
+    "nll": {
+      "it": 1.215602964288681,
+      "en": 1.050221499319978
+    },
+    "foundation_correct": 4,
+    "foundation_probes": 16,
+    "context_rates": {
+      "it:name": 0.0,
+      "it:location": 0.0,
+      "it:topic": 0.0,
+      "it:correction": 0.0,
+      "en:name": 0.0,
+      "en:location": 0.0,
+      "en:topic": 0.0,
+      "en:correction": 0.0
+    },
+    "context_pair_rate": 0.0,
+    "legacy_correct": 15,
+    "dialogue_correct": 4,
+    "exact_correct": 23,
+    "probes": 92,
+    "repetition": 0.0,
+    "samples": [
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Ciao!"
+          }
+        ],
+        "expected": "Ciao! Come stai?",
+        "response": "Ciao! Come stai?",
+        "correct": true,
+        "family": "phrase-it-0",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Come ti chiami?"
+          }
+        ],
+        "expected": "Mi chiamo Airi.",
+        "response": "Mi chiamo Airi.",
+        "correct": true,
+        "family": "phrase-it-1",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Sono stanco."
+          }
+        ],
+        "expected": "Ti va di riposare un po’?",
+        "response": "Ti va di riposare un po’?",
+        "correct": true,
+        "family": "phrase-it-2",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Sono triste."
+          }
+        ],
+        "expected": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+        "response": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+        "correct": true,
+        "family": "phrase-it-3",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Grazie!"
+          }
+        ],
+        "expected": "Prego!",
+        "response": "Prego!",
+        "correct": true,
+        "family": "phrase-it-4",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Non ho capito."
+          }
+        ],
+        "expected": "Va bene, proviamo un passo alla volta.",
+        "response": "Va bene, proviamo un passo alla volta.",
+        "correct": true,
+        "family": "phrase-it-5",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Cos’è un gatto?"
+          }
+        ],
+        "expected": "Un gatto è un piccolo mammifero domestico.",
+        "response": "Un gatto è un piccolo mammifero domestico.",
+        "correct": true,
+        "family": "phrase-it-6",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Vorrei chiederti: Quanti giorni ha una settimana?"
+          }
+        ],
+        "expected": "Una settimana ha sette giorni.",
+        "response": "Una settimana ha sette giorni.",
+        "correct": true,
+        "family": "phrase-it-7",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 21 + 1?"
+          }
+        ],
+        "expected": "22",
+        "response": "16",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 21 + 2?"
+          }
+        ],
+        "expected": "23",
+        "response": "16",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 21 + 3?"
+          }
+        ],
+        "expected": "24",
+        "response": "18",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 21 + 4?"
+          }
+        ],
+        "expected": "25",
+        "response": "19",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi chiamo Marta."
+          },
+          {
+            "role": "assistant",
+            "content": "Ciao Marta!"
+          },
+          {
+            "role": "user",
+            "content": "Come mi chiamo?"
+          }
+        ],
+        "expected": "Marta",
+        "response": "Marco",
+        "correct": false,
+        "family": "memory-unseen-name",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi chiamo Nina."
+          },
+          {
+            "role": "assistant",
+            "content": "Ciao Nina!"
+          },
+          {
+            "role": "user",
+            "content": "Come mi chiamo?"
+          }
+        ],
+        "expected": "Nina",
+        "response": "Davide",
+        "correct": false,
+        "family": "memory-unseen-name",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Come va oggi?"
+          }
+        ],
+        "expected": "Bene, grazie! E tu come stai?",
+        "response": "Come va di ripetare un po’?",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Hai voglia di parlare?"
+          }
+        ],
+        "expected": "Certo. Di cosa ti va di parlare?",
+        "response": "Ho perso per Paolo",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Mi annoio."
+          }
+        ],
+        "expected": "Ti va di raccontarmi cosa hai fatto oggi?",
+        "response": "Hugo",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Ho avuto una bella giornata."
+          }
+        ],
+        "expected": "Mi fa piacere! Che cosa è successo?",
+        "response": "Ha parlato di risposta un po’?",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Oggi è andata male."
+          }
+        ],
+        "expected": "Mi dispiace. Vuoi parlarne?",
+        "response": "Okay. Lei è la piccolo mammifero domestico.",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti scrivo perché: Sono felice!"
+          }
+        ],
+        "expected": "Che bello! Che cosa ti rende felice?",
+        "response": "Che musica ascolti?",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi presento: sono Irene."
+          },
+          {
+            "role": "assistant",
+            "content": "Piacere!"
+          },
+          {
+            "role": "user",
+            "content": "Qual è il mio nome?"
+          }
+        ],
+        "expected": "Irene",
+        "response": "Rita",
+        "correct": false,
+        "family": "extra-heldout-memory",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Mi presento: sono Yuri."
+          },
+          {
+            "role": "assistant",
+            "content": "Piacere!"
+          },
+          {
+            "role": "user",
+            "content": "Qual è il mio nome?"
+          }
+        ],
+        "expected": "Yuri",
+        "response": "Rita",
+        "correct": false,
+        "family": "extra-heldout-memory",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Il mio nome è Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Quale nome ti ho detto?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-name",
+        "language": "it",
+        "pair_id": "it:name:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Il mio nome è Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Quale nome ti ho detto?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-name",
+        "language": "it",
+        "pair_id": "it:name:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Il mio nome è Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Quale nome ti ho detto?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-name",
+        "language": "it",
+        "pair_id": "it:name:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Il mio nome è Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Quale nome ti ho detto?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "sun",
+        "correct": false,
+        "family": "context-name",
+        "language": "it",
+        "pair_id": "it:name:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: La scatola è nella stanza Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "In quale stanza è la scatola?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-location",
+        "language": "it",
+        "pair_id": "it:location:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: La scatola è nella stanza Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "In quale stanza è la scatola?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-location",
+        "language": "it",
+        "pair_id": "it:location:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: La scatola è nella stanza Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "In quale stanza è la scatola?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-location",
+        "language": "it",
+        "pair_id": "it:location:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: La scatola è nella stanza Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "In quale stanza è la scatola?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-location",
+        "language": "it",
+        "pair_id": "it:location:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Parliamo del progetto Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Di quale progetto parliamo?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-topic",
+        "language": "it",
+        "pair_id": "it:topic:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Parliamo del progetto Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Di quale progetto parliamo?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-topic",
+        "language": "it",
+        "pair_id": "it:topic:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Parliamo del progetto Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Di quale progetto parliamo?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-topic",
+        "language": "it",
+        "pair_id": "it:topic:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Parliamo del progetto Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Di quale progetto parliamo?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-topic",
+        "language": "it",
+        "pair_id": "it:topic:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Qual è il nome corretto?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dina",
+        "correct": false,
+        "family": "context-correction",
+        "language": "it",
+        "pair_id": "it:correction:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Qual è il nome corretto?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Dario",
+        "correct": false,
+        "family": "context-correction",
+        "language": "it",
+        "pair_id": "it:correction:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Ho capito."
+          },
+          {
+            "role": "user",
+            "content": "Qual è il nome corretto?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "it",
+        "pair_id": "it:correction:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Va bene."
+          },
+          {
+            "role": "user",
+            "content": "Qual è il nome corretto?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "it",
+        "pair_id": "it:correction:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copia soltanto il testo seguente: ab"
+          }
+        ],
+        "expected": "ab",
+        "response": "a",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti comunico una parola segreta: ab"
+          },
+          {
+            "role": "assistant",
+            "content": "Ricevuto."
+          },
+          {
+            "role": "user",
+            "content": "Ripeti la parola segreta."
+          }
+        ],
+        "expected": "ab",
+        "response": "ai",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copia soltanto il testo seguente: xy"
+          }
+        ],
+        "expected": "xy",
+        "response": "xy",
+        "correct": true,
+        "family": "foundation-heldout-copy",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti comunico una parola segreta: xy"
+          },
+          {
+            "role": "assistant",
+            "content": "Ricevuto."
+          },
+          {
+            "role": "user",
+            "content": "Ripeti la parola segreta."
+          }
+        ],
+        "expected": "xy",
+        "response": "xy",
+        "correct": true,
+        "family": "foundation-heldout-recall",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copia soltanto il testo seguente: casa blu"
+          }
+        ],
+        "expected": "casa blu",
+        "response": "bum",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti comunico una parola segreta: casa blu"
+          },
+          {
+            "role": "assistant",
+            "content": "Ricevuto."
+          },
+          {
+            "role": "user",
+            "content": "Ripeti la parola segreta."
+          }
+        ],
+        "expected": "casa blu",
+        "response": "vmau",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copia soltanto il testo seguente: blue cup"
+          }
+        ],
+        "expected": "blue cup",
+        "response": "bum",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Ti comunico una parola segreta: blue cup"
+          },
+          {
+            "role": "assistant",
+            "content": "Ricevuto."
+          },
+          {
+            "role": "user",
+            "content": "Ripeti la parola segreta."
+          }
+        ],
+        "expected": "blue cup",
+        "response": "bridge vgu",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "it",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: Hello!"
+          }
+        ],
+        "expected": "Hello! How are you?",
+        "response": "Okay. What would you like to draw?",
+        "correct": false,
+        "family": "phrase-en-0",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: What is your name?"
+          }
+        ],
+        "expected": "My name is Airi.",
+        "response": "My name is Airi.",
+        "correct": true,
+        "family": "phrase-en-1",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: I am tired."
+          }
+        ],
+        "expected": "Would you like to rest for a while?",
+        "response": "Would you like to rest for a while?",
+        "correct": true,
+        "family": "phrase-en-2",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: I am sad."
+          }
+        ],
+        "expected": "I am sorry. Would you like to tell me what happened?",
+        "response": "I am sorry. Would you like to tell me what happened?",
+        "correct": true,
+        "family": "phrase-en-3",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: I do not understand."
+          }
+        ],
+        "expected": "That is okay. Let us try one step at a time.",
+        "response": "That is okay. Let us try one step at a time.",
+        "correct": true,
+        "family": "phrase-en-5",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: What is a cat?"
+          }
+        ],
+        "expected": "A cat is a small domestic mammal.",
+        "response": "A cat is a small domestic mammal.",
+        "correct": true,
+        "family": "phrase-en-6",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: How many days are in a week?"
+          }
+        ],
+        "expected": "A week has seven days.",
+        "response": "A week has seven days.",
+        "correct": true,
+        "family": "phrase-en-7",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I would like to ask: How many months are in a year?"
+          }
+        ],
+        "expected": "A year has twelve months.",
+        "response": "A year has twelve months.",
+        "correct": true,
+        "family": "phrase-en-8",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 21 + 1?"
+          }
+        ],
+        "expected": "22",
+        "response": "15",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 21 + 2?"
+          }
+        ],
+        "expected": "23",
+        "response": "16",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 21 + 3?"
+          }
+        ],
+        "expected": "24",
+        "response": "17",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 21 + 4?"
+          }
+        ],
+        "expected": "25",
+        "response": "18",
+        "correct": false,
+        "family": "addition-unseen-operands",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "My name is Marta."
+          },
+          {
+            "role": "assistant",
+            "content": "Hello Marta!"
+          },
+          {
+            "role": "user",
+            "content": "What is my name?"
+          }
+        ],
+        "expected": "Marta",
+        "response": "Marco",
+        "correct": false,
+        "family": "memory-unseen-name",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "My name is Nina."
+          },
+          {
+            "role": "assistant",
+            "content": "Hello Nina!"
+          },
+          {
+            "role": "user",
+            "content": "What is my name?"
+          }
+        ],
+        "expected": "Nina",
+        "response": "Davide",
+        "correct": false,
+        "family": "memory-unseen-name",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: How are you today?"
+          }
+        ],
+        "expected": "I am well, thank you! How are you?",
+        "response": "I am well, thank you! How are you?",
+        "correct": true,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: Would you like to talk?"
+          }
+        ],
+        "expected": "Of course. What would you like to talk about?",
+        "response": "Of course. What would you like to talk about?",
+        "correct": true,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: I am bored."
+          }
+        ],
+        "expected": "Would you like to tell me about your day?",
+        "response": "Would you like to tell me about your day?",
+        "correct": true,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: I had a good day."
+          }
+        ],
+        "expected": "That is nice! What happened?",
+        "response": "I am glad.",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: Today went badly."
+          }
+        ],
+        "expected": "I am sorry. Would you like to talk about it?",
+        "response": "I am sorry. Would you like to talk about it?",
+        "correct": true,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am writing because: I feel happy!"
+          }
+        ],
+        "expected": "That is great! What makes you happy?",
+        "response": "If you can, take some time to rest.",
+        "correct": false,
+        "family": "extra-heldout-dialogue",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Let me introduce myself: I am Irene."
+          },
+          {
+            "role": "assistant",
+            "content": "Nice to meet you!"
+          },
+          {
+            "role": "user",
+            "content": "What name did I give you?"
+          }
+        ],
+        "expected": "Irene",
+        "response": "Omar",
+        "correct": false,
+        "family": "extra-heldout-memory",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Let me introduce myself: I am Yuri."
+          },
+          {
+            "role": "assistant",
+            "content": "Nice to meet you!"
+          },
+          {
+            "role": "user",
+            "content": "What name did I give you?"
+          }
+        ],
+        "expected": "Yuri",
+        "response": "Omar",
+        "correct": false,
+        "family": "extra-heldout-memory",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: My name is Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which name did I tell you?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-name",
+        "language": "en",
+        "pair_id": "en:name:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: My name is Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which name did I tell you?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-name",
+        "language": "en",
+        "pair_id": "en:name:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: My name is Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which name did I tell you?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Hugo",
+        "correct": false,
+        "family": "context-name",
+        "language": "en",
+        "pair_id": "en:name:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: My name is Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which name did I tell you?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Rita",
+        "correct": false,
+        "family": "context-name",
+        "language": "en",
+        "pair_id": "en:name:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: The box is in room Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which room contains the box?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-location",
+        "language": "en",
+        "pair_id": "en:location:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: The box is in room Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which room contains the box?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-location",
+        "language": "en",
+        "pair_id": "en:location:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: The box is in room Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which room contains the box?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-location",
+        "language": "en",
+        "pair_id": "en:location:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: The box is in room Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which room contains the box?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Sto part saffale",
+        "correct": false,
+        "family": "context-location",
+        "language": "en",
+        "pair_id": "en:location:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: We are discussing project Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which project are we discussing?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-topic",
+        "language": "en",
+        "pair_id": "en:topic:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: We are discussing project Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which project are we discussing?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-topic",
+        "language": "en",
+        "pair_id": "en:topic:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: We are discussing project Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "Which project are we discussing?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Ada",
+        "correct": false,
+        "family": "context-topic",
+        "language": "en",
+        "pair_id": "en:topic:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: We are discussing project Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "Which project are we discussing?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-topic",
+        "language": "en",
+        "pair_id": "en:topic:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "What is the correct name?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "en",
+        "pair_id": "en:correction:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "What is the correct name?"
+          }
+        ],
+        "expected": "Lidia",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "en",
+        "pair_id": "en:correction:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "I understand."
+          },
+          {
+            "role": "user",
+            "content": "What is the correct name?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "en",
+        "pair_id": "en:correction:0"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+          },
+          {
+            "role": "assistant",
+            "content": "Okay."
+          },
+          {
+            "role": "user",
+            "content": "What is the correct name?"
+          }
+        ],
+        "expected": "Nereo",
+        "response": "Eva",
+        "correct": false,
+        "family": "context-correction",
+        "language": "en",
+        "pair_id": "en:correction:1"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copy only the following text: ab"
+          }
+        ],
+        "expected": "ab",
+        "response": "ymoe how time about your day?",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am telling you a secret word: ab"
+          },
+          {
+            "role": "assistant",
+            "content": "Received."
+          },
+          {
+            "role": "user",
+            "content": "Repeat the secret word."
+          }
+        ],
+        "expected": "ab",
+        "response": "yco",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copy only the following text: xy"
+          }
+        ],
+        "expected": "xy",
+        "response": "xy",
+        "correct": true,
+        "family": "foundation-heldout-copy",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am telling you a secret word: xy"
+          },
+          {
+            "role": "assistant",
+            "content": "Received."
+          },
+          {
+            "role": "user",
+            "content": "Repeat the secret word."
+          }
+        ],
+        "expected": "xy",
+        "response": "xy",
+        "correct": true,
+        "family": "foundation-heldout-recall",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copy only the following text: casa blu"
+          }
+        ],
+        "expected": "casa blu",
+        "response": "cum bridge",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am telling you a secret word: casa blu"
+          },
+          {
+            "role": "assistant",
+            "content": "Received."
+          },
+          {
+            "role": "user",
+            "content": "Repeat the secret word."
+          }
+        ],
+        "expected": "casa blu",
+        "response": "cuym liste",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Copy only the following text: blue cup"
+          }
+        ],
+        "expected": "blue cup",
+        "response": "bridge succe",
+        "correct": false,
+        "family": "foundation-heldout-copy",
+        "language": "en",
+        "pair_id": null
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "I am telling you a secret word: blue cup"
+          },
+          {
+            "role": "assistant",
+            "content": "Received."
+          },
+          {
+            "role": "user",
+            "content": "Repeat the secret word."
+          }
+        ],
+        "expected": "blue cup",
+        "response": "buf",
+        "correct": false,
+        "family": "foundation-heldout-recall",
+        "language": "en",
+        "pair_id": null
+      }
+    ]
+  },
+  "trials": [
+    {
+      "mode": "head",
+      "strategy": {
+        "mode": "cached_native_head",
+        "trainable_parameters": 36864,
+        "total_parameters": 50164416,
+        "protected_feature_rank": 0,
+        "feature_cache": {
+          "hits": 2021,
+          "misses": 750,
+          "bytes": 21742672,
+          "entries": 750,
+          "invalidations": 0,
+          "max_bytes": 268435456
+        }
+      },
+      "training_seconds": 122.40690831999859,
+      "after": {
+        "human_nll": {
+          "en": 3.373881153272953
+        },
+        "human_development_rows": 16,
+        "nll": {
+          "it": 1.2071457435634372,
+          "en": 1.044241619692903
+        },
+        "foundation_correct": 4,
+        "foundation_probes": 16,
+        "context_rates": {
+          "it:name": 0.0,
+          "it:location": 0.0,
+          "it:topic": 0.0,
+          "it:correction": 0.0,
+          "en:name": 0.0,
+          "en:location": 0.0,
+          "en:topic": 0.0,
+          "en:correction": 0.0
+        },
+        "context_pair_rate": 0.0,
+        "legacy_correct": 15,
+        "dialogue_correct": 4,
+        "exact_correct": 23,
+        "probes": 92,
+        "repetition": 0.0,
+        "samples": [
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Ciao!"
+              }
+            ],
+            "expected": "Ciao! Come stai?",
+            "response": "Ciao! Come stai?",
+            "correct": true,
+            "family": "phrase-it-0",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Come ti chiami?"
+              }
+            ],
+            "expected": "Mi chiamo Airi.",
+            "response": "Mi chiamo Airi.",
+            "correct": true,
+            "family": "phrase-it-1",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Sono stanco."
+              }
+            ],
+            "expected": "Ti va di riposare un po’?",
+            "response": "Ti va di riposare un po’?",
+            "correct": true,
+            "family": "phrase-it-2",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Sono triste."
+              }
+            ],
+            "expected": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+            "response": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+            "correct": true,
+            "family": "phrase-it-3",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Grazie!"
+              }
+            ],
+            "expected": "Prego!",
+            "response": "Prego!",
+            "correct": true,
+            "family": "phrase-it-4",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Non ho capito."
+              }
+            ],
+            "expected": "Va bene, proviamo un passo alla volta.",
+            "response": "Va bene, proviamo un passo alla volta.",
+            "correct": true,
+            "family": "phrase-it-5",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Cos’è un gatto?"
+              }
+            ],
+            "expected": "Un gatto è un piccolo mammifero domestico.",
+            "response": "Un gatto è un piccolo mammifero domestico.",
+            "correct": true,
+            "family": "phrase-it-6",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Quanti giorni ha una settimana?"
+              }
+            ],
+            "expected": "Una settimana ha sette giorni.",
+            "response": "Una settimana ha sette giorni.",
+            "correct": true,
+            "family": "phrase-it-7",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 1?"
+              }
+            ],
+            "expected": "22",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 2?"
+              }
+            ],
+            "expected": "23",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 3?"
+              }
+            ],
+            "expected": "24",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 4?"
+              }
+            ],
+            "expected": "25",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi chiamo Marta."
+              },
+              {
+                "role": "assistant",
+                "content": "Ciao Marta!"
+              },
+              {
+                "role": "user",
+                "content": "Come mi chiamo?"
+              }
+            ],
+            "expected": "Marta",
+            "response": "Marco",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi chiamo Nina."
+              },
+              {
+                "role": "assistant",
+                "content": "Ciao Nina!"
+              },
+              {
+                "role": "user",
+                "content": "Come mi chiamo?"
+              }
+            ],
+            "expected": "Nina",
+            "response": "Davide",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Come va oggi?"
+              }
+            ],
+            "expected": "Bene, grazie! E tu come stai?",
+            "response": "Come va di ripetare un po’?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Hai voglia di parlare?"
+              }
+            ],
+            "expected": "Certo. Di cosa ti va di parlare?",
+            "response": "Ho perso per Paolo",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Mi annoio."
+              }
+            ],
+            "expected": "Ti va di raccontarmi cosa hai fatto oggi?",
+            "response": "Hugo",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Ho avuto una bella giornata."
+              }
+            ],
+            "expected": "Mi fa piacere! Che cosa è successo?",
+            "response": "Ha parlato di risposta un po’?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Oggi è andata male."
+              }
+            ],
+            "expected": "Mi dispiace. Vuoi parlarne?",
+            "response": "Okay. Lei è la piccolo mammifero domestico.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Sono felice!"
+              }
+            ],
+            "expected": "Che bello! Che cosa ti rende felice?",
+            "response": "Che musica ascolti?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi presento: sono Irene."
+              },
+              {
+                "role": "assistant",
+                "content": "Piacere!"
+              },
+              {
+                "role": "user",
+                "content": "Qual è il mio nome?"
+              }
+            ],
+            "expected": "Irene",
+            "response": "Rita",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi presento: sono Yuri."
+              },
+              {
+                "role": "assistant",
+                "content": "Piacere!"
+              },
+              {
+                "role": "user",
+                "content": "Qual è il mio nome?"
+              }
+            ],
+            "expected": "Yuri",
+            "response": "Rita",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "sun",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dario",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: ab"
+              }
+            ],
+            "expected": "ab",
+            "response": "a",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: ab"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "ab",
+            "response": "ai",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: xy"
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: xy"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: casa blu"
+              }
+            ],
+            "expected": "casa blu",
+            "response": "bum",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: casa blu"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "casa blu",
+            "response": "vmau",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: blue cup"
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bum",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: blue cup"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bridge vgu",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: Hello!"
+              }
+            ],
+            "expected": "Hello! How are you?",
+            "response": "Okay. What would you like to draw?",
+            "correct": false,
+            "family": "phrase-en-0",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: What is your name?"
+              }
+            ],
+            "expected": "My name is Airi.",
+            "response": "My name is Airi.",
+            "correct": true,
+            "family": "phrase-en-1",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I am tired."
+              }
+            ],
+            "expected": "Would you like to rest for a while?",
+            "response": "Would you like to rest for a while?",
+            "correct": true,
+            "family": "phrase-en-2",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I am sad."
+              }
+            ],
+            "expected": "I am sorry. Would you like to tell me what happened?",
+            "response": "I am sorry. Would you like to tell me what happened?",
+            "correct": true,
+            "family": "phrase-en-3",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I do not understand."
+              }
+            ],
+            "expected": "That is okay. Let us try one step at a time.",
+            "response": "That is okay. Let us try one step at a time.",
+            "correct": true,
+            "family": "phrase-en-5",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: What is a cat?"
+              }
+            ],
+            "expected": "A cat is a small domestic mammal.",
+            "response": "A cat is a small domestic mammal.",
+            "correct": true,
+            "family": "phrase-en-6",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: How many days are in a week?"
+              }
+            ],
+            "expected": "A week has seven days.",
+            "response": "A week has seven days.",
+            "correct": true,
+            "family": "phrase-en-7",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: How many months are in a year?"
+              }
+            ],
+            "expected": "A year has twelve months.",
+            "response": "A year has twelve months.",
+            "correct": true,
+            "family": "phrase-en-8",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 1?"
+              }
+            ],
+            "expected": "22",
+            "response": "15",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 2?"
+              }
+            ],
+            "expected": "23",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 3?"
+              }
+            ],
+            "expected": "24",
+            "response": "17",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 4?"
+              }
+            ],
+            "expected": "25",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "My name is Marta."
+              },
+              {
+                "role": "assistant",
+                "content": "Hello Marta!"
+              },
+              {
+                "role": "user",
+                "content": "What is my name?"
+              }
+            ],
+            "expected": "Marta",
+            "response": "Marco",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "My name is Nina."
+              },
+              {
+                "role": "assistant",
+                "content": "Hello Nina!"
+              },
+              {
+                "role": "user",
+                "content": "What is my name?"
+              }
+            ],
+            "expected": "Nina",
+            "response": "Davide",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: How are you today?"
+              }
+            ],
+            "expected": "I am well, thank you! How are you?",
+            "response": "I am well, thank you! How are you?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: Would you like to talk?"
+              }
+            ],
+            "expected": "Of course. What would you like to talk about?",
+            "response": "Of course. What would you like to talk about?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I am bored."
+              }
+            ],
+            "expected": "Would you like to tell me about your day?",
+            "response": "Would you like to tell me about your day?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I had a good day."
+              }
+            ],
+            "expected": "That is nice! What happened?",
+            "response": "I am glad.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: Today went badly."
+              }
+            ],
+            "expected": "I am sorry. Would you like to talk about it?",
+            "response": "I am sorry. Would you like to talk about it?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I feel happy!"
+              }
+            ],
+            "expected": "That is great! What makes you happy?",
+            "response": "If you can, take some time to rest.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Let me introduce myself: I am Irene."
+              },
+              {
+                "role": "assistant",
+                "content": "Nice to meet you!"
+              },
+              {
+                "role": "user",
+                "content": "What name did I give you?"
+              }
+            ],
+            "expected": "Irene",
+            "response": "Omar",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Let me introduce myself: I am Yuri."
+              },
+              {
+                "role": "assistant",
+                "content": "Nice to meet you!"
+              },
+              {
+                "role": "user",
+                "content": "What name did I give you?"
+              }
+            ],
+            "expected": "Yuri",
+            "response": "Omar",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Rita",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Rita",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Sto part saffale",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: ab"
+              }
+            ],
+            "expected": "ab",
+            "response": "ymoe how time about your day?",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: ab"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "ab",
+            "response": "yco",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: xy"
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: xy"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: casa blu"
+              }
+            ],
+            "expected": "casa blu",
+            "response": "cum bridge summer.",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: casa blu"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "casa blu",
+            "response": "cuym liste",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: blue cup"
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bridge succe",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: blue cup"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "blue cup",
+            "response": "buf",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          }
+        ]
+      },
+      "development_gate_accepted": false,
+      "lost_answers": [],
+      "gained_answers": [],
+      "candidate": "/workspace/airi-experiment/paired-prefix-256-head-candidate",
+      "separate_native_export_verification": {
+        "logits_exact": true,
+        "chat_exact": true,
+        "scope": "one predeclared authored TRAIN context-name input; no fitting or adoption"
+      }
+    },
+    {
+      "mode": "prefix",
+      "strategy": {
+        "mode": "cached_native_final_attention",
+        "frozen_prefix_blocks": 11,
+        "trainable_parameters": 74304,
+        "total_parameters": 50164416,
+        "trainable_names": [
+          "blocks.11.attn_norm.weight",
+          "blocks.11.attn_norm.bias",
+          "blocks.11.ff_norm.weight",
+          "blocks.11.ff_norm.bias",
+          "blocks.11.attn.qkv.weight",
+          "blocks.11.attn.out.weight",
+          "final_norm.weight",
+          "final_norm.bias",
+          "lm_head.weight"
+        ],
+        "feature_cache": {
+          "hits": 2021,
+          "misses": 750,
+          "bytes": 21742672,
+          "entries": 750,
+          "invalidations": 0,
+          "max_bytes": 268435456,
+          "max_entries": 4096
+        },
+        "scope": "training strategy only; independent quality gates still required"
+      },
+      "training_seconds": 169.09178993300134,
+      "after": {
+        "human_nll": {
+          "en": 3.3489140275799474
+        },
+        "human_development_rows": 16,
+        "nll": {
+          "it": 1.2031154773920014,
+          "en": 1.0338112433466424
+        },
+        "foundation_correct": 4,
+        "foundation_probes": 16,
+        "context_rates": {
+          "it:name": 0.0,
+          "it:location": 0.0,
+          "it:topic": 0.0,
+          "it:correction": 0.0,
+          "en:name": 0.0,
+          "en:location": 0.0,
+          "en:topic": 0.0,
+          "en:correction": 0.0
+        },
+        "context_pair_rate": 0.0,
+        "legacy_correct": 14,
+        "dialogue_correct": 4,
+        "exact_correct": 22,
+        "probes": 92,
+        "repetition": 0.0,
+        "samples": [
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Ciao!"
+              }
+            ],
+            "expected": "Ciao! Come stai?",
+            "response": "Ciro",
+            "correct": false,
+            "family": "phrase-it-0",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Come ti chiami?"
+              }
+            ],
+            "expected": "Mi chiamo Airi.",
+            "response": "Mi chiamo Airi.",
+            "correct": true,
+            "family": "phrase-it-1",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Sono stanco."
+              }
+            ],
+            "expected": "Ti va di riposare un po’?",
+            "response": "Ti va di riposare un po’?",
+            "correct": true,
+            "family": "phrase-it-2",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Sono triste."
+              }
+            ],
+            "expected": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+            "response": "Mi dispiace. Vuoi raccontarmi cosa è successo?",
+            "correct": true,
+            "family": "phrase-it-3",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Grazie!"
+              }
+            ],
+            "expected": "Prego!",
+            "response": "Prego!",
+            "correct": true,
+            "family": "phrase-it-4",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Non ho capito."
+              }
+            ],
+            "expected": "Va bene, proviamo un passo alla volta.",
+            "response": "Va bene, proviamo un passo alla volta.",
+            "correct": true,
+            "family": "phrase-it-5",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Cos’è un gatto?"
+              }
+            ],
+            "expected": "Un gatto è un piccolo mammifero domestico.",
+            "response": "Un gatto è un piccolo mammifero domestico.",
+            "correct": true,
+            "family": "phrase-it-6",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Vorrei chiederti: Quanti giorni ha una settimana?"
+              }
+            ],
+            "expected": "Una settimana ha sette giorni.",
+            "response": "Una settimana ha sette giorni.",
+            "correct": true,
+            "family": "phrase-it-7",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 1?"
+              }
+            ],
+            "expected": "22",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 2?"
+              }
+            ],
+            "expected": "23",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 3?"
+              }
+            ],
+            "expected": "24",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Quanto fa 21 + 4?"
+              }
+            ],
+            "expected": "25",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi chiamo Marta."
+              },
+              {
+                "role": "assistant",
+                "content": "Ciao Marta!"
+              },
+              {
+                "role": "user",
+                "content": "Come mi chiamo?"
+              }
+            ],
+            "expected": "Marta",
+            "response": "Marco",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi chiamo Nina."
+              },
+              {
+                "role": "assistant",
+                "content": "Ciao Nina!"
+              },
+              {
+                "role": "user",
+                "content": "Come mi chiamo?"
+              }
+            ],
+            "expected": "Nina",
+            "response": "Davide",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Come va oggi?"
+              }
+            ],
+            "expected": "Bene, grazie! E tu come stai?",
+            "response": "Come va di ripetare un po’?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Hai voglia di parlare?"
+              }
+            ],
+            "expected": "Certo. Di cosa ti va di parlare?",
+            "response": "Ho perso per Paolo",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Mi annoio."
+              }
+            ],
+            "expected": "Ti va di raccontarmi cosa hai fatto oggi?",
+            "response": "Hugo",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Ho avuto una bella giornata."
+              }
+            ],
+            "expected": "Mi fa piacere! Che cosa è successo?",
+            "response": "Ha parlato di risposta un po’?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Oggi è andata male."
+              }
+            ],
+            "expected": "Mi dispiace. Vuoi parlarne?",
+            "response": "Okay. Lei è la piccolo mammifero domestico.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti scrivo perché: Sono felice!"
+              }
+            ],
+            "expected": "Che bello! Che cosa ti rende felice?",
+            "response": "Che musica ascolti?",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi presento: sono Irene."
+              },
+              {
+                "role": "assistant",
+                "content": "Piacere!"
+              },
+              {
+                "role": "user",
+                "content": "Qual è il mio nome?"
+              }
+            ],
+            "expected": "Irene",
+            "response": "Rita",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Mi presento: sono Yuri."
+              },
+              {
+                "role": "assistant",
+                "content": "Piacere!"
+              },
+              {
+                "role": "user",
+                "content": "Qual è il mio nome?"
+              }
+            ],
+            "expected": "Yuri",
+            "response": "Rita",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Il mio nome è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Quale nome ti ho detto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "sun",
+            "correct": false,
+            "family": "context-name",
+            "language": "it",
+            "pair_id": "it:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: La scatola è nella stanza Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "In quale stanza è la scatola?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "it",
+            "pair_id": "it:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Parliamo del progetto Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Di quale progetto parliamo?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "it",
+            "pair_id": "it:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dina",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Dario",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Ho capito."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Per questa prova: Prima ho detto Zeno, ma il nome corretto è Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Va bene."
+              },
+              {
+                "role": "user",
+                "content": "Qual è il nome corretto?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "it",
+            "pair_id": "it:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: ab"
+              }
+            ],
+            "expected": "ab",
+            "response": "a",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: ab"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "ab",
+            "response": "ai",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: xy"
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: xy"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: casa blu"
+              }
+            ],
+            "expected": "casa blu",
+            "response": "bum",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: casa blu"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "casa blu",
+            "response": "vmau",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copia soltanto il testo seguente: blue cup"
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bum",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ti comunico una parola segreta: blue cup"
+              },
+              {
+                "role": "assistant",
+                "content": "Ricevuto."
+              },
+              {
+                "role": "user",
+                "content": "Ripeti la parola segreta."
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bridge green",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "it",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: Hello!"
+              }
+            ],
+            "expected": "Hello! How are you?",
+            "response": "Okay. What would you like to draw?",
+            "correct": false,
+            "family": "phrase-en-0",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: What is your name?"
+              }
+            ],
+            "expected": "My name is Airi.",
+            "response": "My name is Airi.",
+            "correct": true,
+            "family": "phrase-en-1",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I am tired."
+              }
+            ],
+            "expected": "Would you like to rest for a while?",
+            "response": "Would you like to rest for a while?",
+            "correct": true,
+            "family": "phrase-en-2",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I am sad."
+              }
+            ],
+            "expected": "I am sorry. Would you like to tell me what happened?",
+            "response": "I am sorry. Would you like to tell me what happened?",
+            "correct": true,
+            "family": "phrase-en-3",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: I do not understand."
+              }
+            ],
+            "expected": "That is okay. Let us try one step at a time.",
+            "response": "That is okay. Let us try one step at a time.",
+            "correct": true,
+            "family": "phrase-en-5",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: What is a cat?"
+              }
+            ],
+            "expected": "A cat is a small domestic mammal.",
+            "response": "A cat is a small domestic mammal.",
+            "correct": true,
+            "family": "phrase-en-6",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: How many days are in a week?"
+              }
+            ],
+            "expected": "A week has seven days.",
+            "response": "A week has seven days.",
+            "correct": true,
+            "family": "phrase-en-7",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I would like to ask: How many months are in a year?"
+              }
+            ],
+            "expected": "A year has twelve months.",
+            "response": "A year has twelve months.",
+            "correct": true,
+            "family": "phrase-en-8",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 1?"
+              }
+            ],
+            "expected": "22",
+            "response": "15",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 2?"
+              }
+            ],
+            "expected": "23",
+            "response": "16",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 3?"
+              }
+            ],
+            "expected": "24",
+            "response": "17",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "What is 21 + 4?"
+              }
+            ],
+            "expected": "25",
+            "response": "18",
+            "correct": false,
+            "family": "addition-unseen-operands",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "My name is Marta."
+              },
+              {
+                "role": "assistant",
+                "content": "Hello Marta!"
+              },
+              {
+                "role": "user",
+                "content": "What is my name?"
+              }
+            ],
+            "expected": "Marta",
+            "response": "Marco",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "My name is Nina."
+              },
+              {
+                "role": "assistant",
+                "content": "Hello Nina!"
+              },
+              {
+                "role": "user",
+                "content": "What is my name?"
+              }
+            ],
+            "expected": "Nina",
+            "response": "Davide",
+            "correct": false,
+            "family": "memory-unseen-name",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: How are you today?"
+              }
+            ],
+            "expected": "I am well, thank you! How are you?",
+            "response": "I am well, thank you! How are you?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: Would you like to talk?"
+              }
+            ],
+            "expected": "Of course. What would you like to talk about?",
+            "response": "Of course. What would you like to talk about?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I am bored."
+              }
+            ],
+            "expected": "Would you like to tell me about your day?",
+            "response": "Would you like to tell me about your day?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I had a good day."
+              }
+            ],
+            "expected": "That is nice! What happened?",
+            "response": "I am glad.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: Today went badly."
+              }
+            ],
+            "expected": "I am sorry. Would you like to talk about it?",
+            "response": "I am sorry. Would you like to talk about it?",
+            "correct": true,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am writing because: I feel happy!"
+              }
+            ],
+            "expected": "That is great! What makes you happy?",
+            "response": "If you can, take some time to rest.",
+            "correct": false,
+            "family": "extra-heldout-dialogue",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Let me introduce myself: I am Irene."
+              },
+              {
+                "role": "assistant",
+                "content": "Nice to meet you!"
+              },
+              {
+                "role": "user",
+                "content": "What name did I give you?"
+              }
+            ],
+            "expected": "Irene",
+            "response": "Omar",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Let me introduce myself: I am Yuri."
+              },
+              {
+                "role": "assistant",
+                "content": "Nice to meet you!"
+              },
+              {
+                "role": "user",
+                "content": "What name did I give you?"
+              }
+            ],
+            "expected": "Yuri",
+            "response": "Omar",
+            "correct": false,
+            "family": "extra-heldout-memory",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Hugo",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: My name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which name did I tell you?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "house",
+            "correct": false,
+            "family": "context-name",
+            "language": "en",
+            "pair_id": "en:name:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: The box is in room Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which room contains the box?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Sto part saffale",
+            "correct": false,
+            "family": "context-location",
+            "language": "en",
+            "pair_id": "en:location:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Ada",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: We are discussing project Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "Which project are we discussing?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-topic",
+            "language": "en",
+            "pair_id": "en:topic:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Lidia."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Lidia",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "I understand."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:0"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "For this test: I said Zeno earlier, but the correct name is Nereo."
+              },
+              {
+                "role": "assistant",
+                "content": "Okay."
+              },
+              {
+                "role": "user",
+                "content": "What is the correct name?"
+              }
+            ],
+            "expected": "Nereo",
+            "response": "Eva",
+            "correct": false,
+            "family": "context-correction",
+            "language": "en",
+            "pair_id": "en:correction:1"
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: ab"
+              }
+            ],
+            "expected": "ab",
+            "response": "ymoe how time about your day?",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: ab"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "ab",
+            "response": "yco",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: xy"
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: xy"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "xy",
+            "response": "xy",
+            "correct": true,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: casa blu"
+              }
+            ],
+            "expected": "casa blu",
+            "response": "cum bridge summer.",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: casa blu"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "casa blu",
+            "response": "cuym liste",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "Copy only the following text: blue cup"
+              }
+            ],
+            "expected": "blue cup",
+            "response": "bridge succe",
+            "correct": false,
+            "family": "foundation-heldout-copy",
+            "language": "en",
+            "pair_id": null
+          },
+          {
+            "messages": [
+              {
+                "role": "user",
+                "content": "I am telling you a secret word: blue cup"
+              },
+              {
+                "role": "assistant",
+                "content": "Received."
+              },
+              {
+                "role": "user",
+                "content": "Repeat the secret word."
+              }
+            ],
+            "expected": "blue cup",
+            "response": "buf",
+            "correct": false,
+            "family": "foundation-heldout-recall",
+            "language": "en",
+            "pair_id": null
+          }
+        ]
+      },
+      "development_gate_accepted": false,
+      "lost_answers": [
+        0
+      ],
+      "gained_answers": [],
+      "candidate": "/workspace/airi-experiment/paired-prefix-256-prefix-candidate",
+      "separate_native_export_verification": {
+        "logits_exact": true,
+        "chat_exact": true,
+        "scope": "one predeclared authored TRAIN context-name input; no fitting or adoption"
+      }
+    }
+  ],
+  "live_promoted": false,
+  "source_checkpoint_unchanged": true,
+  "baseline_responses_equal_archived_champion": true
+}
