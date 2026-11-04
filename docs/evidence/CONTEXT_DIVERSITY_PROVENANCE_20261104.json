@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "scope": "SHA256 provenance of exact local JSON, diagnostic Python scripts, opt-in builder snapshot and test logs; gzip mtime=0. No weights, optimizer states, secrets or credentials are packaged. Re-running model diagnostics also requires the original archived data/runtime/checkpoint identified inside the raw reports; this package alone is evidence, not a standalone model distribution.",
+  "summary": {
+    "path": "CONTEXT_DIVERSITY_SUMMARY_20261104.json",
+    "sha256": "3bc86eb13df62711e627ede756ec571dca02f25c4a83e05816131bc72146a17d"
+  },
+  "artifacts": [
+    {
+      "source_path": "/workspace/airi-experiment/context-values-paired-512.json",
+      "source_bytes": 150271,
+      "source_sha256": "d65b7cc4cd342b53ac80fd913fd65462c2826b89ec3d3732b7d0c0e05f58496b",
+      "archive": "CONTEXT_DIVERSITY_context-values-paired-512.json.gz",
+      "archive_bytes": 11305,
+      "archive_sha256": "e402a113f900d4401d9f546242cb32e7f68ab2d09f2e24bb1a100c1a2973ba49"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-static-audit.json",
+      "source_bytes": 13155,
+      "source_sha256": "f56632be425762cc87e979edb36783d040063d0210e8c73183b490b6b3c79135",
+      "archive": "CONTEXT_DIVERSITY_diverse-static-audit.json.gz",
+      "archive_bytes": 2419,
+      "archive_sha256": "3040f566650bdf2c04a40e608295a731d22ff476975006ccfedf154bdca6a715"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-interpolation-evidence.json",
+      "source_bytes": 282349,
+      "source_sha256": "d8a073ecd3ed17aff4359f05cd0df382bc7fc489988cab216ff9583961435a08",
+      "archive": "CONTEXT_DIVERSITY_diverse-interpolation-evidence.json.gz",
+      "archive_bytes": 22316,
+      "archive_sha256": "bcc7267d631769d005460f3a1fb9c0150bba36571b1a8254c37aa5c7151827dd"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-data-audit.json",
+      "source_bytes": 1237,
+      "source_sha256": "66766ec1e321eb77617d0c4e84a30b4d1d091636ceb164ce0554723ccf422855",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-data-audit.json.gz",
+      "archive_bytes": 563,
+      "archive_sha256": "8879f9509d024b92885a33c7efd4d0285550112e62499afd0030697cdd92e00f"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context-representation-original.json",
+      "source_bytes": 99845,
+      "source_sha256": "bcb58feb6c373c1801a8759c94808cce42757c91ab86f4e86bfe86cd7d8f453a",
+      "archive": "CONTEXT_DIVERSITY_context-representation-original.json.gz",
+      "archive_bytes": 6414,
+      "archive_sha256": "c7ba511ab9bbbd181ceba0b517f467ec7b46501f947daa6bb487db8d0fc85d08"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context-representation-revision2.json",
+      "source_bytes": 99836,
+      "source_sha256": "b9d49fbf27d699597040e5483b532a721cc69790fd6d8aabefaac22fe555423c",
+      "archive": "CONTEXT_DIVERSITY_context-representation-revision2.json.gz",
+      "archive_bytes": 6453,
+      "archive_sha256": "44458b7cd8d138b29806d8ddac3b675c3581910461dc1a1f8e6c08f99937ef2b"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/novel-value-representation.json",
+      "source_bytes": 414865,
+      "source_sha256": "78fc1de5c2e0a2abc086dc945ea0e59b6256c0b4ae0a61d4f1258c42194061b3",
+      "archive": "CONTEXT_DIVERSITY_novel-value-representation.json.gz",
+      "archive_bytes": 14923,
+      "archive_sha256": "8136ed537af31cd8d8eece9e4e09a9caa857da376cd59d769c0868dd8bc3273c"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context-only-512.json",
+      "source_bytes": 100197,
+      "source_sha256": "f4e6b79cea7d16ee92fc03acabaedb375c40a650a83a6e977cd25dc0a45aabb0",
+      "archive": "CONTEXT_DIVERSITY_context-only-512.json.gz",
+      "archive_bytes": 8623,
+      "archive_sha256": "f5781c23c12df2ff3381c3f9b5ce775d28ee92f7cc8634e561db79ed10ec42e5"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context_probe.py",
+      "source_bytes": 28788,
+      "source_sha256": "30146ba5fa8dc799e6be20277cb6b387ba047569b932beb5e96ea8ab85b2ac3e",
+      "archive": "CONTEXT_DIVERSITY_context_probe.py.gz",
+      "archive_bytes": 8031,
+      "archive_sha256": "35266e468afe398e991822899adc536b78d58fd6b4fbbae970791924162f15f8"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/analyze_diverse_interpolation.py",
+      "source_bytes": 11745,
+      "source_sha256": "da5ca86caa97cd6b70c62fc96c5264ea96400402b40b4e219565bfb3ce42f161",
+      "archive": "CONTEXT_DIVERSITY_analyze_diverse_interpolation.py.gz",
+      "archive_bytes": 3913,
+      "archive_sha256": "40849106176e8d89022ac4891613e6502b8ba61a738279313735d60f161de900"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context_representation_diagnostic.py",
+      "source_bytes": 10416,
+      "source_sha256": "21124557985371beecd500f4145794ebbbdd3bbde8adc6db2edd041e38f03819",
+      "archive": "CONTEXT_DIVERSITY_context_representation_diagnostic.py.gz",
+      "archive_bytes": 3559,
+      "archive_sha256": "048e5ff31aad8c7ef0f3bb68455d420181ee0551adaa5cddc922638d83584778"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/novel-value-representation.py",
+      "source_bytes": 14338,
+      "source_sha256": "7c86a243e77178b90075a1cadd292766d09ccd28d92d9733a6de36404105cb56",
+      "archive": "CONTEXT_DIVERSITY_novel-value-representation.py.gz",
+      "archive_bytes": 4760,
+      "archive_sha256": "8e2ef19093bc4e01e111ac658c747424acaea9f966df03caecc9803f2a918023"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/context-only-512.py",
+      "source_bytes": 29784,
+      "source_sha256": "4e643fb5b3c4b4cee2517871152e1ddb591f18212b39d38568c54a1bb1a0b263",
+      "archive": "CONTEXT_DIVERSITY_context-only-512.py.gz",
+      "archive_bytes": 8326,
+      "archive_sha256": "22c06c1e38dd761c6247d28064f47193074ad8854eab15a16d390efb9c13e684"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-pure.log",
+      "source_bytes": 11147,
+      "source_sha256": "c4a4d63a1d3c5063e1b6179c4894adeb9fda1c3434e6796feb044657a9939355",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-pure.log.gz",
+      "archive_bytes": 2353,
+      "archive_sha256": "6b8ebf07ef7a6885d41590f26d19015b26145fbbc5f0afe26a6a42f1dc30b41d"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-native.log",
+      "source_bytes": 1785,
+      "source_sha256": "39c5605564700cdff4c097d4136771465915ec78a5dade7036fe5d600b2801e3",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-native.log.gz",
+      "archive_bytes": 443,
+      "archive_sha256": "aebfe39d1a9344a3d138bcf16ffabfdb42d282e1d49adb87a56d460aa275f7c9"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-prefix-integration.log",
+      "source_bytes": 104,
+      "source_sha256": "c6b03d3b256de9003aba84e89ae51140ef37919d2ba6c64a00c8fbc160967158",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-prefix-integration.log.gz",
+      "archive_bytes": 54,
+      "archive_sha256": "a0d1352314b7f6845bda0c1cc8c5c18e3787f29495cdafe54c7c3a631b9c01eb"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-prefix.log",
+      "source_bytes": 843,
+      "source_sha256": "f81ffe5fdeb7e374bab09218605017a6f5dd77c1f88849290a8f8b2d3105f65f",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-prefix.log.gz",
+      "archive_bytes": 403,
+      "archive_sha256": "2336b8a90cfea3df38c436a664626a71bb9780dc2b7de1e20e0f0e00a64a94ca"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-continual-native.log",
+      "source_bytes": 388,
+      "source_sha256": "4f2b12963ce7b46689368fa7905341b97d5d38e3270e7c0aeedd4df2b2b6edd3",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-continual-native.log.gz",
+      "archive_bytes": 255,
+      "archive_sha256": "533e3e7fbea52bf2af4c2593fe0c3a0dc6595df2561688fff588a9ab7c0baaef"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/diverse-review-resume.log",
+      "source_bytes": 499,
+      "source_sha256": "d388212bf54d9920d3768074df29101245461b45b7b659835890a4a9d08ba29e",
+      "archive": "CONTEXT_DIVERSITY_diverse-review-resume.log.gz",
+      "archive_bytes": 337,
+      "archive_sha256": "5aceada7e1720322502a08d35aebfd8d6f908a9aaebe57303126eeb49d5f1e7c"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/context_acquisition.py",
+      "source_bytes": 17216,
+      "source_sha256": "c9ac20fa61509659ede40c4f5eea9ca88d42ebeec1d7efc772e1dd98daf5e0d6",
+      "archive": "CONTEXT_DIVERSITY_context_acquisition.py.gz",
+      "archive_bytes": 5557,
+      "archive_sha256": "56b9a5cde9059f3e4c7a74b2a0bf0bf32ef0f1e3acc2e69bbe257736d137344c"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/learning_probe.py",
+      "source_bytes": 21030,
+      "source_sha256": "afd07692e707d54f924be8d3877016bc7e0253c7f310d1cdb273f91465bb5a8e",
+      "archive": "CONTEXT_DIVERSITY_learning_probe.py.gz",
+      "archive_bytes": 6022,
+      "archive_sha256": "4491bd822d7fd0c3159ba531c8f0b1f82a55a1953dffd055165890ac2854ee23"
+    }
+  ],
+  "observed_checks_record": {
+    "path": "CONTEXT_DIVERSITY_OBSERVED_CHECKS_20261104.json",
+    "sha256": "6b3d74838a4622f3220677ee7bf8f97e663f52be133048134e42b1cb7141ece8"
+  }
+}

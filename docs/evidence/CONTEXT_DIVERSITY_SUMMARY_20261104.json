@@ -1,0 +1,1744 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "scope": "Completed local TRAIN acquisition diagnostics and unactivated opt-in implementation; no new model adoption, live cycle, sealed/final scoring, or operational qualification.",
+  "approved_model": {
+    "revision": 2,
+    "exact_correct": 23,
+    "probes": 92,
+    "context_correct": 0,
+    "terminal_release": "airi-offline-449276-41523612006-1-3",
+    "prior_report": "../CONTEXT_LEARNING_REPAIR_20261102.md",
+    "unchanged_by_this_work": true,
+    "later_byte_level_verification": {
+      "record": "CONTEXT_DIVERSITY_OBSERVED_CHECKS_20261104.json",
+      "model_loaded_weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274"
+    }
+  },
+  "implementation": {
+    "status": "available_opt_in_not_activated",
+    "legacy_default_unchanged": true,
+    "old_frozen_branch_unchanged": true,
+    "frozen_branch": "native-context-learning-20261102",
+    "frozen_branch_sha": "d3f5039c35953625b059263d0be08f70adc74a01",
+    "config": {
+      "version": 1,
+      "template_policy": "matched_train",
+      "paired_batch": true
+    },
+    "audit": {
+      "audit": {
+        "version": "context-acquisition-v1",
+        "rows": 2048,
+        "counterfactual_pairs": 1024,
+        "all_groups_have_two_rows": true,
+        "unique_values": 1868,
+        "initials": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "languages": {
+          "en": 1024,
+          "it": 1024
+        },
+        "tasks": {
+          "context-correction": 512,
+          "context-location": 512,
+          "context-name": 512,
+          "context-topic": 512
+        },
+        "length_buckets": {
+          "0": 512,
+          "1": 512,
+          "2": 512,
+          "3": 512
+        },
+        "sha256": "7ca57ce77307e62e19b5dd08841013fa9999502384f6dab8d4b1e96322365e92",
+        "scope": "TRAIN-only deterministic acquisition inventory; no measured model improvement"
+      },
+      "protected_rows": 559,
+      "protected_histories": 489,
+      "reserved_values": 383,
+      "original_skeletons": 256,
+      "checked_matched_rows": 6656,
+      "stages": [
+        0,
+        1,
+        2
+      ],
+      "scope": "TRAIN construction and split exclusion audit only; no model capability measurement"
+    },
+    "tests": {
+      "pure": {
+        "tests": 70,
+        "skipped": 1,
+        "log": {
+          "source_sha256": "c4a4d63a1d3c5063e1b6179c4894adeb9fda1c3434e6796feb044657a9939355",
+          "archive": "CONTEXT_DIVERSITY_diverse-review-pure.log.gz"
+        }
+      },
+      "native_acquisition": {
+        "tests": 9,
+        "log": {
+          "source_sha256": "39c5605564700cdff4c097d4136771465915ec78a5dade7036fe5d600b2801e3",
+          "archive": "CONTEXT_DIVERSITY_diverse-review-native.log.gz"
+        }
+      },
+      "prefix_integration": {
+        "tests": 6,
+        "log": {
+          "source_sha256": "c6b03d3b256de9003aba84e89ae51140ef37919d2ba6c64a00c8fbc160967158",
+          "archive": "CONTEXT_DIVERSITY_diverse-review-prefix-integration.log.gz"
+        }
+      },
+      "native_prefix": {
+        "source_sha256": "f81ffe5fdeb7e374bab09218605017a6f5dd77c1f88849290a8f8b2d3105f65f",
+        "archive": "CONTEXT_DIVERSITY_diverse-review-prefix.log.gz"
+      },
+      "native_continual_atomicity": {
+        "source_sha256": "4f2b12963ce7b46689368fa7905341b97d5d38e3270e7c0aeedd4df2b2b6edd3",
+        "archive": "CONTEXT_DIVERSITY_diverse-review-continual-native.log.gz"
+      },
+      "native_resume_smoke": {
+        "source_sha256": "d388212bf54d9920d3768074df29101245461b45b7b659835890a4a9d08ba29e",
+        "archive": "CONTEXT_DIVERSITY_diverse-review-resume.log.gz"
+      },
+      "scope_note": "Archived 70/9 logs precede the final legacy-probe guard. Later 71/10 completed checks have explicit root-tool handoff provenance, not saved stdout logs.",
+      "post_guard_observations": {
+        "record": "CONTEXT_DIVERSITY_OBSERVED_CHECKS_20261104.json",
+        "pure_tests": 71,
+        "pure_skipped": 1,
+        "native_acquisition_tests": 10
+      }
+    },
+    "legacy_probe_guard": "learning_probe.py --spec refuses context_acquisition because that legacy harness does not implement paired acquisition; prevents labeling an ignored opt-in config as a measured recipe. Old specs/default remain unchanged."
+  },
+  "paired512": {
+    "source": {
+      "source_sha256": "d65b7cc4cd342b53ac80fd913fd65462c2826b89ec3d3732b7d0c0e05f58496b",
+      "archive": "CONTEXT_DIVERSITY_context-values-paired-512.json.gz"
+    },
+    "profile": {
+      "seed": 20261103,
+      "steps": 512,
+      "learning_rate": 3e-05,
+      "retention_weight": 8.0,
+      "retention_examples_per_language": 2,
+      "profile_predeclared": "LR3e-5 gold/KL8, native.25,2mem/lang,seed20261103,512updates/arm; no adaptive endpoint selection",
+      "shared_noncontext_retention_anchor_sha256": "0a226602f9ea3c9a7409c3a33d7290b5b9f7220bbd5e40a1a7997e8e7de7072b"
+    },
+    "acquisition_pool": {
+      "version": "context-acquisition-v1",
+      "rows": 2048,
+      "counterfactual_pairs": 1024,
+      "all_groups_have_two_rows": true,
+      "unique_values": 1868,
+      "initials": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "languages": {
+        "en": 1024,
+        "it": 1024
+      },
+      "tasks": {
+        "context-correction": 512,
+        "context-location": 512,
+        "context-name": 512,
+        "context-topic": 512
+      },
+      "length_buckets": {
+        "0": 512,
+        "1": 512,
+        "2": 512,
+        "3": 512
+      },
+      "sha256": "7ca57ce77307e62e19b5dd08841013fa9999502384f6dab8d4b1e96322365e92",
+      "scope": "TRAIN-only deterministic acquisition inventory; no measured model improvement"
+    },
+    "exposure": {
+      "legacy-paired": {
+        "unique_values": 8,
+        "initials": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "examples": 256,
+        "target_tokens_including_eos": 1083,
+        "target_utf8_bytes": 1005,
+        "minimum_value_bytes": 3,
+        "maximum_value_bytes": 5
+      },
+      "diverse-paired": {
+        "unique_values": 229,
+        "initials": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "examples": 256,
+        "target_tokens_including_eos": 1960,
+        "target_utf8_bytes": 2049,
+        "minimum_value_bytes": 1,
+        "maximum_value_bytes": 21
+      }
+    },
+    "baseline": {
+      "human_nll": {
+        "en": 3.3305142181939766
+      },
+      "human_development_rows": 16,
+      "nll": {
+        "it": 1.2069149777597543,
+        "en": 1.037827099171288
+      },
+      "foundation_correct": 4,
+      "foundation_probes": 16,
+      "context_rates": {
+        "it:name": 0.0,
+        "it:location": 0.0,
+        "it:topic": 0.0,
+        "it:correction": 0.0,
+        "en:name": 0.0,
+        "en:location": 0.0,
+        "en:topic": 0.0,
+        "en:correction": 0.0
+      },
+      "context_pair_rate": 0.0,
+      "legacy_correct": 15,
+      "dialogue_correct": 4,
+      "exact_correct": 23,
+      "probes": 92,
+      "repetition": 0.0
+    },
+    "baseline_reproduced": true,
+    "trials": [
+      {
+        "mode": "legacy-paired",
+        "strategy": {
+          "mode": "cached_native_final_attention",
+          "frozen_prefix_blocks": 11,
+          "trainable_parameters": 74304,
+          "total_parameters": 50164416,
+          "trainable_names": [
+            "blocks.11.attn_norm.weight",
+            "blocks.11.attn_norm.bias",
+            "blocks.11.ff_norm.weight",
+            "blocks.11.ff_norm.bias",
+            "blocks.11.attn.qkv.weight",
+            "blocks.11.attn.out.weight",
+            "final_norm.weight",
+            "final_norm.bias",
+            "lm_head.weight"
+          ],
+          "feature_cache": {
+            "hits": 2325,
+            "misses": 958,
+            "bytes": 35586936,
+            "entries": 958,
+            "invalidations": 0,
+            "max_bytes": 268435456,
+            "max_entries": 4096
+          },
+          "scope": "training strategy only; independent quality gates still required"
+        },
+        "training_seconds": 155.77028306800003,
+        "supervised_tokens": 92374,
+        "reference_tokens": 65624,
+        "maximum_acquisition_sequence_tokens": 676,
+        "development_gate_accepted": false,
+        "lost_answers": [
+          0,
+          64
+        ],
+        "gained_answers": [],
+        "native_export_logits_exact": true,
+        "metrics": {
+          "human_nll": {
+            "en": 3.269671005145987
+          },
+          "human_development_rows": 16,
+          "nll": {
+            "it": 1.1800676460826371,
+            "en": 1.0080122499231188
+          },
+          "foundation_correct": 4,
+          "foundation_probes": 16,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "exact_correct": 21,
+          "probes": 92,
+          "repetition": 0.0
+        },
+        "recomputed_generation_delta": {
+          "lost_answers": [
+            0,
+            64
+          ],
+          "gained_answers": [],
+          "context_correct": 0,
+          "context_probes": 32
+        }
+      },
+      {
+        "mode": "diverse-paired",
+        "strategy": {
+          "mode": "cached_native_final_attention",
+          "frozen_prefix_blocks": 11,
+          "trainable_parameters": 74304,
+          "total_parameters": 50164416,
+          "trainable_names": [
+            "blocks.11.attn_norm.weight",
+            "blocks.11.attn_norm.bias",
+            "blocks.11.ff_norm.weight",
+            "blocks.11.ff_norm.bias",
+            "blocks.11.attn.qkv.weight",
+            "blocks.11.attn.out.weight",
+            "final_norm.weight",
+            "final_norm.bias",
+            "lm_head.weight"
+          ],
+          "feature_cache": {
+            "hits": 2325,
+            "misses": 958,
+            "bytes": 36462664,
+            "entries": 958,
+            "invalidations": 0,
+            "max_bytes": 268435456,
+            "max_entries": 4096
+          },
+          "scope": "training strategy only; independent quality gates still required"
+        },
+        "training_seconds": 167.21056104200193,
+        "supervised_tokens": 93251,
+        "reference_tokens": 65624,
+        "maximum_acquisition_sequence_tokens": 676,
+        "development_gate_accepted": false,
+        "lost_answers": [
+          0,
+          64
+        ],
+        "gained_answers": [],
+        "native_export_logits_exact": true,
+        "metrics": {
+          "human_nll": {
+            "en": 3.269167535359176
+          },
+          "human_development_rows": 16,
+          "nll": {
+            "it": 1.097845280597888,
+            "en": 0.930185518853561
+          },
+          "foundation_correct": 4,
+          "foundation_probes": 16,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "exact_correct": 21,
+          "probes": 92,
+          "repetition": 0.0
+        },
+        "recomputed_generation_delta": {
+          "lost_answers": [
+            0,
+            64
+          ],
+          "gained_answers": [],
+          "context_correct": 0,
+          "context_probes": 32
+        }
+      }
+    ],
+    "source_checkpoint_unchanged": true,
+    "live_promoted": false,
+    "heldout_training_overlap": false,
+    "comparison_limit": "Equal optimizer updates and paired examples, not equal target tokens/FLOPs. Only literal value substitutions in original TRAIN templates/histories; not a test of new wording/history. Shared CPU and cache warmup preclude throughput comparison."
+  },
+  "interpolation": {
+    "source": {
+      "source_sha256": "d8a073ecd3ed17aff4359f05cd0df382bc7fc489988cab216ff9583961435a08",
+      "archive": "CONTEXT_DIVERSITY_diverse-interpolation-evidence.json.gz"
+    },
+    "factors": [
+      0.5,
+      0.25
+    ],
+    "results": [
+      {
+        "alpha": 0.5,
+        "development_gate_accepted": false,
+        "policy_improved": false,
+        "retains_correct_answers": false,
+        "lost_answers": [
+          0,
+          64
+        ],
+        "gained_answers": [],
+        "old_answers_retained": 21,
+        "new_correct_answers": 0,
+        "reward": 0.13125,
+        "evaluation_seconds": 170.15650868300003,
+        "metrics": {
+          "human_nll": {
+            "en": 3.2937086139301934
+          },
+          "human_development_rows": 16,
+          "nll": {
+            "it": 1.1579186848853313,
+            "en": 0.9789159090298
+          },
+          "foundation_correct": 4,
+          "foundation_probes": 16,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "exact_correct": 21,
+          "probes": 92,
+          "repetition": 0.0
+        },
+        "recomputed_generation_delta": {
+          "lost_answers": [
+            0,
+            64
+          ],
+          "gained_answers": [],
+          "context_correct": 0,
+          "context_probes": 32
+        }
+      },
+      {
+        "alpha": 0.25,
+        "development_gate_accepted": false,
+        "policy_improved": false,
+        "retains_correct_answers": false,
+        "lost_answers": [
+          0,
+          64
+        ],
+        "gained_answers": [],
+        "old_answers_retained": 21,
+        "new_correct_answers": 0,
+        "reward": 0.13125,
+        "evaluation_seconds": 72.74131260800004,
+        "metrics": {
+          "human_nll": {
+            "en": 3.3110402518799877
+          },
+          "human_development_rows": 16,
+          "nll": {
+            "it": 1.1837546692306464,
+            "en": 1.0070117024512355
+          },
+          "foundation_correct": 4,
+          "foundation_probes": 16,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "legacy_correct": 14,
+          "dialogue_correct": 3,
+          "exact_correct": 21,
+          "probes": 92,
+          "repetition": 0.0
+        },
+        "recomputed_generation_delta": {
+          "lost_answers": [
+            0,
+            64
+          ],
+          "gained_answers": [],
+          "context_correct": 0,
+          "context_probes": 32
+        }
+      }
+    ],
+    "first_token_summary": {
+      "baseline": {
+        "count": 32,
+        "target_probability_mean": 0.011937600956713368,
+        "target_rank_mean": 21.96875,
+        "first_token_top1": 0,
+        "rank_better_than_baseline": 0,
+        "rank_same_as_baseline": 32,
+        "rank_worse_than_baseline": 0
+      },
+      "diverse_endpoint": {
+        "count": 32,
+        "target_probability_mean": 0.022106696382735436,
+        "target_rank_mean": 13.40625,
+        "first_token_top1": 0,
+        "rank_better_than_baseline": 25,
+        "rank_same_as_baseline": 7,
+        "rank_worse_than_baseline": 0
+      },
+      "legacy_endpoint": {
+        "count": 32,
+        "target_probability_mean": 0.013702323981476638,
+        "target_rank_mean": 22.28125,
+        "first_token_top1": 0,
+        "rank_better_than_baseline": 7,
+        "rank_same_as_baseline": 11,
+        "rank_worse_than_baseline": 14
+      },
+      "diverse-alpha-0.5": {
+        "count": 32,
+        "target_probability_mean": 0.017611076607053633,
+        "target_rank_mean": 15.96875,
+        "first_token_top1": 0,
+        "new_correct_answers": 0
+      },
+      "diverse-alpha-0.25": {
+        "count": 32,
+        "target_probability_mean": 0.0148425567385857,
+        "target_rank_mean": 18.1875,
+        "first_token_top1": 0,
+        "new_correct_answers": 0
+      }
+    },
+    "method_limitations": [
+      "Same512optimizerupdates and same common trajectory, but different context target token counts (legacy1083/diverse1960), so this is not an equal-token or equal-compute comparison.",
+      "The32contextgenerationtargets are Lidia/Nereo; broader initial-byte coverage can improve first-token ranks without proving correct context binding.",
+      "The export exact-logit check recorded by the original harness used a single probe batch; checkpoint shard validation independently passed.",
+      "Only the original reused development pools were scored. No sealed/final score or production qualification is claimed."
+    ],
+    "conclusion": {
+      "baseline_exact_correct": 23,
+      "baseline_probes": 92,
+      "all_measured_diverse_interpolation_exact_correct": [
+        21,
+        21
+      ],
+      "all_measured_diverse_interpolation_new_correct_answers": [
+        0,
+        0
+      ],
+      "all_measured_diverse_interpolation_old_answers_retained": [
+        21,
+        21
+      ],
+      "any_development_gate_accepted": false,
+      "capability_gain_demonstrated": false,
+      "loss_improvement_demonstrated": true,
+      "interpretation": "Diverse value training reduces heldout NLL and raises the probability/rank of some expected first bytes, but neither full candidate nor the two preexisting smaller steps acquires any new whole answer or recovers the two lost old answers. All are rejected by unchanged development gates."
+    },
+    "source_checkpoint_unchanged": true,
+    "candidate_checkpoint_unchanged": true,
+    "no_adoption": true,
+    "sealed_final_evaluated": false
+  },
+  "independent_static_audit": {
+    "source": {
+      "source_sha256": "f56632be425762cc87e979edb36783d040063d0210e8c73183b490b6b3c79135",
+      "archive": "CONTEXT_DIVERSITY_diverse-static-audit.json.gz"
+    },
+    "all_source_checkpoint_sha256_match": true,
+    "pool_reproduction": {
+      "method": "Rebuilt build_context_acquisition(seed=20261103,max_pairs=1024) using archived exclusions and reserved values, without training. Human corpus split metadata used only for exclusions.",
+      "recorded_audit": {
+        "version": "context-acquisition-v1",
+        "rows": 2048,
+        "counterfactual_pairs": 1024,
+        "all_groups_have_two_rows": true,
+        "unique_values": 1868,
+        "initials": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "languages": {
+          "en": 1024,
+          "it": 1024
+        },
+        "tasks": {
+          "context-correction": 512,
+          "context-location": 512,
+          "context-name": 512,
+          "context-topic": 512
+        },
+        "length_buckets": {
+          "0": 512,
+          "1": 512,
+          "2": 512,
+          "3": 512
+        },
+        "sha256": "7ca57ce77307e62e19b5dd08841013fa9999502384f6dab8d4b1e96322365e92",
+        "scope": "TRAIN-only deterministic acquisition inventory; no measured model improvement"
+      },
+      "reproduced_sha256": "7ca57ce77307e62e19b5dd08841013fa9999502384f6dab8d4b1e96322365e92",
+      "sha256_match": true,
+      "all_audit_values_match": true,
+      "serialization_note": "In-memory length_buckets keys are integers; JSON serialization uses string keys. All reported values and inventory SHA256 match.",
+      "human_corpus_split_rows": {
+        "train": 866,
+        "development": 21,
+        "final": 27
+      },
+      "overlap_tests": {
+        "whole_message_text_overlap": false,
+        "reserved_value_overlap": false,
+        "protected_full_prompt_history_overlap": false
+      }
+    },
+    "arms_different_context_responses": 16,
+    "interpretation": "Both endpoints lost the same two old exact answers and gained none. More changed responses do not demonstrate improved context capability; both endpoints retain zero exact context answers."
+  },
+  "representation_eight_names": {
+    "original": {
+      "source": {
+        "source_sha256": "bcb58feb6c373c1801a8759c94808cce42757c91ab86f4e86bfe86cd7d8f453a",
+        "archive": "CONTEXT_DIVERSITY_context-representation-original.json.gz"
+      },
+      "scope": "TRAIN-only diagnostic; no optimizer, no parameter updates, no development or final forward passes",
+      "rows": 64,
+      "names": [
+        "Ada",
+        "Bruno",
+        "Ciro",
+        "Dina",
+        "Eva",
+        "Fabio",
+        "Gina",
+        "Hugo"
+      ],
+      "readout_note": "auxiliary ridge readout learns TRAIN name identity; not model capability or an inference adapter",
+      "readouts_question_tail_final_two_blocks": [
+        {
+          "language": "it",
+          "layer": "block10",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.015078242602527462,
+          "mean_different_value_cosine_distance": 0.4638150630481141
+        },
+        {
+          "language": "it",
+          "layer": "block11",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.0051583853835678525,
+          "mean_different_value_cosine_distance": 0.8791414069000963
+        },
+        {
+          "language": "en",
+          "layer": "block10",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.021906553624164816,
+          "mean_different_value_cosine_distance": 0.4256450308063426
+        },
+        {
+          "language": "en",
+          "layer": "block11",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.009933724043679966,
+          "mean_different_value_cosine_distance": 0.875177866119446
+        }
+      ],
+      "first_gold_probability_mean": 0.9988092444837093,
+      "first_token_only_not_full_answer_certificate": true,
+      "source_checkpoint_unchanged": true,
+      "all_parameter_gradients_absent": true
+    },
+    "revision2": {
+      "source": {
+        "source_sha256": "b9d49fbf27d699597040e5483b532a721cc69790fd6d8aabefaac22fe555423c",
+        "archive": "CONTEXT_DIVERSITY_context-representation-revision2.json.gz"
+      },
+      "scope": "TRAIN-only diagnostic; no optimizer, no parameter updates, no development or final forward passes",
+      "rows": 64,
+      "names": [
+        "Ada",
+        "Bruno",
+        "Ciro",
+        "Dina",
+        "Eva",
+        "Fabio",
+        "Gina",
+        "Hugo"
+      ],
+      "readout_note": "auxiliary ridge readout learns TRAIN name identity; not model capability or an inference adapter",
+      "readouts_question_tail_final_two_blocks": [
+        {
+          "language": "it",
+          "layer": "block10",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.015078242602527462,
+          "mean_different_value_cosine_distance": 0.4638150630481141
+        },
+        {
+          "language": "it",
+          "layer": "block11",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.005243133701962129,
+          "mean_different_value_cosine_distance": 0.8787390344336703
+        },
+        {
+          "language": "en",
+          "layer": "block10",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.021906553624164816,
+          "mean_different_value_cosine_distance": 0.4256450308063426
+        },
+        {
+          "language": "en",
+          "layer": "block11",
+          "position": "question_tail",
+          "train_template_cv_correct": 32,
+          "rows": 32,
+          "classes": 8,
+          "chance_accuracy": 0.125,
+          "accuracy": 1.0,
+          "ridge": 0.01,
+          "mean_same_value_cosine_distance": 0.010259988548706573,
+          "mean_different_value_cosine_distance": 0.8732914538769581
+        }
+      ],
+      "first_gold_probability_mean": 0.9987653875723481,
+      "first_token_only_not_full_answer_certificate": true,
+      "source_checkpoint_unchanged": true,
+      "all_parameter_gradients_absent": true
+    }
+  },
+  "representation_novel_values": {
+    "source": {
+      "source_sha256": "78fc1de5c2e0a2abc086dc945ea0e59b6256c0b4ae0a61d4f1258c42194061b3",
+      "archive": "CONTEXT_DIVERSITY_novel-value-representation.json.gz"
+    },
+    "scope": "TRAIN-only auxiliary readout; no optimizer, parameter update, evaluation-set access, or evaluation-set forward",
+    "selected_rows": 512,
+    "selected_unique_values": 485,
+    "label_definition": "exact first ASCII uppercase character of the generated literal value: expected[0], A-Z",
+    "split_definition": "75/25 approximately, stratified by initial and language; union of test values makes fit/test globally value-disjoint; all 26 classes in each language fit/test",
+    "split": {
+      "it": {
+        "fit": {
+          "rows": 195,
+          "unique_values": 189,
+          "class_counts": {
+            "A": 9,
+            "B": 10,
+            "C": 9,
+            "D": 9,
+            "E": 8,
+            "F": 9,
+            "G": 6,
+            "H": 6,
+            "I": 6,
+            "J": 6,
+            "K": 6,
+            "L": 6,
+            "M": 6,
+            "N": 9,
+            "O": 9,
+            "P": 10,
+            "Q": 10,
+            "R": 9,
+            "S": 10,
+            "T": 6,
+            "U": 6,
+            "V": 6,
+            "W": 6,
+            "X": 6,
+            "Y": 6,
+            "Z": 6
+          },
+          "length_buckets": {
+            "0": 51,
+            "1": 43,
+            "2": 53,
+            "3": 48
+          },
+          "template_indices": {
+            "0": 68,
+            "1": 64,
+            "2": 63
+          },
+          "history_exchanges": {
+            "0": 89,
+            "1": 56,
+            "2": 50
+          }
+        },
+        "test": {
+          "rows": 61,
+          "unique_values": 60,
+          "class_counts": {
+            "A": 3,
+            "B": 2,
+            "C": 3,
+            "D": 3,
+            "E": 4,
+            "F": 3,
+            "G": 2,
+            "H": 2,
+            "I": 2,
+            "J": 2,
+            "K": 2,
+            "L": 2,
+            "M": 2,
+            "N": 3,
+            "O": 3,
+            "P": 2,
+            "Q": 2,
+            "R": 3,
+            "S": 2,
+            "T": 2,
+            "U": 2,
+            "V": 2,
+            "W": 2,
+            "X": 2,
+            "Y": 2,
+            "Z": 2
+          },
+          "length_buckets": {
+            "0": 13,
+            "1": 21,
+            "2": 11,
+            "3": 16
+          },
+          "template_indices": {
+            "0": 20,
+            "1": 24,
+            "2": 17
+          },
+          "history_exchanges": {
+            "0": 23,
+            "1": 16,
+            "2": 22
+          }
+        }
+      },
+      "en": {
+        "fit": {
+          "rows": 192,
+          "unique_values": 188,
+          "class_counts": {
+            "A": 6,
+            "B": 6,
+            "C": 6,
+            "D": 9,
+            "E": 9,
+            "F": 9,
+            "G": 9,
+            "H": 8,
+            "I": 9,
+            "J": 6,
+            "K": 5,
+            "L": 6,
+            "M": 6,
+            "N": 6,
+            "O": 6,
+            "P": 6,
+            "Q": 9,
+            "R": 9,
+            "S": 10,
+            "T": 9,
+            "U": 9,
+            "V": 10,
+            "W": 6,
+            "X": 6,
+            "Y": 6,
+            "Z": 6
+          },
+          "length_buckets": {
+            "0": 48,
+            "1": 51,
+            "2": 50,
+            "3": 43
+          },
+          "template_indices": {
+            "0": 67,
+            "1": 69,
+            "2": 56
+          },
+          "history_exchanges": {
+            "0": 82,
+            "1": 56,
+            "2": 54
+          }
+        },
+        "test": {
+          "rows": 64,
+          "unique_values": 62,
+          "class_counts": {
+            "A": 2,
+            "B": 2,
+            "C": 2,
+            "D": 3,
+            "E": 3,
+            "F": 3,
+            "G": 3,
+            "H": 4,
+            "I": 3,
+            "J": 2,
+            "K": 3,
+            "L": 2,
+            "M": 2,
+            "N": 2,
+            "O": 2,
+            "P": 2,
+            "Q": 3,
+            "R": 3,
+            "S": 2,
+            "T": 3,
+            "U": 3,
+            "V": 2,
+            "W": 2,
+            "X": 2,
+            "Y": 2,
+            "Z": 2
+          },
+          "length_buckets": {
+            "0": 16,
+            "1": 13,
+            "2": 14,
+            "3": 21
+          },
+          "template_indices": {
+            "0": 21,
+            "1": 19,
+            "2": 24
+          },
+          "history_exchanges": {
+            "0": 30,
+            "1": 16,
+            "2": 18
+          }
+        }
+      }
+    },
+    "value_overlap_fit_test": [],
+    "feature_definition": "source token whose UTF8 byte span contains the first literal A-Z character; question-tail is final assistant role token; embedding is input to block0 including position",
+    "readout_method": "train-centered unit-normalized hidden vectors; 26-class one-hot ridge readout with fixed lambda .01; no tuning on test; per-language fitting; independent readout per layer/position",
+    "readouts": [
+      {
+        "language": "it",
+        "layer": "embedding",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "embedding",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 4,
+        "accuracy": 0.06557377049180328,
+        "macro_accuracy": 0.07051282051282051,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block0",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block0",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 1,
+        "accuracy": 0.01639344262295082,
+        "macro_accuracy": 0.01282051282051282,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block4",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block4",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 4,
+        "accuracy": 0.06557377049180328,
+        "macro_accuracy": 0.0641025641025641,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block8",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block8",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 21,
+        "accuracy": 0.3442622950819672,
+        "macro_accuracy": 0.34615384615384615,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block10",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block10",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 23,
+        "accuracy": 0.3770491803278688,
+        "macro_accuracy": 0.36217948717948717,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block11",
+        "position": "source_first_character_token",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 61,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "it",
+        "layer": "block11",
+        "position": "question_tail",
+        "fit_rows": 195,
+        "test_rows": 61,
+        "classes": 26,
+        "correct": 30,
+        "accuracy": 0.4918032786885246,
+        "macro_accuracy": 0.4935897435897436,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "B",
+        "fit_majority_predictor_test_accuracy": 0.03278688524590164,
+        "test_largest_class_fraction": 0.06557377049180328,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "embedding",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "embedding",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 6,
+        "accuracy": 0.09375,
+        "macro_accuracy": 0.09615384615384616,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block0",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block0",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 6,
+        "accuracy": 0.09375,
+        "macro_accuracy": 0.08974358974358973,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block4",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block4",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 7,
+        "accuracy": 0.109375,
+        "macro_accuracy": 0.10897435897435896,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block8",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block8",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 23,
+        "accuracy": 0.359375,
+        "macro_accuracy": 0.33653846153846156,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block10",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block10",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 32,
+        "accuracy": 0.5,
+        "macro_accuracy": 0.4935897435897436,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block11",
+        "position": "source_first_character_token",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 64,
+        "accuracy": 1.0,
+        "macro_accuracy": 1.0,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      },
+      {
+        "language": "en",
+        "layer": "block11",
+        "position": "question_tail",
+        "fit_rows": 192,
+        "test_rows": 64,
+        "classes": 26,
+        "correct": 42,
+        "accuracy": 0.65625,
+        "macro_accuracy": 0.6666666666666666,
+        "uniform_chance_accuracy": 0.038461538461538464,
+        "fit_majority_label": "S",
+        "fit_majority_predictor_test_accuracy": 0.03125,
+        "test_largest_class_fraction": 0.0625,
+        "ridge": 0.01
+      }
+    ],
+    "limitations": [
+      "These TRAIN-generated literal values are held out only from auxiliary readout fitting, not a claim that their constituent characters are unseen by the model.",
+      "High source-position first-character recovery does not establish recovery of the full value, sequence copying, language-model answer generation, causal access at the output, or benchmark improvement.",
+      "Fit/test share authored TRAIN template families; disjoint values test literal generalization rather than unseen-template generalization.",
+      "Question-tail classification may exploit positional or template/label correlations; no causal intervention or label-shuffling control is claimed.",
+      "Only one fixed ridge regularization and 512 generated context-name rows are measured; other tasks and complete target strings are outside this diagnostic."
+    ],
+    "source_checkpoint_unchanged": true,
+    "model_training": false,
+    "all_parameter_gradients_absent": true
+  },
+  "context_only512": {
+    "source": {
+      "source_sha256": "f4e6b79cea7d16ee92fc03acabaedb375c40a650a83a6e977cd25dc0a45aabb0",
+      "archive": "CONTEXT_DIVERSITY_context-only-512.json.gz"
+    },
+    "profile": {
+      "seed": 20261104,
+      "steps": 512,
+      "learning_rate": 3e-05,
+      "retention_weight": 8.0,
+      "retention_examples_per_language": 2,
+      "profile_predeclared": "LR3e-5 gold/KL8, native.25,2mem/lang,seed20261104,512updates; only context acquisition, no adaptive endpoint selection",
+      "retention_anchor_trajectory_sha256": "1637cbe6e531dcc5e6b9386bd6c3f4800e5b24f8c259d81f456b5ce0b0c026bf"
+    },
+    "acquisition_pool": {
+      "version": "context-acquisition-v1",
+      "rows": 2048,
+      "counterfactual_pairs": 1024,
+      "all_groups_have_two_rows": true,
+      "unique_values": 1866,
+      "initials": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "languages": {
+        "en": 1024,
+        "it": 1024
+      },
+      "tasks": {
+        "context-correction": 512,
+        "context-location": 512,
+        "context-name": 512,
+        "context-topic": 512
+      },
+      "length_buckets": {
+        "0": 512,
+        "1": 512,
+        "2": 512,
+        "3": 512
+      },
+      "sha256": "707fd832bff4133bed802f51528b2567e60803219c65f13d5f2dc64f03edfa45",
+      "scope": "TRAIN-only deterministic acquisition inventory; no measured model improvement"
+    },
+    "exposure": {
+      "diverse-context-only": {
+        "unique_values": 737,
+        "initials": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "examples": 1024,
+        "paired_updates": 512,
+        "pairs_per_language_family": {
+          "it:context-name": 64,
+          "it:context-location": 64,
+          "it:context-topic": 64,
+          "it:context-correction": 64,
+          "en:context-name": 64,
+          "en:context-location": 64,
+          "en:context-topic": 64,
+          "en:context-correction": 64
+        },
+        "target_tokens_including_eos": 7489,
+        "target_utf8_bytes": 7702,
+        "minimum_value_bytes": 1,
+        "maximum_value_bytes": 21,
+        "training_rows_sha256": "0ecbea26cba59d17ff39c4c82e25f5bc4065d163dc693ff1b6753eecdf30e577"
+      }
+    },
+    "baseline": {
+      "human_nll": {
+        "en": 3.3305142181939766
+      },
+      "human_development_rows": 16,
+      "nll": {
+        "it": 1.2069149777597543,
+        "en": 1.037827099171288
+      },
+      "foundation_correct": 4,
+      "foundation_probes": 16,
+      "context_rates": {
+        "it:name": 0.0,
+        "it:location": 0.0,
+        "it:topic": 0.0,
+        "it:correction": 0.0,
+        "en:name": 0.0,
+        "en:location": 0.0,
+        "en:topic": 0.0,
+        "en:correction": 0.0
+      },
+      "context_pair_rate": 0.0,
+      "legacy_correct": 15,
+      "dialogue_correct": 4,
+      "exact_correct": 23,
+      "probes": 92,
+      "repetition": 0.0
+    },
+    "trials": [
+      {
+        "mode": "diverse-context-only",
+        "strategy": {
+          "mode": "cached_native_final_attention",
+          "frozen_prefix_blocks": 11,
+          "trainable_parameters": 74304,
+          "total_parameters": 50164416,
+          "trainable_names": [
+            "blocks.11.attn_norm.weight",
+            "blocks.11.attn_norm.bias",
+            "blocks.11.ff_norm.weight",
+            "blocks.11.ff_norm.bias",
+            "blocks.11.attn.qkv.weight",
+            "blocks.11.attn.out.weight",
+            "final_norm.weight",
+            "final_norm.bias",
+            "lm_head.weight"
+          ],
+          "feature_cache": {
+            "hits": 2257,
+            "misses": 1026,
+            "bytes": 41399512,
+            "entries": 1026,
+            "invalidations": 0,
+            "max_bytes": 268435456,
+            "max_entries": 4096
+          },
+          "scope": "training strategy only; independent quality gates still required"
+        },
+        "training_seconds": 346.5879843090004,
+        "supervised_tokens": 73101,
+        "reference_tokens": 65612,
+        "maximum_acquisition_sequence_tokens": 111,
+        "development_gate_accepted": false,
+        "lost_answers": [
+          0,
+          4,
+          49,
+          60,
+          64
+        ],
+        "gained_answers": [],
+        "native_export_logits_exact": true,
+        "independent_frozen_teachers_unchanged": true,
+        "metrics": {
+          "human_nll": {
+            "en": 3.29077386358459
+          },
+          "human_development_rows": 16,
+          "nll": {
+            "it": 0.9960240309666705,
+            "en": 0.8690816517255652
+          },
+          "foundation_correct": 4,
+          "foundation_probes": 16,
+          "context_rates": {
+            "it:name": 0.0,
+            "it:location": 0.0,
+            "it:topic": 0.0,
+            "it:correction": 0.0,
+            "en:name": 0.0,
+            "en:location": 0.0,
+            "en:topic": 0.0,
+            "en:correction": 0.0
+          },
+          "context_pair_rate": 0.0,
+          "legacy_correct": 12,
+          "dialogue_correct": 2,
+          "exact_correct": 18,
+          "probes": 92,
+          "repetition": 0.0
+        },
+        "recomputed_generation_delta": {
+          "lost_answers": [
+            0,
+            4,
+            49,
+            60,
+            64
+          ],
+          "gained_answers": [],
+          "context_correct": 0,
+          "context_probes": 32
+        }
+      }
+    ],
+    "comparison_scope": "1024 paired context examples vs 256 in prior mixed512, seed changed; not a controlled equal-context-compute comparison",
+    "predeclared_optional_continuation": {
+      "maximum_updates": 2048,
+      "endpoints": [
+        512,
+        2048
+      ],
+      "proceed_beyond_512": false,
+      "instruction": "await root decision; same Adam state and fixed materialized trajectory only",
+      "full_retention_anchor_sha256": "84fdaebb81fccdcdcdcaf4bc19e7c5bf708734f80bcc3292b04b15195e48e563"
+    },
+    "continuation_decision": "Stopped at 512 after rejected endpoint; no continuation to 2048 activated. Exact-state model/Adam snapshot intentionally excluded from this documentation package.",
+    "source_checkpoint_unchanged": true,
+    "heldout_training_overlap": false,
+    "sealed_final_forward_passes": 0,
+    "live_promoted": false
+  },
+  "final_decision": {
+    "capability_gain_demonstrated": false,
+    "model_adopted": false,
+    "new_live_cycle_activated": false,
+    "opt_in_curriculum_activated": false,
+    "approved_revision_unchanged": true,
+    "next_research_question": "Generalization of full literal copying/decoding and preservation of existing answers remain unresolved; auxiliary readouts do not answer those questions."
+  }
+}

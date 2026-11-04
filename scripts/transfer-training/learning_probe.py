@@ -42,6 +42,8 @@ def main():
     if args.spec:
         selected_recipe = json.loads(args.spec.read_text())
         config = selected_recipe['continual_learning']
+        if 'context_acquisition' in config:
+            raise ValueError('legacy learning probe does not support matched context acquisition; use the main runner for this recipe')
         if not 0 <= args.profile_index < len(config['profiles']):
             raise ValueError('invalid selected profile')
         profile = config['profiles'][args.profile_index]
