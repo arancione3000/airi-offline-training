@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "provenance": "Root-agent handoff of completed exec_command observations; session identifiers below refer to those actual tool calls. No separate stdout file was written. This record is not a verbatim saved tool transcript.",
+  "workdir": "/workspace/airi-offline-training",
+  "checks": [
+    {
+      "session_id": 65904,
+      "command": "python -m unittest discover -s tests/transfer-training -q && python -m py_compile scripts/transfer-training/learning_probe.py && git diff --check",
+      "exit_code": 0,
+      "reported_stdout": "Ran 71 tests in 1.110s; OK (skipped=1)",
+      "tests": 71,
+      "skipped": 1
+    },
+    {
+      "session_id": 27023,
+      "command": "PYTHONPATH=/workspace/airi-experiment/probe-source/computer /workspace/airi-experiment/venv/bin/python -m unittest discover -s tests/transfer-training -p test_context_acquisition.py -q && python -m py_compile scripts/transfer-training/context_acquisition.py scripts/transfer-training/continual_learning.py scripts/transfer-training/learning_probe.py scripts/transfer-training/run.py tests/transfer-training/test_context_acquisition.py && git diff --check",
+      "exit_code": 0,
+      "reported_stdout": "Ran 10 tests in 1.992s; OK",
+      "tests": 10,
+      "skipped": 0
+    }
+  ],
+  "later_checkpoint_verification": {
+    "provenance": "Root-agent completed byte download and SHA256/archive-path verification on 2026-11-04; reported by root in collaboration handoff, not re-downloaded by documentation agent.",
+    "terminal_release": "airi-offline-449276-41523612006-1-3",
+    "MODEL_bytes_downloaded_and_sha256_verified": true,
+    "OPTIMIZER_bytes_downloaded_and_sha256_verified": true,
+    "model_loaded_weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+    "identical_to_AIRI_CURRENT_revision2": true,
+    "qualification_or_promotion_claimed": false,
+    "clarification": "The November 3 report correctly described descriptor-only checks at that time. These later byte-level checks extend that verification; they do not change its historical scope."
+  },
+  "later_remote_read_verification": {
+    "provenance": "Root-agent fresh read-only GitHub verification reported on 2026-11-04, distinct from this clone; no remote writes by the documentation agent.",
+    "main_sha": "e8d526a1d99983681f60a9c6895f54cb9fd2c3fa",
+    "frozen_branch": "native-context-learning-20261102",
+    "frozen_branch_sha": "d3f5039c35953625b059263d0be08f70adc74a01",
+    "AIRI_CURRENT_revision": 2,
+    "AIRI_CURRENT_weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+    "production_qualified": false
+  }
+}

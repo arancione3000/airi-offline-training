@@ -197,6 +197,28 @@ def main():
     human_rows=[r for r in human_rows if not any(norm(m['content']) in all_heldout|corpus_heldout_text for m in r['messages'])]
     for r in human_rows:r['language']=r['provenance']['language']
     human_rows=corpus['train'] if reviewed_only else human_rows+corpus['train']
+    context_config=LEARNING.get('context_acquisition') if LEARNING else None
+    context_values=[]
+    if context_config is not None:
+        from context_acquisition import (build_context_acquisition, context_value_pairs,
+                                         context_skeletons, acquisition_audit,
+                                         matched_context_pair, paired_batch)
+        from success_bank import prompt_key
+        context_excluded_text=blocked|all_heldout|corpus_heldout_text
+        context_reserved={r['expected'] for r in heldout+sealed_transfer}
+        context_reserved.update(r['expected'] for split in ('development','final') for r in corpus[split])
+        old_validation=[json.loads(line) for file in ['development.jsonl','test.jsonl']
+                        for line in (data/'data'/file).read_text().splitlines()]
+        context_protected_histories={prompt_key(r) for r in heldout+sealed_transfer
+                                     +corpus['development']+corpus['final']+old_validation}
+        context_values=build_context_acquisition(context_excluded_text,context_reserved,
+                            seed=context_config['seed'],max_pairs=context_config['max_pairs'])
+        context_value_index=context_value_pairs(context_values)
+        context_skeleton_index=context_skeletons(context_train)
+        expected_context_groups={(lang,'context-'+task) for lang in ('it','en')
+                                 for task in ('name','location','topic','correction')}
+        if set(context_value_index)!=expected_context_groups or set(context_skeleton_index)!=expected_context_groups:
+            raise ValueError('incomplete matched TRAIN context acquisition coverage')
     def encode(row):
         ids,labels=encode_sft_example(SFTExample.from_dict(row),reference.tokenizer,1024,require_complete=True)
         scored=(labels!=-100).nonzero()
@@ -299,7 +321,12 @@ def main():
     if bank_file.exists() and source_fingerprint!=SPEC['fingerprint']:
         bank=migrate_bank(bank,eligible,source_fingerprint,SPEC['fingerprint'],runtime.config.vocab_size)
     validate_bank(bank,eligible,SPEC['fingerprint'],runtime.config.vocab_size)
-    curriculum_sha=digest(authored+heldout+sealed_transfer+human_rows+external_development+external_final)
+    curriculum_rows=authored+heldout+sealed_transfer+human_rows+external_development+external_final
+    if context_config is None:
+        curriculum_sha=digest(curriculum_rows)
+    else:
+        from context_acquisition import acquisition_curriculum_digest
+        curriculum_sha=acquisition_curriculum_digest(curriculum_rows,context_config,context_values)
     if args.release==transport.SEED_TAG:
         # Preserve native weights and RNG. A cached-training migration explicitly
         # starts fresh Adam for its exact scope; later resumes restore that Adam.
@@ -328,6 +355,10 @@ def main():
             counters['learning_search']['optimizer_policy']='preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation'
     if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
     counters['human_acquisition_scope']='reviewed corpus only' if reviewed_only else 'legacy plus reviewed corpus'
+    if context_config is not None:
+        counters['context_acquisition']={**acquisition_audit(context_values),
+                       'configuration':dict(context_config),
+                       'template_policy':'Only values are transplanted into original TRAIN histories; old retention remains separate'}
     recipe=SPEC['recipes'][counters['phase']]
     def apply_learning_rate():
         if LEARNING:
@@ -341,7 +372,12 @@ def main():
         counters['effective_learning_rate']=recipe['learning_rate']*factor
     apply_learning_rate()
     out=root/'conversation-results';out.mkdir(exist_ok=True)
-    dataset=out/'AUTHORED_CURRICULUM.json';atomic_json(dataset,{'train':authored,'development':heldout,'sealed_transfer':sealed_transfer,'sha256':curriculum_sha})
+    dataset=out/'AUTHORED_CURRICULUM.json'
+    dataset_payload={'train':authored,'development':heldout,'sealed_transfer':sealed_transfer,'sha256':curriculum_sha}
+    if context_config is not None:
+        dataset_payload.update(context_acquisition=dict(context_config),
+                               context_acquisition_values=context_values)
+    atomic_json(dataset,dataset_payload)
     extras=[HERE/name for name in SPEC['script_sha256']]+[SPEC_PATH,dataset]
     extras+=list((data/'data').glob('*.jsonl'))+[data/'CONVERSATION_TEST.json']
     extras+=list(human_directory.glob('*'))
@@ -570,9 +606,22 @@ def main():
             family=rng.choice(sorted(pools))
             batch=encode(rng.choice(pools[family]));group='foundation-'+lang
         elif sample_group=='verified-context':
-            candidates=[r for r in extra_by[lang] if r['family'].startswith('context-') and r['stage']<=counters['curriculum_stage']]
-            family=rng.choice(sorted({r['family'] for r in candidates}))
-            batch=encode(rng.choice([r for r in candidates if r['family']==family]));group='verified-context-'+lang
+            if context_config is None:
+                candidates=[r for r in extra_by[lang] if r['family'].startswith('context-') and r['stage']<=counters['curriculum_stage']]
+                family=rng.choice(sorted({r['family'] for r in candidates}))
+                batch=encode(rng.choice([r for r in candidates if r['family']==family]))
+            else:
+                families=sorted(family for (language,family),groups in context_skeleton_index.items()
+                                if language==lang and any(rows[0]['stage']<=counters['curriculum_stage'] for rows in groups))
+                family=rng.choice(families)
+                skeletons=[rows for rows in context_skeleton_index[(lang,family)]
+                           if rows[0]['stage']<=counters['curriculum_stage']]
+                source=rng.choice(skeletons)[0]
+                values=rng.choice(context_value_index[(lang,family)])
+                pair=matched_context_pair(source,values,blocked=context_excluded_text,
+                         reserved_values=context_reserved,protected_histories=context_protected_histories)
+                batch=paired_batch([encode(row) for row in pair])
+            group='verified-context-'+lang
         else:
             group=['language-it','language-en','domains'][(update//16)%3]
             batch=rng.choice(replay[group])

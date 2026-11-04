@@ -49,6 +49,13 @@ def validate_configuration(spec):
     value=spec['continual_learning']
     mode=value.get('training_mode','full')
     if mode not in {'full','cached_head','cached_prefix'}:raise ValueError('unsupported native training mode')
+    if 'context_acquisition' in value:
+        from context_acquisition import validate_acquisition_configuration
+        if mode != 'cached_prefix':
+            raise ValueError('matched TRAIN acquisition requires native prefix tuning')
+        validate_acquisition_configuration(value['context_acquisition'])
+        if 'context_acquisition.py' not in spec.get('script_sha256', {}):
+            raise ValueError('matched TRAIN acquisition implementation must be pinned and archived')
     if value.get('human_training_scope','legacy_and_reviewed') not in {'legacy_and_reviewed','reviewed_only'}:
         raise ValueError('invalid human training scope')
     if mode in {'cached_head','cached_prefix'}:
