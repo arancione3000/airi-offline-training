@@ -42,7 +42,8 @@ def _equal(left, right):
 
 def real_retention_smoke(runtime, checkpoint, reference, eligible, human_rows,
                          encode, anchors, evaluate, state_digest, config,
-                         learning, fingerprint):
+                         learning, fingerprint, *, initial_memory=None,
+                         training_registry=None, source_fingerprint=None):
     """Exercise real ledger replay, prompt KL, guarded retries and exact resume.
 
     The caller restricts this path to its explicitly pinned migration seed.
@@ -73,8 +74,12 @@ def real_retention_smoke(runtime, checkpoint, reference, eligible, human_rows,
     old_rows = verified_memories(champion, retention_rows(list(eligible.values())), encode)
     if len(old_rows) > config['capacity']:
         raise ValueError('preflight capacity cannot hold every legacy certified TRAIN answer')
-    memory = refresh(protected_digest, catalog(old_rows, []), certifier,
-                     empty_memory(fingerprint, capacity=config['capacity']), probe_limit=len(old_rows))
+    if initial_memory is None:
+        memory = refresh(protected_digest, catalog(old_rows, []), certifier,
+                         empty_memory(fingerprint, capacity=config['capacity']), probe_limit=len(old_rows))
+    else:
+        from retention_memory import migrate_memory
+        memory = migrate_memory(initial_memory,eligible,source_fingerprint,fingerprint,protected_digest)
     memory = refresh(protected_digest, eligible, certifier, memory,
                      probe_limit=config['refresh_probe_limit'])
     if {entry['row']['language'] for entry in memory['entries'].values()} != {'en', 'it'}:
@@ -85,7 +90,8 @@ def real_retention_smoke(runtime, checkpoint, reference, eligible, human_rows,
                           retention_languages=summary(memory)['languages'])), flush=True)
     # Materialized context examples are not created by this bounded preflight.
     # Persist the same authenticated empty registry format as the real session.
-    registry = dict(schema=1, fingerprint=fingerprint, source_fingerprints=[fingerprint], entries={})
+    registry = (deepcopy(training_registry) if training_registry is not None else
+                dict(schema=1, fingerprint=fingerprint, source_fingerprints=[fingerprint], entries={}))
     tasks = sorted((row for row in eligible.values() if row['family'] == 'extra-dialogue'),
                    key=lambda row: (len(row['expected']), row_key(row)))
     if not tasks:

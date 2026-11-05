@@ -1,0 +1,29 @@
+name: AIRI continuous training supervisor
+on:
+  workflow_run:
+    workflows: [AIRI continuous native training]
+    types: [completed]
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: airi-continuous-supervisor
+  cancel-in-progress: false
+jobs:
+  supervise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify continuation and exclusive-dispatch contracts
+        run: python -m unittest discover -s tests/continuous-controller -v
+      - name: Resume the enabled service from committed state
+        run: python scripts/continuous-training/controller.py tick | tee -a "$GITHUB_STEP_SUMMARY"

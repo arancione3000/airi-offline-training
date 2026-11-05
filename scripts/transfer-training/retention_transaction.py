@@ -91,7 +91,7 @@ def _finite_tensors(value):
 
 
 def transactional_update(model, optimizer, propose_fn, guard_fn, *, state=None,
-                         scales=(1, .5, .25, .125), sampler_rngs=()):
+                         scales=(1, .5, .25, .125), sampler_rngs=(), recovery=None):
     """Commit the first guarded real Adam proposal, or restore the old state.
 
     Retry factors are fixed before the first attempt. Each is multiplied by the
@@ -107,13 +107,29 @@ def transactional_update(model, optimizer, propose_fn, guard_fn, *, state=None,
     Nonfinite proposals or guard diagnostics fail closed as ordinary rejection.
     """
     adaptive = _state_values(state)
+    recovered = False
+    if recovery is not None:
+        if (not isinstance(recovery,dict) or set(recovery)!={'accepted_streak','cooldown_updates','growth_factor'}
+                or type(recovery['accepted_streak']) is not int or not 16<=recovery['accepted_streak']<=1024
+                or type(recovery['cooldown_updates']) is not int or not 1<=recovery['cooldown_updates']<=1024
+                or isinstance(recovery['growth_factor'],bool) or recovery['growth_factor']!=2.):
+            raise ValueError('invalid guarded learning-rate recovery configuration')
+        progress=deepcopy(adaptive.get('recovery',dict(streak=0,cooldown=0,growth_attempts=0,growth_commits=0)))
+        if (set(progress)!={'streak','cooldown','growth_attempts','growth_commits'}
+                or any(type(v) is not int or v<0 for v in progress.values())
+                or progress['growth_commits']>progress['growth_attempts']):
+            raise ValueError('invalid persisted learning-rate recovery state')
+        recovered=(progress['cooldown']==0 and progress['streak']>=recovery['accepted_streak']
+                   and adaptive['lr_scale']<1.)
+        adaptive['recovery']=progress
+    starting_scale=min(1.,adaptive['lr_scale']*2.) if recovered else adaptive['lr_scale']
     factors = tuple(scales)
     if (not factors or len(factors) > 16
             or any(isinstance(x, bool) or not isinstance(x, (int, float))
                    or not math.isfinite(x) or not 0 < x <= 1 for x in factors)
             or any(a <= b for a, b in zip(factors, factors[1:]))):
         raise ValueError('scales must contain 1..16 finite strictly decreasing factors in (0, 1]')
-    attempts_scales = tuple(dict.fromkeys(max(MIN_LR_SCALE, adaptive['lr_scale'] * factor)
+    attempts_scales = tuple(dict.fromkeys(max(MIN_LR_SCALE, starting_scale * factor)
                                          for factor in factors))
     parameters = tuple(model.named_parameters())
     trainable = tuple((name, parameter) for name, parameter in parameters if parameter.requires_grad)
@@ -175,6 +191,18 @@ def transactional_update(model, optimizer, propose_fn, guard_fn, *, state=None,
         adaptive['rejected_updates'] += attempts - int(committed)
         if scale is not None:
             adaptive['lr_scale'] = float(scale)
+        if recovery is not None:
+            progress=adaptive['recovery']
+            progress['growth_attempts']+=int(recovered and attempts>0)
+            if committed and attempts==1:
+                if recovered:
+                    progress['growth_commits']+=1;progress['streak']=0
+                    progress['cooldown']=recovery['cooldown_updates']
+                elif progress['cooldown']:
+                    progress['cooldown']-=1;progress['streak']=0
+                else:progress['streak']=min(recovery['accepted_streak'],progress['streak']+1)
+            else:
+                progress['streak']=0;progress['cooldown']=recovery['cooldown_updates']
         if state is not None:
             state.update(adaptive)
 

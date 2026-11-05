@@ -6,6 +6,10 @@ on:
       - 'tests/transfer-training/**'
       - 'scripts/continual-training/**'
       - 'tests/continual-training/**'
+      - 'scripts/continuous-training/**'
+      - 'tests/continuous-training/**'
+      - 'tests/continuous-controller/**'
+      - '.github/workflows/airi-continuous*.yml'
       - 'scripts/context-learning/**'
       - 'tests/context-learning/**'
       - 'scripts/knowledge-retention/**'
@@ -19,6 +23,10 @@ on:
       - 'tests/transfer-training/**'
       - 'scripts/continual-training/**'
       - 'tests/continual-training/**'
+      - 'scripts/continuous-training/**'
+      - 'tests/continuous-training/**'
+      - 'tests/continuous-controller/**'
+      - '.github/workflows/airi-continuous*.yml'
       - 'scripts/context-learning/**'
       - 'tests/context-learning/**'
       - 'scripts/knowledge-retention/**'
@@ -52,7 +60,9 @@ jobs:
           env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/context-learning -v
           env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/knowledge-retention -v
           python -m py_compile scripts/transfer-training/*.py tests/transfer-training/check_retention_*.py
-          python -m py_compile scripts/knowledge-retention/*.py
+          python -m py_compile scripts/knowledge-retention/*.py scripts/continuous-training/*.py
+          python -m unittest discover -s tests/continuous-training -v
+          python -m unittest discover -s tests/continuous-controller -v
       - name: Restore immutable native runtime
         uses: actions/checkout@v4
         with:
@@ -89,3 +99,5 @@ jobs:
         run: python tests/transfer-training/check_retention_cap.py
       - name: Verify continuous acquisition, retained TRAIN answers and exact resume
         run: python tests/transfer-training/check_retention_smoke.py
+      - name: Verify guarded learning rate recovery and exact retry trajectory
+        run: python tests/transfer-training/check_retention_lr_recovery.py

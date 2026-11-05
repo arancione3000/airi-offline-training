@@ -1,0 +1,232 @@
+{
+  "parent_snapshot": "e949157c88a582b7e52ca46001afcf8da8ddd22e",
+  "native_source": "d078e718dfba0d68babd31de90fa55c0beac1951",
+  "start_step": 449276,
+  "max_steps": 453372,
+  "pilot_step": 449276,
+  "migration_source_release": "airi-offline-450364-42047389197-1-1",
+  "migration_source_fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+  "precision": "fp32",
+  "torch_version": "2.14.1+cpu",
+  "recipes": [
+    {
+      "learning_rate": 3e-05,
+      "kl_weight": 1.0
+    },
+    {
+      "learning_rate": 1e-05,
+      "kl_weight": 1.0
+    },
+    {
+      "learning_rate": 3e-06,
+      "kl_weight": 1.0
+    }
+  ],
+  "optimizer_policy": "Explicit migration from verified450364 champion: preserve all model weights, native Adam, RNG, donor bank, permanent TRAIN certificates, materialized TRAIN registry and lifetime counters. Add guarded recovery of learning rate. Future job/epoch boundaries retain cumulative budgets and provenance; no external teacher or model API.",
+  "schedule": "Indefinite authorized native training service. Each epoch has at most4096 logical updates,3600 timed training seconds,12 exploration decision rounds and3 failed trials. No global end date or job-count cap. Select/revert to verified champion before closing an epoch; retain lifetime counts, knowledge and RNG. Rotate fixed profiles across epochs with durable backoff after no progress. Original adoption gates and full certificate checks remain. Sealed/final sets are never used to renew epochs.",
+  "promotion": "offline only; every persistent complete-answer TRAIN certificate and all original independent development/answer-retention/final gates required; no live promotion",
+  "script_sha256": {
+    "chat_current.py": "345a27debfc456ef265db9b55fe57a6c420eceab4ab2542d721fa38f90e9b5af",
+    "composition_data.py": "0bf3c29b64a7bf2c268da24473e7a25991ce1225c730d362cd474675a641336c",
+    "context_curriculum.py": "2551f8ab546fa6148602e664d4a1c36a2ef310a9ea6b9f970e3215caca8d9b46",
+    "continual_learning.py": "ef0704ad7883c682a44cad09c04b59d1f22d2f25e1e318334e8bf8b08ac2bc75",
+    "continual_smoke.py": "d53ae4860c4eed304b16c8ccc78a3870c49a78aede749f5952ea140c50e4a449",
+    "curriculum.py": "1a73827a32e5ffbdd379d71a2f6008de1181d07e43b242804fe1a019cacaa5fe",
+    "diagnostics.py": "1495b6e7d48f3ce82b980397ff084bb1dd3210c4f91a2f6abbf2b5a7dcc49240",
+    "extra_dialogues.py": "be3006fc9eae09a5dfaa8d31b2722faed7257ec89a595f0a0e8cfb7b0c5c4a40",
+    "fast_head.py": "49c8a9790152fdc16ad5f7aa7a001080b24a093409d2949501b5179840e64f49",
+    "fast_head_smoke.py": "989297dd3d5620a90334b4a9bae33afad5553c1f481daedea3c3929363f06d69",
+    "foundation_data.py": "912c1f7565b9e707bab30772afefc4e3ebd8433bb09f8adb5ca6fae7a5bdc273",
+    "human_data.py": "1babf762560c4705cd9ebd55bb46b34c39c840e3abdbc34321aaecb5a0b558b5",
+    "legacy_run.py": "954b8ad04187f345d0f0f06d8a52bf0256d24e60a4d9b9cb7c59ace5983501ff",
+    "model_channel.py": "006364236b071727c38b617f4272846ac772065c7b260e80bd97117b9a92766f",
+    "morph_model.py": "872089f167c4ba00e93a87bab7524595bb27a1ffd320a6f78fe2bb5085331206",
+    "persist.py": "280ecdef71a043a05bddf53f2fae51d6e16ace8b21c4c10b2f8c5602fecc3b86",
+    "policy.py": "4bf0fcb8c19fd03db4bd3385ae3d5fb4d3e3b13ea9d5f1c0250bb041316e6c5f",
+    "recovery_policy.py": "59b35681fc65290c55be20720d2929d63dda876e000ab025f81c248891624c38",
+    "run.py": "5fd531d5d1af4373075ab8de4434adf27b00d28ee8f9d051e65ea4c2387f8130",
+    "session.py": "8c6e667219c58d50e19cf1ccef31157fc6d142b9d694e0edcf003952f1c26a9c",
+    "success_bank.py": "4cd149673877d18c9b4425f95a1147e248df3598a6434b46b7192d26f52a9bcf",
+    "success_smoke.py": "e34686b6d93e893eb82e48510576697d497953b65f6fe81e56b7b82929833a1f",
+    "success_transfer.py": "4f4ce760977ddd643859b3247b4ea323603c12f9c76c0f00516cd6b33a9ead4a",
+    "transport.py": "dca66c0258b4846dff81367624427763ec7ad7ee4581bfb27774d93fbbbf3d2c",
+    "prefix_tuning.py": "6427e2f1441269426fbfae3398d58fbaa774e2b0053e8504fed87cf54234bd0a",
+    "context_acquisition.py": "c9ac20fa61509659ede40c4f5eea9ca88d42ebeec1d7efc772e1dd98daf5e0d6",
+    "retention_memory.py": "ff130cac8cabb14c5ce44a41f451e058facf472a23ffed6da1661324226586e5",
+    "retention_transaction.py": "54d0dae0d30c91aea6d20602c0d88b68cae446686ab83f3baa3fdbf5dfacfe0e",
+    "retention_guard.py": "3acc3cbf9eb179d03f667989320fc0d4300618645e8b065f82ff721a86ea9c1c",
+    "retention_smoke.py": "aa672449b570f33da0b48b7ed892d8c515017bbf9272c3ab6ce17b3bb064db4f",
+    "continuous_training.py": "6845d2add8971f6c21443758ce2a951edf06d3d66ac1cf01074e1106c2faf193"
+  },
+  "maximum_training_seconds": 3600,
+  "extension": {
+    "request": "user-indefinite-native-training-20261105",
+    "source_sha": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+    "source_branch": "native-knowledge-retention-20261105-v2",
+    "seed_release": "airi-offline-450364-42047389197-1-1",
+    "seed_step": 450364,
+    "authorization": "User explicitly requests indefinite training after review, bug fixes and improvements; no recurring assistant calls or paid external teacher."
+  },
+  "recovery_lr_factors": [
+    1,
+    0.5,
+    0.25
+  ],
+  "human_corpus": {
+    "source": "OpenAssistant/oasst2",
+    "revision": "179dd21fc55192153d94adb0e0ce8f69e222bf75",
+    "source_sha256": "a9f240c4c77aa1378364f70d37e753c07ba284e247b019d700e1947a0e5da751",
+    "license": "Apache-2.0",
+    "attribution": "OpenAssistant contributors / LAION-AI; filtered derivative with original text unchanged",
+    "pins": {
+      "train": "2d4d347b0b97991cceeff85f2d3dafaeefad5aabd7b4339422c878dfb20e970e",
+      "development": "0c2e6f4b1c4a5a1a3def5a0e0f604b346075dc0d5db5cbe5592ffc9d1dac33ed",
+      "final": "e2e982c79a69391a57715c713a671784b3c7156e6c918207e729c553d86d3cd6"
+    },
+    "splits": {
+      "train": {
+        "rows": 918,
+        "languages": {
+          "en": 899,
+          "it": 19
+        },
+        "multiturn": 134
+      },
+      "development": {
+        "rows": 44,
+        "languages": {
+          "en": 42,
+          "it": 2
+        },
+        "multiturn": 1
+      },
+      "final": {
+        "rows": 49,
+        "languages": {
+          "en": 47,
+          "it": 2
+        },
+        "multiturn": 6
+      }
+    },
+    "note": "Reviewed OASST2 only for new conversational acquisition; legacy unreviewed OASST1 removed. Runtime training replacement may reuse reviewed old TRAIN examples; original evaluation/final filtering unchanged. Raw tree/prompt/text disjointness and native authored held-out blocking remain. Runtime pool866:18it,848en; square-root language sampling. Human review does not guarantee factual correctness."
+  },
+  "success_transfer": {
+    "schema": 1,
+    "probe_rows": 24,
+    "capacity": 64,
+    "positions_per_row": 8,
+    "lr_multiplier": 1.0,
+    "lr_cap": 0.0001,
+    "archive": "success_bank.json",
+    "source_sha": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+    "source_fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+    "source_budget": 3600,
+    "request": "user-indefinite-native-training-20261105"
+  },
+  "morph_model": {
+    "model_id": "airi-native",
+    "updates_per_skill": 64,
+    "scope": "one skill transaction from champion; preserve all original gates and each previously correct development answer",
+    "channel_branch": "airi-model-current",
+    "channel_path": "models/AIRI_CURRENT.json",
+    "same_optimizer_budget": true,
+    "carry_lineage_and_eligible_lessons_between_authorized_cycles": true
+  },
+  "continual_learning": {
+    "evaluation_updates": 256,
+    "maximum_rejections": 3,
+    "maximum_evaluations": 12,
+    "profiles": [
+      {
+        "learning_rate": 3e-05,
+        "retention_weight": 8.0,
+        "champion_kl_weight": 8.0
+      },
+      {
+        "learning_rate": 1e-05,
+        "retention_weight": 12.0,
+        "champion_kl_weight": 12.0
+      },
+      {
+        "learning_rate": 3e-06,
+        "retention_weight": 16.0,
+        "champion_kl_weight": 16.0
+      }
+    ],
+    "interpolation_alphas": [
+      0.5,
+      0.25
+    ],
+    "sampling_schedule": [
+      "human-dialogue",
+      "verified-context",
+      "composition",
+      "old-authored",
+      "human-dialogue",
+      "verified-context",
+      "curated-dialogue",
+      "native-replay",
+      "human-dialogue",
+      "verified-context",
+      "composition",
+      "old-authored",
+      "human-dialogue",
+      "verified-context",
+      "curated-dialogue",
+      "native-replay"
+    ],
+    "success_transfer_slots": [],
+    "trial_updates": 1024,
+    "training_mode": "cached_prefix",
+    "feature_cache_mebibytes": 256,
+    "human_training_scope": "reviewed_only",
+    "human_language_policy": "sqrt_corpus",
+    "retention_examples_per_language": 2,
+    "protected_head_rank": 0,
+    "context_acquisition": {
+      "version": 1,
+      "seed": 20261103,
+      "max_pairs": 1024,
+      "template_policy": "matched_train",
+      "paired_batch": true
+    },
+    "knowledge_retention": {
+      "version": 1,
+      "capacity": 1024,
+      "refresh_probe_limit": 256,
+      "prompt_kl_weight": 8.0,
+      "max_prompt_kl": 0.01,
+      "max_nll_regression": 0.02,
+      "guard_examples_per_language": 4,
+      "retry_scales": [
+        1.0,
+        0.5,
+        0.25,
+        0.125
+      ],
+      "consolidation_updates": 128,
+      "source_policy": "eligible_train_only"
+    }
+  },
+  "job_limit": null,
+  "frozen_runner_branch": "native-continuous-learning-20261105",
+  "migration_source_step": 450364,
+  "continuous_training": {
+    "version": 1,
+    "mode": "indefinite",
+    "epoch_updates": 4096,
+    "epoch_training_seconds": 3600,
+    "epoch_decisions": 12,
+    "minimum_backoff_seconds": 300,
+    "maximum_backoff_seconds": 3600,
+    "history_capacity": 32,
+    "registry_capacity": 8192,
+    "lr_recovery": {
+      "accepted_streak": 64,
+      "cooldown_updates": 32,
+      "growth_factor": 2.0
+    }
+  },
+  "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01"
+}

@@ -1,0 +1,115 @@
+name: AIRI continuous native training
+run-name: AIRI continuous ${{ inputs.preflight_only == 'true' && 'preflight' || inputs.dispatch_key }}
+on:
+  workflow_dispatch:
+    inputs:
+      checkpoint_release:
+        description: Hash-committed native checkpoint
+        required: true
+        default: airi-offline-450364-42047389197-1-1
+        type: string
+      continuation:
+        description: Monotonic service job index
+        default: '0'
+        type: string
+      preflight_only:
+        description: Ephemeral native verification; never publishes trained weights
+        default: 'false'
+        type: string
+      dispatch_key:
+        description: Durable controller claim; required for training
+        default: ''
+        type: string
+      chunk_seconds:
+        description: Wall-time chunk target; checked at safe boundaries
+        default: '1200'
+        type: string
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ${{ inputs.preflight_only == 'true' && 'airi-continuous-preflight' || 'airi-offline-background-training' }}
+  cancel-in-progress: false
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      AIRI_EXPERIMENT_SPEC: scripts/continuous-training/SPEC.json
+      GH_TOKEN: ${{ github.token }}
+      CHECKPOINT_RELEASE: ${{ inputs.checkpoint_release }}
+      CONTINUATION: ${{ inputs.continuation }}
+      DISPATCH_KEY: ${{ inputs.dispatch_key }}
+      CHUNK_SECONDS: ${{ inputs.chunk_seconds }}
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify immutable recipe and inputs
+        run: |
+          python - <<'PY'
+          import json,os,re,hashlib
+          from pathlib import Path
+          spec=json.load(open(os.environ['AIRI_EXPERIMENT_SPEC']))
+          assert os.environ['GITHUB_REF_TYPE']=='branch' and os.environ['GITHUB_REF_NAME']==spec['frozen_runner_branch']
+          assert re.fullmatch(r'airi-offline-[A-Za-z0-9._-]+',os.environ['CHECKPOINT_RELEASE'])
+          assert re.fullmatch(r'0|[1-9][0-9]*',os.environ['CONTINUATION'])
+          assert 60<=int(os.environ['CHUNK_SECONDS'])<=10800
+          for name,pin in spec['script_sha256'].items():
+              assert hashlib.sha256((Path('scripts/transfer-training')/name).read_bytes()).hexdigest()==pin,name
+          PY
+      - name: Claim exclusive controller dispatch
+        id: claim
+        if: inputs.preflight_only != 'true'
+        run: python scripts/continuous-training/controller.py claim
+      - name: Restore immutable native source
+        if: inputs.preflight_only == 'true' || steps.claim.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: d078e718dfba0d68babd31de90fa55c0beac1951
+          path: source
+          filter: blob:none
+          sparse-checkout: computer
+          persist-credentials: false
+      - name: Restore immutable native reference
+        if: inputs.preflight_only == 'true' || steps.claim.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-bootstrap
+          ref: e949157c88a582b7e52ca46001afcf8da8ddd22e
+          path: background-work/context-trial
+          filter: blob:none
+          sparse-checkout: generalist-state/bootstrap-data/candidate
+          persist-credentials: false
+      - name: Install exact native CPU dependencies
+        if: inputs.preflight_only == 'true' || steps.claim.outputs.authorized == 'true'
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.5.4'
+          git -C source apply --check --include='computer/*' ../scripts/offline-training/recovery.patch
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+      - name: Verify retention, recovery and native continuation
+        if: inputs.preflight_only == 'true'
+        run: |
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/continuous-training -v
+          python tests/transfer-training/check_retention_transaction.py
+          python tests/transfer-training/check_retention_lr_recovery.py
+          python tests/transfer-training/check_retention_guard.py
+          python tests/transfer-training/check_retention_session.py
+          python tests/transfer-training/check_retention_smoke.py
+      - name: Verify real migration checkpoint without publishing weights
+        if: inputs.preflight_only == 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds 60 --learning-smoke-only
+      - name: Train and publish durable state
+        id: train
+        if: inputs.preflight_only != 'true' && steps.claim.outputs.authorized == 'true'
+        run: python scripts/transfer-training/run.py --release "$CHECKPOINT_RELEASE" --root background-work --seconds "$CHUNK_SECONDS"
+      - name: Record handoff
+        if: inputs.preflight_only != 'true' && steps.claim.outputs.authorized == 'true'
+        env:
+          SAVED_RELEASE: ${{ steps.train.outputs.checkpoint_release }}
+        run: |
+          printf 'Durable checkpoint: %s\nThe continuous supervisor resumes this checkpoint. Original gates retained; no live promotion.\n' "$SAVED_RELEASE" >> "$GITHUB_STEP_SUMMARY"

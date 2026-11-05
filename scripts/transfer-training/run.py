@@ -19,6 +19,7 @@ FAST_HEAD = bool(LEARNING and LEARNING.get('training_mode')=='cached_head')
 FAST_PREFIX = bool(LEARNING and LEARNING.get('training_mode')=='cached_prefix')
 CACHED_TRAINING = FAST_HEAD or FAST_PREFIX
 RETENTION = LEARNING.get('knowledge_retention') if LEARNING else None
+CONTINUOUS = SPEC.get('continuous_training')
 
 def empty_training_registry(fingerprint):
     return {'schema':1,'fingerprint':fingerprint,'source_fingerprints':[fingerprint],'entries':{}}
@@ -63,7 +64,7 @@ def validate_training_registry(registry,original_rows,value_rows,forbidden,*,fin
         raise ValueError('materialized TRAIN registry contains a protected history')
     return rows
 
-def register_context_pair(registry,source,pair):
+def register_context_pair(registry,source,pair,*,values=None):
     from success_bank import row_key
     rows=[]
     for original in pair:
@@ -72,7 +73,16 @@ def register_context_pair(registry,source,pair):
                'counterfactual_index':row['counterfactual_index']}
         previous=registry['entries'].get(key)
         if previous is not None and previous!=proof:
-            raise ValueError('materialized TRAIN row has conflicting registration proof')
+            # Literal TRAIN values can occur in several acquisition groups.
+            # Authenticate the fresh witness, then retain the original exact
+            # row/provenance so old certificates never change identity.
+            from context_acquisition import matched_context_pair
+            if values is None or original not in matched_context_pair(source,values):
+                raise ValueError('materialized TRAIN row has conflicting registration proof')
+            semantic=('messages','expected','family','language')
+            if any(previous['row'].get(name)!=row.get(name) for name in semantic):
+                raise ValueError('materialized TRAIN row has conflicting gold/history')
+            rows.append(previous['row']);continue
         registry['entries'][key]=proof;rows.append(row)
     return rows
 
@@ -81,13 +91,18 @@ def consolidation_allowed(counters,config):
     validate_budget(counters)
     quota=config['consolidation_updates']
     spent=counters.get('retention_consolidation_updates',0)
+    if CONTINUOUS:
+        from continuous_training import limits
+        bounds=limits(counters,SPEC)
+        spent-=bounds['consolidation']
+    else:bounds=dict(seconds=SPEC['maximum_training_seconds'],update=SPEC['max_steps']-SPEC['start_step'])
     if type(spent) is not int or not 0<=spent<=quota:
         raise ValueError('invalid persisted retention consolidation quota')
     # Early rollbacks share the first half. The final rejected candidate can
     # still donate lessons after the ordinary search has permanently stopped.
     limit=quota if counters.get('learning_search',{}).get('stopped',False) else quota//2
-    return (counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
-            and counters['completed_steps']<SPEC['max_steps']
+    return (counters['elapsed_training_seconds']<bounds['seconds']
+            and counters['conversation_updates']<bounds['update']
             and spent<limit)
 
 def transfer_retention_statistics(stats,options):
@@ -115,6 +130,9 @@ def validate_budget(counters):
 
 def needs_training(counters):
     validate_budget(counters)
+    if CONTINUOUS:
+        from continuous_training import can_train
+        return can_train(counters,SPEC)
     search=counters.get('learning_search',{})
     return (not search.get('stopped',False)
             and (not RETENTION or counters['completed_steps']<SPEC['max_steps'])
@@ -179,6 +197,9 @@ def main():
     if LEARNING:
         from continual_learning import validate_configuration
         validate_configuration(SPEC)
+    if CONTINUOUS:
+        from continuous_training import validate_configuration as validate_continuous
+        validate_continuous(SPEC)
     root=args.root.resolve();root.mkdir(parents=True,exist_ok=True)
     transport.SPEC=SPEC
     transport.FINGERPRINT=SPEC['fingerprint']
@@ -194,9 +215,10 @@ def main():
         if manifest['fingerprint']!=expected_fingerprint:
             raise ValueError('checkpoint fingerprint mismatch')
         step=manifest['completed_steps']
-        if not SPEC['start_step']<=step<=SPEC['max_steps']:
+        if (type(step) is not int or step<SPEC['start_step']
+                or (not CONTINUOUS and step>SPEC['max_steps'])):
             raise ValueError('checkpoint outside finite conversation experiment')
-        if expected_fingerprint==transport.LEGACY_FINGERPRINT and step!=SPEC['start_step']:
+        if expected_fingerprint==transport.LEGACY_FINGERPRINT and step!=SPEC.get('migration_source_step',SPEC['start_step']):
             raise ValueError('only the exact verified pilot checkpoint can migrate')
         if not manifest['files']:
             raise ValueError('empty checkpoint')
@@ -373,7 +395,7 @@ def main():
         return optimizer
     source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
     runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint,
-        load_optimizer=not (CACHED_TRAINING and args.release==transport.SEED_TAG),
+        load_optimizer=bool(CONTINUOUS) or not (CACHED_TRAINING and args.release==transport.SEED_TAG),
         require_retention=bool(RETENTION and source_fingerprint==SPEC['fingerprint']))
     if LEARNING:cache_tokenizer(runtime.tokenizer)
     rng,anchor_rng=random.Random(),random.Random()
@@ -401,12 +423,14 @@ def main():
     eligible = catalog(authored+registered,forbidden)
     if args.learning_smoke_only or (CACHED_TRAINING and args.success_smoke_only):
         if RETENTION:
-            if args.release!=transport.SEED_TAG or retention_memory is not None:
+            if args.release!=transport.SEED_TAG or (retention_memory is not None and not CONTINUOUS):
                 raise ValueError('retention preflight requires the exact migration seed; resumed ledgers must use the full runner')
             from retention_smoke import real_retention_smoke
             real_retention_smoke(runtime,checkpoint,reference,eligible,human_rows,
                                  encode,anchors,evaluate,legacy_run.state_digest,
-                                 RETENTION,LEARNING,SPEC['fingerprint'])
+                                 RETENTION,LEARNING,SPEC['fingerprint'],
+                                 **(dict(initial_memory=retention_memory,training_registry=training_registry,
+                                         source_fingerprint=source_fingerprint) if CONTINUOUS else {}))
             return
         from continual_smoke import real_learning_smoke
         real_learning_smoke(runtime,opt,checkpoint,reference,eligible,human_rows,
@@ -430,7 +454,7 @@ def main():
     else:
         from context_acquisition import acquisition_curriculum_digest
         curriculum_sha=acquisition_curriculum_digest(curriculum_rows,context_config,context_values)
-    if args.release==transport.SEED_TAG:
+    if args.release==transport.SEED_TAG and not CONTINUOUS:
         # Preserve native weights and RNG. A cached-training migration explicitly
         # starts fresh Adam for its exact scope; later resumes restore that Adam.
         counters={'completed_steps':SPEC['start_step'],'supervised_tokens':0,'reference_tokens':0,
@@ -451,11 +475,16 @@ def main():
     if LEARNING:
         counters.setdefault('learning_search',{'consecutive_rejections':0,'evaluations':0,
                             'accepted_updates':0,'stopped':False,'history':[]})
-        if args.release==transport.SEED_TAG:
+        if args.release==transport.SEED_TAG and not CONTINUOUS:
             # The champion's durable Adam remains in its source checkpoint. A
             # fresh, explicit exploration state avoids inherited stale moments.
             opt=factory(runtime.model)
             counters['learning_search']['optimizer_policy']='preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation'
+    if CONTINUOUS:
+        from continuous_training import initialize,open_epoch
+        current_digest=legacy_run.state_digest(runtime.model)
+        initialize(counters,SPEC,current_digest)
+        open_epoch(counters,SPEC,current_digest,time.time())
     if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
     counters['human_acquisition_scope']='reviewed corpus only' if reviewed_only else 'legacy plus reviewed corpus'
     if context_config is not None:
@@ -466,7 +495,9 @@ def main():
     def apply_learning_rate():
         if LEARNING:
             from continual_learning import profile_index
-            profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+            profile=LEARNING['profiles'][(
+                __import__('continuous_training').profile_index(counters,SPEC) if CONTINUOUS
+                else profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles'])))]
             for parameter_group in opt.param_groups:parameter_group['lr']=profile['learning_rate']
             counters['effective_learning_rate']=profile['learning_rate']
             return
@@ -558,7 +589,9 @@ def main():
         if not LEARNING:return {}
         if RETENTION:
             from continual_learning import profile_index
-            profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+            profile=LEARNING['profiles'][(
+                __import__('continuous_training').profile_index(counters,SPEC) if CONTINUOUS
+                else profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles'])))]
             return dict(memories=[encode(row) for row in sample_rows(retention_memory,eligible,anchor_rng,
                             per_language=LEARNING.get('retention_examples_per_language',1))],
                         retention_weight=profile['retention_weight'],champion_kl_weight=profile['champion_kl_weight'],
@@ -583,7 +616,8 @@ def main():
             stats=propose(scales[0]);proposed.append(stats);return stats
         result=transactional_update(runtime.model,opt,record_proposal,guard,
                     state=counters['retention_transaction'],scales=RETENTION['retry_scales'],
-                    sampler_rngs=(rng,anchor_rng))
+                    sampler_rngs=(rng,anchor_rng),
+                    recovery=CONTINUOUS['lr_recovery'] if CONTINUOUS else None)
         observations=result['guard']['observations'] if result['accepted'] else guard.before_observations
         if len(observations)!=len(rows):raise ValueError('incomplete post-transaction retention evidence')
         evidence={row_key(row):value for row,value in zip(rows,observations)}
@@ -640,7 +674,10 @@ def main():
             state={'fingerprint':SPEC['fingerprint'],'completed_steps':counters['completed_steps'],
                    'elapsed_training_seconds':counters['elapsed_training_seconds'],
                    'maximum_training_seconds':SPEC['maximum_training_seconds'],
-                   'continue':needs_training(counters),'job_index':int(os.environ.get('CONTINUATION','0')),
+                   'continue':True if CONTINUOUS else needs_training(counters),
+                   'job_index':int(os.environ.get('CONTINUATION','0')),
+                   **(dict(continuous_training=counters['continuous_training'],runner_sha=os.environ['GITHUB_SHA'],
+                           needs_training=needs_training(counters)) if CONTINUOUS else {}),
                    'model_id':counters['morph']['model_id'],'revision':counters['morph']['revision'],
                    'search':counters['learning_search'],'production_qualified':False,'live_promoted':False}
             atomic_json(path/'AIRI_RUN_STATE.json',state)
@@ -690,7 +727,8 @@ def main():
                     # weights. Restore drift priorities to the actual candidate.
                     preserves_certificates()
             report['accepted']=accepted
-            decision=record_decision(search,LEARNING,counters['conversation_updates'],accepted,force=force)
+            decision_config=(__import__('continuous_training').decision_configuration(counters,SPEC) if CONTINUOUS else LEARNING)
+            decision=record_decision(search,decision_config,counters['conversation_updates'],accepted,force=force)
             report.update(decision)
             rollback_candidate=decision['rollback']
             counters['exploration_pending']=decision['exploration_pending']
@@ -843,14 +881,19 @@ def main():
                            if rows[0]['stage']<=counters['curriculum_stage']]
                 source=rng.choice(skeletons)[0]
                 values=rng.choice(context_value_index[(lang,family)])
-                pair=matched_context_pair(source,values,blocked=context_excluded_text,
-                         reserved_values=context_reserved,protected_histories=context_protected_histories)
-                if RETENTION:
-                    pair=register_context_pair(training_registry,source,pair)
-                    registered=catalog(pair,forbidden)
-                    if len(registered)!=len(pair):raise ValueError('materialized context pair failed TRAIN audit')
-                    eligible.update(registered)
-                batch=paired_batch([encode(row) for row in pair])
+                if CONTINUOUS and len(training_registry['entries'])+2>CONTINUOUS['registry_capacity']:
+                    prior=[e['row'] for e in training_registry['entries'].values()
+                           if e['row']['language']==lang and e['row']['family']==family]
+                    batch=encode(rng.choice(prior) if prior else source)
+                else:
+                    pair=matched_context_pair(source,values,blocked=context_excluded_text,
+                             reserved_values=context_reserved,protected_histories=context_protected_histories)
+                    if RETENTION:
+                        pair=register_context_pair(training_registry,source,pair,values=values)
+                        registered=catalog(pair,forbidden)
+                        if len(registered)!=len(pair):raise ValueError('materialized context pair failed TRAIN audit')
+                        eligible.update(registered)
+                    batch=paired_batch([encode(row) for row in pair])
             group='verified-context-'+lang
         else:
             group=['language-it','language-en','domains'][(update//16)%3]
@@ -871,7 +914,9 @@ def main():
         if lesson is None:
             if LEARNING:
                 from continual_learning import continual_step,profile_index,retention_memories
-                profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+                profile=LEARNING['profiles'][(
+                __import__('continuous_training').profile_index(counters,SPEC) if CONTINUOUS
+                else profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles'])))]
                 memories=([encode(row) for row in sample_rows(retention_memory,eligible,anchor_rng,
                             per_language=LEARNING.get('retention_examples_per_language',1))] if RETENTION
                           else retention_memories(LEARNING,memory_by,anchor_rng))
@@ -906,7 +951,9 @@ def main():
             select_candidate('periodic-development')
         # Memorization cannot lower LR. Three fixed phases depend on actual compute,
         # preserved across jobs, rather than correctness on oversampled examples.
-        phase=recipe_phase(counters['elapsed_training_seconds'])
+        phase_seconds=(counters['elapsed_training_seconds']-counters['continuous_training']['base']['seconds']
+                       if CONTINUOUS else counters['elapsed_training_seconds'])
+        phase=recipe_phase(phase_seconds)
         if phase!=counters['phase']:
             counters['phase']=phase;recipe=SPEC['recipes'][phase]
             apply_learning_rate()
@@ -922,6 +969,14 @@ def main():
             next_action={'release':publisher.next_release};break
     if legacy_run.state_digest(reference.model)!=reference_digest or any(p.grad is not None for p in reference.model.parameters()):
         raise ValueError('frozen reference changed')
+    if CONTINUOUS and next_action is None:
+        select_candidate('continuous-epoch-boundary',force=True)
+        if not preserves_certificates():raise ValueError('continuous epoch champion lost certified TRAIN answers')
+        from continuous_training import close_epoch
+        close_epoch(counters,SPEC,legacy_run.state_digest(runtime.model),time.time())
+        counters['best_release']=publisher.release_tag(counters['completed_steps'])
+        save(champion=True)
+        next_action={'release':publisher.next_release}
     if next_action is None:
         select_candidate('finite-budget-boundary',force=True)
         if FAST_PREFIX:

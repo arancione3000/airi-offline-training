@@ -70,6 +70,12 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,su
 def restore_session(path,optimizer_factory,*,fingerprint,load_optimizer=True,require_retention=False):
     path=Path(path);manifest=json.loads((path/'checkpoint.json').read_text())
     if manifest['fingerprint']!=fingerprint:raise ValueError('checkpoint provenance mismatch')
+    # ByteTokenizer checkpoints legitimately have no tokenizer.json. Every
+    # tokenizer/shard file that is present must nevertheless be committed.
+    mandatory={'resume.pt','optimizer.pt','model/model.pt','model/config.json'}
+    mandatory.update(str(p.relative_to(path)) for p in (path/'model').rglob('*') if p.is_file())
+    if not mandatory.issubset(manifest.get('files',{})):
+        raise ValueError('checkpoint manifest omits mandatory model, optimizer or resume state')
     for name,digest in manifest['files'].items():
         p=path/name
         if not p.resolve().is_relative_to(path.resolve()):raise ValueError('unsafe checkpoint path')
@@ -81,6 +87,8 @@ def restore_session(path,optimizer_factory,*,fingerprint,load_optimizer=True,req
         raise ValueError('checkpoint has no complete hash-committed retention memory and TRAIN registry')
     payload=torch.load(path/'resume.pt',map_location='cpu',weights_only=True)
     if payload['fingerprint']!=fingerprint:raise ValueError('resume provenance mismatch')
+    if payload.get('counters',{}).get('completed_steps')!=manifest['completed_steps']:
+        raise ValueError('resume completed_steps differs from committed manifest')
     for name in retention_files:
         if (path/name).is_file():payload[name.removesuffix('.json')]=json.loads((path/name).read_text())
     runtime=GeneralistRuntime.from_checkpoint(path/'model')

@@ -42,6 +42,31 @@ class RetentionOrchestrationTests(unittest.TestCase):
         self.assertEqual({entry['source_row_key'] for entry in restored['entries'].values()},{row_key(self.source)})
         self.assertEqual({entry['counterfactual_index'] for entry in restored['entries'].values()},{0,1})
 
+    def test_real_repeated_train_literal_retains_original_proof_and_certificate_row(self):
+        values=build_context_acquisition(seed=20261103,max_pairs=1024)
+        groups=context_value_pairs(values)[('it','context-name')]
+        source=next(r for r in self.sources if r['language']=='it' and r['family']=='context-name')
+        seen={};collision=None
+        for group in groups:
+            pair=matched_context_pair(source,group)
+            for row in pair:
+                key=row_key(row)
+                if key in seen and seen[key][1]!=row:
+                    collision=(seen[key],(group,row,pair));break
+                seen[key]=(group,row,pair)
+            if collision:break
+        self.assertIsNotNone(collision)
+        (first,old,old_pair),(second,new,new_pair)=collision
+        registry=runner.empty_training_registry('recipe')
+        runner.register_context_pair(registry,source,old_pair,values=first)
+        original=copy.deepcopy(registry['entries'][row_key(old)])
+        result=runner.register_context_pair(registry,source,new_pair,values=second)
+        self.assertEqual(registry['entries'][row_key(old)],original)
+        self.assertIn(original['row'],result)
+        runner.validate_training_registry(registry,self.sources,values,[],fingerprint='recipe')
+        forged=copy.deepcopy(new_pair);forged[next(i for i,r in enumerate(forged) if row_key(r)==row_key(old))]['stage']=999
+        with self.assertRaises(ValueError):runner.register_context_pair(registry,source,forged,values=second)
+
     def test_row_metadata_and_source_value_proofs_cannot_be_forged(self):
         registry,_=self.registry()
         for name,value in [('source_row_key','0'*64),('value_group','missing'),('counterfactual_index',9)]:
