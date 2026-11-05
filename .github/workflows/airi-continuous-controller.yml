@@ -1,7 +1,7 @@
 name: AIRI continuous training supervisor
 on:
   workflow_run:
-    workflows: [AIRI continuous native training]
+    branches: [native-continuous-learning-20261105]
     types: [completed]
   schedule:
     - cron: '*/10 * * * *'
@@ -14,6 +14,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   supervise:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.path == '.github/workflows/airi-continuous-background.yml'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
