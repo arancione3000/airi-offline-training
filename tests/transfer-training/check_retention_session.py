@@ -49,6 +49,18 @@ with tempfile.TemporaryDirectory() as temporary:
     assert payload['retention_memory']==memory and payload['training_registry']==registry
     assert payload['counters']==counters
     assert validate_training_registry(payload['training_registry'],sources,values,[],fingerprint='retention-session')==rows
+    for missing in ('resume.pt','optimizer.pt','model/model.pt','model/config.json'):
+        bad=copy.deepcopy(manifest);bad['files'].pop(missing)
+        (path/'checkpoint.json').write_text(json.dumps(bad))
+        try:restore_session(path,factory,fingerprint='retention-session',require_retention=True)
+        except ValueError as error:assert 'mandatory' in str(error)
+        else:raise AssertionError('omitted mandatory state was trusted: '+missing)
+    bad=copy.deepcopy(manifest);bad['completed_steps']=999
+    (path/'checkpoint.json').write_text(json.dumps(bad))
+    try:restore_session(path,factory,fingerprint='retention-session',require_retention=True)
+    except ValueError as error:assert 'completed_steps' in str(error)
+    else:raise AssertionError('manifest/resume step mismatch was trusted')
+    (path/'checkpoint.json').write_text(json.dumps(manifest))
     train_step(runtime.model,reference.model,optimizer,ids,labels,ids,labels)
     train_step(restored.model,reference.model,restored_optimizer,ids,labels,ids,labels)
     assert all(torch.equal(a,b) for a,b in zip(runtime.model.parameters(),restored.model.parameters()))
