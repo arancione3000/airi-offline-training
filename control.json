@@ -1,13 +1,20 @@
 {
-  "schema": 1,
+  "authorization": "User explicitly requested indefinite native training; no assistant automation or external teacher.",
+  "chunk_seconds": 180,
+  "dispatch": {
+    "job_index": 0,
+    "key": "173930e06b6b6b0b021a2a84da3dd9bb7a4a70417a13ea624fc0381478206eca",
+    "request_attempts": 1,
+    "requested_at": 1793893700.3095355,
+    "run_id": null,
+    "source_release": "airi-offline-450364-42047389197-1-1"
+  },
   "enabled": true,
+  "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
   "halted_reason": null,
+  "origin_step": 449276,
   "runner_branch": "native-continuous-learning-20261105",
   "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
-  "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
-  "seed_release": "airi-offline-450364-42047389197-1-1",
-  "origin_step": 449276,
-  "chunk_seconds": 180,
-  "dispatch": null,
-  "authorization": "User explicitly requested indefinite native training; no assistant automation or external teacher."
+  "schema": 1,
+  "seed_release": "airi-offline-450364-42047389197-1-1"
 }
