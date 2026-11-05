@@ -44,7 +44,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
       - name: Verify pure orchestration and TRAIN provenance
         run: |
           env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/transfer-training -v
