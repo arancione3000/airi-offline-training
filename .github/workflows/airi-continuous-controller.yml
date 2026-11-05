@@ -1,6 +1,7 @@
 name: AIRI continuous training supervisor
 on:
   workflow_run:
+    workflows: ['*']
     branches: [native-continuous-learning-20261105]
     types: [completed]
   schedule:
