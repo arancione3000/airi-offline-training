@@ -84,7 +84,7 @@ jobs:
           python tests/transfer-training/check_continual_native.py
           python tests/transfer-training/check_prefix_tuning.py
           python tests/transfer-training/check_prefix_integration.py
-          python tests/transfer-training/check_context_acquisition.py
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/transfer-training -p test_context_acquisition.py -v
           python tests/transfer-training/check_retention_memory.py
           python tests/transfer-training/check_retention_transaction.py
           python tests/transfer-training/check_retention_guard.py
