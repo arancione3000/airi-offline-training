@@ -37,7 +37,10 @@ def train_step(model,reference,optimizer,ids,labels,anchor_ids,anchor_labels,*,p
             'supervised_tokens':int((labels[:,1:]!=-100).sum()),'reference_tokens':count,
             'gradient_norm_before_clipping':float(norm),'objective':objective}
 
-def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,success_bank=None):
+def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,success_bank=None,
+                 retention_memory=None,training_registry=None):
+    if (retention_memory is None)!=(training_registry is None):
+        raise ValueError('retention checkpoint requires both memory and TRAIN registry')
     path=Path(path)
     if path.exists():raise FileExistsError(f'checkpoint already exists: {path.name}')
     tmp=path.with_name(path.name+'.partial');tmp.mkdir(parents=True,exist_ok=False)
@@ -55,30 +58,41 @@ def save_session(runtime,optimizer,rng,anchor_rng,counters,path,*,fingerprint,su
     torch.save({'sampler_rng':rng.getstate(),'anchor_rng':anchor_rng.getstate(),
                 'torch_rng':torch.get_rng_state(),'counters':counters,'fingerprint':fingerprint},tmp/'resume.pt')
     if success_bank is not None:atomic_json(tmp/'success_bank.json',success_bank)
+    if retention_memory is not None:
+        atomic_json(tmp/'retention_memory.json',retention_memory)
+        atomic_json(tmp/'training_registry.json',training_registry)
     manifest={'fingerprint':fingerprint,'completed_steps':counters.get('completed_steps',0),
               'files':{str(p.relative_to(tmp)):sha256_file(p) for p in tmp.rglob('*') if p.is_file()}}
     atomic_json(tmp/'checkpoint.json',manifest)
     tmp.replace(path)
     return manifest
 
-def restore_session(path,optimizer_factory,*,fingerprint,load_optimizer=True):
+def restore_session(path,optimizer_factory,*,fingerprint,load_optimizer=True,require_retention=False):
     path=Path(path);manifest=json.loads((path/'checkpoint.json').read_text())
     if manifest['fingerprint']!=fingerprint:raise ValueError('checkpoint provenance mismatch')
     for name,digest in manifest['files'].items():
         p=path/name
         if not p.resolve().is_relative_to(path.resolve()):raise ValueError('unsafe checkpoint path')
         if sha256_file(p)!=digest:raise ValueError(f'checkpoint digest mismatch: {name}')
+    retention_files=('retention_memory.json','training_registry.json')
+    present=[(path/name).is_file() for name in retention_files]
+    if ((require_retention and not all(present)) or any(present)!=all(present)
+            or any((path/name).exists() and name not in manifest['files'] for name in retention_files)):
+        raise ValueError('checkpoint has no complete hash-committed retention memory and TRAIN registry')
     payload=torch.load(path/'resume.pt',map_location='cpu',weights_only=True)
     if payload['fingerprint']!=fingerprint:raise ValueError('resume provenance mismatch')
+    for name in retention_files:
+        if (path/name).is_file():payload[name.removesuffix('.json')]=json.loads((path/name).read_text())
     runtime=GeneralistRuntime.from_checkpoint(path/'model')
     optimizer=optimizer_factory(runtime.model)
     if load_optimizer:_load_optimizer_checkpoint(optimizer,path/'optimizer.pt')
     torch.set_rng_state(payload['torch_rng'])
     return runtime,optimizer,payload
 
-def restore_champion(path,optimizer_factory,rng,anchor_rng,*,fingerprint):
+def restore_champion(path,optimizer_factory,rng,anchor_rng,*,fingerprint,require_retention=False):
     """Restore model/Adam from the champion while continuing the exploration stream."""
     sampler_state=rng.getstate();anchor_state=anchor_rng.getstate();torch_state=torch.get_rng_state()
-    runtime,optimizer,payload=restore_session(path,optimizer_factory,fingerprint=fingerprint)
+    runtime,optimizer,payload=restore_session(path,optimizer_factory,fingerprint=fingerprint,
+                                              require_retention=require_retention)
     rng.setstate(sampler_state);anchor_rng.setstate(anchor_state);torch.set_rng_state(torch_state)
     return runtime,optimizer,payload

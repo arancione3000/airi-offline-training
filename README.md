@@ -1,5 +1,12 @@
 # Independent offline training
 
+The latest work is documented in [persistent knowledge retention](docs/KNOWLEDGE_RETENTION_20261105.md)
+and [context acquisition diagnostics](docs/CONTEXT_DIVERSITY_20261104.md). The approved offline
+model remains revision2 at23/92 exact held-out answers. The new retention runner preserves
+certified TRAIN knowledge across checkpoints and rejects regressions; its isolated192-unit
+candidate scored22/92 and was rejected. See the reports for evidence and the separate bounded
+automatic pilot. The original October runner instructions below describe the historical cycle.
+
 This manual workflow resumes the native 1024-context experiment from update1280,
 using its original optimizer, RNG, data and reference. The CPU variant uses FP32
 instead of BF16, with a new recipe fingerprint; only the verified original seed

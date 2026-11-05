@@ -56,6 +56,35 @@ def validate_configuration(spec):
         validate_acquisition_configuration(value['context_acquisition'])
         if 'context_acquisition.py' not in spec.get('script_sha256', {}):
             raise ValueError('matched TRAIN acquisition implementation must be pinned and archived')
+    if 'knowledge_retention' in value:
+        retention=value['knowledge_retention']
+        fields={'version','capacity','refresh_probe_limit','prompt_kl_weight','max_prompt_kl',
+                'max_nll_regression','guard_examples_per_language','retry_scales',
+                'consolidation_updates','source_policy'}
+        if (mode!='cached_prefix' or not isinstance(retention,dict) or set(retention)!=fields
+                or type(retention['version']) is not int or retention['version']!=1
+                or retention['source_policy']!='eligible_train_only'):
+            raise ValueError('invalid eligible TRAIN knowledge retention configuration')
+        for name,low,high in [('capacity',1,8192),('refresh_probe_limit',1,1024),
+                              ('guard_examples_per_language',1,8),('consolidation_updates',1,128)]:
+            n=retention[name]
+            if type(n) is not int or not low<=n<=high:
+                raise ValueError('invalid bounded knowledge retention '+name)
+        for name,low,high in [('prompt_kl_weight',.01,32.),('max_prompt_kl',0.,1.),
+                              ('max_nll_regression',0.,1.)]:
+            n=retention[name]
+            if isinstance(n,bool) or not isinstance(n,(int,float)) or not math.isfinite(n) or not low<=n<=high:
+                raise ValueError('invalid knowledge retention '+name)
+        scales=retention['retry_scales']
+        if (not isinstance(scales,list) or not 1<=len(scales)<=8 or scales[0]!=1
+                or any(isinstance(n,bool) or not isinstance(n,(int,float)) or not math.isfinite(n)
+                       or not 1/64<=n<=1 for n in scales)
+                or any(a<=b for a,b in zip(scales,scales[1:]))):
+            raise ValueError('invalid finite retention retry scales')
+        for module in ('retention_memory.py','retention_transaction.py','retention_guard.py'):
+            pin=spec.get('script_sha256',{}).get(module)
+            if not isinstance(pin,str) or len(pin)!=64 or any(c not in '0123456789abcdef' for c in pin):
+                raise ValueError('knowledge retention implementation must be pinned and archived: '+module)
     if value.get('human_training_scope','legacy_and_reviewed') not in {'legacy_and_reviewed','reviewed_only'}:
         raise ValueError('invalid human training scope')
     if mode in {'cached_head','cached_prefix'}:
@@ -270,7 +299,8 @@ def rejection_reasons(before, after):
 
 
 def continual_step(model, champion, reference, optimizer, batch, memories, anchor, *,
-                   retention_weight=2., champion_kl_weight=2., native_weight=.25):
+                   retention_weight=2., champion_kl_weight=2., native_weight=.25,
+                   prompt_kl_weight=0.):
     """Accumulate losses per example, then perform exactly ONE Adam update.
 
     The old step had no supervised replay on conversational retention and its
@@ -285,7 +315,9 @@ def continual_step(model, champion, reference, optimizer, batch, memories, ancho
     frozen_independent(model, reference)
     if not memories:
         raise ValueError('supervised retention replay is required')
-    weights = (retention_weight, champion_kl_weight, native_weight)
+    if isinstance(prompt_kl_weight, bool) or not isinstance(prompt_kl_weight, (int, float)):
+        raise ValueError('invalid full-sequence retention weight')
+    weights = (retention_weight, champion_kl_weight, native_weight, prompt_kl_weight)
     if any(not math.isfinite(w) or w < 0 for w in weights) or retention_weight <= 0:
         raise ValueError('invalid retention weights')
     model.train(); champion.eval(); reference.eval()
@@ -293,6 +325,7 @@ def continual_step(model, champion, reference, optimizer, batch, memories, ancho
     normalization = 1. + retention_weight + native_weight
     total = 0.; task_ce = 0.; memory_ce = 0.; kl_total = 0.
     supervised = 0; reference_tokens = 0
+    prompt_total = 0.; prompt_tokens = 0
 
     def ce_forward(encoded):
         ids, labels = encoded
@@ -314,6 +347,12 @@ def continual_step(model, champion, reference, optimizer, batch, memories, ancho
             with torch.no_grad(): teacher = champion(memory[0])['logits']
             kl, count = reference_kl_loss(logits, teacher, memory[1])
             loss = (retention_weight * ce + champion_kl_weight * kl) / (normalization * len(memories))
+            if prompt_kl_weight:
+                from retention_guard import full_sequence_kl
+                prompt_kl, real_tokens = full_sequence_kl(logits, teacher, memory[0])
+                loss = loss + prompt_kl_weight * prompt_kl / (normalization * len(memories))
+                prompt_total += float(prompt_kl.detach()) / len(memories)
+                prompt_tokens += real_tokens
             if not bool(torch.isfinite(loss)):
                 raise RuntimeError('non-finite retention loss; no optimizer update')
             loss.backward(); total += float(loss.detach())
@@ -334,10 +373,14 @@ def continual_step(model, champion, reference, optimizer, batch, memories, ancho
     except BaseException:
         optimizer.zero_grad(set_to_none=True)
         raise
-    return {'loss': total, 'ce': task_ce, 'retention_ce': memory_ce, 'kl': kl_total,
+    result = {'loss': total, 'ce': task_ce, 'retention_ce': memory_ce, 'kl': kl_total,
             'supervised_tokens': supervised, 'reference_tokens': reference_tokens,
             'gradient_norm_before_clipping': float(norm),
             'method': 'gold conversational replay + current champion KL + native replay'}
+    if prompt_kl_weight:
+        result.update(prompt_kl=prompt_total, prompt_reference_tokens=prompt_tokens,
+                      prompt_kl_weight=prompt_kl_weight)
+    return result
 
 
 def acquisition_language(config,pools,rng,fallback):
