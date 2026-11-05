@@ -211,6 +211,6 @@
     }
   },
   "job_limit": 4,
-  "frozen_runner_branch": "native-knowledge-retention-20261105",
-  "fingerprint": "fab812e25bc732d92f168d81622ab0f8dcb92eee36547d6b52c9274f81fe8daa"
+  "frozen_runner_branch": "native-knowledge-retention-20261105-v2",
+  "fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311"
 }
