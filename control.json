@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "enabled": false,
+  "enabled": true,
   "halted_reason": null,
   "runner_branch": "native-continuous-learning-20261105",
   "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
