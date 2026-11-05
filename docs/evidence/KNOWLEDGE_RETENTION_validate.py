@@ -134,6 +134,98 @@ def main():
     assert sha(blobs['retention-system-trial.py']) == raw['harness_sha256']
     assert sha(blobs['retention-system-trial-fullkl.py']) == raw['read_only_fullprompt_audit_script_sha256']
     print('PASS: %d exact archives, source hashes, derived metrics, complete TRAIN certificates, resume and physical accounting' % len(blobs))
+    remote_path = root / 'KNOWLEDGE_RETENTION_REMOTE_20261105.json'
+    if remote_path.exists():
+        remote = json.loads(remote_path.read_text())
+        reports = []
+        for item in remote['archived_logs']:
+            packed = (root / item['archive']).read_bytes()
+            data = gzip.decompress(packed)
+            assert len(packed) == item['archive_bytes'] and sha(packed) == item['archive_sha256']
+            assert len(data) == item['source_bytes'] and sha(data) == item['source_sha256']
+            if item['archive'].startswith('KNOWLEDGE_RETENTION_REMOTE_job-'):
+                for line in data.decode('utf-8-sig').splitlines():
+                    try:
+                        record = json.loads(line[line.index('{'):])
+                    except (ValueError, json.JSONDecodeError):
+                        continue
+                    if isinstance(record, dict) and record.get('phase') == 'real native persistent retention preflight PASS':
+                        reports.append(record)
+        assert reports and reports[-1] == remote['real_checkpoint_preflight']
+        proof = reports[-1]
+        assert proof['full_bank_lost'] == proof['development_evaluations'] == 0
+        assert proof['training_retention_rows'] == 518
+        assert proof['units'] == proof['physical_attempts'] == proof['committed_updates'] == 32
+        assert all(proof[key] is True for key in ('resume_exact', 'native_export_exact',
+                                                 'champion_unchanged', 'reference_unchanged'))
+        assert proof['live_promoted'] is False and remote['heldout_improvement_evaluated'] is False
+        assert all(run['status'] == 'completed' and run['conclusion'] == 'success'
+                   and run['head_sha'] == remote['frozen_runner_commit'] for run in remote['runs'])
+        print('PASS: hashed remote CI logs and exact full-checkpoint retention preflight report')
+        checkpoint_material = {}
+        for checkpoint_key in ('first_checkpoint_proof', 'first_candidate_checkpoint_proof'):
+            checkpoint = remote.get(checkpoint_key)
+            if not checkpoint:
+                continue
+            material = {}
+            for item in checkpoint['files']:
+                packed = (root / item['archive']).read_bytes()
+                data = gzip.decompress(packed)
+                assert len(packed) == item['archive_bytes'] and sha(packed) == item['archive_sha256']
+                assert len(data) == item['source_bytes'] and sha(data) == item['source_sha256']
+                material[item['kind']] = (item, data, json.loads(data))
+            index = material['index'][2]
+            manifest = material['manifest'][2]
+            state = material['run_state'][2]
+            memory = material['ledger'][2]
+            registry = material['registry'][2]
+            assert all(value['fingerprint'] == remote['pilot_fingerprint']
+                       for value in (index, manifest, state, memory, registry))
+            for kind in ('run_state', 'ledger', 'registry'):
+                item, data, _ = material[kind]
+                assert manifest['files'][item['name']] == sha(data)
+            assert index['run_state']['sha256'] == sha(material['run_state'][1])
+            assert checkpoint['optimizer_archive_descriptor'] in index['archives']
+            assert len(memory['entries']) == checkpoint['verified']['retention_rows'] == 518
+            assert all(entry['certificate']['correct'] and entry['certificate']['includes_eos']
+                       for entry in memory['entries'].values())
+            assert state['revision'] == 2 and state['search']['accepted_updates'] == 0
+            checkpoint_material[checkpoint_key] = material
+        if checkpoint_material:
+            print('PASS: durable ledger/registry and hash-committed continuation states')
+        if 'first_candidate_checkpoint_proof' in checkpoint_material:
+            initial = checkpoint_material['first_checkpoint_proof']
+            candidate = checkpoint_material['first_candidate_checkpoint_proof']
+            assert set(initial['ledger'][2]['entries']) == set(candidate['ledger'][2]['entries'])
+            assert all(entry['observation']['correct'] for entry in candidate['ledger'][2]['entries'].values())
+            assert len(candidate['registry'][2]['entries']) == 252
+            extra = {}
+            for key in ('training_assessments', 'continuation_progress', 'first_training_job_log'):
+                item = remote[key]
+                packed = (root / item['archive']).read_bytes()
+                data = gzip.decompress(packed)
+                assert len(packed) == item['archive_bytes'] and sha(packed) == item['archive_sha256']
+                assert len(data) == item['source_bytes'] and sha(data) == item['source_sha256']
+                if key != 'first_training_job_log': extra[key] = json.loads(data)
+            assessments = extra['training_assessments']
+            assert assessments['source']['sha256'] == candidate['manifest'][2]['files']['resume.pt']
+            before, after = assessments['champion'], assessments['last_candidate_assessment']
+            assert metrics(before)['exact_correct'] == 23 and metrics(after)['exact_correct'] == 22
+            assert sum(old['correct'] and not new['correct'] for old, new in zip(before['samples'], after['samples'])) == 1
+            assert not any(new['correct'] and not old['correct'] for old, new in zip(before['samples'], after['samples']))
+            progress = extra['continuation_progress']
+            continued = remote['automatic_continuation']
+            assert progress['fingerprint'] == remote['pilot_fingerprint']
+            assert progress['checkpoint_release'] == continued['source_release']
+            assert progress['completed_steps'] == continued['last_observed_step'] == 450044
+            assert progress['conversation_updates'] == continued['last_observed_logical_units'] == 768
+            assert progress['elapsed_training_seconds'] == continued['elapsed_training_seconds']
+            transaction = progress['retention_transaction']
+            assert transaction['attempted_updates'] == 774
+            assert transaction['committed_updates'] == 741 and transaction['rejected_updates'] == 33
+            assert progress['learning_search']['history'] == candidate['run_state'][2]['search']['history']
+            assert progress['learning_search']['trial_start_update'] == 0
+            print('PASS: unchanged certificate membership, rejected 22/92 candidate and actual automatic training resume')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,560 @@
+{
+  "runs": [
+    {
+      "id": 42044360271,
+      "html_url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42044360271",
+      "head_sha": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+      "head_branch": "native-knowledge-retention-20261105-v2",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 42044358719,
+      "html_url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42044358719",
+      "head_sha": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+      "head_branch": "native-knowledge-retention-20261105-v2",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 42044347754,
+      "html_url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42044347754",
+      "head_sha": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+      "head_branch": "native-knowledge-retention-20261105-v2",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "real_checkpoint_preflight": {
+    "phase": "real native persistent retention preflight PASS",
+    "units": 32,
+    "physical_attempts": 32,
+    "committed_updates": 32,
+    "rejected_attempts": 0,
+    "lr_scale": 1.0,
+    "initial_training_task_nll": 0.0006883853930048645,
+    "final_training_task_nll": 0.0006841758149676025,
+    "training_retention_rows": 518,
+    "retention_languages": [
+      "en",
+      "it"
+    ],
+    "full_bank_lost": 0,
+    "training_seconds": 32.220108391999986,
+    "attempted_supervised_tokens": 3755,
+    "committed_supervised_tokens": 3755,
+    "attempted_prompt_reference_tokens": 7510,
+    "committed_prompt_reference_tokens": 7510,
+    "resume_proof_units_per_branch": 1,
+    "resume_proof_branches": 2,
+    "resume_proof_physical_attempts_per_branch": 1,
+    "resume_proof_committed_per_branch": 1,
+    "champion_unchanged": true,
+    "reference_unchanged": true,
+    "resume_exact": true,
+    "native_export_exact": true,
+    "development_evaluations": 0,
+    "live_promoted": false,
+    "scope": "ephemeral TRAIN task/retention/integrity check; no held-out improvement or adoption claim"
+  },
+  "source_release": "airi-offline-449276-41523612006-1-3",
+  "source_step": 449276,
+  "source_index_runstate_and_final_result_bytes_unchanged": true,
+  "source_approved_revision": 2,
+  "source_weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+  "legacy_certified_rows": 278,
+  "native_acquisition_tests_passed": 10,
+  "native_guard_tests_passed": 8,
+  "native_retention_checks_passed": 6,
+  "training_and_publication_steps_skipped": true,
+  "heldout_improvement_evaluated": false,
+  "monitor_dispatched_or_edited": false,
+  "training_task_nll_relative_improvement_percent": 0.6115147241702463,
+  "schema_version": 1,
+  "pilot_fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+  "frozen_runner_branch": "native-knowledge-retention-20261105-v2",
+  "frozen_runner_commit": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+  "implementation_module_pins": 30,
+  "activation": {
+    "run_id": 42045545781,
+    "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42045545781",
+    "preflight_only": false,
+    "continuation": 0,
+    "status_at_observation": "completed",
+    "first_checkpoint_observed": true,
+    "automatic_continuation_observed": true,
+    "source_release": "airi-offline-449276-41523612006-1-3",
+    "saved_release": "airi-offline-449788-42045545781-1-2"
+  },
+  "startup_repairs": [
+    {
+      "run_id": 42042531593,
+      "reason": "NumPy2.5.4 requiresPython>=3.12; both new workflows corrected toPython3.12",
+      "checkpoint_optimizer_updates": 0
+    },
+    {
+      "run_id": 42043283238,
+      "reason": "Nonexistent check_context_acquisition.py replaced by actual native test_context_acquisition.py; old frozen branch retained",
+      "checkpoint_optimizer_updates": 0
+    }
+  ],
+  "archived_logs": [
+    {
+      "archive": "KNOWLEDGE_RETENTION_REMOTE_job-127303192571.log.gz",
+      "archive_bytes": 16137,
+      "archive_sha256": "133ec290822f8061cca4b99473ca1a847584dd8698cc76dbea6a2bf0dce985ab",
+      "source_bytes": 81912,
+      "source_sha256": "b0252cdbda409107050d82977171be74619ea8405cbc8d05b0e97f0d3f98a700"
+    },
+    {
+      "archive": "KNOWLEDGE_RETENTION_REMOTE_CI-job-127303172805.log.gz",
+      "archive_bytes": 14148,
+      "archive_sha256": "51d3ca687abf328ad4d5e282a60d6b0b87c60718106820ceab05699cd3a40f5a",
+      "source_bytes": 67117,
+      "source_sha256": "f233bd6fd2912cd160a58eda54762ef1d43f8b654961572b96d71fff9cfb2402"
+    },
+    {
+      "archive": "KNOWLEDGE_RETENTION_REMOTE_CI-job-127303137838.log.gz",
+      "archive_bytes": 13753,
+      "archive_sha256": "1b5c5e7e45369c7065927f0b0aaf03ecb0d068a10dd79d2bebfe64802d300005",
+      "source_bytes": 66292,
+      "source_sha256": "1e1f7826da0aa89a18e1df14d55fa0cfc159991c9764c99684f0d0ad822245d6"
+    }
+  ],
+  "first_checkpoint_proof": {
+    "stage": "initial_migration",
+    "verified": {
+      "tag": "airi-offline-449276-42045545781-1-1",
+      "step": 449276,
+      "fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+      "all_required_files_manifest_hashed": true,
+      "optimizer_archive_sha256_verified": true,
+      "run_state_sha256_verified": true,
+      "retention_rows": 518,
+      "currently_correct": 518,
+      "base_champion_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+      "training_registry_rows": 0,
+      "transaction": {
+        "schema": 1,
+        "lr_scale": 1.0,
+        "attempted_updates": 0,
+        "committed_updates": 0,
+        "rejected_updates": 0
+      },
+      "continue": true,
+      "job_index": 0,
+      "model_revision": 2,
+      "model_lineage": {
+        "model_id": "airi-native",
+        "revision": 2,
+        "weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274"
+      },
+      "new_adoption": false
+    },
+    "optimizer_archive_descriptor": {
+      "name": "AIRI_TRAINING_449276_OPTIMIZER.zip",
+      "sha256": "5d5bdbbe793bccd4efc369f7cb9db13661213273f795f366b927f25499a16a4d",
+      "bytes": 6038991
+    },
+    "archive_contents_verified": true,
+    "files": [
+      {
+        "kind": "index",
+        "name": "AIRI_TRAINING_CHECKPOINT_449276.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449276_index.json.gz",
+        "archive_bytes": 424,
+        "archive_sha256": "d9c734e3d0bcf189fff3ca9d511f866b4e39a97a9497e1a3cac9e6bb66991b84",
+        "source_bytes": 693,
+        "source_sha256": "fce2ae903e87ea93c7d0fc0611fc6c6977c0a93fddae50b8bb06be760e0d467a"
+      },
+      {
+        "kind": "manifest",
+        "name": "checkpoint.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449276_manifest.json.gz",
+        "archive_bytes": 993,
+        "archive_sha256": "bc5447030ef2c34a094fc6a4662a7eb561c35a74f8ab5eb43a801a1c50701ce9",
+        "source_bytes": 1931,
+        "source_sha256": "c6438111d8c60b7a2b3da32e07b861684ce7e5485df66a481df1ef84d97ed4a8"
+      },
+      {
+        "kind": "run_state",
+        "name": "AIRI_RUN_STATE.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449276_run_state.json.gz",
+        "archive_bytes": 378,
+        "archive_sha256": "3c7bce96e90fd02d20e31ac97d1dd5fb29f7ab5105c1383d3f008514ede11885",
+        "source_bytes": 613,
+        "source_sha256": "943f82c846130ef2e10e072aca9f84f3d0a30218d6d290af307aa125c08f2021"
+      },
+      {
+        "kind": "ledger",
+        "name": "retention_memory.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449276_ledger.json.gz",
+        "archive_bytes": 83289,
+        "archive_sha256": "47343a63f2ddd2815dc91c977f169ffe0a8ac2422bf1cf0d69c2a29df5890475",
+        "source_bytes": 811565,
+        "source_sha256": "a10eb154ad3b69553320d9fbe09928d236fa9a9cd63ad081d303693cb008656e"
+      },
+      {
+        "kind": "registry",
+        "name": "training_registry.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449276_registry.json.gz",
+        "archive_bytes": 185,
+        "archive_sha256": "53558e601315e8667417b5da95990a22a8609f06f3acafad5285009427ec2afd",
+        "source_bytes": 294,
+        "source_sha256": "7e48117453285213c58de9b41355e4dc18a446b909401f9c8890524c4cc02117"
+      }
+    ],
+    "scope": "Raw archive entries are packaged directly, preserving manifest bytes; no model or optimizer tensors packaged"
+  },
+  "progress_at_256": {
+    "step": 449532,
+    "logical_units": 256,
+    "physical_attempts": 262,
+    "committed_updates": 247,
+    "rejected_attempts": 15,
+    "lr_scale": 0.015625,
+    "training_seconds": 109.83,
+    "scope": "pre-evaluation telemetry; initialized summary is not a fresh full-bank certificate check"
+  },
+  "first_candidate_checkpoint_proof": {
+    "stage": "first_512_unit_candidate",
+    "verified": {
+      "tag": "airi-offline-449788-42045545781-1-2",
+      "step": 449788,
+      "fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+      "all_required_files_manifest_hashed": true,
+      "optimizer_archive_sha256_verified": true,
+      "run_state_sha256_verified": true,
+      "raw_manifest_sha256": "a3f34dc22e1cb18087546bdfa3de61d6eb9cdd30ded1e81c2d2d30d638d21a20",
+      "retention_rows": 518,
+      "previous_518_entries_all_present": true,
+      "currently_correct_observations": 518,
+      "base_champion_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+      "base_certificates_correct": true,
+      "training_registry_rows": 252,
+      "registry_exact_train_reconstruction_passed": true,
+      "transaction": {
+        "schema": 1,
+        "lr_scale": 0.015625,
+        "attempted_updates": 518,
+        "committed_updates": 496,
+        "rejected_updates": 22
+      },
+      "continue": true,
+      "job_index": 0,
+      "elapsed_training_seconds": 203.64747477100025,
+      "model_revision": 2,
+      "model_lineage": {
+        "model_id": "airi-native",
+        "revision": 2,
+        "weights_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274"
+      },
+      "learning_search": {
+        "consecutive_rejections": 0,
+        "evaluations": 2,
+        "accepted_updates": 0,
+        "stopped": false,
+        "history": [
+          {
+            "step": 449532,
+            "learning_rate": 3e-05,
+            "reasons": [
+              "legacy_correct_regressed",
+              "previously_correct_answer_lost"
+            ],
+            "interpolation": null,
+            "interpolation_probes": 2,
+            "accepted": false,
+            "rollback": false,
+            "trial_complete": false,
+            "trial_updates": 256,
+            "exploration_pending": true
+          },
+          {
+            "step": 449788,
+            "learning_rate": 3e-05,
+            "reasons": [
+              "legacy_correct_regressed",
+              "previously_correct_answer_lost"
+            ],
+            "interpolation": null,
+            "interpolation_probes": 2,
+            "accepted": false,
+            "rollback": false,
+            "trial_complete": false,
+            "trial_updates": 512,
+            "exploration_pending": true
+          }
+        ],
+        "optimizer_policy": "preserve candidate weights and Adam within bounded trial; fresh Adam only after rollback or accepted interpolation",
+        "trial_start_update": 0
+      },
+      "last_adoption_check": {
+        "protected": 518,
+        "lost": 0,
+        "accepted": true
+      },
+      "conversation_updates": 512,
+      "last_candidate_assessment": {
+        "exact_correct": 22,
+        "probes": 92,
+        "context_pair_rate": 0.0,
+        "nll": {
+          "it": 1.1759633408236965,
+          "en": 1.0026137945275408
+        },
+        "human_nll": {
+          "en": 3.309547517986075
+        }
+      },
+      "champion_assessment": {
+        "exact_correct": 23,
+        "probes": 92,
+        "context_pair_rate": 0.0,
+        "nll": {
+          "it": 1.2069149777597543,
+          "en": 1.037827099171288
+        },
+        "human_nll": {
+          "en": 3.3305142181939766
+        }
+      }
+    },
+    "optimizer_archive_descriptor": {
+      "name": "AIRI_TRAINING_449788_OPTIMIZER.zip",
+      "sha256": "e6b8befe871919528e175efe26db13988ca17f277f49d00f121835463c5f402b",
+      "bytes": 6656755
+    },
+    "archive_contents_verified": true,
+    "files": [
+      {
+        "kind": "index",
+        "name": "AIRI_TRAINING_CHECKPOINT_449788.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449788_index.json.gz",
+        "archive_bytes": 426,
+        "archive_sha256": "2ff8f8cfe9e911855d4c651297875f9bbb5ac6d068c861a821e5499b38ebaec5",
+        "source_bytes": 694,
+        "source_sha256": "812b9bc6a6b18212c2fa6801810698818fd7c20ff99591501f05f51cf88fc152"
+      },
+      {
+        "kind": "manifest",
+        "name": "checkpoint.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449788_manifest.json.gz",
+        "archive_bytes": 990,
+        "archive_sha256": "29b6d4950a372618d797304086b91747fdaf7ea938780d2c84729886681fadb0",
+        "source_bytes": 1931,
+        "source_sha256": "a3f34dc22e1cb18087546bdfa3de61d6eb9cdd30ded1e81c2d2d30d638d21a20"
+      },
+      {
+        "kind": "run_state",
+        "name": "AIRI_RUN_STATE.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449788_run_state.json.gz",
+        "archive_bytes": 556,
+        "archive_sha256": "e5eb13d13daffeeea2f79276938e166215cfe7c37a70cc762b73ecbbb8963ba8",
+        "source_bytes": 1471,
+        "source_sha256": "32455baa4aa81ca0ada0a30bd10c30800b3380a400e8cc00515d6366fdec1b17"
+      },
+      {
+        "kind": "ledger",
+        "name": "retention_memory.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449788_ledger.json.gz",
+        "archive_bytes": 105115,
+        "archive_sha256": "8c142e53c9e38c70ff884aac44177ce3477e4541c30ccfba227c47f3a1b6d575",
+        "source_bytes": 827887,
+        "source_sha256": "6cdba3c63e305cda65a3bff08ee3fef44d3b1933d71682ae9dbaaf52470dd8dc"
+      },
+      {
+        "kind": "registry",
+        "name": "training_registry.json",
+        "archive": "KNOWLEDGE_RETENTION_REMOTE_CHECKPOINT_449788_registry.json.gz",
+        "archive_bytes": 23610,
+        "archive_sha256": "39a65c0fb1d93926722dcbcf011f708c22ea2a4a5b75a9279cefefe32e7b37ec",
+        "source_bytes": 301661,
+        "source_sha256": "cfdb3268a9906cb86768848aaf87c79fca60cd81e9dd55a3746aaef4f33c9501"
+      }
+    ],
+    "scope": "Raw OPT archive entries; no model or optimizer tensors packaged"
+  },
+  "automatic_continuation": {
+    "run_id": 42047389197,
+    "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42047389197",
+    "source_release": "airi-offline-449788-42045545781-1-2",
+    "frozen_runner_commit": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+    "fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+    "status_at_observation": "in_progress",
+    "last_observed_step": 450044,
+    "last_observed_logical_units": 768,
+    "last_observed_physical_attempts": 774,
+    "last_observed_committed_updates": 741,
+    "last_observed_rejected_attempts": 33,
+    "elapsed_training_seconds": 347.0364393080007,
+    "same_trial_and_shared_budget_retained": true
+  },
+  "first_training_job_log": {
+    "archive": "KNOWLEDGE_RETENTION_REMOTE_FIRST_TRAINING_JOB.log.gz",
+    "archive_bytes": 17511,
+    "archive_sha256": "ba4411dca91694c3d337b23785f6c25291c1a1ff6b10efbb364ffc37756b46c1",
+    "source_bytes": 87512,
+    "source_sha256": "3f59871f7583c7a2ccfc7a69b60b19176b3ce6f47c902188db4fec2dd874565c"
+  },
+  "first_training_result": {
+    "status": "first durable retained-learning chunk and automatic resume verified; experiment active",
+    "first_run": {
+      "id": 42045545781,
+      "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42045545781",
+      "conclusion": "success"
+    },
+    "frozen_head": "72bda54e942e5ec36ded31ca0c3ad43fa87f5fe4",
+    "fingerprint": "d079288692141fae1f2aed2b2d55fcbe168c6e08e1a03e6a236e3aae7279c311",
+    "source_checkpoint": "airi-offline-449276-41523612006-1-3",
+    "initial_migration_checkpoint": "airi-offline-449276-42045545781-1-1",
+    "candidate_checkpoint": "airi-offline-449788-42045545781-1-2",
+    "first_chunk": {
+      "completed_steps": 449788,
+      "logical_updates": 512,
+      "physical_attempts": 518,
+      "committed_updates": 496,
+      "rejected_attempts": 22,
+      "elapsed_training_seconds": 203.64747477100025,
+      "adaptive_lr_scale": 0.015625,
+      "retention_rows": 518,
+      "all_original_certificate_keys_persisted": true,
+      "correct_candidate_observations_at_checkpoint": 518,
+      "champion_certificate_base_digest": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+      "registered_train_rows": 252,
+      "registered_rows_reconstructed_from_archived_train_sources": true,
+      "checkpoint_manifest_and_registry_ledger_resume_hashes_verified": true
+    },
+    "independent_quality": {
+      "baseline_and_stable_champion": {
+        "exact_correct": 23,
+        "probes": 92,
+        "nll": {
+          "it": 1.2069149777597543,
+          "en": 1.037827099171288
+        },
+        "human_nll": {
+          "en": 3.3305142181939766
+        },
+        "context_pair_rate": 0.0
+      },
+      "candidate_at_256": {
+        "exact_correct": 22,
+        "probes": 92,
+        "nll": {
+          "it": 1.1762647839241342,
+          "en": 1.003070780175634
+        },
+        "human_nll": {
+          "en": 3.309662136876415
+        },
+        "context_pair_rate": 0.0
+      },
+      "candidate_at_512": {
+        "exact_correct": 22,
+        "probes": 92,
+        "nll": {
+          "it": 1.1759633408236965,
+          "en": 1.0026137945275408
+        },
+        "human_nll": {
+          "en": 3.309547517986075
+        },
+        "context_pair_rate": 0.0
+      },
+      "gate_history": [
+        {
+          "step": 449532,
+          "learning_rate": 3e-05,
+          "reasons": [
+            "legacy_correct_regressed",
+            "previously_correct_answer_lost"
+          ],
+          "interpolation": null,
+          "interpolation_probes": 2,
+          "accepted": false,
+          "rollback": false,
+          "trial_complete": false,
+          "trial_updates": 256,
+          "exploration_pending": true
+        },
+        {
+          "step": 449788,
+          "learning_rate": 3e-05,
+          "reasons": [
+            "legacy_correct_regressed",
+            "previously_correct_answer_lost"
+          ],
+          "interpolation": null,
+          "interpolation_probes": 2,
+          "accepted": false,
+          "rollback": false,
+          "trial_complete": false,
+          "trial_updates": 512,
+          "exploration_pending": true
+        }
+      ],
+      "old_correct_answers_lost_by_candidate": 1,
+      "new_correct_answers_gained_by_candidate": 0,
+      "adoptions": 0,
+      "approved_revision": 2,
+      "approved_champion_unchanged": true,
+      "interpretation": "Candidate NLL improved, but it lost a previously correct held-out answer and was rejected at both gates. The approved benchmark remains23/92 and context0/32."
+    },
+    "automatic_continuation": {
+      "run_id": 42047389197,
+      "url": "https://github.com/arancione3000/airi-offline-training/actions/runs/42047389197",
+      "status_at_handoff": "in_progress",
+      "same_frozen_head": true,
+      "first_job_continuation_step_succeeded": true,
+      "validated_dispatch_payload_from_pinned_controller_and_committed_state": {
+        "ref": "native-knowledge-retention-20261105-v2",
+        "inputs": {
+          "checkpoint_release": "airi-offline-449788-42045545781-1-2",
+          "continuation": "1",
+          "preflight_only": "false"
+        }
+      },
+      "observed_progress_asset_source_release": "airi-offline-449788-42045545781-1-2",
+      "progress_source_path": "/workspace/airi-experiment/retention-first-job-42045545781/continuation-first-telemetry/step-450044.raw.json",
+      "progress_source_sha256": "1563fc4dd8b9c9cbedb582851f406b01d830fd1bce6bbaeed60a3e795048e5b5",
+      "progress_source_bytes": 242360,
+      "observed_completed_steps": 450044,
+      "observed_logical_updates": 768,
+      "observed_elapsed_training_seconds": 347.0364393080007,
+      "observed_transaction": {
+        "schema": 1,
+        "lr_scale": 0.015625,
+        "attempted_updates": 774,
+        "committed_updates": 741,
+        "rejected_updates": 33
+      },
+      "prior_counters_search_history_and_trial_start_preserved": true,
+      "monitor_dispatched_jobs": 0
+    },
+    "raw_source_files_receipt": "/workspace/airi-experiment/retention-first-job-42045545781/first-candidate/RECEIPT.json",
+    "raw_log": "/workspace/airi-experiment/retention-first-job-42045545781/job-127307402962.log",
+    "benchmark_assessments_without_torch": "/workspace/airi-experiment/retention-first-job-42045545781/first-candidate/ASSESSMENTS.json",
+    "production_qualified": false,
+    "live_promoted": false,
+    "monitor_stopped_after_verified_automatic_handoff": true
+  },
+  "training_assessments": {
+    "archive": "KNOWLEDGE_RETENTION_REMOTE_TRAINING_ASSESSMENTS.json.gz",
+    "archive_bytes": 11521,
+    "archive_sha256": "0712563b3152eeb6ac20e5cbf8d594fa4dbff2703480df89a4673d8c0716426a",
+    "source_bytes": 166906,
+    "source_sha256": "f46745061fe71f9c8730dc7e75756816cf1bb91cf6ca2cee01f810adfc099045"
+  },
+  "continuation_progress": {
+    "archive": "KNOWLEDGE_RETENTION_REMOTE_AUTOMATIC_RESUME_PROGRESS.json.gz",
+    "archive_bytes": 19707,
+    "archive_sha256": "24044bb3368f3acba23e161a3d152b73b046561f8433c959d48e14b114d2c5c5",
+    "source_bytes": 242360,
+    "source_sha256": "1563fc4dd8b9c9cbedb582851f406b01d830fd1bce6bbaeed60a3e795048e5b5"
+  },
+  "observation_scope": "Verified first512-unit checkpoint and automatic resume through768 logical units; later live-cycle outcomes are not asserted by this snapshot"
+}
