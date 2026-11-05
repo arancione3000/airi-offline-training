@@ -54,6 +54,9 @@ class Client:
     def dispatch(self,branch,inputs):
         subprocess.run(['gh','api','--method','POST',self.base+'/actions/workflows/'+WORKFLOW+'/dispatches',
                         '--input','-'],input=json.dumps(dict(ref=branch,inputs=inputs)),text=True,check=True)
+    def renew_supervisor(self):
+        subprocess.run(['gh','api','--method','POST',self.base+'/actions/workflows/airi-continuous-controller.yml/dispatches',
+                        '--input','-'],input=json.dumps(dict(ref='main',inputs={})),text=True,check=True)
     def runs(self):
         return self.get('actions/workflows/'+WORKFLOW+'/runs?per_page=100')['workflow_runs']
     def logs(self,run):
@@ -173,10 +176,32 @@ def claim(client,*,run_id,runner_sha,source,job,request):
     d['run_id']=run_id;client.write(c,sha);return True
 
 
+def watch(client,seconds=2700,poll_seconds=30,clock=time.time,pause=time.sleep):
+    """Observe child completion directly and explicitly renew this bounded watcher."""
+    end=clock()+seconds
+    while clock()<end:
+        control,_=client.control()
+        if not control.get('enabled') or control.get('halted_reason'):
+            return dict(action='watch stopped',reason=control.get('halted_reason') or 'disabled')
+        try:
+            result=tick(client,now=clock())
+            print(json.dumps(result),flush=True)
+            if result.get('action')=='halted':return result
+        except subprocess.CalledProcessError:
+            print(json.dumps(dict(action='controller API retry pending')),flush=True)
+        pause(min(poll_seconds,max(0,end-clock())))
+    control,_=client.control()
+    if control.get('enabled') and not control.get('halted_reason'):
+        client.renew_supervisor()
+        return dict(action='next supervisor explicitly dispatched')
+    return dict(action='watch stopped')
+
+
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('mode',choices=['tick','claim']);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('mode',choices=['tick','claim','watch']);args=parser.parse_args()
     client=Client(os.environ['GITHUB_REPOSITORY'])
-    if args.mode=='tick':print(json.dumps(tick(client)))
+    if args.mode=='watch':print(json.dumps(watch(client)))
+    elif args.mode=='tick':print(json.dumps(tick(client)))
     else:
         allowed=claim(client,run_id=int(os.environ['GITHUB_RUN_ID']),runner_sha=os.environ['GITHUB_SHA'],
                       source=os.environ['CHECKPOINT_RELEASE'],job=int(os.environ['CONTINUATION']),request=os.environ['DISPATCH_KEY'])

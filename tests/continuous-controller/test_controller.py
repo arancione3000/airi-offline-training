@@ -67,6 +67,17 @@ class ControllerTests(unittest.TestCase):
   f.c['enabled']=False;self.assertEqual(module.tick(f,200)['action'],'idle')
  def test_frozen_branch_movement_halts(self):
   f=Fake();f.branch='d'*40;self.assertEqual(module.tick(f,100)['action'],'halted');self.assertFalse(f.posts)
+ def test_watcher_explicitly_renews_without_duplicate_training(self):
+  f=Fake();f.run_values=[dict(status='in_progress',head_branch='frozen')]
+  renewals=[];f.renew_supervisor=lambda:renewals.append(True)
+  now=[0.]
+  result=module.watch(f,seconds=60,poll_seconds=30,clock=lambda:now[0],pause=lambda delay:now.__setitem__(0,now[0]+delay))
+  self.assertEqual(result['action'],'next supervisor explicitly dispatched')
+  self.assertEqual(renewals,[True]);self.assertFalse(f.posts)
+ def test_disabled_watcher_never_renews(self):
+  f=Fake();f.c['enabled']=False
+  f.renew_supervisor=lambda:self.fail('disabled service renewed')
+  self.assertEqual(module.watch(f,seconds=1)['action'],'watch stopped')
  def test_wrong_checkpoint_job_and_duplicate_archives_refused(self):
   for mutate in ('job','archives'):
    f=Fake();f.finished()

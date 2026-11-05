@@ -17,7 +17,7 @@ jobs:
   supervise:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.path == '.github/workflows/airi-continuous-background.yml'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 55
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -28,4 +28,4 @@ jobs:
       - name: Verify continuation and exclusive-dispatch contracts
         run: python -m unittest discover -s tests/continuous-controller -v
       - name: Resume the enabled service from committed state
-        run: python scripts/continuous-training/controller.py tick | tee -a "$GITHUB_STEP_SUMMARY"
+        run: python scripts/continuous-training/controller.py watch | tee -a "$GITHUB_STEP_SUMMARY"
