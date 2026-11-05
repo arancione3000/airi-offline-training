@@ -55,7 +55,7 @@ def harvest(candidate, champion, rows, encode, bank, eligible, source, *, genera
 
 
 def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multiplier=5., lr_cap=1e-6,
-                 memories=None, retention_weight=.5, champion_kl_weight=1.):
+                 memories=None, retention_weight=.5, champion_kl_weight=1., prompt_kl_weight=0.):
     """Learn selected donor tokens while replaying supervised champion anchors."""
     frozen_independent(model, champion)
     if any(isinstance(w,bool) or not isinstance(w,(int,float)) or not math.isfinite(w) or w<=0
@@ -64,6 +64,8 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
     if memories is not None and not memories:
         raise ValueError('transfer retention memories cannot be empty')
     replay=[anchor] if memories is None else list(memories)
+    if isinstance(prompt_kl_weight,bool) or not isinstance(prompt_kl_weight,(int,float)) or not math.isfinite(prompt_kl_weight) or prompt_kl_weight<0:
+        raise ValueError('invalid full-sequence transfer retention weight')
     ids, labels = batch
     positions = [p['position'] for p in entry['positions']]
     for token in entry['positions']:
@@ -81,6 +83,7 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
     kd = F.kl_div(logits.log_softmax(-1), teacher, reduction='batchmean')
     loss = ce + .5 * kd
     count=0;supervised=len(positions);retention_total=0.;anchor_ce_total=0.
+    prompt_total=0.;prompt_tokens=0
     for anchor_ids,anchor_labels in replay:
         anchor_logits = model(anchor_ids)['logits']
         anchor_ce, objective = causal_training_objective(anchor_logits, anchor_labels, anchor_ids,
@@ -88,6 +91,11 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
         with torch.no_grad(): protected = champion(anchor_ids)['logits']
         retention, tokens = reference_kl_loss(anchor_logits, protected, anchor_labels)
         loss = loss + (retention_weight * anchor_ce + champion_kl_weight * retention)/len(replay)
+        if prompt_kl_weight:
+            from retention_guard import full_sequence_kl
+            prompt_kl,real_tokens=full_sequence_kl(anchor_logits,protected,anchor_ids)
+            loss=loss+prompt_kl_weight*prompt_kl/len(replay)
+            prompt_total+=float(prompt_kl.detach())/len(replay);prompt_tokens+=real_tokens
         retention_total+=float(retention.detach())/len(replay)
         anchor_ce_total+=float(anchor_ce.detach())/len(replay)
         count+=tokens;supervised+=int((anchor_labels[:,1:]!=-100).sum())
@@ -106,8 +114,10 @@ def distill_step(model, champion, optimizer, entry, batch, anchor, *, lr_multipl
         optimizer.step()
     finally:
         for group, lr in zip(optimizer.param_groups, previous_lrs): group['lr'] = lr
-    return {'loss': float(loss.detach()), 'ce': float(ce.detach()), 'kl': float(kd.detach()),
+    result={'loss': float(loss.detach()), 'ce': float(ce.detach()), 'kl': float(kd.detach()),
             'retention_kl': retention_total, 'retention_ce': anchor_ce_total, 'supervised_tokens': supervised,
             'reference_tokens': count, 'gradient_norm_before_clipping': float(norm), 'objective': objective,
             'retention_weight':retention_weight,'champion_kl_weight':champion_kl_weight,'retention_examples':len(replay),
             'method': 'selected native donor tokens + supervised replay + champion KL'}
+    if prompt_kl_weight:result.update(prompt_kl=prompt_total,prompt_reference_tokens=prompt_tokens,prompt_kl_weight=prompt_kl_weight)
+    return result

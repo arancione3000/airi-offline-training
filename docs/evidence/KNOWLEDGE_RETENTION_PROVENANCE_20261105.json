@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-05",
+  "scope": "Exact local fixed192-unit OLD/NEW native trial, failed-and-recovered resume harness log, read-only exhaustive TRAIN audit, actual training modules and observed pure test stdout. gzip mtime=0. No model weights, optimizer states, credentials or external pretrained teachers are packaged. Reproducing model forwards requires the original model/data/runtime identified by hashes inside the raw report; this is an evidence package.",
+  "summary": {
+    "path": "KNOWLEDGE_RETENTION_SUMMARY_20261105.json",
+    "sha256": "5734d0bce7077c54ea64913a507c5cfcd708ae9378b3a5e5785d8853a860368e"
+  },
+  "artifacts": [
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial.json",
+      "source_bytes": 2597203,
+      "source_sha256": "35016b0c5aab3a4c4060edf52dac47e56ad4142f631463b19c18b2962fb6f7a6",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial.json.gz",
+      "archive_bytes": 390070,
+      "archive_sha256": "164f20c0f5cf972cad7fae593eefef18956e1e34a9e80512bbd3f5f649784113"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial.py",
+      "source_bytes": 38529,
+      "source_sha256": "05f83990eed4068a50d2a0169d4adcdb12dc54ac5befb7ded53d808b4e7785ec",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial.py.gz",
+      "archive_bytes": 10380,
+      "archive_sha256": "694fc84574911ac3ca31288892bc275da55e1b8131cd8791fb800ea8beea41ff"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/fix_retention_resume.py",
+      "source_bytes": 5465,
+      "source_sha256": "d0a50aadb9c615a6ae7b18c60217a3de6c0bc2c693aed254c2c9000700914ad4",
+      "archive": "KNOWLEDGE_RETENTION_fix_retention_resume.py.gz",
+      "archive_bytes": 1785,
+      "archive_sha256": "d9a2ef0517591d0a11059214d68bb01535637fb44988fdb6db83af39f23ee9f9"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial.log",
+      "source_bytes": 5407,
+      "source_sha256": "74d02d65e9b264a5fd67a2e9637238ca38724b73b32ef42fa337a70739d20b24",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial.log.gz",
+      "archive_bytes": 1384,
+      "archive_sha256": "71228320479f60edc38399098c9e43962c74e2de1b4f0b05ed36b2f55202e132"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial-initial-bank.json",
+      "source_bytes": 800643,
+      "source_sha256": "aae6af8ce9ce894c12c641828595bbafa29ed291709705f839025304b80be9a4",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial-initial-bank.json.gz",
+      "archive_bytes": 82989,
+      "archive_sha256": "aa3ada9334812dde293fd6bda11111ac10e9cd3011d22f56a713c999e9fb81b5"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial-fullkl.py",
+      "source_bytes": 4601,
+      "source_sha256": "3c1bc82a0d01dbc6f4f2a2a206e92486e84d93cb654c2a2f6d8213c0c8244174",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial-fullkl.py.gz",
+      "archive_bytes": 1768,
+      "archive_sha256": "8e7bdde7fae6189a54fe1b2098019797ad69c0b0967fcf6563329fbc812dde9e"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-system-trial-fullkl.log",
+      "source_bytes": 1012,
+      "source_sha256": "a0eba9d56b6f6841bbcbdbb58ebaa6e34c6bee23d9921d051fb1ce8ca5345128",
+      "archive": "KNOWLEDGE_RETENTION_retention-system-trial-fullkl.log.gz",
+      "archive_bytes": 490,
+      "archive_sha256": "2d3fa9ed8ec791ecdcc0ebc6c70479431666ba5d2218767db42a4056bb7ee086"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-pure-checks.log",
+      "source_bytes": 15490,
+      "source_sha256": "10eac65bb5797831cc4ef729a0ed276e40ff71b049aaa69aaf3489579976f1b8",
+      "archive": "KNOWLEDGE_RETENTION_retention-pure-checks.log.gz",
+      "archive_bytes": 3042,
+      "archive_sha256": "5d38f110ea1bf52d2f4e8971ccc64e3639c05a3600e17a0d64185de8b0796a12"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/continual_learning.py",
+      "source_bytes": 21295,
+      "source_sha256": "ef0704ad7883c682a44cad09c04b59d1f22d2f25e1e318334e8bf8b08ac2bc75",
+      "archive": "KNOWLEDGE_RETENTION_continual_learning.py.gz",
+      "archive_bytes": 6514,
+      "archive_sha256": "4061819db03dfaaa447c506b76534586e7dc2f389266a6134ad4ddaeed15d757"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/retention_memory.py",
+      "source_bytes": 20855,
+      "source_sha256": "ff130cac8cabb14c5ce44a41f451e058facf472a23ffed6da1661324226586e5",
+      "archive": "KNOWLEDGE_RETENTION_retention_memory.py.gz",
+      "archive_bytes": 6046,
+      "archive_sha256": "c16dfe770c68894ffce8b69f85ac8356c5d3b4f3c7f0a9f1e0539305e94d9d4f"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/retention_transaction.py",
+      "source_bytes": 12414,
+      "source_sha256": "8225912867786b99d9f0ff68ac1f37dbd1b2dbb368a541a37f70049ea2fd0732",
+      "archive": "KNOWLEDGE_RETENTION_retention_transaction.py.gz",
+      "archive_bytes": 3608,
+      "archive_sha256": "2f855dba50ca622880a56f6ab22f149ecd4332cb2b2ffac11ed7d36f0abaf9de"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/retention_guard.py",
+      "source_bytes": 6897,
+      "source_sha256": "3acc3cbf9eb179d03f667989320fc0d4300618645e8b065f82ff721a86ea9c1c",
+      "archive": "KNOWLEDGE_RETENTION_retention_guard.py.gz",
+      "archive_bytes": 2172,
+      "archive_sha256": "ae354290a7764ca661d11bb829ffa94babf012a07759fe361602706733b9e5b8"
+    },
+    {
+      "source_path": "/workspace/airi-offline-training/scripts/transfer-training/prefix_tuning.py",
+      "source_bytes": 11298,
+      "source_sha256": "6427e2f1441269426fbfae3398d58fbaa774e2b0053e8504fed87cf54234bd0a",
+      "archive": "KNOWLEDGE_RETENTION_prefix_tuning.py.gz",
+      "archive_bytes": 3475,
+      "archive_sha256": "8f7b33bc6125b32d2b4fafc27dc87001b55c0a1266a6914a6d8fc6ef915bbd2b"
+    },
+    {
+      "source_path": "/workspace/airi-experiment/retention-existing-ci.log",
+      "source_bytes": 28626,
+      "source_sha256": "aec8c802a6389696e26a9a323597b00d0dacd1fdd657183c09845e8a05762c23",
+      "archive": "KNOWLEDGE_RETENTION_retention-existing-ci.log.gz",
+      "archive_bytes": 5080,
+      "archive_sha256": "89196cb14420b614dc3ffe9b14b4bb5e9504f03f41817b271970f1870b7944c6"
+    }
+  ]
+}

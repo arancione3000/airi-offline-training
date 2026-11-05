@@ -1,0 +1,91 @@
+name: Verify native knowledge retention
+on:
+  push:
+    paths:
+      - 'scripts/transfer-training/**'
+      - 'tests/transfer-training/**'
+      - 'scripts/continual-training/**'
+      - 'tests/continual-training/**'
+      - 'scripts/context-learning/**'
+      - 'tests/context-learning/**'
+      - 'scripts/knowledge-retention/**'
+      - 'tests/knowledge-retention/**'
+      - '.github/workflows/airi-retention-background.yml'
+      - 'scripts/offline-training/recovery.patch'
+      - '.github/workflows/verify-knowledge-retention.yml'
+  pull_request:
+    paths:
+      - 'scripts/transfer-training/**'
+      - 'tests/transfer-training/**'
+      - 'scripts/continual-training/**'
+      - 'tests/continual-training/**'
+      - 'scripts/context-learning/**'
+      - 'tests/context-learning/**'
+      - 'scripts/knowledge-retention/**'
+      - 'tests/knowledge-retention/**'
+      - '.github/workflows/airi-retention-background.yml'
+      - 'scripts/offline-training/recovery.patch'
+      - '.github/workflows/verify-knowledge-retention.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: knowledge-retention-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: ${{ github.workspace }}/source/computer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify pure orchestration and TRAIN provenance
+        run: |
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/transfer-training -v
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/continual-training -v
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/context-learning -v
+          env -u AIRI_EXPERIMENT_SPEC python -m unittest discover -s tests/knowledge-retention -v
+          python -m py_compile scripts/transfer-training/*.py tests/transfer-training/check_retention_*.py
+          python -m py_compile scripts/knowledge-retention/*.py
+      - name: Restore immutable native runtime
+        uses: actions/checkout@v4
+        with:
+          repository: arancione3000/airi-pc-runtime
+          ref: a5ddce05683dd4c77b1848673f2e87934138e57a
+          path: source
+          persist-credentials: false
+      - name: Install pinned CPU dependencies and complete-dialogue support
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.5.4'
+          git -C source apply --check --include='computer/*' ../scripts/offline-training/recovery.patch
+          git -C source apply --include='computer/*' ../scripts/offline-training/recovery.patch
+          python - <<'PY'
+          import inspect
+          import subprocess
+          import numpy
+          import torch
+          from generalist_lm.training import encode_sft_example
+          assert subprocess.check_output(['git','-C','source','rev-parse','HEAD'],text=True).strip() == 'a5ddce05683dd4c77b1848673f2e87934138e57a'
+          assert torch.__version__ == '2.14.1+cpu'
+          assert numpy.__version__ == '2.5.4'
+          assert 'require_complete' in inspect.signature(encode_sft_example).parameters
+          PY
+      - name: Verify complete certified answers and EOS
+        run: python tests/transfer-training/check_retention_memory.py
+      - name: Verify exact Adam, gradient and RNG rollback
+        run: python tests/transfer-training/check_retention_transaction.py
+      - name: Verify prompt retention and TRAIN step guards
+        run: python tests/transfer-training/check_retention_guard.py
+      - name: Verify hash-committed knowledge and TRAIN registry resume
+        run: python tests/transfer-training/check_retention_session.py
+      - name: Verify real donor retry learning rates under caps
+        run: python tests/transfer-training/check_retention_cap.py
+      - name: Verify continuous acquisition, retained TRAIN answers and exact resume
+        run: python tests/transfer-training/check_retention_smoke.py

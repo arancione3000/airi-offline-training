@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-05",
+  "scope": "Fixed native retention and persistence diagnostic; no candidate adoption or production promotion",
+  "seed": 20261105,
+  "steps_per_arm": 192,
+  "segment_units": 64,
+  "approved_model_tensor_sha256": "9e07639be3478a9e1fcba937fcc7cf8857429a2faf5af449ef34dce520b83274",
+  "original_reference_tensor_sha256": "7ad76ab982a74eaf8d854537631d2e69eedaa4f324d2dee682951c60d876a718",
+  "source_checkpoint_unchanged": true,
+  "frozen_teachers_unchanged": true,
+  "baseline": {
+    "exact_correct": 23,
+    "probes": 92,
+    "context_correct": 0,
+    "context_probes": 32,
+    "native_nll": {
+      "it": 1.2069149777597543,
+      "en": 1.037827099171288
+    },
+    "human_nll": {
+      "en": 3.3305142181939766
+    },
+    "repetition": 0.0
+  },
+  "initial_training_coverage": {
+    "protected_legacy_rows": 278,
+    "protected_bank_rows": 518,
+    "measured_train_rows": 534,
+    "correct_measured_rows": 518,
+    "coverage_added_before_training": 240,
+    "note": "Coverage expansion certifies pre-existing TRAIN answers; it is not a training improvement"
+  },
+  "common_acquisition_anchor_sha256": "5e45b6c84ad911a6053df66693202552fed34f3840c4f73648b9da0dc2128c25",
+  "common_acquisition_supervised_tokens": 9899,
+  "predeclared_profile": {
+    "learning_rate": 3e-05,
+    "retention_weight": 8.0,
+    "target_kl_weight": 8.0,
+    "native_weight": 0.25,
+    "memories_per_unit": 4,
+    "training": "native last1 block plus head",
+    "new_full_sequence_kl_weight": 8.0,
+    "new_sentinel_rows": 8,
+    "new_max_full_sequence_kl": 0.01,
+    "new_max_nll_regression": 0.02,
+    "new_retry_scales": [
+      1,
+      0.5,
+      0.25,
+      0.125
+    ]
+  },
+  "equal_optimizer_units": true,
+  "equal_tokens_or_compute": false,
+  "live_promoted": false,
+  "candidate_adoptions": 0,
+  "trials": [
+    {
+      "arm": "old-uniform-target-kl",
+      "after": {
+        "exact_correct": 21,
+        "probes": 92,
+        "context_correct": 0,
+        "context_probes": 32,
+        "native_nll": {
+          "it": 1.1983401988734805,
+          "en": 1.025377763033183
+        },
+        "human_nll": {
+          "en": 3.3070696320835253
+        },
+        "repetition": 0.0
+      },
+      "lost_heldout_indices": [
+        0,
+        64
+      ],
+      "gained_heldout_indices": [],
+      "original_development_gate_accepted": false,
+      "complete_train_certificates_retained": 518,
+      "complete_train_certificates_lost": 0,
+      "segments": [
+        {
+          "unit": 64,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        },
+        {
+          "unit": 128,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        },
+        {
+          "unit": 192,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        }
+      ],
+      "logical_trajectory_accounting": {
+        "physical_attempts": 192,
+        "committed_updates": 192,
+        "rejected_attempts": 0,
+        "rejected_units": 0,
+        "physical_supervised_tokens": 34649,
+        "committed_supervised_tokens": 34649,
+        "physical_reference_tokens": 24750,
+        "committed_reference_tokens": 24750,
+        "physical_prompt_reference_tokens": 0,
+        "committed_prompt_reference_tokens": 0,
+        "optimizer_seconds": 67.9614384120008,
+        "unit_seconds": 68.00075973799926,
+        "guard_setup_seconds": 0.0,
+        "guard_evaluation_seconds": 0.0
+      },
+      "extra_resume_validation_accounting": {
+        "physical_attempts": 0,
+        "committed_updates": 0,
+        "rejected_attempts": 0,
+        "rejected_units": 0,
+        "physical_supervised_tokens": 0,
+        "committed_supervised_tokens": 0,
+        "physical_reference_tokens": 0,
+        "committed_reference_tokens": 0,
+        "physical_prompt_reference_tokens": 0,
+        "committed_prompt_reference_tokens": 0,
+        "optimizer_seconds": 0.0,
+        "unit_seconds": 0.0,
+        "guard_setup_seconds": 0.0,
+        "guard_evaluation_seconds": 0.0
+      },
+      "total_physical_attempts_including_validation_and_discarded": 192,
+      "total_physical_token_exposures_including_validation_and_discarded": {
+        "supervised_tokens": 34649,
+        "reference_tokens": 24750,
+        "prompt_reference_tokens": 0
+      },
+      "interruption": null,
+      "resume": null,
+      "native_export_logits_exact": true
+    },
+    {
+      "arm": "new-persistent-transactional",
+      "after": {
+        "exact_correct": 22,
+        "probes": 92,
+        "context_correct": 0,
+        "context_probes": 32,
+        "native_nll": {
+          "it": 1.200812394113488,
+          "en": 1.03018455687886
+        },
+        "human_nll": {
+          "en": 3.31950051042476
+        },
+        "repetition": 0.0
+      },
+      "lost_heldout_indices": [
+        64
+      ],
+      "gained_heldout_indices": [],
+      "original_development_gate_accepted": false,
+      "complete_train_certificates_retained": 518,
+      "complete_train_certificates_lost": 0,
+      "segments": [
+        {
+          "unit": 64,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        },
+        {
+          "unit": 128,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        },
+        {
+          "unit": 192,
+          "correct_measured_train_rows": 518,
+          "old_correct": 278,
+          "bank_correct": 518,
+          "ledger_entries_ever_correct": 518,
+          "ledger_entries_currently_correct": 518,
+          "newly_correct_vs_baseline": []
+        }
+      ],
+      "logical_trajectory_accounting": {
+        "physical_attempts": 192,
+        "committed_updates": 192,
+        "rejected_attempts": 0,
+        "rejected_units": 0,
+        "physical_supervised_tokens": 32174,
+        "committed_supervised_tokens": 32174,
+        "physical_reference_tokens": 22275,
+        "committed_reference_tokens": 22275,
+        "physical_prompt_reference_tokens": 44084,
+        "committed_prompt_reference_tokens": 44084,
+        "optimizer_seconds": 84.55661648700038,
+        "unit_seconds": 199.65956581199907,
+        "guard_setup_seconds": 48.20342687599896,
+        "guard_evaluation_seconds": 16.38825915299958
+      },
+      "extra_resume_validation_accounting": {
+        "physical_attempts": 1,
+        "committed_updates": 1,
+        "rejected_attempts": 0,
+        "rejected_units": 0,
+        "physical_supervised_tokens": 231,
+        "committed_supervised_tokens": 231,
+        "physical_reference_tokens": 78,
+        "committed_reference_tokens": 78,
+        "physical_prompt_reference_tokens": 194,
+        "committed_prompt_reference_tokens": 194,
+        "optimizer_seconds": 0.6919002880001699,
+        "unit_seconds": 1.9736214910001308,
+        "guard_setup_seconds": 0.9259933900000306,
+        "guard_evaluation_seconds": 0.08793902599995818
+      },
+      "total_physical_attempts_including_validation_and_discarded": 195,
+      "total_physical_token_exposures_including_validation_and_discarded": {
+        "supervised_tokens": 32867,
+        "reference_tokens": 22509,
+        "prompt_reference_tokens": 44666
+      },
+      "interruption": {
+        "reason": "Harness compared Torch RNG after reload constructor had consumed it; all weights/Adam/statistics/bank/sampler checks passed",
+        "recovery": "Continue saved native/Adam/JSON midpoint64, unchanged fixed192 logical trajectory; original development endpoint not repeated",
+        "extra_discarded_physical_optimizer_attempts": 2,
+        "extra_discarded_attempts_timing_seconds": null,
+        "missing_timing_reason": "Process-local clocks were lost on harness assertion; exact extra token exposures reconstructed from independently reproduced unit65",
+        "extra_discarded_physical_supervised_tokens": 462,
+        "extra_discarded_physical_reference_tokens": 156,
+        "extra_discarded_physical_prompt_reference_tokens": 388
+      },
+      "resume": {
+        "path": "/workspace/airi-experiment/retention-system-trial-new-midpoint",
+        "step": 64,
+        "verification_pending": false,
+        "trainable_weights_exact": true,
+        "optimizer_exact": true,
+        "bank_json_exact": true,
+        "transaction_json_exact": true,
+        "memory_rng_exact": true,
+        "guard_rng_exact": true,
+        "torch_rng_exact": true,
+        "update_statistics_exact": true
+      },
+      "native_export_logits_exact": true,
+      "exhaustive_train_bank_fullprompt_audit": {
+        "scope": "Read-only exhaustive initial518 certified TRAIN-bank rows, native approved champion versus fixed NEW endpoint; no optimization, no evaluation labels, no guarantee for unseen inputs",
+        "rows": 518,
+        "max_full_sequence_kl": 0.00390529609285295,
+        "mean_row_full_sequence_kl": 0.0002667812314855233,
+        "rows_above_sampled_kl_threshold": 0,
+        "max_answer_nll_increase": 0.0005226805806159973,
+        "rows_above_sampled_answer_nll_threshold": 0,
+        "all_teacher_answers_correct": true,
+        "all_candidate_answers_correct": true,
+        "real_next_token_positions": 27510,
+        "full_sequence_argmax_changed": 96,
+        "seconds": 106.986388885,
+        "source_checkpoint_unchanged": true
+      }
+    }
+  ]
+}

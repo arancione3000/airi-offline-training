@@ -18,6 +18,83 @@ LEARNING = SPEC.get('continual_learning')
 FAST_HEAD = bool(LEARNING and LEARNING.get('training_mode')=='cached_head')
 FAST_PREFIX = bool(LEARNING and LEARNING.get('training_mode')=='cached_prefix')
 CACHED_TRAINING = FAST_HEAD or FAST_PREFIX
+RETENTION = LEARNING.get('knowledge_retention') if LEARNING else None
+
+def empty_training_registry(fingerprint):
+    return {'schema':1,'fingerprint':fingerprint,'source_fingerprints':[fingerprint],'entries':{}}
+
+def normalized_context_row(row):
+    """Keep exact TRAIN inputs/answers; normalize only audited provenance metadata."""
+    import copy
+    result=copy.deepcopy(row)
+    result['provenance']='deterministic audited matched TRAIN context; original TRAIN template and literal TRAIN value'
+    return result
+
+def validate_training_registry(registry,original_rows,value_rows,forbidden,*,fingerprint,
+                               blocked=(),reserved_values=(),protected_histories=()):
+    """Reconstruct every materialized row from pinned TRAIN sources before trusting it."""
+    from success_bank import row_key,catalog
+    from context_acquisition import matched_context_pair,context_value_pairs
+    if (not isinstance(registry,dict) or set(registry)!={'schema','fingerprint','source_fingerprints','entries'}
+            or registry.get('schema')!=1 or registry.get('fingerprint')!=fingerprint
+            or not isinstance(registry.get('entries'),dict)):
+        raise ValueError('invalid materialized TRAIN registry')
+    ancestry=registry.get('source_fingerprints')
+    if (not isinstance(ancestry,list) or not ancestry or fingerprint not in ancestry
+            or any(not isinstance(x,str) or not x for x in ancestry) or len(set(ancestry))!=len(ancestry)):
+        raise ValueError('invalid materialized TRAIN registry ancestry')
+    sources={row_key(row):row for row in original_rows}
+    groups={rows[0]['acquisition_group']:rows for pairs in context_value_pairs(value_rows).values() for rows in pairs}
+    rows=[]
+    for key,entry in registry['entries'].items():
+        if not isinstance(entry,dict) or set(entry)!={'row','source_row_key','value_group','counterfactual_index'}:
+            raise ValueError('invalid materialized TRAIN registration proof')
+        source=sources.get(entry['source_row_key']);values=groups.get(entry['value_group'])
+        if source is None or values is None or type(entry['counterfactual_index']) is not int:
+            raise ValueError('materialized TRAIN row lacks its original source/value pool')
+        pair=matched_context_pair(source,values,blocked=blocked,reserved_values=reserved_values,
+                                  protected_histories=protected_histories)
+        matches=[normalized_context_row(row) for row in pair
+                 if row['counterfactual_index']==entry['counterfactual_index']]
+        if len(matches)!=1 or entry['row']!=matches[0] or key!=row_key(matches[0]):
+            raise ValueError('materialized TRAIN row differs from its reconstructed source')
+        rows.append(matches[0])
+    if rows and catalog(rows,forbidden)!={row_key(row):row for row in rows}:
+        raise ValueError('materialized TRAIN registry contains a protected history')
+    return rows
+
+def register_context_pair(registry,source,pair):
+    from success_bank import row_key
+    rows=[]
+    for original in pair:
+        row=normalized_context_row(original);key=row_key(row)
+        proof={'row':row,'source_row_key':row_key(source),'value_group':row['acquisition_group'],
+               'counterfactual_index':row['counterfactual_index']}
+        previous=registry['entries'].get(key)
+        if previous is not None and previous!=proof:
+            raise ValueError('materialized TRAIN row has conflicting registration proof')
+        registry['entries'][key]=proof;rows.append(row)
+    return rows
+
+def consolidation_allowed(counters,config):
+    """Reserve at least half the finite salvage quota until exploration stops."""
+    validate_budget(counters)
+    quota=config['consolidation_updates']
+    spent=counters.get('retention_consolidation_updates',0)
+    if type(spent) is not int or not 0<=spent<=quota:
+        raise ValueError('invalid persisted retention consolidation quota')
+    # Early rollbacks share the first half. The final rejected candidate can
+    # still donate lessons after the ordinary search has permanently stopped.
+    limit=quota if counters.get('learning_search',{}).get('stopped',False) else quota//2
+    return (counters['elapsed_training_seconds']<SPEC['maximum_training_seconds']
+            and counters['completed_steps']<SPEC['max_steps']
+            and spent<limit)
+
+def transfer_retention_statistics(stats,options):
+    """Keep recipe diagnostics even when a nonfinite proposal was rolled back."""
+    return {'retention_weight':stats.get('retention_weight',options.get('retention_weight',1.)),
+            'champion_kl_weight':stats.get('champion_kl_weight',options.get('champion_kl_weight',1.)),
+            'retention_examples':stats.get('retention_examples',len(options.get('memories',[])))}
 
 def training_strategy(model):
     if FAST_PREFIX:
@@ -40,6 +117,7 @@ def needs_training(counters):
     validate_budget(counters)
     search=counters.get('learning_search',{})
     return (not search.get('stopped',False)
+            and (not RETENTION or counters['completed_steps']<SPEC['max_steps'])
             and counters['elapsed_training_seconds']<SPEC['maximum_training_seconds'])
 
 SAMPLING_SCHEDULES={
@@ -295,16 +373,41 @@ def main():
         return optimizer
     source_fingerprint=transport.SOURCE_FINGERPRINTS.get(args.release,SPEC['fingerprint'])
     runtime,opt,payload=restore_session(checkpoint,factory,fingerprint=source_fingerprint,
-        load_optimizer=not (CACHED_TRAINING and args.release==transport.SEED_TAG))
+        load_optimizer=not (CACHED_TRAINING and args.release==transport.SEED_TAG),
+        require_retention=bool(RETENTION and source_fingerprint==SPEC['fingerprint']))
     if LEARNING:cache_tokenizer(runtime.tokenizer)
     rng,anchor_rng=random.Random(),random.Random()
     rng.setstate(payload['sampler_rng']);anchor_rng.setstate(payload['anchor_rng'])
     counters=payload['counters']
     source_digest=sha256_file(checkpoint/'model/model.pt')
-    from success_bank import (catalog, empty_bank, validate_bank, probe_rows,
+    from success_bank import (catalog, empty_bank, validate_bank, probe_rows,row_key,
                               summary as bank_summary, retains_correct_answers, migrate_bank)
-    eligible = catalog(authored, heldout + sealed_transfer + external_development + external_final)
+    forbidden=heldout+sealed_transfer+external_development+external_final
+    training_registry=None;retention_memory=None
+    if RETENTION:
+        # Session verified BOTH files against the immutable manifest before any
+        # restored row can grant donor/certificate eligibility.
+        training_registry=payload.get('training_registry',empty_training_registry(source_fingerprint))
+        registered=validate_training_registry(training_registry,context_train,context_values,forbidden,
+            fingerprint=source_fingerprint,
+            blocked=context_excluded_text if context_config else (),
+            reserved_values=context_reserved if context_config else (),
+            protected_histories=context_protected_histories if context_config else ())
+        if source_fingerprint!=SPEC['fingerprint']:
+            training_registry['fingerprint']=SPEC['fingerprint']
+            training_registry['source_fingerprints']=sorted(set(training_registry['source_fingerprints'])|{SPEC['fingerprint']})
+        retention_memory=payload.get('retention_memory')
+    else:registered=[]
+    eligible = catalog(authored+registered,forbidden)
     if args.learning_smoke_only or (CACHED_TRAINING and args.success_smoke_only):
+        if RETENTION:
+            if args.release!=transport.SEED_TAG or retention_memory is not None:
+                raise ValueError('retention preflight requires the exact migration seed; resumed ledgers must use the full runner')
+            from retention_smoke import real_retention_smoke
+            real_retention_smoke(runtime,checkpoint,reference,eligible,human_rows,
+                                 encode,anchors,evaluate,legacy_run.state_digest,
+                                 RETENTION,LEARNING,SPEC['fingerprint'])
+            return
         from continual_smoke import real_learning_smoke
         real_learning_smoke(runtime,opt,checkpoint,reference,eligible,human_rows,
                             encode,anchors,evaluate,legacy_run.state_digest)
@@ -404,27 +507,135 @@ def main():
     protected_champion = load_protected_champion()
     if LEARNING:
         from continual_learning import retention_rows,verified_memories
-        memory_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
+        if RETENTION:
+            from retention_memory import (empty_memory,validate_memory,migrate_memory,refresh,
+                                           make_certifier,sample_rows,observe,summary as memory_summary)
+            from generalist_lm.tokenizer import EOS
+            champion_digest=legacy_run.state_digest(protected_champion.model)
+            certifier=make_certifier(protected_champion.model,encode,EOS)
+            if retention_memory is None:
+                if source_fingerprint==SPEC['fingerprint']:
+                    raise ValueError('resumed retention recipe cannot recreate a missing certificate ledger')
+                old_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
+                if len(old_rows)>RETENTION['capacity']:
+                    raise ValueError('retention capacity cannot hold all previous certified TRAIN answers')
+                retention_memory=empty_memory(SPEC['fingerprint'],RETENTION['capacity'])
+                retention_memory=refresh(champion_digest,catalog(old_rows,forbidden),certifier,
+                                         retention_memory,probe_limit=len(old_rows))
+                retention_memory=refresh(champion_digest,eligible,certifier,retention_memory,
+                                         probe_limit=RETENTION['refresh_probe_limit'])
+            elif source_fingerprint!=SPEC['fingerprint']:
+                retention_memory=migrate_memory(retention_memory,eligible,source_fingerprint,
+                                                 SPEC['fingerprint'],champion_digest)
+                if retention_memory['capacity']!=RETENTION['capacity']:
+                    raise ValueError('explicit retention migration must preserve certificate capacity')
+                retention_memory=refresh(champion_digest,eligible,certifier,retention_memory,
+                                         probe_limit=RETENTION['refresh_probe_limit'])
+            else:
+                validate_memory(retention_memory,eligible,SPEC['fingerprint'],champion_digest)
+                if retention_memory['capacity']!=RETENTION['capacity']:
+                    raise ValueError('retention capacity differs from resumed recipe')
+            memory_rows=[entry['row'] for entry in retention_memory['entries'].values()]
+            if {r['language'] for r in memory_rows}!={'it','en'}:
+                raise ValueError('persistent retention requires certified TRAIN answers in both languages')
+            counters['retention_memory']=memory_summary(retention_memory)
+            counters.setdefault('retention_transaction',{'schema':1,'lr_scale':1.,'attempted_updates':0,
+                'committed_updates':0,'rejected_updates':0})
+            counters.setdefault('retention_consolidation_updates',0)
+        else:
+            memory_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
+            counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
+                                         'scope':'eligible authored training only; no evaluation answers'}
         memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
-        counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
-                                     'scope':'eligible authored training only; no evaluation answers'}
     def protect_current_head():
         if FAST_HEAD and LEARNING.get('protected_head_rank',0):
             from fast_head import configure_projection
             configure_projection(runtime.model,protected_champion.model,memory_rows,encode,
                                  rank=LEARNING['protected_head_rank'])
     protect_current_head()
-    def transfer_options():
+    def transfer_options(prepared=None):
+        if prepared is not None:return prepared
         if not LEARNING:return {}
+        if RETENTION:
+            from continual_learning import profile_index
+            profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
+            return dict(memories=[encode(row) for row in sample_rows(retention_memory,eligible,anchor_rng,
+                            per_language=LEARNING.get('retention_examples_per_language',1))],
+                        retention_weight=profile['retention_weight'],champion_kl_weight=profile['champion_kl_weight'],
+                        prompt_kl_weight=RETENTION['prompt_kl_weight'])
         from continual_learning import transfer_replay_options
         return transfer_replay_options(LEARNING,counters['learning_search'],memory_by,anchor_rng)
+    def protected_update(propose):
+        nonlocal retention_memory
+        if not RETENTION:return propose()
+        from retention_guard import make_retention_guard
+        from retention_transaction import transactional_update
+        rows=sample_rows(retention_memory,eligible,anchor_rng,
+                         per_language=RETENTION['guard_examples_per_language'])
+        guard=make_retention_guard(runtime.model,protected_champion.model,[encode(row) for row in rows],
+                   max_prompt_kl=RETENTION['max_prompt_kl'],max_nll_regression=RETENTION['max_nll_regression'])
+        base_lrs=[group['lr'] for group in opt.param_groups]
+        proposed=[]
+        def record_proposal():
+            scales=[group['lr']/base for group,base in zip(opt.param_groups,base_lrs)]
+            if not scales or any(abs(value-scales[0])>1e-12 for value in scales):
+                raise ValueError('retention transaction must scale all optimizer groups equally')
+            stats=propose(scales[0]);proposed.append(stats);return stats
+        result=transactional_update(runtime.model,opt,record_proposal,guard,
+                    state=counters['retention_transaction'],scales=RETENTION['retry_scales'],
+                    sampler_rngs=(rng,anchor_rng))
+        observations=result['guard']['observations'] if result['accepted'] else guard.before_observations
+        if len(observations)!=len(rows):raise ValueError('incomplete post-transaction retention evidence')
+        evidence={row_key(row):value for row,value in zip(rows,observations)}
+        retention_memory=observe(retention_memory,eligible,
+                                 lambda row:evidence[row_key(row)],keys=list(evidence))
+        stats=dict(result['stats'])
+        # All physical retry work belongs to attempted-token/compute accounting;
+        # only the accepted optimizer trajectory counts as committed tokens.
+        for name in ('supervised_tokens','reference_tokens'):
+            committed=int(stats.get(name,0)) if result['accepted'] else 0
+            counters['committed_'+name]=counters.get('committed_'+name,0)+committed
+            stats[name]=sum(int(value.get(name,0)) for value in proposed)
+        if any('prompt_reference_tokens' in value for value in proposed):
+            counters['committed_prompt_reference_tokens']=counters.get('committed_prompt_reference_tokens',0)+(int(stats.get('prompt_reference_tokens',0)) if result['accepted'] else 0)
+            stats['prompt_reference_tokens']=sum(int(value.get('prompt_reference_tokens',0)) for value in proposed)
+            counters['attempted_prompt_reference_tokens']=counters.get('attempted_prompt_reference_tokens',0)+stats['prompt_reference_tokens']
+        stats.setdefault('loss',0.)
+        stats.update(committed=result['accepted'],physical_attempts=result['attempts'],
+                     retention_guard=result['guard'],retention_lr_scale=result['scale'])
+        counters['last_retention_transaction']={k:stats[k] for k in
+                       ('committed','physical_attempts','retention_guard','retention_lr_scale')}
+        return stats
+    def preserves_certificates():
+        nonlocal retention_memory
+        if not RETENTION:return True
+        retention_memory=observe(retention_memory,eligible,make_certifier(runtime.model,encode,EOS))
+        lost=[key for key,entry in retention_memory['entries'].items() if not entry['observation']['correct']]
+        counters['retention_last_adoption_check']={'protected':len(retention_memory['entries']),
+                                                  'lost':len(lost),'accepted':not lost}
+        return not lost
+    def refresh_champion_memory():
+        nonlocal retention_memory,memory_rows,memory_by
+        retention_memory=refresh(legacy_run.state_digest(runtime.model),eligible,
+                    make_certifier(runtime.model,encode,EOS),retention_memory,
+                    probe_limit=RETENTION['refresh_probe_limit'])
+        memory_rows=[entry['row'] for entry in retention_memory['entries'].values()]
+        memory_by={lang:[encode(row) for row in memory_rows if row['language']==lang] for lang in ('it','en')}
+        counters['retention_memory']=memory_summary(retention_memory)
     def save(*,champion=False):
         nonlocal best_path,best_fingerprint
         path=out/f'checkpoint-{counters["completed_steps"]:05d}'
-        if path.exists():shutil.rmtree(path)
         counters['success_bank']=bank_summary(bank)
+        if RETENTION:
+            if champion and not preserves_certificates():
+                raise ValueError('cannot publish a champion that lost a certified TRAIN answer')
+            validate_memory(retention_memory,eligible,SPEC['fingerprint'],
+                            legacy_run.state_digest(runtime.model) if champion else None)
+            counters['retention_memory']=memory_summary(retention_memory)
         if CACHED_TRAINING:counters['training_strategy']=training_strategy(runtime.model)
-        save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank)
+        if path.exists():shutil.rmtree(path)
+        save_session(runtime,opt,rng,anchor_rng,counters,path,fingerprint=SPEC['fingerprint'],success_bank=bank,
+                     retention_memory=retention_memory,training_registry=training_registry)
         if LEARNING:
             state={'fingerprint':SPEC['fingerprint'],'completed_steps':counters['completed_steps'],
                    'elapsed_training_seconds':counters['elapsed_training_seconds'],
@@ -455,23 +666,29 @@ def main():
         assessment=evaluate(runtime);counters['last_candidate_assessment']=assessment
         counters['reward_history'].append({'step':counters['completed_steps'],'score':reward(assessment),'context':assessment['context_rates'],'pair_rate':assessment['context_pair_rate']})
         champion=counters['champion']
-        accepted=quality_improved(champion,assessment) and retains_correct_answers(champion,assessment)
+        retained=preserves_certificates()
+        accepted=quality_improved(champion,assessment) and retains_correct_answers(champion,assessment) and retained
         rollback_candidate=False
         if LEARNING:
             from continual_learning import rejection_reasons, try_interpolations, record_decision
             search=counters['learning_search']
             report={'step':counters['completed_steps'],'learning_rate':counters['effective_learning_rate'],
                     'reasons':rejection_reasons(champion,assessment),'interpolation':None}
+            if not retained:report['reasons'].append('previously certified TRAIN answer lost')
             if not accepted:
                 blended=try_interpolations(runtime.model,protected_champion.model,
                     evaluate=lambda:evaluate(runtime),
-                    acceptable=lambda value:quality_improved(champion,value) and retains_correct_answers(champion,value),
+                    acceptable=lambda value:quality_improved(champion,value) and retains_correct_answers(champion,value) and preserves_certificates(),
                     alphas=LEARNING['interpolation_alphas'])
                 report['interpolation']=blended['alpha'];report['interpolation_probes']=blended['probes']
                 if blended['alpha'] is not None:
                     assessment=blended['assessment'];accepted=True
                     # A merged parameter path has no exact Adam trajectory.
                     opt=factory(runtime.model);apply_learning_rate()
+                elif RETENTION:
+                    # Rejected interpolation callbacks observed temporary
+                    # weights. Restore drift priorities to the actual candidate.
+                    preserves_certificates()
             report['accepted']=accepted
             decision=record_decision(search,LEARNING,counters['conversation_updates'],accepted,force=force)
             report.update(decision)
@@ -496,39 +713,44 @@ def main():
         counters['stagnant_rounds']=0 if accepted else counters['stagnant_rounds']+1
         action='continue_candidate'
         if accepted:
+            if RETENTION:refresh_champion_memory()
             adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                   step=counters['completed_steps'],reason='independently verified candidate')
             counters['champion']=assessment;action='accepted'
         elif (rollback_candidate if LEARNING else force or recover_best(counters['stagnant_rounds'])):
-            runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+            runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint,
+                         require_retention=bool(RETENTION and best_fingerprint==SPEC['fingerprint']))
             if LEARNING:opt=factory(runtime.model)
             protect_current_head()
             counters['rollbacks']+=1;counters['stagnant_rounds']=0;action='rolled_back'
             apply_learning_rate()
             def restore_transaction():
                 nonlocal runtime,opt
-                runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint)
+                runtime,opt,_=restore_champion(best_path,factory,rng,anchor_rng,fingerprint=best_fingerprint,
+                         require_retention=bool(RETENTION and best_fingerprint==SPEC['fingerprint']))
                 if LEARNING:opt=factory(runtime.model)
                 protect_current_head()
                 apply_learning_rate()
             def learn_lesson(entry):
                 from success_transfer import distill_step
                 tick=time.monotonic()
-                stats=distill_step(runtime.model,protected_champion.model,opt,entry,encode(entry['row']),
-                                   rng.choice(memory_by[entry['row']['language']]) if LEARNING else rng.choice(anchors),lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
-                                   lr_cap=SPEC['success_transfer']['lr_cap'],**transfer_options())
+                anchor=rng.choice(memory_by[entry['row']['language']]) if LEARNING else rng.choice(anchors)
+                options=transfer_options()
+                stats=protected_update(lambda scale=1.:distill_step(runtime.model,protected_champion.model,opt,entry,encode(entry['row']),
+                                   anchor,lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
+                                   lr_cap=SPEC['success_transfer']['lr_cap']*scale,**transfer_options(options)))
                 counters['elapsed_training_seconds']+=time.monotonic()-tick
                 counters['conversation_updates']+=1;counters['completed_steps']+=1
                 counters['supervised_tokens']+=stats['supervised_tokens'];counters['reference_tokens']+=stats['reference_tokens']
                 bank['transfer_updates']+=1
-                counters['last_transfer_retention']={k:stats[k] for k in
-                    ('retention_weight','champion_kl_weight','retention_examples')}
+                if RETENTION:counters['retention_consolidation_updates']+=1
+                counters['last_transfer_retention']=transfer_retention_statistics(stats,options)
                 group='morph-consolidation-'+entry['row']['language']
                 counters.setdefault('updates_by_group',{})[group]=counters.setdefault('updates_by_group',{}).get(group,0)+1
             result=consolidate(counters['morph'],bank,champion,train=learn_lesson,
                                evaluate=lambda:evaluate(runtime),restore=restore_transaction,
-                               can_train=lambda:needs_training(counters),
-                               can_adopt=lambda a,b:quality_improved(a,b) and retains_correct_answers(a,b),
+                               can_train=lambda:consolidation_allowed(counters,RETENTION) if RETENTION else needs_training(counters),
+                               can_adopt=lambda a,b:quality_improved(a,b) and retains_correct_answers(a,b) and preserves_certificates(),
                                step=lambda:counters['completed_steps'],
                                max_updates=SPEC['morph_model']['updates_per_skill'])
             counters['last_consolidation']={k:v for k,v in result.items() if k!='assessment'}
@@ -537,13 +759,16 @@ def main():
                 # candidate's learning horizon.
                 counters['learning_search']['trial_start_update']=counters['conversation_updates']
             if result['action']=='skill_accepted':
+                if RETENTION:refresh_champion_memory()
                 adopt(counters['morph'],legacy_run.state_digest(runtime.model),
                       step=counters['completed_steps'],reason='selective consolidation: '+result['skill'])
                 counters['champion']=result['assessment'];action='consolidated'
                 if LEARNING:
                     search=counters['learning_search']
-                    search['consecutive_rejections']=0;search['accepted_updates']+=1
-                    search['stopped']=search['evaluations']>=LEARNING['maximum_evaluations']
+                    if not RETENTION:
+                        search['consecutive_rejections']=0
+                        search['stopped']=search['evaluations']>=LEARNING['maximum_evaluations']
+                    search['accepted_updates']+=1
                     search['history'][-1]['consolidated']=True
                     apply_learning_rate()
                 print(json.dumps({'phase':'single AIRI model acquired verified skill',
@@ -567,7 +792,7 @@ def main():
                 del protected_champion
                 gc.collect()
                 protected_champion = load_protected_champion()
-                if LEARNING:
+                if LEARNING and not RETENTION:
                     memory_rows=verified_memories(protected_champion,retention_rows(list(eligible.values())),encode)
                     memory_by={lang:[encode(r) for r in memory_rows if r['language']==lang] for lang in ('it','en')}
                     counters['retention_memory']={'rows':len(memory_rows),'sha256':digest(memory_rows),
@@ -620,6 +845,11 @@ def main():
                 values=rng.choice(context_value_index[(lang,family)])
                 pair=matched_context_pair(source,values,blocked=context_excluded_text,
                          reserved_values=context_reserved,protected_histories=context_protected_histories)
+                if RETENTION:
+                    pair=register_context_pair(training_registry,source,pair)
+                    registered=catalog(pair,forbidden)
+                    if len(registered)!=len(pair):raise ValueError('materialized context pair failed TRAIN audit')
+                    eligible.update(registered)
                 batch=paired_batch([encode(row) for row in pair])
             group='verified-context-'+lang
         else:
@@ -642,20 +872,24 @@ def main():
             if LEARNING:
                 from continual_learning import continual_step,profile_index,retention_memories
                 profile=LEARNING['profiles'][profile_index(counters['learning_search']['consecutive_rejections'],len(LEARNING['profiles']))]
-                memories=retention_memories(LEARNING,memory_by,anchor_rng)
-                stats=continual_step(runtime.model,protected_champion.model,reference.model,opt,batch,memories,anchor,
+                memories=([encode(row) for row in sample_rows(retention_memory,eligible,anchor_rng,
+                            per_language=LEARNING.get('retention_examples_per_language',1))] if RETENTION
+                          else retention_memories(LEARNING,memory_by,anchor_rng))
+                options={'prompt_kl_weight':RETENTION['prompt_kl_weight']} if RETENTION else {}
+                stats=protected_update(lambda scale=1.:continual_step(runtime.model,protected_champion.model,reference.model,opt,batch,memories,anchor,
                                      retention_weight=profile['retention_weight'],
-                                     champion_kl_weight=profile['champion_kl_weight'])
+                                     champion_kl_weight=profile['champion_kl_weight'],**options))
             else:stats=train_step(runtime.model,reference.model,opt,*batch,*anchor,kl_weight=recipe['kl_weight'])
         else:
             from success_transfer import distill_step
-            stats=distill_step(runtime.model,protected_champion.model,opt,lesson,batch,
-                               rng.choice(memory_by[lesson['row']['language']]) if LEARNING else anchor,
+            transfer_anchor=rng.choice(memory_by[lesson['row']['language']]) if LEARNING else anchor
+            options=transfer_options()
+            stats=protected_update(lambda scale=1.:distill_step(runtime.model,protected_champion.model,opt,lesson,batch,
+                               transfer_anchor,
                                lr_multiplier=SPEC['success_transfer']['lr_multiplier'],
-                               lr_cap=SPEC['success_transfer']['lr_cap'],**transfer_options())
+                               lr_cap=SPEC['success_transfer']['lr_cap']*scale,**transfer_options(options)))
             bank['transfer_updates']+=1
-            counters['last_transfer_retention']={k:stats[k] for k in
-                ('retention_weight','champion_kl_weight','retention_examples')}
+            counters['last_transfer_retention']=transfer_retention_statistics(stats,options)
             counters['success_bank']=bank_summary(bank)
         counters['elapsed_training_seconds']+=time.monotonic()-tick
         counters['conversation_updates']+=1;counters['completed_steps']+=1
