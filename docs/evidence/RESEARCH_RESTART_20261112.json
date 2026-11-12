@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-12T20:02:49Z",
+  "research_pr": "https://github.com/arancione3000/airi-offline-training/pull/7",
+  "decision": {
+    "architectural_activation": false,
+    "reason": "Both fixed 256-unit candidates lost old exact answers, gained none; FFN arm also lost one complete TRAIN certificate.",
+    "adopted_revision": 4,
+    "approved_exact_correct": 23,
+    "approved_context_correct": 0,
+    "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79"
+  },
+  "recovery_fix": {
+    "pull_request": 6,
+    "merged_commit": "e3b98f4aa6dd0b6b7902d81d852f9ba33ebc99a2",
+    "controller_tests": 17,
+    "ci_run": 43292652227,
+    "ci_conclusion": "success",
+    "supervisor_run": 43294725434
+  },
+  "recovered_run": {
+    "id": 42277407762,
+    "attempt": 2,
+    "job_id": 131450019450,
+    "conclusion": "success",
+    "source_release": "airi-offline-471452-42276399393-1-1",
+    "source_step": 471452,
+    "saved_step": 471612,
+    "new_logical_units": 160,
+    "saved_release": "airi-offline-471612-42277407762-2-1",
+    "progress_log_lines": [
+      "2026-11-12T19:57:28.2009136Z {\"step\": 471468, \"updates\": 22192, \"loss\": 0.11462413077242672, \"phase\": 0}",
+      "2026-11-12T19:57:51.9594182Z {\"step\": 471484, \"updates\": 22208, \"loss\": 0.10177730268333107, \"phase\": 0}",
+      "2026-11-12T19:58:10.0718878Z {\"step\": 471500, \"updates\": 22224, \"loss\": 0.3471503745386144, \"phase\": 0}",
+      "2026-11-12T19:58:28.5695317Z {\"step\": 471516, \"updates\": 22240, \"loss\": 0.07442183856619522, \"phase\": 0}",
+      "2026-11-12T19:58:44.5984751Z {\"step\": 471532, \"updates\": 22256, \"loss\": 0.3326820295478683, \"phase\": 0}",
+      "2026-11-12T19:59:00.2350660Z {\"step\": 471548, \"updates\": 22272, \"loss\": 0.3278567711240612, \"phase\": 0}",
+      "2026-11-12T19:59:16.2556873Z {\"step\": 471564, \"updates\": 22288, \"loss\": 0.13744328648317605, \"phase\": 0}",
+      "2026-11-12T19:59:31.0079493Z {\"step\": 471580, \"updates\": 22304, \"loss\": 0.155839445113088, \"phase\": 0}",
+      "2026-11-12T19:59:44.9444724Z {\"step\": 471596, \"updates\": 22320, \"loss\": 0.33311631908873096, \"phase\": 0}",
+      "2026-11-12T19:59:57.8123417Z {\"step\": 471612, \"updates\": 22336, \"loss\": 0.06426468792778905, \"phase\": 0}"
+    ]
+  },
+  "checkpoint": {
+    "index": {
+      "completed_steps": 471612,
+      "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
+      "archives": [
+        {
+          "name": "AIRI_TRAINING_471612_MODEL.zip",
+          "sha256": "e9e67c0e98ae5f37f7d11fff463cd3188fb5440b2872608a8cd0b7ea29e97eda",
+          "bytes": 169731215
+        },
+        {
+          "name": "AIRI_TRAINING_471612_OPTIMIZER.zip",
+          "sha256": "fdb14a1e0c457e0f4b5226591c1ea533463e46737278c52557a0409bc57ea97b",
+          "bytes": 7403115
+        }
+      ],
+      "production_qualified": false,
+      "live_promoted": false,
+      "run_state": {
+        "name": "AIRI_RUN_STATE.json",
+        "sha256": "33565c6213a13f83fd443c824861e86cb81b7a99f4c959be1752a25a041a2bb0",
+        "bytes": 31038
+      }
+    },
+    "run_state_sha256_verified": true,
+    "root_independently_downloaded_model_optimizer_archives": false,
+    "run_state": {
+      "completed_steps": 471612,
+      "job_index": 133,
+      "continue": true,
+      "elapsed_training_seconds": 19711.64269204395,
+      "evaluations": 83,
+      "accepted_updates": 2
+    }
+  },
+  "autonomous_handoff": {
+    "control": {
+      "authorization": "User explicitly requested indefinite native training; no assistant automation or external teacher.",
+      "chunk_seconds": 180,
+      "dispatch": {
+        "job_index": 134,
+        "key": "eaf8eb06815ffcdbd58f3db78a135d4ffea48300876f4908de6206525b405944",
+        "request_attempts": 1,
+        "requested_at": 1794513706.923519,
+        "run_id": 43296178579,
+        "source_release": "airi-offline-471612-42277407762-2-1"
+      },
+      "enabled": true,
+      "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
+      "halted_reason": null,
+      "origin_step": 449276,
+      "runner_branch": "native-continuous-learning-20261105",
+      "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
+      "schema": 1,
+      "seed_release": "airi-offline-450364-42047389197-1-1"
+    },
+    "next_run": 43296178579,
+    "next_job": 131455000648,
+    "status": "in_progress",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run actions/setup-python@v5",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify immutable recipe and inputs",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Claim exclusive controller dispatch",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Restore immutable native source",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Restore immutable native reference",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install exact native CPU dependencies",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify retention, recovery and native continuation",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Verify real migration checkpoint without publishing weights",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Train and publish durable state",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "name": "Record handoff",
+        "status": "pending",
+        "conclusion": null
+      },
+      {
+        "name": "Post Restore immutable native reference",
+        "status": "pending",
+        "conclusion": null
+      },
+      {
+        "name": "Post Restore immutable native source",
+        "status": "pending",
+        "conclusion": null
+      },
+      {
+        "name": "Post Run actions/setup-python@v5",
+        "status": "pending",
+        "conclusion": null
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "pending",
+        "conclusion": null
+      }
+    ]
+  },
+  "limits": "Observed recovery, new updates, durable checkpoint and automatic next-job start. No new complete-answer capability gain demonstrated; sampled step guards do not replace full adoption checks."
+}

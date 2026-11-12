@@ -26,4 +26,4 @@
 
 ## Stato
 
-Ricerca e confronto completati: entrambi i candidati respinti, nessuna modifica architetturale attivata. Patch operativa pubblicata con 17 test passati e CI remota riuscita. Supervisore riabilitato dopo la decisione; il job precedentemente bloccato è stato effettivamente rilanciato. [Conclusioni e limiti](RESEARCH_CONCLUSIONS_20261112.md); [archivio riproducibile](../scripts/research-training/ffn-output-20261112/README.md). L'esito del checkpoint e del successivo passaggio automatico va osservato separatamente.
+Ricerca e confronto completati: entrambi i candidati respinti, nessuna modifica architetturale attivata. Patch operativa pubblicata con 17 test passati e CI remota riuscita. Supervisore riabilitato dopo la decisione; il job precedentemente bloccato è riuscito, ha salvato160 nuove unità e il successivo è partito automaticamente dal nuovo checkpoint. [Conclusioni e limiti](RESEARCH_CONCLUSIONS_20261112.md); [archivio riproducibile](../scripts/research-training/ffn-output-20261112/README.md); [ricevuta della ripartenza](evidence/RESEARCH_RESTART_20261112.json). Modello approvato ancora23/92, nessuna capacità nuova dimostrata.
