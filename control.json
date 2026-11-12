@@ -4,8 +4,11 @@
   "dispatch": {
     "job_index": 133,
     "key": "7649bdf2ea2da22ef94d567cc0594bb1a752a50f2dcd748cf4dec99d15e8c58f",
+    "last_retry_attempt": 1,
     "request_attempts": 1,
     "requested_at": 1793992271.715007,
+    "retry_requested_at": 1794513203.67975,
+    "retry_requests": 1,
     "run_id": 42277407762,
     "source_release": "airi-offline-471452-42276399393-1-1"
   },
