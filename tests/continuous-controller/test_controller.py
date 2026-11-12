@@ -1,5 +1,6 @@
 import base64,copy,hashlib,importlib.util,json,unittest
 from pathlib import Path
+from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[2]
 loader=importlib.util.spec_from_file_location('controller',ROOT/'scripts/continuous-training/controller.py')
 module=importlib.util.module_from_spec(loader);loader.loader.exec_module(module)
@@ -84,5 +85,50 @@ class ControllerTests(unittest.TestCase):
    if mutate=='job':f.c['dispatch']['job_index']=2
    else:f.index['archives'][1]=f.index['archives'][0]
    self.assertEqual(module.tick(f,100)['action'],'halted')
+ def test_job_log_capture_allows_then_removes_terminal_controls(self):
+  client=module.Client('owner/repo')
+  client.get=lambda path:{'jobs':[dict(id=17,conclusion='failure'),dict(id=18,conclusion='success')]}
+  with patch.object(module.subprocess,'check_output',return_value='\x1b[31mHTTP 500\x1b[0m\n') as request:
+   value=client.logs(dict(id=42))
+  self.assertEqual(value,'HTTP 500\n')
+  self.assertIn('--allow-escape-sequences',request.call_args.args[0])
+  self.assertEqual(request.call_count,1)
+ def test_actual_failure_shape_reaches_bounded_rerun(self):
+  f=Fake();f.finished();f.run['conclusion']='failure'
+  f.log=('\x1b[36;1mpython scripts/transfer-training/run.py\x1b[0m\n'
+         'HTTP 500 (https://api.github.com/repos/owner/repo/releases/assets/17)\n'
+         'Traceback (most recent call last):\n'
+         "subprocess.CalledProcessError: Command '['gh', 'release', 'download']' returned non-zero exit status 1.")
+  self.assertEqual(module.tick(f,100)['action'],'retry transient failure')
+  self.assertEqual(f.retries,[42]);self.assertFalse(f.posts)
+  self.assertFalse(module.transient(f.log+'\nfinger\x1b[31mprint mismatch'))
+ def test_persistent_log_cli_error_is_visible_halt_not_endless_healthy_watch(self):
+  f=Fake();f.finished();f.run['conclusion']='failure';now=[100.]
+  def logs(run):
+   raise module.subprocess.CalledProcessError(1,['gh','api','repos/owner/repo/actions/jobs/17/logs'],
+      stderr='the response contains terminal escape sequences; pass --allow-escape-sequences')
+  f.logs=logs;f.renew_supervisor=lambda:self.fail('failing watch renewed')
+  result=module.watch(f,seconds=200,poll_seconds=30,clock=lambda:now[0],pause=lambda delay:now.__setitem__(0,now[0]+delay))
+  self.assertEqual(result['action'],'controller failure');self.assertFalse(f.retries)
+  self.assertEqual(f.c['controller_error']['error_kind'],'CLI compatibility')
+  self.assertEqual(f.c['controller_error']['consecutive_failures'],3)
+  self.assertIn('read job logs',f.c['halted_reason'])
+ def test_unavailable_initial_control_api_is_also_bounded(self):
+  f=Fake();now=[0.]
+  def control():raise module.subprocess.CalledProcessError(1,['gh','api','repos/owner/repo/contents/control.json'],stderr='gh: HTTP 403')
+  f.control=control;f.renew_supervisor=lambda:self.fail('unreadable control renewed')
+  result=module.watch(f,seconds=200,poll_seconds=30,clock=lambda:now[0],pause=lambda delay:now.__setitem__(0,now[0]+delay))
+  self.assertEqual(result['action'],'controller failure')
+  self.assertIn('API authorization',result['reason']);self.assertLess(now[0],200)
+ def test_uncertain_rerun_post_has_bounded_receipt_recovery(self):
+  f=Fake();f.finished();f.run['conclusion']='failure';f.log='HTTP 500';calls=[]
+  def rerun(run):
+   calls.append(run['id']);raise module.subprocess.CalledProcessError(1,['gh','api','repos/owner/repo/actions/runs/42/rerun-failed-jobs'],stderr='HTTP 503')
+  f.rerun=rerun
+  for now in (100,700,1300):
+   with self.assertRaises(module.subprocess.CalledProcessError):module.tick(f,now)
+   self.assertEqual(module.tick(f,now+1)['action'],'idle')
+  self.assertEqual(module.tick(f,1900)['action'],'halted')
+  self.assertEqual(calls,[42,42,42]);self.assertFalse(f.posts)
 
 if __name__=='__main__':unittest.main()
