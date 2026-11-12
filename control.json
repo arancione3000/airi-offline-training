@@ -9,12 +9,13 @@
     "run_id": 42277407762,
     "source_release": "airi-offline-471452-42276399393-1-1"
   },
-  "enabled": true,
+  "enabled": false,
   "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
   "halted_reason": null,
   "origin_step": 449276,
   "runner_branch": "native-continuous-learning-20261105",
   "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
   "schema": 1,
-  "seed_release": "airi-offline-450364-42047389197-1-1"
+  "seed_release": "airi-offline-450364-42047389197-1-1",
+  "pause_reason": "User requested diagnosis and controlled research before resuming training."
 }
