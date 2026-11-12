@@ -1,0 +1,195 @@
+{
+  "scope": "Single predeclared 256-unit FFN-output ablation; never promotes or touches live state.\n\nBoth arms start at the same native champion, fresh AdamW, fixed identical TRAIN\ntrajectory and sampled guards. Only native final FFN down trainability differs.\nThe fixed memory sampler deliberately omits adaptive per-arm drift prioritization;\nthis is a controlled scope test, not an exact production replay or equal-FLOPs test.\n",
+  "seed": 20261112,
+  "steps": 256,
+  "torch_version": "2.14.1+cpu",
+  "source_files": {
+    "/workspace/airi-lab/rev4/checkpoint/model/model.pt": "6e34970036c4fec66c56197d525590e9d2f393387f979093c6b06f2002ea1058",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00001-of-00007-8dbf7484b75d.pt": "8dbf7484b75d067b9775f31510ea903e6715942302b0413d070cc08eda0c61df",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00002-of-00007-0944c21e10f3.pt": "0944c21e10f3020dde2c4cda6e29ed696596eb47aad7b5340dfa2eeab354493c",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00003-of-00007-1bd7fbc12a85.pt": "1bd7fbc12a851529149c058877a863e179ab3a3cf4b0400c571a18da2f4dad24",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00004-of-00007-70cb8325b006.pt": "70cb8325b006f655a6812cde8b35e17d8df9ef25f93515b072b936c49412133a",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00005-of-00007-19614836a89b.pt": "19614836a89b58c2c59c7ef889beb91fa9588538073f09b9e39e34b5f76f0eb5",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00006-of-00007-0a89aa609583.pt": "0a89aa609583ee8d7b9f9b1b81642c0fac284efe3f4d545c49be93086551c140",
+    "/workspace/airi-lab/rev4/checkpoint/model/model-shard-00007-of-00007-653e96a7fc48.pt": "653e96a7fc48fb79e2e52e354c6e4aaf4bb009017aa622c876634f2c702bd8f3"
+  },
+  "reference_sha256": "998530839d9722316b59cb28ff1ef68a7863f517de73fa8fef8ce9677a24b85e",
+  "schedule": [
+    "human-dialogue",
+    "verified-context",
+    "composition",
+    "old-authored",
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "native-replay",
+    "human-dialogue",
+    "verified-context",
+    "composition",
+    "old-authored",
+    "human-dialogue",
+    "verified-context",
+    "curated-dialogue",
+    "native-replay"
+  ],
+  "objective": {
+    "learning_rate": 3e-05,
+    "retention_weight": 8.0,
+    "champion_kl_weight": 8.0,
+    "native_weight": 0.25,
+    "prompt_kl_weight": 8.0
+  },
+  "guards": {
+    "examples_per_language": 4,
+    "max_prompt_kl": 0.01,
+    "max_nll_regression": 0.02,
+    "retry_scales": [
+      1.0,
+      0.5,
+      0.25,
+      0.125
+    ],
+    "lr_recovery": {
+      "accepted_streak": 64,
+      "cooldown_updates": 32,
+      "growth_factor": 2.0
+    }
+  },
+  "optimizer": "fresh AdamW for both arms, weight_decay .01; original Adam not reused because scope changes",
+  "sampling_policy": "fixed pre-materialized identical TRAIN acquisition, anchors, retention and sentinel IDs; sampler drift observations frozen at champion, unlike production adaptation",
+  "generation": {
+    "temperature": 0,
+    "max_new_tokens": 64,
+    "original_samples": 92
+  },
+  "sealed_forward": false,
+  "live_promoted": false,
+  "source_checkpoint_unchanged": true,
+  "training_code_unchanged": true,
+  "complete": true,
+  "raw_report_sha256": "96143e2d15c13e3f28b0417f780274ad85a2146c5e953a96c05dceeab339425d",
+  "compressed_report_sha256": "83b441d9676c165e586d2a6d863968173cb9285c1b1d8d9c54e3628217f02c5b",
+  "native_runtime_commit": "a5ddce05683dd4c77b1848673f2e87934138e57a",
+  "native_recovery_patch_sha256": "84df51e9eadfe15c7967f340097b57305dc6b61147e8bc94d240a4c9c3bea69c",
+  "baseline": {
+    "exact_correct": 23,
+    "probes": 92,
+    "nll": {
+      "it": 1.16253543822541,
+      "en": 0.9816829795714671
+    },
+    "human_nll": {
+      "en": 3.302019998586712
+    },
+    "full_eos_certificates_correct": 897
+  },
+  "trials": [
+    {
+      "arm": "A_frozen_ffn",
+      "train_ffn_output": false,
+      "training_seconds": 168.57746480600008,
+      "physical_attempts": 262,
+      "transaction": {
+        "schema": 1,
+        "lr_scale": 0.015625,
+        "attempted_updates": 262,
+        "committed_updates": 252,
+        "rejected_updates": 10,
+        "recovery": {
+          "streak": 0,
+          "cooldown": 8,
+          "growth_attempts": 0,
+          "growth_commits": 0
+        }
+      },
+      "physical_supervised_tokens": 43109,
+      "physical_reference_tokens": 29459,
+      "gradient_norm": {
+        "mean": 0.5380689034821423,
+        "minimum": 0.06696507334709167,
+        "maximum": 1.988498330116272,
+        "clipped_fraction": 0.16793893129770993
+      },
+      "lost_answers": [
+        0
+      ],
+      "gained_answers": [],
+      "context_correct": 0,
+      "lost_retention_keys": [],
+      "native_export_logits_exact": true,
+      "trainable_parameters": 74304,
+      "total_parameters": 50164416,
+      "after": {
+        "exact_correct": 22,
+        "probes": 92,
+        "nll": {
+          "it": 1.1400325936373983,
+          "en": 0.9628683220143839
+        },
+        "human_nll": {
+          "en": 3.2899156105598837
+        }
+      },
+      "full_eos_certificates_correct": 897,
+      "physical_prompt_reference_tokens": 58324,
+      "committed_supervised_tokens": 42017,
+      "logical_rejected_units": 4,
+      "adoption_eligible": false
+    },
+    {
+      "arm": "B_train_ffn_output",
+      "train_ffn_output": true,
+      "training_seconds": 162.19899589300007,
+      "physical_attempts": 262,
+      "transaction": {
+        "schema": 1,
+        "lr_scale": 0.015625,
+        "attempted_updates": 262,
+        "committed_updates": 243,
+        "rejected_updates": 19,
+        "recovery": {
+          "streak": 0,
+          "cooldown": 23,
+          "growth_attempts": 0,
+          "growth_commits": 0
+        }
+      },
+      "physical_supervised_tokens": 44003,
+      "physical_reference_tokens": 29666,
+      "gradient_norm": {
+        "mean": 0.6734142408400546,
+        "minimum": 0.07727470993995667,
+        "maximum": 2.956176519393921,
+        "clipped_fraction": 0.2633587786259542
+      },
+      "lost_answers": [
+        0,
+        64
+      ],
+      "gained_answers": [],
+      "context_correct": 0,
+      "lost_retention_keys": [
+        "0615f81087e8ee17711a841fcea545210f19a7ea389e72765bab8583061fd635"
+      ],
+      "native_export_logits_exact": true,
+      "trainable_parameters": 1450560,
+      "total_parameters": 50164416,
+      "after": {
+        "exact_correct": 21,
+        "probes": 92,
+        "nll": {
+          "it": 1.1273496418988849,
+          "en": 0.954508046605215
+        },
+        "human_nll": {
+          "en": 3.2849633654178176
+        }
+      },
+      "full_eos_certificates_correct": 896,
+      "physical_prompt_reference_tokens": 58342,
+      "committed_supervised_tokens": 40769,
+      "logical_rejected_units": 13,
+      "adoption_eligible": false
+    }
+  ]
+}

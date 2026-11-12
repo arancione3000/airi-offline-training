@@ -26,4 +26,4 @@
 
 ## Stato
 
-Supervisore temporaneamente disabilitato per rispettare la sequenza ricerca → prova → decisione → riavvio richiesta dall'utente. Patch operativa con17 test passati. Opzione FFN soltanto in laboratorio, default invariato; confronto controllato in preparazione/esecuzione. Risultati ed esito dell'attivazione seguiranno dopo osservazione.
+Ricerca e confronto completati: entrambi i candidati respinti, nessuna modifica architetturale attivata. Patch operativa pubblicata con 17 test passati e CI remota riuscita. Supervisore riabilitato dopo la decisione; il job precedentemente bloccato è stato effettivamente rilanciato. [Conclusioni e limiti](RESEARCH_CONCLUSIONS_20261112.md); [archivio riproducibile](../scripts/research-training/ffn-output-20261112/README.md). L'esito del checkpoint e del successivo passaggio automatico va osservato separatamente.
