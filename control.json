@@ -11,7 +11,7 @@
   },
   "enabled": true,
   "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
-  "halted_reason": null,
+  "halted_reason": "training failed or intentionally cancelled; inspect integrity/program error",
   "origin_step": 449276,
   "runner_branch": "native-continuous-learning-20261105",
   "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
