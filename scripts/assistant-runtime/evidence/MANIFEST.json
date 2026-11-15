@@ -1,0 +1,110 @@
+{
+  "artifacts": [
+    {
+      "path": "V1_CASES.json.gz",
+      "kind": "preserved v1 development failure and exact source",
+      "raw_sha256": "afe1eadbf86a9fad4c13b110d8d9087c041e00b0fb663b92286dff7bb91176f2",
+      "gzip_sha256": "e342751a26e29bcb68d1b32a7ccdd8b6572838440e110d371846b837058fbf4d",
+      "raw_bytes": 109621,
+      "gzip_bytes": 3804
+    },
+    {
+      "path": "V1_PREREGISTRATION.json.gz",
+      "kind": "preserved v1 development failure and exact source",
+      "raw_sha256": "84d23c866a5ded2c28ddbfe409ccd6f72044400d7236be4ff70f60cffda7939b",
+      "gzip_sha256": "60845ed7245b37fe1a0f32ff834ed440827145f62d1721da5c8b8d3e0f925ebc",
+      "raw_bytes": 592,
+      "gzip_bytes": 375
+    },
+    {
+      "path": "V1_REPORT.json.gz",
+      "kind": "preserved v1 development failure and exact source",
+      "raw_sha256": "3604a1750f310b5c1e7a859ef4dda84827e58a268a425474b23a6cdd2f9b5d7c",
+      "gzip_sha256": "fe079de82b026557331844e1e1e898592ee5b75e26869af09a2803fcba137a17",
+      "raw_bytes": 182391,
+      "gzip_bytes": 8976
+    },
+    {
+      "path": "V1_context_memory.py.gz",
+      "kind": "preserved v1 development failure and exact source",
+      "raw_sha256": "112e4ba59d3d6d0eba2d1d1243ac1f5056b39197e19b66e66aa3968c2e5f99ff",
+      "gzip_sha256": "aa7d56650dda2da8eaf2b2224eea226f80ecc9c2c04a3aef004306caeb876833",
+      "raw_bytes": 17680,
+      "gzip_bytes": 6012
+    },
+    {
+      "path": "V1_evaluate.py.gz",
+      "kind": "preserved v1 development failure and exact source",
+      "raw_sha256": "0d25528e8e280f46db82e1b305285a48eddda3c86a856e3ca1403c45bc8fe767",
+      "gzip_sha256": "fee2c76bab68679985300a50c6345e3a7465092aaf48e43732a215f74724be4b",
+      "raw_bytes": 8856,
+      "gzip_bytes": 2851
+    },
+    {
+      "path": "V2_CASES.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "ce0f049f7160e4234e284447bbeeae321bf48ea4b4818425d5cffaf691bf6c56",
+      "gzip_sha256": "21e2237a046c14add42d0c0251dc9d4ddb939148e91bcf917014f226fbe1bf9e",
+      "raw_bytes": 109621,
+      "gzip_bytes": 3815
+    },
+    {
+      "path": "V2_PREREGISTRATION.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "6b04a0021869bead79332c78ba16b3009babf934b8e2ed8a699628405b541b83",
+      "gzip_sha256": "4c7e9b854d79bc39f44ad31a06a44862261047ab9cce1d239f18f3e6bd5bef18",
+      "raw_bytes": 592,
+      "gzip_bytes": 375
+    },
+    {
+      "path": "V2_REPORT.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "222db02814aed3f397139cf05e370d78083198c3f8247dac45be00fb46819c51",
+      "gzip_sha256": "a27c4e0bc4763a075f94f471ce157794a50dc41f7b9ce63600f1c464a7ced4d8",
+      "raw_bytes": 194062,
+      "gzip_bytes": 9514
+    },
+    {
+      "path": "V2_NATIVE_VERIFICATION.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "848c7188eafc3909507cd132eec1971f68048123f4cf7de72214ab402d8057f8",
+      "gzip_sha256": "eaaf8a108fb213c09e1a8702a59d86b22dfc85bdd19c713d345449b0db973528",
+      "raw_bytes": 32181,
+      "gzip_bytes": 3008
+    },
+    {
+      "path": "V2_CLI_DEMO.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "c188f3cfba3ac85cd9f639bf7489b0adc2dbe15acf8bee3768076ece40c65a9f",
+      "gzip_sha256": "f319cc0ad7f99988e293f73af37f6ad0134be34fadea8ac68cc6e83c48aa4112",
+      "raw_bytes": 225,
+      "gzip_bytes": 166
+    },
+    {
+      "path": "V2_approved-record.json.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "b6f3ad04a36a8e327cae2750183ada7b03e859dec8dcdb7ff96110a4ae299fb7",
+      "gzip_sha256": "0f2d7d689e4987c11219267ea61fdc9d44989617b897624c2a8ccdf4714158d2",
+      "raw_bytes": 1879,
+      "gzip_bytes": 915
+    },
+    {
+      "path": "V2_native_verification.py.gz",
+      "kind": "final software-memory validation; synthetic cases or frozen model identity, not private conversation logs",
+      "raw_sha256": "28a32ac932ab3396057163757f211bc6188580c71157245ec2ba588f372253e8",
+      "gzip_sha256": "8315138aa55ea620a3c9441987125481733fbbaaf1fcf3dc875d2caaa4ea064f",
+      "raw_bytes": 3189,
+      "gzip_bytes": 1235
+    }
+  ],
+  "source_sha256": {
+    "scripts/assistant-runtime/evaluate.py": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+    "scripts/assistant-runtime/context_memory.py": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+    "scripts/assistant-runtime/assistant.py": "e13a3d531f4219c4fddf4949f1ab091ee8b048964710675c97a90878e3a93834",
+    "scripts/assistant-runtime/chat.py": "524442965d5ef7d9565560142ea93f32824489f03698fe048779739c469c329b"
+  },
+  "summary_sha256": "fbebadf860e650958d6f85103023a45f1629eaae1985041b6f239b1afa5227ec",
+  "private_user_logs_included": false,
+  "model_weights_included": false,
+  "gzip_mtime": 0
+}

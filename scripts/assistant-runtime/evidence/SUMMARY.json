@@ -1,0 +1,49 @@
+{
+  "scope": "experimental composed assistant; neural and software scores explicitly separate",
+  "memory_source_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+  "gates_passed_memory_composition_only": true,
+  "production_qualified": false,
+  "neural_weights_promoted": false,
+  "native_expert_enabled": false,
+  "functional_positive": {
+    "correct": 96,
+    "total": 96
+  },
+  "functional_negative": {
+    "false_answers": 0,
+    "total": 68
+  },
+  "actual_composed_legacy92": {
+    "correct": 27,
+    "previously_correct_lost": 0,
+    "native_only_baseline": 23
+  },
+  "actual_fresh32": {
+    "seed": 202611152255,
+    "native_correct": 0,
+    "composed_correct": 32
+  },
+  "certified_routes": {
+    "total": 897,
+    "memory_outputs_checked_against_gold": 20,
+    "lost": 0,
+    "native_unchanged_inherited": 877,
+    "scope": "memory-route outputs compared to every certified gold; abstentions preserve exact native call, no fresh neural certification claim"
+  },
+  "model_revision": 4,
+  "model_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "greedy_rng_unchanged": true,
+  "v1_development_result": {
+    "positive_correct": 72,
+    "positive_count": 96,
+    "false_answers": 0,
+    "passed": false,
+    "generic_fix": "collective IT/EN topic grammar; fresh-v2 values independently preregistered"
+  },
+  "limits": [
+    "Closed explicit declaration/question grammar, not general discourse understanding.",
+    "No persistent profile: provided history/process memory only; explicit reset.",
+    "Baseline native model and production qualification unchanged.",
+    "Fresh dataset values test software functionality, not neural learning."
+  ]
+}

@@ -1,0 +1,45 @@
+name: Verify experimental Airi assistant memory
+on:
+  push:
+    paths:
+      - 'scripts/assistant-runtime/**'
+      - 'tests/assistant-runtime/**'
+      - '.github/workflows/verify-assistant-runtime.yml'
+  pull_request:
+    paths:
+      - 'scripts/assistant-runtime/**'
+      - 'tests/assistant-runtime/**'
+      - '.github/workflows/verify-assistant-runtime.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify memory precision, boundaries, provenance and actual CLI
+        run: python -m unittest discover -s tests/assistant-runtime -v
+      - name: Verify independent functionality and inherited native preservation
+        run: |
+          python scripts/assistant-runtime/evaluate.py --output assistant-ci --prepare-only --seed 202611152254
+          python - <<'PY'
+          import gzip
+          from pathlib import Path
+          Path('assistant-ci/ledger.json').write_bytes(gzip.decompress(Path('tests/assistant-runtime/fixtures/retention_contract.json.gz').read_bytes()))
+          PY
+          python scripts/assistant-runtime/evaluate.py --output assistant-ci --legacy-report scripts/research-training/learnability-20261115/evidence/REPORT.json.gz --ledger assistant-ci/ledger.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('assistant-ci/REPORT.json').read_text())
+          assert r['composed_memory_gates_passed']
+          assert r['legacy92']['previously_correct_lost']==0
+          assert r['certified897']['total']==897 and r['certified897']['lost']==0
+          PY
