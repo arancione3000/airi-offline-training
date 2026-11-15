@@ -59,9 +59,12 @@ class ControllerTests(unittest.TestCase):
   self.assertEqual(module.tick(f,100)['action'],'halted');self.assertFalse(f.retries)
  def test_transient_retry_is_claimed_once_and_bounded(self):
   f=Fake();f.finished();f.run['conclusion']='failure';f.log='gh: HTTP502 BadGateway'
-  self.assertEqual(module.tick(f,100)['action'],'retry transient failure')
-  self.assertEqual(module.tick(f,101)['action'],'idle');self.assertEqual(f.retries,[42])
-  f.run['run_attempt']=3;self.assertEqual(module.tick(f,102)['action'],'halted')
+  self.assertEqual(module.tick(f,100)['action'],'recovery cooldown')
+  self.assertEqual(module.tick(f,160)['action'],'retry transient failure')
+  self.assertEqual(module.tick(f,161)['action'],'idle');self.assertEqual(f.retries,[42])
+  f.run['run_attempt']=3;self.assertEqual(module.tick(f,170)['action'],'recovery cooldown')
+  self.assertEqual(module.tick(f,290)['action'],'redispatched recoverable failure')
+  self.assertIsNone(f.c['halted_reason']);self.assertEqual(f.c['dispatch']['receipt_after_run_id'],42)
  def test_active_job_and_disabled_service_do_not_dispatch(self):
   f=Fake();f.run_values=[dict(status='in_progress',head_branch='frozen')]
   self.assertEqual(module.tick(f,100)['action'],'idle');self.assertFalse(f.posts)
@@ -90,16 +93,17 @@ class ControllerTests(unittest.TestCase):
   client.get=lambda path:{'jobs':[dict(id=17,conclusion='failure'),dict(id=18,conclusion='success')]}
   with patch.object(module.subprocess,'check_output',return_value='\x1b[31mHTTP 500\x1b[0m\n') as request:
    value=client.logs(dict(id=42))
-  self.assertEqual(value,'HTTP 500\n')
+  self.assertEqual(value,'HTTP 500\n\nHTTP 500\n')
   self.assertIn('--allow-escape-sequences',request.call_args.args[0])
-  self.assertEqual(request.call_count,1)
+  self.assertEqual(request.call_count,2)
  def test_actual_failure_shape_reaches_bounded_rerun(self):
   f=Fake();f.finished();f.run['conclusion']='failure'
   f.log=('\x1b[36;1mpython scripts/transfer-training/run.py\x1b[0m\n'
          'HTTP 500 (https://api.github.com/repos/owner/repo/releases/assets/17)\n'
          'Traceback (most recent call last):\n'
          "subprocess.CalledProcessError: Command '['gh', 'release', 'download']' returned non-zero exit status 1.")
-  self.assertEqual(module.tick(f,100)['action'],'retry transient failure')
+  self.assertEqual(module.tick(f,100)['action'],'recovery cooldown')
+  self.assertEqual(module.tick(f,160)['action'],'retry transient failure')
   self.assertEqual(f.retries,[42]);self.assertFalse(f.posts)
   self.assertFalse(module.transient(f.log+'\nfinger\x1b[31mprint mismatch'))
  def test_persistent_log_cli_error_is_visible_halt_not_endless_healthy_watch(self):
@@ -125,10 +129,24 @@ class ControllerTests(unittest.TestCase):
   def rerun(run):
    calls.append(run['id']);raise module.subprocess.CalledProcessError(1,['gh','api','repos/owner/repo/actions/runs/42/rerun-failed-jobs'],stderr='HTTP 503')
   f.rerun=rerun
-  for now in (100,700,1300):
+  self.assertEqual(module.tick(f,100)['action'],'recovery cooldown')
+  for now in (160,760,1360):
    with self.assertRaises(module.subprocess.CalledProcessError):module.tick(f,now)
    self.assertEqual(module.tick(f,now+1)['action'],'idle')
-  self.assertEqual(module.tick(f,1900)['action'],'halted')
-  self.assertEqual(calls,[42,42,42]);self.assertFalse(f.posts)
+  self.assertEqual(module.tick(f,1960)['action'],'redispatched recoverable failure')
+  self.assertEqual(calls,[42,42,42]);self.assertEqual(len(f.posts),1)
+  self.assertIsNone(f.c['halted_reason'])
+ def test_each_new_attempt_gets_retry_then_platform_limit_rolls_over(self):
+  f=Fake();f.finished();f.run['conclusion']='failure';f.log='stream error: PROTOCOL_ERROR; received from peer'
+  self.assertEqual(module.tick(f,0)['action'],'recovery cooldown')
+  module.tick(f,60)
+  f.run['run_attempt']=2
+  self.assertEqual(module.tick(f,61)['action'],'recovery cooldown')
+  self.assertEqual(module.tick(f,181)['action'],'retry transient failure')
+  f.run['run_attempt']=3
+  self.assertEqual(module.tick(f,182)['action'],'recovery cooldown')
+  self.assertEqual(module.tick(f,422)['action'],'redispatched recoverable failure')
+  self.assertEqual(f.retries,[42,42]);self.assertEqual(len(f.posts),1)
+  self.assertEqual(f.c['dispatch']['network_failures'],3)
 
 if __name__=='__main__':unittest.main()
