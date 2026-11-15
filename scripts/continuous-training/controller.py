@@ -2,8 +2,9 @@
 
 A serialized controller and a CAS lease at training-job start jointly prevent
 concurrent writers. Published checkpoint indices, never mutable progress, grant
-continuation. Integrity/program failures halt; network failures have bounded
-retries. An enabled service has no date or total-job limit.
+continuation. Integrity/program failures halt; network failures retry indefinitely
+with bounded request rates and fresh runs after platform rerun limits. An enabled
+service has no date or total-job limit.
 """
 import argparse
 import base64
@@ -20,21 +21,31 @@ CONTROL_PATH='control.json'
 WORKFLOW='airi-continuous-background.yml'
 ACTIVE={'queued','in_progress','waiting','pending','requested'}
 TAG=re.compile(r'airi-offline-(\d+)-(\d+)-(\d+)-(\d+)\Z')
+API_TIMEOUT=60
+IO_ERRORS=(subprocess.CalledProcessError,subprocess.TimeoutExpired)
 
 
 def key(fp,release,index):
     return hashlib.sha256(json.dumps([fp,release,index],separators=(',',':')).encode()).hexdigest()
 
 
-def transient(log):
-    value='\n'.join(clean_log(log).splitlines()[-200:]).lower()
-    if any(x in value for x in ('digest mismatch','fingerprint','provenance','unsafe archive',
+def hard_failure(log):
+    value=clean_log(log).lower()
+    return any(x in value for x in ('digest mismatch','fingerprint mismatch','provenance','unsafe archive',
                                 'conflicting registration','valueerror:','assertionerror:','runtimeerror:',
-                                'retention memory','manifest omits')):
-        return False
-    return bool(re.search(r'(?:http|status|gh:)[^\n]{0,100}?(429|500|502|503|504)\b',value)
+                                'retention memory','manifest omits'))
+
+
+def transient(log):
+    if hard_failure(log):return False
+    value='\n'.join(clean_log(log).splitlines()[-200:]).lower()
+    conflict=('409' in value and 'sha' in value and ('does not match' in value or "doesn't match" in value))
+    return bool(conflict or re.search(r'(?:http|status|gh:)[^\n]{0,100}?(408|429|500|502|503|504)\b',value)
                 or any(x in value for x in ('connection reset','connection timed out',
-                       'temporary failure in name resolution','runner has lost communication','tls handshake timeout')))
+                       'temporary failure in name resolution','runner has lost communication','tls handshake timeout',
+                       'protocol_error','stream error: stream id','context deadline exceeded',
+                       'net/http: timeout','unexpected eof','i/o timeout','network is unreachable',
+                       'connection refused','connection closed','http2: stream closed')))
 
 
 def clean_log(value):
@@ -45,13 +56,17 @@ def clean_log(value):
 
 
 def io_error_kind(error):
+    if isinstance(error,subprocess.TimeoutExpired):return 'transient timeout'
     value=error.stderr or ''
     if isinstance(value,bytes):value=value.decode('utf-8',errors='replace')
     value=value.lower()
     if 'escape sequences' in value or 'unknown flag' in value:return 'CLI compatibility'
+    if 'rate limit' in value or transient(value):return 'transient transport'
     if re.search(r'http\s*(401|403)\b',value):return 'API authorization'
-    if re.search(r'http\s*404\b',value):return 'API resource unavailable'
-    if re.search(r'http\s*(429|500|502|503|504)\b',value):return 'transient HTTP'
+    if re.search(r'http\s*(404|410|422)\b',value):
+        args=' '.join(error.cmd) if isinstance(error.cmd,(list,tuple)) else ''
+        if any(x in args for x in ('/logs','/releases/','/rerun-failed-jobs')):return 'transient resource unavailable'
+        return 'API resource unavailable'
     return 'subprocess failure'
 
 
@@ -71,7 +86,7 @@ class Client:
         if not re.fullmatch(r'[\w.-]+/[\w.-]+',repo):raise ValueError('invalid repository')
         self.base='repos/'+repo
     def get(self,path):
-        return json.loads(subprocess.check_output(['gh','api',self.base+'/'+path],text=True,stderr=subprocess.PIPE))
+        return json.loads(subprocess.check_output(['gh','api',self.base+'/'+path],text=True,stderr=subprocess.PIPE,timeout=API_TIMEOUT))
     def control(self):
         result=self.get('contents/'+CONTROL_PATH+'?ref='+CONTROL_BRANCH)
         return json.loads(base64.b64decode(result['content'])),result['sha']
@@ -79,43 +94,41 @@ class Client:
         payload=dict(message='chore: coordinate continuous AIRI training',branch=CONTROL_BRANCH,
                      content=base64.b64encode((json.dumps(state,sort_keys=True,indent=2)+'\n').encode()).decode(),sha=sha)
         subprocess.run(['gh','api','--method','PUT',self.base+'/contents/'+CONTROL_PATH,'--input','-'],
-                       input=json.dumps(payload),text=True,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+                       input=json.dumps(payload),text=True,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,timeout=API_TIMEOUT)
     def dispatch(self,branch,inputs):
         subprocess.run(['gh','api','--method','POST',self.base+'/actions/workflows/'+WORKFLOW+'/dispatches',
-                        '--input','-'],input=json.dumps(dict(ref=branch,inputs=inputs)),text=True,check=True,stderr=subprocess.PIPE)
+                        '--input','-'],input=json.dumps(dict(ref=branch,inputs=inputs)),text=True,check=True,stderr=subprocess.PIPE,timeout=API_TIMEOUT)
     def renew_supervisor(self):
         subprocess.run(['gh','api','--method','POST',self.base+'/actions/workflows/airi-continuous-controller.yml/dispatches',
-                        '--input','-'],input=json.dumps(dict(ref='main',inputs={})),text=True,check=True,stderr=subprocess.PIPE)
+                        '--input','-'],input=json.dumps(dict(ref='main',inputs={})),text=True,check=True,stderr=subprocess.PIPE,timeout=API_TIMEOUT)
     def runs(self):
         return self.get('actions/workflows/'+WORKFLOW+'/runs?per_page=100')['workflow_runs']
     def logs(self,run):
-        jobs=self.get(f'actions/runs/{run["id"]}/jobs?per_page=100')['jobs']
-        # Recent gh versions refuse ANSI-bearing response bodies by default,
-        # even with captured stdout. Permit capture, then sanitize locally.
+        jobs=self.get(f'actions/runs/{run["id"]}/jobs?filter=latest&per_page=100')['jobs']
         return '\n'.join(clean_log(subprocess.check_output(
                          ['gh','api','--allow-escape-sequences',self.base+f'/actions/jobs/{j["id"]}/logs'],
-                         text=True,errors='replace',stderr=subprocess.PIPE))
-                         for j in jobs if j.get('conclusion')=='failure')
+                         text=True,errors='replace',stderr=subprocess.PIPE,timeout=API_TIMEOUT))
+                         for j in jobs if j.get('conclusion') in {'failure','cancelled','timed_out','success'})
     def rerun(self,run):
-        subprocess.run(['gh','api','--method','POST',self.base+f'/actions/runs/{run["id"]}/rerun-failed-jobs'],check=True,stderr=subprocess.PIPE)
+        subprocess.run(['gh','api','--method','POST',self.base+f'/actions/runs/{run["id"]}/rerun-failed-jobs'],check=True,stderr=subprocess.PIPE,timeout=API_TIMEOUT)
     def asset(self,item):
         return subprocess.check_output(['gh','api','-H','Accept: application/octet-stream',
-                                       self.base+f'/releases/assets/{item["id"]}'],stderr=subprocess.PIPE)
+                                       self.base+f'/releases/assets/{item["id"]}'],stderr=subprocess.PIPE,timeout=API_TIMEOUT)
     def checkpoint(self,run_id):
-        choices=[]
-        for page in range(1,4):
-            values=self.get(f'releases?per_page=100&page={page}')
-            for release in values:
-                match=TAG.fullmatch(release['tag_name'])
-                if match and int(match[2])==run_id and not release['draft']:
-                    choices.append((int(match[3]),int(match[4]),release))
-            if choices or len(values)<100:break
-        if not choices:raise ValueError('successful training has no committed checkpoint')
-        release=max(choices,key=lambda r:r[:2])[2]
-        assets=release['assets'];indices=[a for a in assets if re.fullmatch(r'AIRI_TRAINING_CHECKPOINT_\d+\.json',a['name'])]
+        # A mandatory handoff receipt identifies the terminal checkpoint exactly.
+        # Never scan a growing, unsorted release catalogue or reuse an older attempt.
+        run=self.get(f'actions/runs/{run_id}')
+        receipts=set(re.findall(r'SAVED_RELEASE:\s*(airi-offline-\d+-\d+-\d+-\d+)\b',self.logs(run)))
+        if len(receipts)!=1:raise ValueError('successful training has no unique checkpoint handoff receipt')
+        tag=receipts.pop();match=TAG.fullmatch(tag)
+        if int(match[2])!=run_id or int(match[3])!=run.get('run_attempt',1):
+            raise ValueError('checkpoint handoff run/attempt mismatch')
+        release=self.get('releases/tags/'+tag)
+        if release.get('draft') or release.get('tag_name')!=tag:raise ValueError('uncommitted checkpoint release')
+        assets=release['assets'];indices=[a for a in assets if a['name']==f'AIRI_TRAINING_CHECKPOINT_{int(match[1]):05d}.json']
         states=[a for a in assets if a['name']=='AIRI_RUN_STATE.json']
         if len(indices)!=1 or len(states)!=1:raise ValueError('checkpoint index/run state missing')
-        return release['tag_name'],json.loads(self.asset(indices[0])),self.asset(states[0])
+        return tag,json.loads(self.asset(indices[0])),self.asset(states[0])
 
 
 def validate_checkpoint(state,index,raw,control,job):
@@ -152,6 +165,36 @@ def submit(client,c,sha,source,job,now):
     return dict(action='dispatched',job_index=job,source_release=source)
 
 
+def recover_training(client,c,sha,run,now):
+    """Retry indefinitely at bounded frequency, always from the durable source."""
+    d=c['dispatch'];attempt=run.get('run_attempt',1)
+    marker=[run['id'],attempt]
+    if d.get('failure_marker')!=marker:
+        d['failure_marker']=marker
+        count=d.get('network_failures',0)+1;d['network_failures']=count
+        d['retry_not_before']=now+min(3600,60*2**min(count-1,6))
+        client.write(c,sha)
+        return dict(action='recovery cooldown',not_before=d['retry_not_before'],failures=count)
+    if now<d.get('retry_not_before',0):
+        return dict(action='idle',reason='recovery cooldown',not_before=d['retry_not_before'])
+    if d.get('last_retry_attempt')==attempt and now-d.get('retry_requested_at',0)<600:
+        return dict(action='idle',reason='transient retry already claimed')
+    requests=d.get('retry_requests',0) if d.get('last_retry_attempt')==attempt else 0
+    if run.get('conclusion')=='failure' and attempt<3 and requests<3:
+        if d.get('last_retry_attempt')!=attempt:d['retry_requests']=0
+        d.update(last_retry_attempt=attempt,retry_requested_at=now,retry_requests=d.get('retry_requests',0)+1)
+        client.write(c,sha);client.rerun(run)
+        return dict(action='retry transient failure',run_id=run['id'])
+    # Old runs have platform rerun limits/expiry. A fresh dispatch keeps the
+    # original source/job/key; its watermark excludes every previous receipt.
+    d.update(receipt_after_run_id=run['id'],run_id=None,requested_at=now,request_attempts=1)
+    for field in ('last_retry_attempt','retry_requested_at','retry_requests'):d.pop(field,None)
+    client.write(c,sha)
+    client.dispatch(c['runner_branch'],dict(checkpoint_release=d['source_release'],continuation=str(d['job_index']),
+                    preflight_only='false',dispatch_key=d['key'],chunk_seconds=str(c.get('chunk_seconds',1200))))
+    return dict(action='redispatched recoverable failure',job_index=d['job_index'],source_release=d['source_release'])
+
+
 def tick(client,now=None):
     now=time.time() if now is None else now
     c,sha=client.control()
@@ -166,14 +209,13 @@ def tick(client,now=None):
     d=c.get('dispatch')
     if d is None:return submit(client,c,sha,c['seed_release'],0,now)
     if d['run_id'] is None:
-        found=[r for r in runs if d['key'] in r.get('display_title','') and r.get('head_sha')==c['runner_sha']]
+        found=[r for r in runs if d['key'] in r.get('display_title','') and r.get('head_sha')==c['runner_sha']
+               and r['id']>d.get('receipt_after_run_id',0)]
         if found:
             d['run_id']=max(found,key=lambda r:r['id'])['id'];client.write(c,sha)
             return dict(action='recovered dispatch receipt',run_id=d['run_id'])
-        if now-d['requested_at']<600:return dict(action='idle',reason='dispatch receipt pending')
-        if d['request_attempts']>=3:
-            c['halted_reason']='dispatch receipt unavailable after bounded retries';client.write(c,sha)
-            return dict(action='halted',reason=c['halted_reason'])
+        wait=min(3600,600*2**min(d['request_attempts']-1,3))
+        if now-d['requested_at']<wait:return dict(action='idle',reason='dispatch receipt pending')
         d['request_attempts']+=1;d['requested_at']=now;client.write(c,sha)
         client.dispatch(c['runner_branch'],dict(checkpoint_release=d['source_release'],continuation=str(d['job_index']),preflight_only='false',dispatch_key=d['key'],chunk_seconds=str(c.get('chunk_seconds',1200))))
         return dict(action='retried uncertain dispatch')
@@ -183,24 +225,18 @@ def tick(client,now=None):
         c['halted_reason']='claimed run identity changed';client.write(c,sha)
         return dict(action='halted',reason=c['halted_reason'])
     if run.get('conclusion')!='success':
-        if run.get('conclusion') in {'failure','timed_out'} and transient(client.logs(run)) and run.get('run_attempt',1)<3:
-            attempt=run.get('run_attempt',1)
-            if d.get('last_retry_attempt')==attempt:
-                if now-d.get('retry_requested_at',0)<600:
-                    return dict(action='idle',reason='transient retry already claimed')
-                if d.get('retry_requests',1)>=3:
-                    c['halted_reason']='transient rerun receipt unavailable after bounded requests'
-                    client.write(c,sha);return dict(action='halted',reason=c['halted_reason'])
-            else:d['retry_requests']=0
-            d.update(last_retry_attempt=attempt,retry_requested_at=now,
-                     retry_requests=d.get('retry_requests',0)+1)
-            client.write(c,sha)
-            client.rerun(run);return dict(action='retry transient failure',run_id=run['id'])
+        log=client.logs(run)
+        if (not hard_failure(log) and (transient(log) or run.get('conclusion') in {'cancelled','timed_out'})):
+            return recover_training(client,c,sha,run,now)
         c['halted_reason']='training failed or intentionally cancelled; inspect integrity/program error'
         client.write(c,sha);return dict(action='halted',reason=c['halted_reason'])
     try:
         release,index,raw=client.checkpoint(run['id']);state=json.loads(raw)
         validate_checkpoint(state,index,raw,c,d['job_index'])
+        match=TAG.fullmatch(release)
+        if (not match or int(match[1])!=state['completed_steps'] or int(match[2])!=run['id']
+                or int(match[3])!=run.get('run_attempt',1)):
+            raise ValueError('checkpoint tag/step/run/attempt mismatch')
     except (ValueError,KeyError,TypeError) as error:
         c['halted_reason']=str(error);client.write(c,sha);return dict(action='halted',reason=str(error))
     if state['continuous_training']['not_before']>now:return dict(action='idle',reason='durable epoch cooldown',not_before=state['continuous_training']['not_before'])
@@ -217,7 +253,7 @@ def claim(client,*,run_id,runner_sha,source,job,request):
     d['run_id']=run_id;client.write(c,sha);return True
 
 
-def watch(client,seconds=2700,poll_seconds=30,clock=time.time,pause=time.sleep):
+def watch(client,seconds=1200,poll_seconds=30,clock=time.time,pause=time.sleep):
     """Observe child completion directly and explicitly renew this bounded watcher."""
     end=clock()+seconds
     failures=0
@@ -230,19 +266,21 @@ def watch(client,seconds=2700,poll_seconds=30,clock=time.time,pause=time.sleep):
             failures=0
             print(json.dumps(result),flush=True)
             if result.get('action')=='halted':return result
-        except subprocess.CalledProcessError as error:
+        except IO_ERRORS as error:
             failures+=1
             diagnostic=dict(action='controller API retry pending',operation=io_operation(error),
-                            exit_code=error.returncode,error_kind=io_error_kind(error),consecutive_failures=failures)
+                            exit_code=getattr(error,'returncode',None),error_kind=io_error_kind(error),consecutive_failures=failures)
             print(json.dumps(diagnostic),flush=True)
-            if failures>=3:
+            if failures>=3 and not diagnostic['error_kind'].startswith('transient'):
                 reason='repeated controller I/O failure: '+diagnostic['operation']+' ('+diagnostic['error_kind']+')'
                 try:
                     control,sha=client.control();control['halted_reason']=reason
                     control['controller_error']=diagnostic;client.write(control,sha)
-                except subprocess.CalledProcessError:
+                except IO_ERRORS:
                     pass # Cannot persist a halt if the control API itself is unavailable.
                 return dict(action='controller failure',reason=reason)
+            pause(min(300,poll_seconds*2**min(failures-1,4),max(0,end-clock())))
+            continue
         pause(min(poll_seconds,max(0,end-clock())))
     control,_=client.control()
     if control.get('enabled') and not control.get('halted_reason'):
