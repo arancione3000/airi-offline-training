@@ -1,11 +1,29 @@
 # Independent offline training
 
-The latest work is documented in [persistent knowledge retention](docs/KNOWLEDGE_RETENTION_20261105.md)
-and [context acquisition diagnostics](docs/CONTEXT_DIVERSITY_20261104.md). The approved offline
-model remains revision2 at23/92 exact held-out answers. The new retention runner preserves
-certified TRAIN knowledge across checkpoints and rejects regressions; its isolated192-unit
-candidate scored22/92 and was rejected. See the reports for evidence and the separate bounded
-automatic pilot. The original October runner instructions below describe the historical cycle.
+## Current experimental assistant
+
+Run `python scripts/assistant-runtime/chat.py` for the new assistant entry point.
+It can recall explicit names, residences and topics from the current conversation,
+with source spans, corrections and conservative abstention. Native fallback uses the
+existing hash-verified approved model loader and requires the usual native runtime
+dependencies and GitHub access. See [setup, examples and limits](scripts/assistant-runtime/README.md).
+
+Measurements are separate: the approved **native model remains revision4,23/92**.
+The **composed assistant scores27/92** in actual inference with the same weights and
+memory, preserving all23 earlier successes. New explicit-memory tests score96/96
+positive and0/68 unsupported false answers. This is software recall, not a claim that
+the neural weights learned those cases. The certified897 TRAIN routes are preserved:
+20 memory answers match their gold and877 calls inherit unchanged native behavior.
+
+The [architecture plan](docs/ARCHITECTURE_IMPROVEMENT_PLAN_20261115.md) and
+[results](docs/ARCHITECTURE_IMPROVEMENT_RESULTS_20261115.md) document both the useful
+memory component and the rejected broad-curriculum neural candidate. The
+[continuous service](docs/AUTONOMOUS_RECOVERY_20261115.md) retains its checkpoint,
+integrity and adoption gates; experimental weights are not silently activated.
+
+## Historical October runner
+
+The original October instructions below describe a different, bounded cycle.
 
 This manual workflow resumes the native 1024-context experiment from update1280,
 using its original optimizer, RNG, data and reference. The CPU variant uses FP32

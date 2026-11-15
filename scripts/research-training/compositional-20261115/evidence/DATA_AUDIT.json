@@ -1,0 +1,136 @@
+{
+  "train": {
+    "rows": 512,
+    "unique_values": 256,
+    "counterfactual_pairs": 256,
+    "languages": {
+      "it": 256,
+      "en": 256
+    },
+    "families": {
+      "context-name": 128,
+      "context-location": 128,
+      "context-code": 128,
+      "context-correction": 128
+    },
+    "length_buckets": {
+      "0": 128,
+      "1": 128,
+      "2": 128,
+      "3": 128
+    },
+    "history_exchanges": {
+      "0": 192,
+      "1": 160,
+      "2": 160
+    },
+    "source_after_filler": {
+      "false": 256,
+      "true": 256
+    },
+    "conditions": {
+      "train": 512
+    },
+    "all_exact_context_provenance": true,
+    "all_pairs_two_members": true,
+    "literal_length_buckets_verified": {
+      "0": 128,
+      "1": 128,
+      "2": 128,
+      "3": 128
+    },
+    "scheduled_bucket_annotation_mismatches": 0
+  },
+  "development": {
+    "rows": 32,
+    "unique_values": 16,
+    "counterfactual_pairs": 16,
+    "languages": {
+      "it": 16,
+      "en": 16
+    },
+    "families": {
+      "context-name": 12,
+      "context-location": 12,
+      "context-code": 4,
+      "context-correction": 4
+    },
+    "length_buckets": {
+      "0": 12,
+      "1": 12,
+      "2": 4,
+      "3": 4
+    },
+    "history_exchanges": {
+      "0": 16,
+      "1": 12,
+      "2": 4
+    },
+    "source_after_filler": {
+      "false": 16,
+      "true": 16
+    },
+    "conditions": {
+      "new-values-known-template": 8,
+      "known-values-new-template": 8,
+      "new-values-new-template": 16
+    },
+    "all_exact_context_provenance": true,
+    "all_pairs_two_members": true,
+    "literal_length_buckets_verified": {
+      "0": 12,
+      "1": 12,
+      "2": 4,
+      "3": 4
+    },
+    "scheduled_bucket_annotation_mismatches": 0
+  },
+  "final": {
+    "rows": 64,
+    "unique_values": 32,
+    "counterfactual_pairs": 32,
+    "languages": {
+      "it": 32,
+      "en": 32
+    },
+    "families": {
+      "context-name": 16,
+      "context-location": 16,
+      "context-code": 16,
+      "context-correction": 16
+    },
+    "length_buckets": {
+      "0": 16,
+      "1": 16,
+      "2": 16,
+      "3": 16
+    },
+    "history_exchanges": {
+      "0": 28,
+      "1": 20,
+      "2": 16
+    },
+    "source_after_filler": {
+      "false": 32,
+      "true": 32
+    },
+    "conditions": {
+      "new-values-known-template": 16,
+      "known-values-new-template": 16,
+      "new-values-new-template": 32
+    },
+    "all_exact_context_provenance": true,
+    "all_pairs_two_members": true,
+    "literal_length_buckets_verified": {
+      "0": 16,
+      "1": 16,
+      "2": 16,
+      "3": 16
+    },
+    "scheduled_bucket_annotation_mismatches": 16
+  },
+  "source_state_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "initial_letters_in_train": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  "train_characters": " 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  "bucket_annotation_note": "Final familiar-value/new-template rows store scheduled case bucket rather than reused TRAIN value bucket; true histograms remain balanced; no bucket performance claim."
+}
