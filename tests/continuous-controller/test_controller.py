@@ -148,5 +148,13 @@ class ControllerTests(unittest.TestCase):
   self.assertEqual(module.tick(f,422)['action'],'redispatched recoverable failure')
   self.assertEqual(f.retries,[42,42]);self.assertEqual(len(f.posts),1)
   self.assertEqual(f.c['dispatch']['network_failures'],3)
+ def test_transport_variants_and_control_cas_conflicts_are_recoverable(self):
+  for text in ('HTTP 408 Request Timeout','stream error: stream ID 5; INTERNAL_ERROR; received from peer',
+               'context deadline exceeded','net/http: timeout awaiting response headers',
+               'sha abc does not match def (HTTP 409)'):
+   self.assertTrue(module.transient(text),text)
+   self.assertTrue(module.io_error_kind(module.subprocess.CalledProcessError(1,['gh','api'],stderr=text)).startswith('transient'))
+  self.assertFalse(module.transient('HTTP 409 release conflict'))
+  self.assertFalse(module.transient('sha abc does not match def (HTTP 409)\nValueError: invalid checkpoint'))
 
 if __name__=='__main__':unittest.main()

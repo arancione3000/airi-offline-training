@@ -17,6 +17,6 @@ Errori di digest, provenienza, checkpoint, programma, autorizzazione o incompati
 
 ## Verifica e attivazione
 
-26 test del controller e7 della ricetta continua passati localmente, inclusi errore HTTP/2 reale, più di tre guasti API, timeout, log404, rinnovo, cancellazione, POST incerta, rollover, scrittore unico e rifiuto dei checkpoint di tentativi precedenti. I31 moduli della ricetta di training, il fingerprint e il ramo congelato18c9dd5 restano invariati. Nessuna modifica ai pesi, ai dati o ai criteri di adozione.
+27 test del controller e7 della ricetta continua passati localmente, inclusi errore HTTP/2 reale, più di tre guasti API, timeout, log404, rinnovo, cancellazione, POST incerta, rollover, scrittore unico e rifiuto dei checkpoint di tentativi precedenti. I31 moduli della ricetta di training, il fingerprint e il ramo congelato18c9dd5 restano invariati. Nessuna modifica ai pesi, ai dati o ai criteri di adozione.
 
 CI remota, ripartenza del job266 e checkpoint successivo vengono registrati dopo l'attivazione. Questa modifica riguarda la continuità del servizio; non certifica nuove capacità del modello, che resta alla revisione4 approvata.

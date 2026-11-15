@@ -39,10 +39,12 @@ def hard_failure(log):
 def transient(log):
     if hard_failure(log):return False
     value='\n'.join(clean_log(log).splitlines()[-200:]).lower()
-    return bool(re.search(r'(?:http|status|gh:)[^\n]{0,100}?(429|500|502|503|504)\b',value)
+    conflict=('409' in value and 'sha' in value and ('does not match' in value or "doesn't match" in value))
+    return bool(conflict or re.search(r'(?:http|status|gh:)[^\n]{0,100}?(408|429|500|502|503|504)\b',value)
                 or any(x in value for x in ('connection reset','connection timed out',
                        'temporary failure in name resolution','runner has lost communication','tls handshake timeout',
-                       'protocol_error','unexpected eof','i/o timeout','network is unreachable',
+                       'protocol_error','stream error: stream id','context deadline exceeded',
+                       'net/http: timeout','unexpected eof','i/o timeout','network is unreachable',
                        'connection refused','connection closed','http2: stream closed')))
 
 
