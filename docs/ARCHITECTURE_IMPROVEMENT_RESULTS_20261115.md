@@ -44,6 +44,9 @@ parser includono150 valori casuali Unicode con correzioni e provenienza esatta.
 Il controllo dei31 hash della ricetta esistente resta superato. Una nuova CI
 esegue test e verifiche di preservazione a ogni modifica del componente.
 
+La PR12 è integrata nel ramo principale, commit896a531. Le CI remote43775200033
+e43775192149 sono riuscite. [Ricevuta di attivazione del codice](evidence/ARCHITECTURE_ACTIVATION_20261115.json).
+
 ## Prima versione e correzione verificata
 
 V1 fa72/96 sui positivi (75%),0 risposte indebite: non supera la soglia80% fissata.

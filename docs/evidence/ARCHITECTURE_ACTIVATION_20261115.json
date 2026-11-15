@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "code_commit": "896a5314dd303629de2085e7dc1f7f550899a5f0",
+  "pull_request": 12,
+  "ci_runs": [
+    {
+      "id": 43775200033,
+      "conclusion": "success"
+    },
+    {
+      "id": 43775192149,
+      "conclusion": "success"
+    }
+  ],
+  "local_tests": {
+    "assistant": 50,
+    "pinned_recipe": 7
+  },
+  "entrypoint": "python scripts/assistant-runtime/chat.py",
+  "status": "experimental composed assistant available; not a remote runtime/provider deployment",
+  "memory_enabled": true,
+  "neural_expert_enabled": false,
+  "native_model_qualified": false,
+  "actual_native_baseline": 23,
+  "actual_composed_score": 27,
+  "old_successes_lost": 0,
+  "actual_fresh32": {
+    "native": 0,
+    "composed": 32
+  },
+  "functional_v2": {
+    "positive_correct": 96,
+    "positive_total": 96,
+    "false_answers": 0,
+    "negative_total": 68
+  },
+  "certified_routes": {
+    "gold_checked_memory": 20,
+    "unchanged_native_inherited": 877,
+    "lost": 0,
+    "scope": "composition check, not newly generated neural certificates"
+  },
+  "approved_model_pointer": {
+    "schema": 1,
+    "model_id": "airi-native",
+    "revision": 4,
+    "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+    "parent_weights_digest": "43569724fe35f8ddf2dd7d95b23461504df7b040bee1c4e04af3ec66479f2cca",
+    "checkpoint_release": "airi-offline-469820-42263066151-1-1",
+    "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
+    "completed_steps": 469820,
+    "model_file_sha256": "6e34970036c4fec66c56197d525590e9d2f393387f979093c6b06f2002ea1058",
+    "model_files": {
+      "model/model.pt": "6e34970036c4fec66c56197d525590e9d2f393387f979093c6b06f2002ea1058",
+      "model/config.json": "e59c79048b447e59710c2f4827966f022b9ad93d4bd19cb111c6c4bb777b889c",
+      "model/model-shard-00007-of-00007-653e96a7fc48.pt": "653e96a7fc48fb79e2e52e354c6e4aaf4bb009017aa622c876634f2c702bd8f3",
+      "model/model-shard-00003-of-00007-1bd7fbc12a85.pt": "1bd7fbc12a851529149c058877a863e179ab3a3cf4b0400c571a18da2f4dad24",
+      "model/metadata.json": "f7220ae0845f98ca482d77a5ccf9fe243c15a1f28b37adcbd29ffa6b74bcfe43",
+      "model/model-shard-00001-of-00007-8dbf7484b75d.pt": "8dbf7484b75d067b9775f31510ea903e6715942302b0413d070cc08eda0c61df",
+      "model/model-shard-00006-of-00007-0a89aa609583.pt": "0a89aa609583ee8d7b9f9b1b81642c0fac284efe3f4d545c49be93086551c140",
+      "model/model-shard-00002-of-00007-0944c21e10f3.pt": "0944c21e10f3020dde2c4cda6e29ed696596eb47aad7b5340dfa2eeab354493c",
+      "model/tokenizer.json": "1099cf0cd718706212492967cb607034ef5fa8321a3e81125a106761b2d247f3",
+      "model/model-shard-00004-of-00007-70cb8325b006.pt": "70cb8325b006f655a6812cde8b35e17d8df9ef25f93515b072b936c49412133a",
+      "model/model-shard-00005-of-00007-19614836a89b.pt": "19614836a89b58c2c59c7ef889beb91fa9588538073f09b9e39e34b5f76f0eb5"
+    },
+    "scope": "verified offline champion",
+    "production_qualified": false,
+    "live_promoted": false
+  },
+  "continuous_service": {
+    "enabled": true,
+    "halted_reason": null,
+    "job_index": 312,
+    "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
+    "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01"
+  },
+  "expert": {
+    "training_updates": 493,
+    "training_seconds": 600.543,
+    "final_values": {
+      "correct": 4,
+      "total": 16
+    },
+    "final_both_new": {
+      "correct": 0,
+      "total": 32
+    },
+    "old92": 3,
+    "lost_old23": 21,
+    "decision": "rejected, source/pointer unchanged"
+  }
+}
