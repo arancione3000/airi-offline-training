@@ -1,0 +1,78 @@
+{
+  "artifacts": [
+    {
+      "gzip_bytes": 1569,
+      "gzip_sha256": "ecbdf59a947d7e711b95342372967be8c622c3e0fbc086976bd90dc50e51c5da",
+      "path": "D_ROWS.json.gz",
+      "raw_bytes": 30376,
+      "raw_sha256": "4178600a3f105e0c5bffacdc3e1d1992aab1ff99f365307f8e0ec6fc09e83155",
+      "source_path": "/workspace/airi-lab/learnability-20261115/D_ROWS.json"
+    },
+    {
+      "gzip_bytes": 28460,
+      "gzip_sha256": "0c5ff9ef1c4ddcc889680108b2dbe44a08e359365a7bdfe6da88914225437ab4",
+      "path": "D_PREREGISTRATION.json.gz",
+      "raw_bytes": 120232,
+      "raw_sha256": "42d0fe488fd8b03b6257b05675643c0bbea1d6cf2f476615a865eb08b911fe23",
+      "source_path": "/workspace/airi-lab/learnability-20261115/D_PREREGISTRATION.json"
+    },
+    {
+      "gzip_bytes": 107197,
+      "gzip_sha256": "35b9ccd901811130da1bd4167a4ca6e8f86a8a6e1ac76924a5addb855f9c1bd9",
+      "path": "D_REPORT.json.gz",
+      "raw_bytes": 670972,
+      "raw_sha256": "f383602ed8106f342d1aed87edf77242055a3c479129e8ae02fc74c3731440df",
+      "source_path": "/workspace/airi-lab/learnability-20261115/D_REPORT.json"
+    },
+    {
+      "gzip_bytes": 1828,
+      "gzip_sha256": "b18e59cfdc3f529f660aaa3bd490db177d755ca9869035707e0eb770b2c0af18",
+      "path": "CACHE_ENDPOINT_D.json.gz",
+      "raw_bytes": 11806,
+      "raw_sha256": "72d34562520dfe07c597bad8badb28fce6233389fe3f5bcd34fc8ff4fd2e2104",
+      "source_path": "/workspace/airi-lab/learnability-20261115/CACHE_ENDPOINT_D.json"
+    }
+  ],
+  "code_snapshots": [
+    {
+      "bytes": 30122,
+      "path": "/workspace/airi-offline-training/scripts/research-training/learnability-20261115/protected_full_native.py",
+      "sha256": "463dd6a158786cfaaa9cdbee098270873504ae52bb66223d65074c61456c63ef"
+    },
+    {
+      "bytes": 30377,
+      "path": "/workspace/airi-offline-training/scripts/research-training/learnability-20261115/controlled_learnability.py",
+      "sha256": "56811dfac2b7826556c2ad910cf6207029643b69c94474d3109df5e06ecf19e2"
+    },
+    {
+      "bytes": 7695,
+      "path": "/workspace/airi-offline-training/scripts/research-training/learnability-20261115/audit_native_chat.py",
+      "sha256": "b6890be28f4ce88eb3dbbdb7bc220c6ce6addbba6d148e55d9ba08207240015a"
+    }
+  ],
+  "conclusions_authored_separately": true,
+  "derivation_checks_passed": true,
+  "deterministic_gzip": {
+    "compresslevel": 9,
+    "mtime": 0,
+    "original_filename": "",
+    "zlib_runtime_version": "1.3.2",
+    "zlib_version": "1.3.2"
+  },
+  "packaging_python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "prerequisite_manifest": "FIRST_THREE_ARMS_MANIFEST.json",
+  "prerequisite_manifest_sha256": "8df54520446a437d710b67659657b9fa06f2479c4e9a102160fd50eb2f5a13b9",
+  "scope": "Single conditional D immutable evidence bundle; excludes weights, optimizers, credentials and raw logs.",
+  "uncompressed_bundle_files": [
+    {
+      "bytes": 5904,
+      "path": "D_SUMMARY.json",
+      "sha256": "ea7157536cfb258314f68367fdc67daa50f3c4b67ce33eb635a0ae55dc5ff301"
+    },
+    {
+      "bytes": 2555,
+      "path": "D_REPRODUCTION.md",
+      "sha256": "87bb8bffd1b64be17c83d734ea0c3157024701c5498e77c2814c696ed890616e"
+    }
+  ]
+}
