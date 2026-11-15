@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-11-15T15:59:04Z",
+  "pull_requests": [
+    8,
+    9,
+    10
+  ],
+  "deployed_code_commit": "a7027f4165280213d8548dd29843af00f3b1c608",
+  "validation": {
+    "controller_tests": 30,
+    "continuous_recipe_tests": 7,
+    "native_ci_run": 43732353997,
+    "native_ci_conclusion": "success",
+    "workflow_states": [
+      {
+        "name": "AIRI continuous native training",
+        "state": "active",
+        "id": 408334890
+      },
+      {
+        "name": "AIRI continuous training supervisor",
+        "state": "active",
+        "id": 408334892
+      },
+      {
+        "name": "AIRI continuous recovery watchdog",
+        "state": "active",
+        "id": 419256597
+      }
+    ],
+    "frozen_training_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
+    "recipe_fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01"
+  },
+  "recovered_training": {
+    "run": 43452114543,
+    "job": 132863384028,
+    "attempt": 2,
+    "conclusion": "success",
+    "previous_step": 490876,
+    "saved_step": 491036,
+    "new_logical_units": 160,
+    "saved_release": "airi-offline-491036-43452114543-2-1",
+    "index": {
+      "completed_steps": 491036,
+      "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
+      "archives": [
+        {
+          "name": "AIRI_TRAINING_491036_MODEL.zip",
+          "sha256": "63c880f8d75b728b2372ddb8a2e74a30e5fc6111eec3aadc5a7527b2c7ec8040",
+          "bytes": 169731163
+        },
+        {
+          "name": "AIRI_TRAINING_491036_OPTIMIZER.zip",
+          "sha256": "1e275a3fb8000d1d293ae5d210c7ad6208e92b4f6f07e567e097c118f8a3bb63",
+          "bytes": 7535870
+        }
+      ],
+      "production_qualified": false,
+      "live_promoted": false,
+      "run_state": {
+        "name": "AIRI_RUN_STATE.json",
+        "sha256": "4359dd1813bf54392bf9a0deff90679daf27b7de820af3f1bd40e3eccc307a8f",
+        "bytes": 35021
+      }
+    },
+    "run_state_hash_verified": true,
+    "root_downloaded_model_optimizer_archives": false,
+    "progress_log": [
+      "2026-11-15T15:43:03.7463203Z {\"step\": 490892, \"updates\": 41616, \"loss\": 0.23190501379576745, \"phase\": 0}",
+      "2026-11-15T15:43:26.1509395Z {\"step\": 490908, \"updates\": 41632, \"loss\": 0.17519329280185048, \"phase\": 0}",
+      "2026-11-15T15:43:44.3569991Z {\"step\": 490924, \"updates\": 41648, \"loss\": 0.2100945817619504, \"phase\": 0}",
+      "2026-11-15T15:43:59.4686363Z {\"step\": 490940, \"updates\": 41664, \"loss\": 0.25043121466296725, \"phase\": 0}",
+      "2026-11-15T15:44:16.1924003Z {\"step\": 490956, \"updates\": 41680, \"loss\": 0.06274512184609193, \"phase\": 0}",
+      "2026-11-15T15:44:31.7189005Z {\"step\": 490972, \"updates\": 41696, \"loss\": 0.16760618232365232, \"phase\": 0}",
+      "2026-11-15T15:44:45.5444884Z {\"step\": 490988, \"updates\": 41712, \"loss\": 0.24360444555350114, \"phase\": 0}",
+      "2026-11-15T15:45:01.2423912Z {\"step\": 491004, \"updates\": 41728, \"loss\": 0.0871121119853342, \"phase\": 0}",
+      "2026-11-15T15:45:17.5830448Z {\"step\": 491020, \"updates\": 41744, \"loss\": 0.06742456294887234, \"phase\": 0}",
+      "2026-11-15T15:45:30.8523253Z {\"step\": 491036, \"updates\": 41760, \"loss\": 0.24348529663984664, \"phase\": 0}"
+    ]
+  },
+  "interruption_observations": [
+    {
+      "cancelled_supervisor": 43730939521,
+      "automatic_watchdog": 43731116415,
+      "watchdog_event": "workflow_run",
+      "watchdog_conclusion": "success",
+      "result": "First implementation detected active training but did not restore watcher. Fixed in PR10."
+    },
+    {
+      "cancelled_supervisor": 43732381912,
+      "callback_observed_within_window": false,
+      "result": "Second completion callback not observed promptly; do not claim this event alone guarantees recovery. Periodic fallback is configured and registered active. Final activation used a manual watchdog dispatch."
+    }
+  ],
+  "final_activation": {
+    "watchdog": 43732811879,
+    "watchdog_event": "workflow_dispatch",
+    "watchdog_conclusion": "success",
+    "watcher_created_by_watchdog": 43732828564,
+    "watcher_status": "in_progress",
+    "control": {
+      "authorization": "User explicitly requested indefinite native training; no assistant automation or external teacher.",
+      "chunk_seconds": 180,
+      "dispatch": {
+        "job_index": 267,
+        "key": "9a76281eb5f62b7cb77a2457d156285b598c3cf2ec602ccc9412f5611ed81e0a",
+        "request_attempts": 1,
+        "requested_at": 1794757999.5144835,
+        "run_id": 43732378167,
+        "source_release": "airi-offline-491036-43452114543-2-1"
+      },
+      "enabled": true,
+      "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
+      "halted_reason": null,
+      "origin_step": 449276,
+      "runner_branch": "native-continuous-learning-20261105",
+      "runner_sha": "18c9dd5418f7531e1950c74453f704f52416ccf9",
+      "schema": 1,
+      "seed_release": "airi-offline-450364-42047389197-1-1"
+    },
+    "next_job": [
+      {
+        "id": 132867463286,
+        "status": "in_progress",
+        "claim_conclusion": "success"
+      }
+    ]
+  },
+  "limits": "Observed actual training recovery/checkpoint, next native job, active watcher restoration through watchdog, and one automatic watchdog callback. The final periodic schedule is active/configured but a scheduled firing has not been observed in this window. Callback latency/cancellation delivery remains external to the code. Integrity/program/auth/CLI failures still halt; GitHub availability/permissions required."
+}
