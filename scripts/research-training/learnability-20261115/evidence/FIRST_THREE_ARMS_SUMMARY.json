@@ -1,0 +1,187 @@
+{
+  "acquisition_objective": {
+    "comparison": "identical native acquisition objective in all arms; raw shifted CE reported separately",
+    "eos_loss_weight": 1.2,
+    "repetition_unlikelihood_weight": 0.05
+  },
+  "baseline": {
+    "heldout_complete_with_eos": 0,
+    "old92_correct": 23,
+    "old92_rows": 92,
+    "source_train_ledger_correct": 897,
+    "train_complete_with_eos": 0
+  },
+  "limits": [
+    "Equal acquisition exposure, not equal FLOPs or wall time.",
+    "The removed retention package combines replay, KL, normalization and transactional guards.",
+    "All-native acquisition-only success is a learnability control; it fails retention and unseen-value transfer.",
+    "Finite current-scope failure does not prove architectural impossibility.",
+    "TRAIN ledger retention and old 92 probe retention are separate measurements."
+  ],
+  "live_promoted": false,
+  "native_path_audits": [
+    {
+      "complete_gold_and_eos_certificates": 0,
+      "passed": true,
+      "raw_answer_and_eos_exact": 0,
+      "report": "CACHE_PREFLIGHT.json",
+      "seconds": 8.187899944001401,
+      "train_rows": 8
+    },
+    {
+      "complete_gold_and_eos_certificates": 0,
+      "passed": true,
+      "raw_answer_and_eos_exact": 0,
+      "report": "CACHE_ENDPOINT_A.json",
+      "seconds": 7.122209802000725,
+      "train_rows": 8
+    },
+    {
+      "complete_gold_and_eos_certificates": 0,
+      "passed": true,
+      "raw_answer_and_eos_exact": 0,
+      "report": "CACHE_ENDPOINT_B.json",
+      "seconds": 7.604636447998928,
+      "train_rows": 8
+    },
+    {
+      "complete_gold_and_eos_certificates": 8,
+      "passed": true,
+      "raw_answer_and_eos_exact": 8,
+      "report": "CACHE_ENDPOINT_C.json",
+      "seconds": 4.417286246000003,
+      "train_rows": 8
+    }
+  ],
+  "optimizer": {
+    "gradient_clipping": 1.0,
+    "learning_rate": 3e-05,
+    "name": "fresh AdamW per arm",
+    "weight_decay": 0.01
+  },
+  "production_qualified": false,
+  "scope": "Immutable observations from the completed original three-arm diagnostic only; no fourth-arm data.",
+  "sealed_benchmark_forward": false,
+  "seed": 20261115,
+  "source_checkpoint": "/workspace/airi-lab/rev4/checkpoint/model",
+  "source_checkpoint_unchanged": true,
+  "source_tensor_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "torch_version": "2.14.1+cpu",
+  "training_code_unchanged": true,
+  "trials": [
+    {
+      "arm": "A_current_with_retention",
+      "committed_updates": 63,
+      "heldout_conditions": {
+        "known-values-new-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        },
+        "new-values-known-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        },
+        "new-values-new-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        }
+      },
+      "logical_units": 64,
+      "native_export_logits_exact": true,
+      "native_export_raw_ids_and_eos_exact": true,
+      "old92_correct": 22,
+      "physical_attempts": 68,
+      "source23_lost": 1,
+      "source92_gained": 0,
+      "source_train_ledger_lost": 0,
+      "source_train_ledger_retained": 897,
+      "train_complete_with_eos": 0,
+      "train_raw_answer_and_eos_exact": 0,
+      "train_raw_ce": 5.5443220138549805,
+      "trainable_parameters": 74304,
+      "training_seconds": 63.16623258900108
+    },
+    {
+      "arm": "B_current_acquisition_only",
+      "committed_updates": 64,
+      "heldout_conditions": {
+        "known-values-new-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        },
+        "new-values-known-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        },
+        "new-values-new-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        }
+      },
+      "logical_units": 64,
+      "native_export_logits_exact": true,
+      "native_export_raw_ids_and_eos_exact": true,
+      "old92_correct": 21,
+      "physical_attempts": 64,
+      "source23_lost": 2,
+      "source92_gained": 0,
+      "source_train_ledger_lost": 1,
+      "source_train_ledger_retained": 896,
+      "train_complete_with_eos": 0,
+      "train_raw_answer_and_eos_exact": 0,
+      "train_raw_ce": 5.375565469264984,
+      "trainable_parameters": 74304,
+      "training_seconds": 1.3459362119992875
+    },
+    {
+      "arm": "C_full_native_acquisition_only",
+      "committed_updates": 64,
+      "heldout_conditions": {
+        "known-values-new-template": {
+          "certificate_with_eos": 2,
+          "decoded_exact": 2,
+          "raw_answer_and_eos": 2,
+          "rows": 4
+        },
+        "new-values-known-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        },
+        "new-values-new-template": {
+          "certificate_with_eos": 0,
+          "decoded_exact": 0,
+          "raw_answer_and_eos": 0,
+          "rows": 4
+        }
+      },
+      "logical_units": 64,
+      "native_export_logits_exact": true,
+      "native_export_raw_ids_and_eos_exact": true,
+      "old92_correct": 11,
+      "physical_attempts": 64,
+      "source23_lost": 15,
+      "source92_gained": 3,
+      "source_train_ledger_lost": 330,
+      "source_train_ledger_retained": 567,
+      "train_complete_with_eos": 8,
+      "train_raw_answer_and_eos_exact": 8,
+      "train_raw_ce": 0.02943393192254007,
+      "trainable_parameters": 50164416,
+      "training_seconds": 23.91380868800661
+    }
+  ]
+}

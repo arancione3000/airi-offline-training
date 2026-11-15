@@ -1,0 +1,191 @@
+{
+  "acquisition_objective": {
+    "comparison": "identical native acquisition objective in all arms; raw shifted CE reported separately",
+    "eos_loss_weight": 1.2,
+    "repetition_unlikelihood_weight": 0.05
+  },
+  "arm": "D_full_native_with_retention",
+  "baseline_fresh_confirmation": {
+    "known-values-new-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    },
+    "new-values-known-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    },
+    "new-values-new-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    }
+  },
+  "change": "Only trainable scope broadened from A; exact original64 paired TRAIN/anchor/retention/sentinel trajectory retained.",
+  "exposure": "complete64",
+  "familiar_holdout": {
+    "known-values-new-template": {
+      "certificate_with_eos": 1,
+      "decoded_exact": 1,
+      "raw_answer_and_eos": 1,
+      "rows": 4
+    },
+    "new-values-known-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 4
+    },
+    "new-values-new-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 4
+    }
+  },
+  "fresh_confirmation": {
+    "known-values-new-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    },
+    "new-values-known-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    },
+    "new-values-new-template": {
+      "certificate_with_eos": 0,
+      "decoded_exact": 0,
+      "raw_answer_and_eos": 0,
+      "rows": 8
+    }
+  },
+  "fresh_confirmation_gained": [],
+  "fresh_confirmation_lost": [],
+  "gradient_diagnostics": {
+    "current_scope": {
+      "acquisition_combined_gradient_cosine": 0.9969731029941449,
+      "acquisition_gradient_norm": 12.172074887800937,
+      "acquisition_loss": 6.265756130218506,
+      "collection_only_no_optimizer_update": true,
+      "combined_gradient_norm_after_clipping": 1.0000004434679797,
+      "combined_gradient_norm_before_clipping": 1.321661114692688,
+      "gradients_restored": true,
+      "model_weights_exactly_unchanged": true,
+      "module_modes_restored": true,
+      "rng_exactly_restored": true
+    },
+    "full_native": {
+      "acquisition_combined_gradient_cosine": 0.99974439367089,
+      "acquisition_gradient_norm": 205.83708906249737,
+      "acquisition_loss": 6.265756130218506,
+      "collection_only_no_optimizer_update": true,
+      "combined_gradient_norm_after_clipping": 1.0000566297057203,
+      "combined_gradient_norm_before_clipping": 22.266944885253906,
+      "gradients_restored": true,
+      "model_weights_exactly_unchanged": true,
+      "module_modes_restored": true,
+      "rng_exactly_restored": true
+    }
+  },
+  "gradient_interpretation": "One initial TRAIN batch only: near-parallel acquisition and combined directions; not evidence of initial gradient cancellation or a trajectory-wide alignment guarantee.",
+  "independent_native_audit": {
+    "complete_gold_and_eos_certificates": 1,
+    "passed": true,
+    "raw_answer_and_eos_exact": 1,
+    "report": "CACHE_ENDPOINT_D.json",
+    "rows": 8,
+    "seconds": 6.784450529999958
+  },
+  "limits": [
+    "No LR tuning, checkpoint selection or additional arm.",
+    "Old12 holdouts are familiar after the first three-arm diagnostic; fresh24 paired rows are the confirmation set.",
+    "NLL gates were skipped because old exact-answer/certificate gates already failed; no all-gates-pass claim.",
+    "Finite bounded outcomes do not prove architectural impossibility."
+  ],
+  "live_promoted": false,
+  "logical_units": 64,
+  "measured_retention_gates_pass": false,
+  "native_export_logits_exact": true,
+  "native_export_raw_ids_and_eos_exact": true,
+  "nll_skipped_reason": "already fails original23 and/or full897 retention; no promotion claim; fixed cost-saving rule",
+  "old92": {
+    "endpoint_correct": 19,
+    "new_gains": 0,
+    "rows": 92,
+    "source23_lost": 4,
+    "source_correct": 23
+  },
+  "optimizer": {
+    "gradient_clipping": 1.0,
+    "learning_rate": 3e-05,
+    "name": "fresh AdamW per arm",
+    "weight_decay": 0.01
+  },
+  "original_nll_gates_evaluated": false,
+  "physical_attempts": 70,
+  "production_qualified": false,
+  "retention_package": {
+    "champion_kl_weight": 8.0,
+    "max_nll_regression": 0.02,
+    "max_prompt_kl": 0.01,
+    "native_weight": 0.25,
+    "package": "unaltered continual_step + make_retention_guard + transactional_update",
+    "prompt_kl_weight": 8.0,
+    "recovery": {
+      "accepted_streak": 64,
+      "cooldown_updates": 32,
+      "growth_factor": 2.0
+    },
+    "retention_weight": 8.0,
+    "retry_scales": [
+      1.0,
+      0.5,
+      0.25,
+      0.125
+    ]
+  },
+  "scope": "Immutable observations from the single conditional D full-native-with-retention follow-up.",
+  "sealed_benchmark_forward": false,
+  "seed": 20261115,
+  "source_checkpoint": "/workspace/airi-lab/rev4/checkpoint/model",
+  "source_checkpoint_unchanged": true,
+  "source_train_ledger": {
+    "lost": 1,
+    "retained": 896,
+    "rows": 897
+  },
+  "train": {
+    "acquired_values": [
+      "Qyx"
+    ],
+    "complete_with_eos": 1,
+    "raw_answer_and_eos_exact": 1,
+    "raw_ce": 3.4797792583703995,
+    "rows": 8
+  },
+  "trainable_parameters": 50164416,
+  "training_cap_seconds": 600,
+  "training_code_unchanged": true,
+  "training_seconds": 251.98348223499306,
+  "transaction": {
+    "attempted_updates": 70,
+    "committed_updates": 37,
+    "lr_scale": 0.015625,
+    "recovery": {
+      "cooldown": 31,
+      "growth_attempts": 0,
+      "growth_commits": 0,
+      "streak": 0
+    },
+    "rejected_updates": 33,
+    "schema": 1
+  }
+}
