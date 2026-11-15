@@ -156,5 +156,24 @@ class ControllerTests(unittest.TestCase):
    self.assertTrue(module.io_error_kind(module.subprocess.CalledProcessError(1,['gh','api'],stderr=text)).startswith('transient'))
   self.assertFalse(module.transient('HTTP 409 release conflict'))
   self.assertFalse(module.transient('sha abc does not match def (HTTP 409)\nValueError: invalid checkpoint'))
+ def test_watchdog_restores_watcher_while_training_active(self):
+  f=Fake();f.run_values=[dict(status='in_progress',head_branch='frozen')];calls=[]
+  f.ensure_supervisor=lambda:calls.append(True) or True
+  result=module.recover(f)
+  self.assertEqual(result['action'],'recovery supervisor requested')
+  self.assertEqual(calls,[True]);self.assertFalse(f.posts)
+ def test_watchdog_does_not_restore_disabled_or_integrity_halted_service(self):
+  for disabled in (True,False):
+   f=Fake();f.finished()
+   if disabled:f.c['enabled']=False
+   else:f.raw+=b' '
+   f.ensure_supervisor=lambda:self.fail('stopped service renewed')
+   self.assertEqual(module.recover(f)['action'],'recovery stopped')
+ def test_existing_queued_or_running_watcher_prevents_duplicate_renewal(self):
+  client=module.Client('owner/repo');calls=[];client.renew_supervisor=lambda:calls.append(True)
+  for state in ('queued','in_progress','completed'):
+   client.get=lambda path:{'workflow_runs':[dict(status=state,head_branch='main')]}
+   self.assertEqual(client.ensure_supervisor(),state=='completed')
+  self.assertEqual(calls,[True])
 
 if __name__=='__main__':unittest.main()

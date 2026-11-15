@@ -101,6 +101,10 @@ class Client:
     def renew_supervisor(self):
         subprocess.run(['gh','api','--method','POST',self.base+'/actions/workflows/airi-continuous-controller.yml/dispatches',
                         '--input','-'],input=json.dumps(dict(ref='main',inputs={})),text=True,check=True,stderr=subprocess.PIPE,timeout=API_TIMEOUT)
+    def ensure_supervisor(self):
+        runs=self.get('actions/workflows/airi-continuous-controller.yml/runs?per_page=20')['workflow_runs']
+        if any(r.get('status') in ACTIVE and r.get('head_branch')=='main' for r in runs):return False
+        self.renew_supervisor();return True
     def runs(self):
         return self.get('actions/workflows/'+WORKFLOW+'/runs?per_page=100')['workflow_runs']
     def logs(self,run):
@@ -253,6 +257,16 @@ def claim(client,*,run_id,runner_sha,source,job,request):
     d['run_id']=run_id;client.write(c,sha);return True
 
 
+def recover(client):
+    """An independent watchdog must restore the watcher, even with active training."""
+    transition=tick(client)
+    control,_=client.control()
+    if control.get('enabled') and not control.get('halted_reason'):
+        requested=client.ensure_supervisor()
+        return dict(action='recovery supervisor requested' if requested else 'supervisor already active',transition=transition)
+    return dict(action='recovery stopped',transition=transition)
+
+
 def watch(client,seconds=1200,poll_seconds=30,clock=time.time,pause=time.sleep):
     """Observe child completion directly and explicitly renew this bounded watcher."""
     end=clock()+seconds
@@ -290,11 +304,12 @@ def watch(client,seconds=1200,poll_seconds=30,clock=time.time,pause=time.sleep):
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('mode',choices=['tick','claim','watch']);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('mode',choices=['tick','claim','watch','recover']);args=parser.parse_args()
     client=Client(os.environ['GITHUB_REPOSITORY'])
     if args.mode=='watch':
         result=watch(client);print(json.dumps(result))
         if result.get('action')=='controller failure':raise SystemExit(1)
+    elif args.mode=='recover':print(json.dumps(recover(client)))
     elif args.mode=='tick':print(json.dumps(tick(client)))
     else:
         allowed=claim(client,run_id=int(os.environ['GITHUB_RUN_ID']),runner_sha=os.environ['GITHUB_SHA'],

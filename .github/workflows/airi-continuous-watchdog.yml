@@ -10,7 +10,7 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: airi-continuous-supervisor
+  group: airi-continuous-watchdog
   cancel-in-progress: false
 jobs:
   recover:
@@ -25,5 +25,5 @@ jobs:
           python-version: '3.12'
       - name: Verify autonomous recovery contracts
         run: python -m unittest discover -s tests/continuous-controller -v
-      - name: Recover one service transition independently of the watcher
-        run: python scripts/continuous-training/controller.py tick
+      - name: Recover the transition and restore an absent watcher
+        run: python scripts/continuous-training/controller.py recover
