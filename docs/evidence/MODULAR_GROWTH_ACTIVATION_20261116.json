@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-11-16T07:25:58.776944+00:00",
+  "implementation_merge": "8c999625eec716951633db06e7afe5117ce60522",
+  "pull_request": "https://github.com/arancione3000/airi-offline-training/pull/13",
+  "canonical_main_verified_at_implementation_merge": true,
+  "source_commit": "82b13b94baa71b600334c78c1495dba07e9cdfb7",
+  "github_ci": [
+    {
+      "id": 43823577997,
+      "event": "pull_request",
+      "conclusion": "success"
+    },
+    {
+      "id": 43823568273,
+      "event": "push",
+      "conclusion": "success"
+    }
+  ],
+  "local_tests": {
+    "assistant": 87,
+    "continuous_training": 7,
+    "memory_gates": true,
+    "modular_replay": true
+  },
+  "bank_revision": 6,
+  "bank_payload_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7",
+  "evidence_manifest_sha256": "b50ace02935934e62789f8f3f614368163cc2591dfc4baf951480cf8a9918b64",
+  "native_weights_changed": false,
+  "native_weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "native_benchmark": {
+    "correct": 23,
+    "total": 92,
+    "scope": "same approved weights; no new full neural benchmark in this task"
+  },
+  "modular_final": {
+    "correct": 96,
+    "total": 96,
+    "scope": "held-out values within six learned exact templates; fixed seven-operation DSL"
+  },
+  "local_watcher": {
+    "alive_at_check": true,
+    "initial_batch_logged": true,
+    "poll_seconds": 30,
+    "bank_revision": 6,
+    "scope": "trusted local lessons; process/workspace lifetime; no automatic reliable-label generation or remote-PC installation"
+  },
+  "production_qualified": false,
+  "frozen_native_service_recipe_changed": false,
+  "scope": "modular program learning around stable native Transformer, not neural topology mutation or general Transformer superiority"
+}
