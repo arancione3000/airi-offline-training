@@ -27,11 +27,12 @@ class LearnCLITests(unittest.TestCase):
             self.assertEqual(answer['answer'],'24ébA')
             training=root/'lesson.json';training.write_text(json.dumps(lesson()))
             learned=subprocess.run(chat+['--learn',str(training)],env=env,capture_output=True,text=True,check=True,timeout=10)
-            self.assertEqual(json.loads(learned.stdout)['registry']['revision'],7)
+            bundled_revision=json.loads((ROOT/'scripts/assistant-runtime/skills/approved-bank.json').read_text())['payload']['revision']
+            self.assertEqual(json.loads(learned.stdout)['registry']['revision'],bundled_revision+1)
             messages.write_text(json.dumps(lesson()['qualification'][0]['messages']))
             restarted=subprocess.run(chat+['--messages-file',str(messages)],env=env,capture_output=True,text=True,check=True,timeout=10)
             self.assertEqual(json.loads(restarted.stdout)['answer'],lesson()['qualification'][0]['answer'])
-            self.assertEqual(json.loads(restarted.stdout)['skill_revision'],7)
+            self.assertEqual(json.loads(restarted.stdout)['skill_revision'],bundled_revision+1)
 
     def test_watcher_learns_new_file_without_intervention_and_restarts_idempotently(self):
         with tempfile.TemporaryDirectory() as directory:

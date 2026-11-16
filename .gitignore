@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 .venv/
+scripts/assistant-runtime/skills/*.json.lock
+scripts/assistant-runtime/skills/*.json.revisions/

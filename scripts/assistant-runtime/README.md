@@ -104,6 +104,20 @@ change the production provider, approved model pointer or frozen training servic
 
 ## Verification
 
+Automatic curriculum cycles can run independently of incoming lesson files:
+
+```sh
+python scripts/assistant-runtime/auto_update.py --watch --interval 3600 --limit 2
+```
+
+This watcher generates exact-reference lessons from a finite12-family authored
+catalog and stages at most two missing experts per cycle. It audits new values,
+old examples and989 historical routes before atomic activation. A complete catalog
+is audited without adding duplicates. The hourly GitHub workflow also validates
+and publishes qualified bundled updates independently of this chat. Existing
+private banks now qualify/import missing installed bundled experts while retaining
+private additions; this does not fetch remote source. See [operation and limits](../../docs/AUTOMATIC_MODULAR_UPDATES_20261116.md).
+
 ```sh
 python -m unittest discover -s tests/assistant-runtime -v
 ```

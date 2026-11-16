@@ -1,0 +1,33 @@
+{
+  "scope": "first local autonomous cycle; exact procedural reference labels; no native weight change",
+  "files": {
+    "INPUTS.json.gz": {
+      "sha256": "915e05beac42e2aa704861c4ca9507c33dd4a89b9449f02040257d35072f0a1d",
+      "raw_sha256": "1f4d106c4bd111164dcc93550488d9b1f5d71b3e2e3eaa8f3e8088ace9697502"
+    },
+    "REPORT.json.gz": {
+      "sha256": "376dee6a05f90130ee82bbc1e0755799726d06249a972e700a227defea007cef",
+      "raw_sha256": "6328caf1516658f65d79d7a67f68da207fb6ef626af7c26ce8eb36fe12f43538"
+    },
+    "PREREGISTRATION.json.gz": {
+      "sha256": "bd3b3dca102f707f124ffc6a10abbe64326e1211bece27aafc2cbf74871d1d18",
+      "raw_sha256": "80625f62d66039e1c2818409a1c44fb3546e91045d57ff83018dd13ba561bde9"
+    }
+  },
+  "before_revision": 6,
+  "after_revision": 8,
+  "new_value_audit": {
+    "correct": 40,
+    "total": 40
+  },
+  "stored_contracts_passed": 160,
+  "stable_gate": {
+    "cases": 989,
+    "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+    "failed_cases": [],
+    "learned_intercepts": 0,
+    "passed": true,
+    "scope": "routing validation; not a new neural certificate",
+    "unchanged_native_routes": 965
+  }
+}
