@@ -1,0 +1,40 @@
+name: AIRI modular update supervisor
+on:
+  workflow_dispatch:
+    inputs:
+      watch_seconds:
+        description: 'Bounded watcher duration; explicitly renews itself (60..2400 seconds)'
+        default: '2400'
+  schedule:
+    - cron: '11,41 * * * *'
+  workflow_run:
+    workflows: ['AIRI continuous native training']
+    branches: [native-continuous-learning-20261105]
+    types: [completed]
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: airi-modular-supervisor
+  cancel-in-progress: false
+jobs:
+  supervise:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.path == '.github/workflows/airi-continuous-background.yml'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WATCH_SECONDS: ${{ inputs.watch_seconds || '2400' }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify dispatch, timing and renewal contracts
+        run: python -m unittest discover -s tests/assistant-runtime -p test_supervise.py -q
+      - name: Observe due cycles and explicitly renew supervision
+        run: python -u scripts/assistant-runtime/supervise.py --seconds "$WATCH_SECONDS" --poll 60 | tee -a "$GITHUB_STEP_SUMMARY"
