@@ -101,9 +101,14 @@ class SkillBank:
             if not stat.S_ISREG(os.fstat(f.fileno()).st_mode):raise RegistryError('registry is not a regular file')
             raw=f.read(MAX_BYTES+1)
         if len(raw)>MAX_BYTES:raise RegistryError('registry exceeds byte limit')
-        wrapper=json.loads(raw)
-        if not isinstance(wrapper,dict) or set(wrapper)!={'payload','sha256'} or wrapper['sha256']!=digest(wrapper['payload']):raise RegistryError('registry checksum mismatch')
-        return _validate_payload(wrapper['payload']),wrapper['sha256']
+        try:
+            wrapper=json.loads(raw)
+            if not isinstance(wrapper,dict) or set(wrapper)!={'payload','sha256'} or wrapper['sha256']!=digest(wrapper['payload']):raise RegistryError('registry checksum mismatch')
+            return _validate_payload(wrapper['payload']),wrapper['sha256']
+        except RecursionError as error:
+            # A bounded byte count does not bound JSON nesting. Treat damaged
+            # nested data like other corruption so snapshots/native can recover.
+            raise RegistryError('registry nesting exceeds parser bound') from error
 
     def _read(self):
         candidates=[];errors=[];main_revision=None;main_exists=self.path.exists() or self.path.is_symlink()
@@ -114,7 +119,8 @@ class SkillBank:
         if self.snapshots.is_symlink():raise RegistryError('snapshot directory cannot be a symlink')
         if self.snapshots.exists():
             files=list(self.snapshots.glob('*.json'))
-            if len(files)>MAX_SKILLS:raise RegistryError('too many snapshots')
+            # Revision zero may be seeded before the first learned expert.
+            if len(files)>MAX_SKILLS+1:raise RegistryError('too many snapshots')
             revisions=[p.name[:6] for p in files]
             if len(revisions)!=len(set(revisions)):raise RegistryError('conflicting snapshot revisions')
             for path in sorted(files,reverse=True):

@@ -67,6 +67,27 @@ class BankTests(unittest.TestCase):
         self.assertIn('component_error',result)
         self.assertEqual(a.respond([{'role':'user','content':'Mi chiamo Ada. Come mi chiamo?'}])['answer'],'Ada')
 
+    def test_deeply_nested_registry_corruption_recovers_or_uses_native(self):
+        damaged=b'['*10000+b'0'+b']'*10000
+        self.path.write_bytes(damaged)
+        assistant=AiriAssistant(lambda _: 'stable',skill_bank=self.bank)
+        result=assistant.respond([{'role':'user','content':'unknown'}])
+        self.assertEqual(result['answer'],'stable')
+        self.assertIn('component_error',result)
+        self.path.unlink();self.bank.learn(lesson());self.path.write_bytes(damaged)
+        row=lesson()['qualification'][0]
+        self.assertEqual(self.bank.predict(row['messages'])['answer'],row['answer'])
+        self.assertTrue(self.bank.status()['recovered_from_snapshot'])
+
+    def test_seed_revision_zero_does_not_consume_expert_capacity(self):
+        import skill_bank
+        with patch.object(skill_bank,'MAX_SKILLS',2):
+            self.bank._write(skill_bank._empty())
+            self.bank.learn(lesson())
+            self.bank.learn(lesson('other','Other: ','What is the other value?'))
+            self.assertEqual(self.bank.status()['revision'],2)
+            self.assertEqual(len(list(self.bank.snapshots.glob('*.json'))),3)
+
     def test_cas_conflict_does_not_replace_a_committed_revision(self):
         self.bank.learn(lesson(),expected_revision=0);before=self.path.read_bytes()
         with self.assertRaises(RegistryError):self.bank.learn(lesson('other','Other: ','What is the other value?'),expected_revision=0)
