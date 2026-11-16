@@ -55,7 +55,7 @@ system or a factual-world validator. Native fallback can still answer poorly.
 ## Learning new procedural skills
 
 The routing order is existing memory, ordered learned experts, then the native
-model. Six synthetic experts are bundled: parcel-code copy, signal reversal,
+model. The first six bundled experts cover parcel-code copy, signal reversal,
 card-text uppercase, plate-text lowercase, and two named integer operations.
 For example, these messages are answered without loading Torch:
 
@@ -86,7 +86,7 @@ expert examples and989 stable historical routing contracts; failure preserves
 the current bank. Old memory and earlier experts retain priority.
 
 The default private bank is `~/.cache/airi/skill-bank.json`, initially seeded
-from the six bundled experts when learning first runs. `--skills PATH` in chat
+from the current qualified bundled experts when learning first runs. `--skills PATH` in chat
 or `--bank PATH` in the learner uses an explicit independent bank; an absent
 explicit path starts empty. `--no-skills` retains just memory/native routing.
 The watcher polls trusted local JSON files, admits new valid lessons and treats

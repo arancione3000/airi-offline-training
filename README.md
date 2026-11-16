@@ -3,7 +3,7 @@
 ## Current experimental assistant
 
 Run `python scripts/assistant-runtime/chat.py` for the new assistant entry point.
-It now includes six persistent procedural experts learned from examples. Use
+It includes a persistent procedural bank learned from examples, initially six experts. Use
 `/learn FILE` or the trusted local lesson watcher to qualify and append more
 experts without rewriting the approved neural weights. On precommitted tasks,
 the learned bank answers96/96 unseen-value final cases; on a fixed24-case sample,

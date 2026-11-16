@@ -1,0 +1,157 @@
+{
+  "checked_at_utc": "2026-11-16T07:48:40.207421+00:00",
+  "implementation_merge": "a6aa30b9600b23ee224088631c9426212b8d142b",
+  "pull_request": "https://github.com/arancione3000/airi-offline-training/pull/14",
+  "ci_success": [
+    43825771236,
+    43825761172
+  ],
+  "durable_workflow": {
+    "id": 419856199,
+    "name": "airi-modular-auto-update.yml",
+    "state": "active",
+    "schedule": "23 * * * *",
+    "max_admissions_per_cycle": 2,
+    "scope": "GitHub schedule independent of local workspace; subject to Actions availability and scheduler delays"
+  },
+  "successful_remote_cycles": [
+    {
+      "run_id": 43825904298,
+      "commit": "d035d8b7afdf2122359d9a6c1a033e6b56458a37",
+      "before": 6,
+      "after": 8,
+      "progress": {
+        "activated": 2,
+        "after_revision": 8,
+        "after_sha256": "83460eaed7bfbe273a64207dc9335283d5032718db68a31c25a5c3430e88a156",
+        "audit": {
+          "by_family": {
+            "auto_v1_contact": {
+              "correct": 20,
+              "total": 20
+            },
+            "auto_v1_remaining": {
+              "correct": 20,
+              "total": 20
+            }
+          },
+          "correct": 40,
+          "passed": true,
+          "total": 40
+        },
+        "before_revision": 6,
+        "before_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7",
+        "capacity": 32,
+        "catalog_size": 12,
+        "checked_at_utc": "2026-11-16T07:44:33.061087+00:00",
+        "neural_weights_changed": false,
+        "preregistration_sha256": "0f319d0b4c610c23c754b9be133d6d8f89ccef9e0983098758d65cc5efaf7275",
+        "publication": {
+          "main_copy_updated": true,
+          "snapshot_committed": true
+        },
+        "published": true,
+        "remaining_families": 10,
+        "report_sha256": "03928dee3c059b2067306e06273abc55f815ea62dc4b5500e62c06697847be55",
+        "schema": 1,
+        "scope": "finite authored procedural templates; independent exact labels, not general chat or neural improvement",
+        "seed": 43825904298,
+        "stable_gate": {
+          "cases": 989,
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "failed_cases": [],
+          "learned_intercepts": 0,
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate",
+          "unchanged_native_routes": 965
+        },
+        "status": "updated",
+        "stored_expert_contracts_passed": 160
+      }
+    },
+    {
+      "run_id": 43826138936,
+      "commit": "e45ac0353088c2b15f6efc8c720cd5d1bdd09627",
+      "before": 8,
+      "after": 10,
+      "progress": {
+        "activated": 2,
+        "after_revision": 10,
+        "after_sha256": "4c937045ca185e97742a200bdbf986b80976958a37dd7646e5131799d85fd611",
+        "audit": {
+          "by_family": {
+            "auto_v1_contact": {
+              "correct": 20,
+              "total": 20
+            },
+            "auto_v1_customer_reference": {
+              "correct": 20,
+              "total": 20
+            },
+            "auto_v1_order_reference": {
+              "correct": 20,
+              "total": 20
+            },
+            "auto_v1_remaining": {
+              "correct": 20,
+              "total": 20
+            }
+          },
+          "correct": 80,
+          "passed": true,
+          "total": 80
+        },
+        "before_revision": 8,
+        "before_sha256": "83460eaed7bfbe273a64207dc9335283d5032718db68a31c25a5c3430e88a156",
+        "capacity": 32,
+        "catalog_size": 12,
+        "checked_at_utc": "2026-11-16T07:46:26.920168+00:00",
+        "neural_weights_changed": false,
+        "preregistration_sha256": "73057ad94c30209369c120672e5ace83837cc1d30fa14c2aaef5312c237641fb",
+        "publication": {
+          "main_copy_updated": true,
+          "snapshot_committed": true
+        },
+        "published": true,
+        "remaining_families": 8,
+        "report_sha256": "127505fc3d5e4f37b834d86037a5e172415e7ba302f806c68a3eac47f4ad88bd",
+        "schema": 1,
+        "scope": "finite authored procedural templates; independent exact labels, not general chat or neural improvement",
+        "seed": 43826138936,
+        "stable_gate": {
+          "cases": 989,
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "failed_cases": [],
+          "learned_intercepts": 0,
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate",
+          "unchanged_native_routes": 965
+        },
+        "status": "updated",
+        "stored_expert_contracts_passed": 200
+      }
+    }
+  ],
+  "canonical_main_verified": "e45ac0353088c2b15f6efc8c720cd5d1bdd09627",
+  "private_bank": {
+    "revision": 10,
+    "active_skills": 10,
+    "state_sha256": "3695c618226f72bd00997eff6840155f75a7afdc2c74299b879479e3886973c0",
+    "recovered_from_snapshot": false,
+    "capacity": 32
+  },
+  "local_automatic_and_queue_watchers_alive": true,
+  "local_scope": "process/workspace lifetime, separate from durable GitHub schedule",
+  "tests": {
+    "assistant": 102,
+    "continuous_training": 7
+  },
+  "native_weights_changed": false,
+  "compiler_unchanged_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+  "catalog_remaining": 8,
+  "target_expert_count_after_catalog": 18,
+  "exhaustion_behavior": "audit fresh values; do not add duplicates or claim further learning",
+  "no_paid_model_api": true,
+  "raw_actions_artifact_retention_days": 14,
+  "production_provider_unchanged": true
+}
