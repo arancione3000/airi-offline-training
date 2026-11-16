@@ -1,0 +1,276 @@
+{
+  "baseline_limit": "Main-run empty-bank zero is structural; existing-memory final zero is computed. Historical native fallback uses hash-bound archived outputs, not fresh 92/897 inference. Separate native comparison directly measures24 new-task cases in each native condition.",
+  "claim": "Six bounded symbolic programs learned from labeled examples with persistent modular retention; no neural update or Transformer superiority claim.",
+  "dataset": {
+    "counts": {
+      "consistent_train_hypotheses_per_lesson": {
+        "card_upper": 1,
+        "delta_sum": 1,
+        "parcel_copy": 1,
+        "plate_lower": 1,
+        "sigma_product": 1,
+        "signal_reverse": 1
+      },
+      "dev_positive": 48,
+      "final_positive": 96,
+      "lessons": 6,
+      "negative": 78,
+      "qualification_negative": 24,
+      "qualification_positive": 48,
+      "train_examples": 48
+    },
+    "manifest_sha256": "165fe7160767092135d8418a23acd855889888ed37ac13d48e01263dd19c96f3",
+    "precommitted_at_utc": "2026-11-16T06:41:18.112012+00:00",
+    "qualification_role": "Accept/reject the TRAIN-selected program only.",
+    "seed": 20261116063627,
+    "transfer_scope": "New values, lengths, Unicode, signed integer ranges in known source/query templates; no new-wording claim."
+  },
+  "experiment": "modular-growth-20261116",
+  "native_comparison": {
+    "by_lesson": {
+      "card_upper": 4,
+      "delta_sum": 4,
+      "parcel_copy": 4,
+      "plate_lower": 4,
+      "sigma_product": 4,
+      "signal_reverse": 4
+    },
+    "case_sha256": "c2425f64147d2e44a61dbe27459ac479ba06c6280d84a6d8dbf5f353822e0279",
+    "complete": true,
+    "correct_native_in_context": 0,
+    "correct_native_plain": 0,
+    "correct_program": 24,
+    "count": 24,
+    "driver_sha256": "887ef8f5638bb01696e0953b6d0aff33df11e04562df653e1b788a7d5a20202c",
+    "fairness_limit": "Same specific frozen checkpoint; operation library/admission and training compute are not matched to native inference. No fine-tuned-neural or general Transformer comparison.",
+    "fewshot_prompt_tokens_max": 569,
+    "fewshot_prompt_tokens_min": 460,
+    "generation": {
+      "fewshot_prompt_truncation": false,
+      "max_new_tokens": 64,
+      "temperature": 0
+    },
+    "greedy_rng_unchanged": true,
+    "independence_limit": "Mechanical first-four-per-lesson selection before native inference; cases already evaluated at the symbolic final endpoint. Driver hash is bound by this evidence archive, not the native report itself.",
+    "model_revision": 4,
+    "report_sha256": "a66208be662cde5cb93f247916e83985982356cf07a4363362b77d94f3a09b1e",
+    "sample_policy": "first four precommitted FINAL cases per lesson, fixed before inference",
+    "scope": "same frozen Airi native reference; learned symbolic programs versus no/8-example context, not an equal-training-compute or general Transformer comparison",
+    "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79"
+  },
+  "privacy_scope": "Only authored synthetic lessons, cases, programs and source. No private user lessons or model/optimizer weights.",
+  "repeat_limit": "Deployment regression repeats already-observed cases after CLI-only safeguard change; it is not a second held-out confirmation.",
+  "runs": {
+    "deployment-regression": {
+      "all_gates_passed": true,
+      "bad_lesson": {
+        "action": "rejected",
+        "reason": "no unique bounded program fits TRAIN"
+      },
+      "bad_lesson_unchanged": true,
+      "baselines": {
+        "empty_learned_bank_answers": 0,
+        "existing_memory_answers": 0
+      },
+      "endpoints": {
+        "DEV": {
+          "by_lesson": {
+            "card_upper": 8,
+            "delta_sum": 8,
+            "parcel_copy": 8,
+            "plate_lower": 8,
+            "sigma_product": 8,
+            "signal_reverse": 8
+          },
+          "correct": 48,
+          "total": 48
+        },
+        "FINAL": {
+          "by_lesson": {
+            "card_upper": 16,
+            "delta_sum": 16,
+            "parcel_copy": 16,
+            "plate_lower": 16,
+            "sigma_product": 16,
+            "signal_reverse": 16
+          },
+          "correct": 96,
+          "total": 96
+        },
+        "NEGATIVE": {
+          "by_lesson": {
+            "card_upper": 13,
+            "delta_sum": 13,
+            "parcel_copy": 13,
+            "plate_lower": 13,
+            "sigma_product": 13,
+            "signal_reverse": 13
+          },
+          "correct": 78,
+          "total": 78
+        }
+      },
+      "growth_active_skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "latency_seconds": {
+        "max": 0.026691822999964643,
+        "median": 0.014880084499964141,
+        "samples": 30
+      },
+      "legacy92": {
+        "correct": 27,
+        "learned_intercepts": 0,
+        "native_baseline": 23,
+        "native_old_correct_lost": 0,
+        "scope": "actual symbolic routes, hash-bound archived native fallback inherited"
+      },
+      "neural_weights_changed": false,
+      "production_qualified": false,
+      "registry": {
+        "active_skills": 6,
+        "capacity": 32,
+        "recovered_from_snapshot": false,
+        "revision": 6,
+        "state_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7"
+      },
+      "replay_unchanged": true,
+      "restart_equal": true,
+      "snapshot_recovery": {
+        "active_skills": 6,
+        "capacity": 32,
+        "recovered_from_snapshot": true,
+        "revision": 6,
+        "state_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7"
+      },
+      "stable_contract": {
+        "cases": 989,
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "failed_cases": [],
+        "learned_intercepts": 0,
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate",
+        "unchanged_native_routes": 965
+      },
+      "training_seconds": 0.7529389659998742
+    },
+    "qualified-run": {
+      "all_gates_passed": true,
+      "bad_lesson": {
+        "action": "rejected",
+        "reason": "no unique bounded program fits TRAIN"
+      },
+      "bad_lesson_unchanged": true,
+      "baselines": {
+        "empty_learned_bank_answers": 0,
+        "existing_memory_answers": 0
+      },
+      "endpoints": {
+        "DEV": {
+          "by_lesson": {
+            "card_upper": 8,
+            "delta_sum": 8,
+            "parcel_copy": 8,
+            "plate_lower": 8,
+            "sigma_product": 8,
+            "signal_reverse": 8
+          },
+          "correct": 48,
+          "total": 48
+        },
+        "FINAL": {
+          "by_lesson": {
+            "card_upper": 16,
+            "delta_sum": 16,
+            "parcel_copy": 16,
+            "plate_lower": 16,
+            "sigma_product": 16,
+            "signal_reverse": 16
+          },
+          "correct": 96,
+          "total": 96
+        },
+        "NEGATIVE": {
+          "by_lesson": {
+            "card_upper": 13,
+            "delta_sum": 13,
+            "parcel_copy": 13,
+            "plate_lower": 13,
+            "sigma_product": 13,
+            "signal_reverse": 13
+          },
+          "correct": 78,
+          "total": 78
+        }
+      },
+      "growth_active_skills": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "latency_seconds": {
+        "max": 0.016810459999760496,
+        "median": 0.014500286999918899,
+        "samples": 30
+      },
+      "legacy92": {
+        "correct": 27,
+        "learned_intercepts": 0,
+        "native_baseline": 23,
+        "native_old_correct_lost": 0,
+        "scope": "actual symbolic routes, hash-bound archived native fallback inherited"
+      },
+      "neural_weights_changed": false,
+      "production_qualified": false,
+      "registry": {
+        "active_skills": 6,
+        "capacity": 32,
+        "recovered_from_snapshot": false,
+        "revision": 6,
+        "state_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7"
+      },
+      "replay_unchanged": true,
+      "restart_equal": true,
+      "snapshot_recovery": {
+        "active_skills": 6,
+        "capacity": 32,
+        "recovered_from_snapshot": true,
+        "revision": 6,
+        "state_sha256": "841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7"
+      },
+      "stable_contract": {
+        "cases": 989,
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "failed_cases": [],
+        "learned_intercepts": 0,
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate",
+        "unchanged_native_routes": 965
+      },
+      "training_seconds": 0.8528544430000693
+    }
+  },
+  "schema": 1,
+  "source_verification": {
+    "deployment-regression": {
+      "all_preregistered_source_hashes_verified": true,
+      "compiler_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "current_source_differences": []
+    },
+    "qualified-run": {
+      "all_preregistered_source_hashes_verified": true,
+      "compiler_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "current_source_differences": [
+        "chat.py"
+      ]
+    }
+  }
+}

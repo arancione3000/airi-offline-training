@@ -42,12 +42,20 @@ def main():
     p.add_argument('--model-record', type=Path, help='Hash-bound AIRI_CURRENT.json for the local checkpoint')
     p.add_argument('--messages-file', type=Path, help='One JSON array of conversation messages; emit one JSON answer')
     p.add_argument('--native-only', action='store_true', help='Bypass contextual memory for an explicitly neural-only measurement')
+    p.add_argument('--skills',type=Path,help='Persistent learned skill bank; default private bank or the bundled qualified bank')
+    p.add_argument('--no-skills',action='store_true',help='Disable learned experts while keeping the stable memory/native assistant')
+    p.add_argument('--learn',type=Path,help='Learn and qualify explicitly trusted labeled lessons, then exit')
     a = p.parse_args()
     if (a.checkpoint is None) != (a.model_record is None):
         p.error('--checkpoint and --model-record are required together')
     record = json.loads(a.model_record.read_text()) if a.model_record else None
+    from learn import selected_bank,private_bank,learn_file
+    if a.learn:
+        bank=private_bank(a.skills)
+        print(json.dumps({'results':learn_file(a.learn,bank),'registry':bank.status()},ensure_ascii=False));return
     native = VerifiedNative(cache=a.cache, checkpoint=a.checkpoint, record=record)
-    assistant = AiriAssistant(native)
+    bank=None if a.no_skills or a.native_only else selected_bank(a.skills)
+    assistant = AiriAssistant(native,skill_bank=bank)
 
     def respond(messages):
         if a.native_only:
@@ -59,7 +67,7 @@ def main():
         result = respond(messages)
         print(json.dumps(result, ensure_ascii=False))
         return
-    print('Airi sperimentale — memoria contestuale esplicita + modello nativo. /reset, /exit')
+    print('Airi sperimentale — memoria, abilità apprese e modello nativo. /learn FILE, /reset, /exit')
     history = []
     while True:
         try:
@@ -72,6 +80,15 @@ def main():
             history.clear()
             print('Conversazione azzerata.')
             continue
+        if text.startswith('/learn '):
+            try:
+                bank=private_bank(a.skills)
+                result=learn_file(Path(text[7:].strip()),bank)
+                if not a.no_skills and not a.native_only:assistant.skill_bank=bank
+                print(json.dumps({'learning':result,'registry':bank.status()},ensure_ascii=False))
+            except (ValueError,OSError) as error:
+                print(f'Lezione rifiutata ({type(error).__name__}).',file=sys.stderr)
+            continue
         if not text.strip():
             continue
         history.append({'role': 'user', 'content': text})
@@ -82,7 +99,8 @@ def main():
             print(f'Modello non disponibile ({type(error).__name__}); la memoria della conversazione resta utilizzabile.', file=sys.stderr)
             continue
         history.append({'role': 'assistant', 'content': result['answer']})
-        label = 'memoria' if result['source'] == 'bounded_context_memory' else 'modello'
+        label = {'bounded_context_memory':'memoria','learned_skill':'abilità appresa','native_model':'modello'}[result['source']]
+        if result.get('component_error'):print(result['component_error'],file=sys.stderr)
         print(f"Airi [{label}]: {result['answer']}")
 
 

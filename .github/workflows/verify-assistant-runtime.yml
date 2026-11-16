@@ -1,14 +1,16 @@
-name: Verify experimental Airi assistant memory
+name: Verify experimental Airi assistant and modular growth
 on:
   push:
     paths:
       - 'scripts/assistant-runtime/**'
       - 'tests/assistant-runtime/**'
+      - 'scripts/research-training/modular-growth-20261116/**'
       - '.github/workflows/verify-assistant-runtime.yml'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
       - 'tests/assistant-runtime/**'
+      - 'scripts/research-training/modular-growth-20261116/**'
       - '.github/workflows/verify-assistant-runtime.yml'
   workflow_dispatch:
 permissions:
@@ -43,3 +45,7 @@ jobs:
           assert r['legacy92']['previously_correct_lost']==0
           assert r['certified897']['total']==897 and r['certified897']['lost']==0
           PY
+      - name: Replay modular learning, independent values, persistence and old routing
+        run: |
+          python scripts/research-training/modular-growth-20261116/curriculum.py --out modular-ci-input
+          python scripts/research-training/modular-growth-20261116/run_growth.py --curriculum modular-ci-input --output modular-ci-output
