@@ -12,6 +12,12 @@ examples in context, versus24/24 with the learned bank. This is bounded program
 induction with fixed wording and a seven-operation library, not evidence of
 general Transformer superiority. See [growth results and limits](docs/MODULAR_GROWTH_RESULTS_20261116.md).
 
+The [automatic update workflow](docs/AUTOMATIC_MODULAR_UPDATES_20261116.md) now learns
+up to two additional procedural families per hourly cycle, publishes only after
+regression checks, and audits without duplicate training when its12-family catalog
+is complete. It uses exact reference labels and no paid model/API. Local private
+banks preserve their additions when importing newly installed bundled experts.
+
 It can recall explicit names, residences and topics from the current conversation,
 with source spans, corrections and conservative abstention. Native fallback uses the
 existing hash-verified approved model loader and requires the usual native runtime

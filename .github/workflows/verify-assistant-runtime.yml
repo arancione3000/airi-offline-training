@@ -6,12 +6,14 @@ on:
       - 'tests/assistant-runtime/**'
       - 'scripts/research-training/modular-growth-20261116/**'
       - '.github/workflows/verify-assistant-runtime.yml'
+      - '.github/workflows/airi-modular-auto-update.yml'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
       - 'tests/assistant-runtime/**'
       - 'scripts/research-training/modular-growth-20261116/**'
       - '.github/workflows/verify-assistant-runtime.yml'
+      - '.github/workflows/airi-modular-auto-update.yml'
   workflow_dispatch:
 permissions:
   contents: read

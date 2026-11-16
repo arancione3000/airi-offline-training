@@ -16,9 +16,21 @@ DEFAULT_PRIVATE=Path.home()/'.cache/airi/skill-bank.json'
 BUNDLED=Path(__file__).resolve().parent/'skills/approved-bank.json'
 
 
+def _refresh_default(bank):
+    from managed_skills import ReconciliationConflict,reconcile
+    try:
+        return reconcile(bank,BUNDLED)
+    except (RegistryError,OSError) as error:
+        print(f'Bundled skill refresh unavailable ({type(error).__name__}); retaining stable response routing.',file=sys.stderr)
+        return {'action':'rejected','reason':type(error).__name__,'retry':isinstance(error,(ReconciliationConflict,OSError))}
+
+
 def selected_bank(path=None):
     if path is not None:return SkillBank(path)
-    if DEFAULT_PRIVATE.exists() or DEFAULT_PRIVATE.is_symlink() or Path(str(DEFAULT_PRIVATE)+'.revisions').exists():return SkillBank(DEFAULT_PRIVATE)
+    if DEFAULT_PRIVATE.exists() or DEFAULT_PRIVATE.is_symlink() or Path(str(DEFAULT_PRIVATE)+'.revisions').exists():
+        bank=SkillBank(DEFAULT_PRIVATE)
+        _refresh_default(bank)
+        return bank
     return SkillBank(BUNDLED)
 
 
@@ -41,11 +53,7 @@ def learn_file(path,bank):
 def private_bank(path=None):
     target=Path(path) if path is not None else DEFAULT_PRIVATE
     bank=SkillBank(target)
-    if path is None and not target.exists() and not target.is_symlink() and BUNDLED.exists():
-        seed=SkillBank(BUNDLED)._read()[0]
-        with bank._lock():
-            current,_=bank._read()
-            if current['revision']==0:bank._write(seed)
+    if path is None:_refresh_default(bank)
     return bank
 
 
@@ -66,16 +74,43 @@ def main():
     if a.lessons:
         print(json.dumps({'results':learn_file(a.lessons,bank),'registry':bank.status()},ensure_ascii=False));return
     if a.watch.is_symlink() or not a.watch.is_dir():p.error('trusted queue must be an existing directory')
-    seen={};cycle=0
+    seen={};cycle=0;queue_health=None;refresh_stamp=None
     while True:
+        if a.bank is None:
+            try:
+                stamp=(BUNDLED.stat().st_mtime_ns,BUNDLED.stat().st_size)
+                if stamp!=refresh_stamp:
+                    refreshed=_refresh_default(bank)
+                    if not refreshed.get('retry'):refresh_stamp=stamp
+                    if refreshed['action']=='activated':
+                        print(json.dumps({'managed_refresh':refreshed,'registry':bank.status()}),flush=True)
+            except OSError as error:
+                if refresh_stamp!=('unavailable',):
+                    print(json.dumps({'managed_refresh':'unavailable','reason':type(error).__name__}),flush=True)
+                refresh_stamp=('unavailable',)
         paths=sorted(a.watch.glob('*.json'))
-        if len(paths)>32:raise RegistryError('trusted queue exceeds file bound')
+        present={str(path) for path in paths}
+        seen={path:stamp for path,stamp in seen.items() if path in present}
+        health='overflow' if len(paths)>32 else 'ok'
+        if health!=queue_health and (health=='overflow' or queue_health=='overflow'):
+            print(json.dumps({'queue_health':health,'file_limit':32,'action':'processing_first_32_unseen_files_per_cycle'}),flush=True)
+        queue_health=health
+        pending=[]
         for path in paths:
             try:
-                if path.is_symlink():raise RegistryError('symlink lesson refused')
-                stamp=(path.stat().st_mtime_ns,path.stat().st_size)
+                info=path.lstat();stamp=(info.st_mtime_ns,info.st_size)
                 if seen.get(str(path))==stamp:continue
-                result=learn_file(path,bank);seen[str(path)]=stamp
+                pending.append((path,stamp))
+            except OSError as error:
+                stamp=('unavailable',type(error).__name__)
+                if seen.get(str(path))==stamp:continue
+                seen[str(path)]=stamp
+                print(json.dumps({'file':path.name,'action':'rejected','reason':type(error).__name__}),flush=True)
+        for path,stamp in pending[:32]:
+            seen[str(path)]=stamp
+            try:
+                if path.is_symlink():raise RegistryError('symlink lesson refused')
+                result=learn_file(path,bank)
                 print(json.dumps({'file':path.name,'results':result,'registry':bank.status()},ensure_ascii=False),flush=True)
             except (ValueError,TypeError,OSError) as error:
                 print(json.dumps({'file':path.name,'action':'rejected','reason':type(error).__name__}),flush=True)

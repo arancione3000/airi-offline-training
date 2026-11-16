@@ -1,0 +1,92 @@
+name: AIRI automatic modular updates
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: airi-modular-auto-update
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Learn at most two procedural families and audit new values
+        id: cycle
+        run: |
+          python scripts/assistant-runtime/auto_update.py --bank scripts/assistant-runtime/skills/approved-bank.json --limit 2 --seed "$GITHUB_RUN_ID" --report-dir "$RUNNER_TEMP/modular-cycle" --progress scripts/assistant-runtime/skills/auto-progress.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json,os
+          from pathlib import Path
+          report=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json').read_text())
+          print('changed='+str(bool(report['activated'])).lower())
+          PY
+      - name: Verify the candidate through the full assistant suite
+        if: steps.cycle.outputs.changed == 'true'
+        run: python -m unittest discover -s tests/assistant-runtime -q
+      - name: Verify frozen continuous-training contracts
+        if: steps.cycle.outputs.changed == 'true'
+        run: python -m unittest discover -s tests/continuous-training -q
+      - name: Publish only the qualified bank and compact progress
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json').read_text())
+          assert report['audit']['passed'] and report['stable_gate']['passed']
+          assert report['neural_weights_changed'] is False
+          if report['activated']:
+              assert report['status']=='updated' and report['published']
+              bank=json.loads(Path('scripts/assistant-runtime/skills/approved-bank.json').read_text())
+              assert bank['sha256']==report['after_sha256']
+          PY
+          git add -- scripts/assistant-runtime/skills/approved-bank.json
+          if test -f scripts/assistant-runtime/skills/auto-progress.json; then
+            git add -- scripts/assistant-runtime/skills/auto-progress.json
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          python - <<'PY'
+          import subprocess
+          paths=set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())
+          assert paths <= {'scripts/assistant-runtime/skills/approved-bank.json','scripts/assistant-runtime/skills/auto-progress.json'}
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'learn: admit qualified procedural updates [skip ci]'
+          gh auth setup-git
+          git push origin HEAD:main
+      - name: Keep full inputs, preregistration and audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: modular-cycle-${{ github.run_id }}
+          path: ${{ runner.temp }}/modular-cycle/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Report actual progress
+        if: always()
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json,os
+          from pathlib import Path
+          path=Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json')
+          if path.exists():
+              r=json.loads(path.read_text())
+              print(f"Candidate status: {r['status']}; acquired: {r['activated']}; revision: {r['after_revision']}; pending families: {r['remaining_families']}.")
+              print(f"New-value audit: {r['audit']['correct']}/{r['audit']['total']}; inspect the publish step for delivery success.")
+              print('Finite exact-reference procedural learning; native weights unchanged. Completed catalogs are audited without new bank commits.')
+          PY
