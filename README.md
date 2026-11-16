@@ -3,6 +3,15 @@
 ## Current experimental assistant
 
 Run `python scripts/assistant-runtime/chat.py` for the new assistant entry point.
+It now includes six persistent procedural experts learned from examples. Use
+`/learn FILE` or the trusted local lesson watcher to qualify and append more
+experts without rewriting the approved neural weights. On precommitted tasks,
+the learned bank answers96/96 unseen-value final cases; on a fixed24-case sample,
+the same native model answers0/24 both without examples and with eight TRAIN
+examples in context, versus24/24 with the learned bank. This is bounded program
+induction with fixed wording and a seven-operation library, not evidence of
+general Transformer superiority. See [growth results and limits](docs/MODULAR_GROWTH_RESULTS_20261116.md).
+
 It can recall explicit names, residences and topics from the current conversation,
 with source spans, corrections and conservative abstention. Native fallback uses the
 existing hash-verified approved model loader and requires the usual native runtime

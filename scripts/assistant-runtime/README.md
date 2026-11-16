@@ -1,4 +1,4 @@
-# Airi: experimental composed assistant
+# Airi: experimental composed assistant with persistent learned experts
 
 ```sh
 python scripts/assistant-runtime/chat.py
@@ -37,10 +37,12 @@ restarting selects the then-current approved model. The model remains experiment
 and no production qualification/provider gate is bypassed.
 
 `--messages-file path.json` consumes one JSON array and emits one JSON answer with
-`source` and provenance. `--native-only` bypasses memory for a clearly labeled
+`source` and provenance. `--native-only` bypasses memory and learned experts for a clearly labeled
 measurement of the neural model alone. `AiriAssistant(native_chat).respond(messages)`
 provides the same composition API for callers; fallback receives the original
-conversation unchanged. No candidate expert is loaded or selected by this API.
+conversation unchanged. Pass `skill_bank=SkillBank(path)` to enable learned symbolic
+experts in this API. The chat CLI enables the qualified bundled bank by default.
+No neural candidate checkpoint is selected by this component.
 
 Only explicit supported user declarations and recall questions are recognized.
 Names, locations and topics retain arbitrary unseen Unicode values. Corrections,
@@ -49,6 +51,56 @@ and unsafe controls are checked conservatively. System/developer/tool messages
 disable the memory route so it cannot override their instructions. Unsupported
 syntax abstains; this limited grammar is not a general discourse understanding
 system or a factual-world validator. Native fallback can still answer poorly.
+
+## Learning new procedural skills
+
+The routing order is existing memory, ordered learned experts, then the native
+model. Six synthetic experts are bundled: parcel-code copy, signal reversal,
+card-text uppercase, plate-text lowercase, and two named integer operations.
+For example, these messages are answered without loading Torch:
+
+```json
+[{"role":"user","content":"Il segnale acquisito è Abé42."},
+ {"role":"user","content":"Come restituisci il segnale?"}]
+```
+
+The answer is `24ébA`, with `source: learned_skill`, expert identity and exact
+source spans. The learner infers literal extraction anchors, an exact question,
+and one uniquely consistent operation from copy/reverse/uppercase/lowercase/
+add/subtract/multiply. It does not generate arbitrary algorithms or new neural
+layers. New values generalize inside learned templates; paraphrases may abstain.
+
+```sh
+python scripts/assistant-runtime/learn.py --status
+python scripts/assistant-runtime/chat.py --learn /path/to/trusted-lessons.json
+python scripts/assistant-runtime/learn.py --watch /path/to/trusted-queue --interval 30
+```
+
+Interactive chat also accepts `/learn /path/to/trusted-lessons.json`. A lesson has
+`lesson_id`, `trusted: true`, `examples` and `qualification`; each row contains
+`messages` and `answer` (null for required abstention). Supply4–64 TRAIN examples,
+then at least8 positive and4 negative distinct qualification examples with new
+extracted values. The synthetic examples in the [reproduction bundle](../research-training/modular-growth-20261116/REPRODUCTION.md)
+show the full format. Only TRAIN selects a program. Admission replays all old
+expert examples and989 stable historical routing contracts; failure preserves
+the current bank. Old memory and earlier experts retain priority.
+
+The default private bank is `~/.cache/airi/skill-bank.json`, initially seeded
+from the six bundled experts when learning first runs. `--skills PATH` in chat
+or `--bank PATH` in the learner uses an explicit independent bank; an absent
+explicit path starts empty. `--no-skills` retains just memory/native routing.
+The watcher polls trusted local JSON files, admits new valid lessons and treats
+repeats as unchanged. It needs a running Linux process; use a service supervisor
+for machine restarts. Ordinary chat is not silently labeled as training, and the
+watcher cannot improve without new correct lessons. No external model/API is used.
+
+Validated snapshots are committed atomically before the convenience main copy.
+An interrupted/corrupted main copy can recover from a valid committed snapshot;
+if no valid bank remains, the assistant falls back to the native model with a component error. Checksums
+detect accidental corruption, not a malicious filesystem owner. Banks are tied
+to the compiler source hash: a compiler change requires requalification. Capacity
+is32 experts, with no automatic knowledge eviction. This experiment does not
+change the production provider, approved model pointer or frozen training service.
 
 ## Verification
 

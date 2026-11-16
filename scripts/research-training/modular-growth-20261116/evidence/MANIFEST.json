@@ -1,0 +1,334 @@
+{
+  "artifacts": {
+    "deployment-regression/PREREGISTRATION.json.gz": {
+      "raw_bytes": 2259,
+      "raw_sha256": "6aaceeee8c37f169957d9c265ab604805ca8e885dfaa182719eb43f156a38174",
+      "source": "/workspace/airi-lab/modular-growth-20261116/deployment-regression/PREREGISTRATION.json",
+      "stored_bytes": 977,
+      "stored_sha256": "f4a07f26e18b0c54308215277ed74f07bbb82dfa9f66555312495c862a7b5c20"
+    },
+    "deployment-regression/REPORT.json.gz": {
+      "raw_bytes": 235386,
+      "raw_sha256": "4fa536f96ae235f7091dcaaf31ab004a4bb8948d75d40e11af53e1c69cdbe542",
+      "source": "/workspace/airi-lab/modular-growth-20261116/deployment-regression/REPORT.json",
+      "stored_bytes": 10758,
+      "stored_sha256": "b532d1caa50659ce3542f47a9b304e68ccbadf91fb1471e940aba6678df03072"
+    },
+    "deployment-regression/sources/assistant.py.gz": {
+      "raw_bytes": 1336,
+      "raw_sha256": "cf0f54af68ab918ff6dc27a6e063860a5a2c9657c357e199fc63934345b66389",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/assistant.py",
+      "stored_bytes": 592,
+      "stored_sha256": "d87431cc9e32bd211168097620904781270a08aa0e30ae2931fd020faa0b6963"
+    },
+    "deployment-regression/sources/chat.py.gz": {
+      "raw_bytes": 5372,
+      "raw_sha256": "2e248b154fc0466985165279db6f1d03fa09feb9718a4332d0c9e31f6f207786",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/chat.py",
+      "stored_bytes": 2023,
+      "stored_sha256": "666b3ad92f44265b8750ff8ef12f67e189f5c4fab5c8acfa36d3ef5d0ada71ff"
+    },
+    "deployment-regression/sources/context_memory.py.gz": {
+      "raw_bytes": 18315,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/context_memory.py",
+      "stored_bytes": 6148,
+      "stored_sha256": "e4cbf588e8748a7e73dcb0e2c9e1df7527e260dfd6e88e50a5950abc4c76f8e6"
+    },
+    "deployment-regression/sources/evaluate.py.gz": {
+      "raw_bytes": 8932,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/evaluate.py",
+      "stored_bytes": 2878,
+      "stored_sha256": "f6acb31b0915aeaade9d3bb189cfa2d826db765f93a8fd33f40f2bea299e8c82"
+    },
+    "deployment-regression/sources/learn.py.gz": {
+      "raw_bytes": 3959,
+      "raw_sha256": "57076e26d6d0fd3278296b3b23dd81a18fefed8ef55b600bd61f14a3be6e2b30",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/learn.py",
+      "stored_bytes": 1555,
+      "stored_sha256": "0eb43cdafdc6c98ea48858104638c9f75fdc545157def4745ea34f52286d9ade"
+    },
+    "deployment-regression/sources/skill_bank.py.gz": {
+      "raw_bytes": 12939,
+      "raw_sha256": "01e99621014e40b07153ae11372660d76712d835ecc3d066f23dd6b67bd10f6b",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/skill_bank.py",
+      "stored_bytes": 3833,
+      "stored_sha256": "65ec78eb757993534f2beca53bce10e81c512e0373859b7b67d24e7fc05b667a"
+    },
+    "deployment-regression/sources/skill_programs.py.gz": {
+      "raw_bytes": 16734,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/skill_programs.py",
+      "stored_bytes": 5599,
+      "stored_sha256": "06bf63bfa082bea830cb87ed866481b0fa9dc557991e3453bc8de064f37c43fb"
+    },
+    "deployment-regression/sources/skill_validation.py.gz": {
+      "raw_bytes": 1524,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "source": "/workspace/airi-offline-training/scripts/assistant-runtime/skill_validation.py",
+      "stored_bytes": 702,
+      "stored_sha256": "9253c890131154e68b1e4be44479e09ea8a5bad810ce31f16000a40f4a42ec16"
+    },
+    "native-comparison/CASES.json.gz": {
+      "raw_bytes": 11077,
+      "raw_sha256": "c2425f64147d2e44a61dbe27459ac479ba06c6280d84a6d8dbf5f353822e0279",
+      "source": "/workspace/airi-lab/modular-growth-20261116/native-comparison/CASES.json",
+      "stored_bytes": 868,
+      "stored_sha256": "5e8b5b08b927b3a91e9ecde01f59e2b6cdacf473a12feb4d678fd55fca850965"
+    },
+    "native-comparison/REPORT.json.gz": {
+      "raw_bytes": 40282,
+      "raw_sha256": "a66208be662cde5cb93f247916e83985982356cf07a4363362b77d94f3a09b1e",
+      "source": "/workspace/airi-lab/modular-growth-20261116/native-comparison/REPORT.json",
+      "stored_bytes": 3810,
+      "stored_sha256": "bd7856b4bc56bf3947fc06d146c372a814398efa31bb05ddfd68fef1a9287adb"
+    },
+    "precommitted/CASES/DEV.json.gz": {
+      "raw_bytes": 24310,
+      "raw_sha256": "f4b320643d792e0f270e99b6979fc8f33f1c24eabb9b1e9ff7332aa048ae821b",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/CASES/DEV.json",
+      "stored_bytes": 1459,
+      "stored_sha256": "f90979b91db7e7dfdc9d2f37137ca15a15f0d7746e3c6eb930ddd74874daae4c"
+    },
+    "precommitted/CASES/FINAL.json.gz": {
+      "raw_bytes": 53258,
+      "raw_sha256": "2882ec8c2a450d3c34328b1a26c04e48405453671855b4ac021434cf3843b7fb",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/CASES/FINAL.json",
+      "stored_bytes": 2530,
+      "stored_sha256": "c1db5caa6f84d327d2f5a8e839559fa32e930f3aa6fb8a427d7b49b23e778dc6"
+    },
+    "precommitted/CASES/NEGATIVE.json.gz": {
+      "raw_bytes": 38166,
+      "raw_sha256": "c70a26ae616fedc065fc9631e5a623a0057ec8dd84925115c5c402774c637529",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/CASES/NEGATIVE.json",
+      "stored_bytes": 1760,
+      "stored_sha256": "16bff2b5fc9754065d9a8b766c394ac9fec9782e756c6c12a94f77d08a977347"
+    },
+    "precommitted/LESSONS/CORRUPTED.json.gz": {
+      "raw_bytes": 6853,
+      "raw_sha256": "405e1ef29602b47ffb4d9b7f7d1c5a6f4a81b627629cd37cd99c3d9454418abd",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/LESSONS/CORRUPTED.json",
+      "stored_bytes": 682,
+      "stored_sha256": "4227f2eddf7b3b2273bc641ed70d02959ec19a2c5c610d004b30c36fe4b7ab5c"
+    },
+    "precommitted/LESSONS/TRAIN.json.gz": {
+      "raw_bytes": 43104,
+      "raw_sha256": "8bd03786a67555cf3c9d5e988a0c7847399b8303963c05fac7d93d781a3899d7",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/LESSONS/TRAIN.json",
+      "stored_bytes": 1928,
+      "stored_sha256": "df5547c497a1f186b846ca12757dd0202a9b078c328b0fbef23fb432f0113b7e"
+    },
+    "precommitted/MANIFEST.json.gz": {
+      "raw_bytes": 1654,
+      "raw_sha256": "165fe7160767092135d8418a23acd855889888ed37ac13d48e01263dd19c96f3",
+      "source": "/workspace/airi-lab/modular-growth-20261116/precommitted/MANIFEST.json",
+      "stored_bytes": 881,
+      "stored_sha256": "e02441bb73afffc886ff703e17250666538ebdf953fe8a8200e0159b4276c3ec"
+    },
+    "qualified-bank.json.gz": {
+      "raw_bytes": 22379,
+      "raw_sha256": "b3e226768f4044fb1bff6eb0563e83982d953d7c2490995e86d808ab60fed2c9",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json",
+      "stored_bytes": 2703,
+      "stored_sha256": "5eb57dc49866fde96f2a345ba206be1007e41797440594af52a41d0176b62da4"
+    },
+    "qualified-run/PREREGISTRATION.json.gz": {
+      "raw_bytes": 2259,
+      "raw_sha256": "e0530d5a52c57926ce56031a4838597269dfda84e41f2947088f5fe7df4183d0",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/PREREGISTRATION.json",
+      "stored_bytes": 975,
+      "stored_sha256": "dc4b588ba792a736f00db159ae1a6f35336223ce6e2ad2fe692b857cde68543a"
+    },
+    "qualified-run/REPORT.json.gz": {
+      "raw_bytes": 235386,
+      "raw_sha256": "8d137a08cd0e245e233dd0f047132490b3561d059798047168a131a857e5fb26",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/REPORT.json",
+      "stored_bytes": 10758,
+      "stored_sha256": "d0ae61424fe25807fd38f9e786c3f9e6d8120f136f771e3346b57e06274e1252"
+    },
+    "qualified-run/bank-revisions/000001-5cedbe08a6270257032913b38be763b8bf368a5e28f73cb3d64880f70a207b0b.json.gz": {
+      "raw_bytes": 3939,
+      "raw_sha256": "22148efe182423958864b35b0b859254724a509ffa4480311ba2cb78f5565ead",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000001-5cedbe08a6270257032913b38be763b8bf368a5e28f73cb3d64880f70a207b0b.json",
+      "stored_bytes": 788,
+      "stored_sha256": "593b1dd64866e514d598fa22abcf05a51edd4b9c941e5e59fd8d802aee263282"
+    },
+    "qualified-run/bank-revisions/000002-03a3db6b9d3121ed4bb113807743f4dc7157aa50e019b73f1f4a2563759fd0ed.json.gz": {
+      "raw_bytes": 7697,
+      "raw_sha256": "96791f93a7957f91f1fedf915a97c1f72bc860381416c066a75a52052d2fbd43",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000002-03a3db6b9d3121ed4bb113807743f4dc7157aa50e019b73f1f4a2563759fd0ed.json",
+      "stored_bytes": 1204,
+      "stored_sha256": "94f9bbe8dc390119fee39afd0c0fb23829f76d4e769f3e57e997bcb93e0ddb2b"
+    },
+    "qualified-run/bank-revisions/000003-1671300b2f614c22f03513fcfcebb46750cb7b479093ff6b4577c35147fd01b7.json.gz": {
+      "raw_bytes": 11560,
+      "raw_sha256": "cf7b25ebdcbaf52e754e90c7c9cc33d663cf8beffcd9691c737689e22f459fd4",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000003-1671300b2f614c22f03513fcfcebb46750cb7b479093ff6b4577c35147fd01b7.json",
+      "stored_bytes": 1621,
+      "stored_sha256": "125959eced8f6b27650ac509ec6bc660f6bf531e8e5d00605c9a6ee2cbe0f6c5"
+    },
+    "qualified-run/bank-revisions/000004-23f10797dad6e39c3729ea71af6da61f93c427b84b76ab4e3841733a73ba36f5.json.gz": {
+      "raw_bytes": 15338,
+      "raw_sha256": "31119bc41bc0fe59021d8052e752152944380429bb513cfae7bdf341850cb886",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000004-23f10797dad6e39c3729ea71af6da61f93c427b84b76ab4e3841733a73ba36f5.json",
+      "stored_bytes": 2004,
+      "stored_sha256": "eef8b5e4e826ef4f2d63597a13cb93b245f6b84ecf401d3fd7984407b664dcb9"
+    },
+    "qualified-run/bank-revisions/000005-545c46f494f8c4aa06993ccd5648c70441b95a223c3030c9aa8da5c5d0b30242.json.gz": {
+      "raw_bytes": 18798,
+      "raw_sha256": "e01e4290e8d9e49a39e4602ed5acf5d07ab56c45dceb8fe57bb159af015f459c",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000005-545c46f494f8c4aa06993ccd5648c70441b95a223c3030c9aa8da5c5d0b30242.json",
+      "stored_bytes": 2350,
+      "stored_sha256": "ed9ef6f6335b64fce6279e12cc4b3409dd739bf7c2888995bf1c36a5dc004998"
+    },
+    "qualified-run/bank-revisions/000006-841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7.json.gz": {
+      "raw_bytes": 22379,
+      "raw_sha256": "b3e226768f4044fb1bff6eb0563e83982d953d7c2490995e86d808ab60fed2c9",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/bank.json.revisions/000006-841b62d2aa557b12aeb16e105cba68afb4782b9d547750a2f0e11b4a721497f7.json",
+      "stored_bytes": 2703,
+      "stored_sha256": "5eb57dc49866fde96f2a345ba206be1007e41797440594af52a41d0176b62da4"
+    },
+    "qualified-run/sources/assistant.py.gz": {
+      "original_compressed_sha256": "b555a54a31b5ed8d65edc930d70caa64babfc8aaa7e2087dcc4dfd3e7dbe8be6",
+      "raw_bytes": 1336,
+      "raw_sha256": "cf0f54af68ab918ff6dc27a6e063860a5a2c9657c357e199fc63934345b66389",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/assistant.py.gz",
+      "stored_bytes": 592,
+      "stored_sha256": "d87431cc9e32bd211168097620904781270a08aa0e30ae2931fd020faa0b6963"
+    },
+    "qualified-run/sources/chat.py.gz": {
+      "original_compressed_sha256": "a26bb729d936021ff4b283c638833e8981515fe95931ebf69bb6919dd57048bb",
+      "raw_bytes": 5331,
+      "raw_sha256": "1c89e4485393ab101e9e104836bd303aeb4ee4aa96139f3ea8555a60b7f8917f",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/chat.py.gz",
+      "stored_bytes": 2012,
+      "stored_sha256": "433d600e1c0c5206d51dd58885b498c19d19a2aaa89c89a2b8b1de8045411cf0"
+    },
+    "qualified-run/sources/context_memory.py.gz": {
+      "original_compressed_sha256": "f46a03d355e0ca5f511faff7b19306afb1f6da4717c6df63973efc5016793e2b",
+      "raw_bytes": 18315,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/context_memory.py.gz",
+      "stored_bytes": 6148,
+      "stored_sha256": "e4cbf588e8748a7e73dcb0e2c9e1df7527e260dfd6e88e50a5950abc4c76f8e6"
+    },
+    "qualified-run/sources/evaluate.py.gz": {
+      "original_compressed_sha256": "47236736f56d35d636ef7a5e7095b51d4a4f5dd41643b56e41d614fbc39ba6d2",
+      "raw_bytes": 8932,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/evaluate.py.gz",
+      "stored_bytes": 2878,
+      "stored_sha256": "f6acb31b0915aeaade9d3bb189cfa2d826db765f93a8fd33f40f2bea299e8c82"
+    },
+    "qualified-run/sources/learn.py.gz": {
+      "original_compressed_sha256": "de211df2a65a524a249bc5f756509ad02f1c183b57d8f075467cc3cade708030",
+      "raw_bytes": 3959,
+      "raw_sha256": "57076e26d6d0fd3278296b3b23dd81a18fefed8ef55b600bd61f14a3be6e2b30",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/learn.py.gz",
+      "stored_bytes": 1555,
+      "stored_sha256": "0eb43cdafdc6c98ea48858104638c9f75fdc545157def4745ea34f52286d9ade"
+    },
+    "qualified-run/sources/skill_bank.py.gz": {
+      "original_compressed_sha256": "fc3fd2276a7f444536c4415fd675d7229f23a7c69b41c2b2a92f02c0cc3b7810",
+      "raw_bytes": 12939,
+      "raw_sha256": "01e99621014e40b07153ae11372660d76712d835ecc3d066f23dd6b67bd10f6b",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/skill_bank.py.gz",
+      "stored_bytes": 3833,
+      "stored_sha256": "65ec78eb757993534f2beca53bce10e81c512e0373859b7b67d24e7fc05b667a"
+    },
+    "qualified-run/sources/skill_programs.py.gz": {
+      "original_compressed_sha256": "e84bc7d213303957fde20a046aed6d9d50e9806a72c4ff29337242c3a9c09609",
+      "raw_bytes": 16734,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/skill_programs.py.gz",
+      "stored_bytes": 5599,
+      "stored_sha256": "06bf63bfa082bea830cb87ed866481b0fa9dc557991e3453bc8de064f37c43fb"
+    },
+    "qualified-run/sources/skill_validation.py.gz": {
+      "original_compressed_sha256": "c9b85bb46e25f7aa145fd155240a625825ca6126c2ca018567e181688c29523c",
+      "raw_bytes": 1524,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "source": "/workspace/airi-lab/modular-growth-20261116/qualified-run/source-snapshots/skill_validation.py.gz",
+      "stored_bytes": 702,
+      "stored_sha256": "9253c890131154e68b1e4be44479e09ea8a5bad810ce31f16000a40f4a42ec16"
+    },
+    "research-sources/PLAN.md.gz": {
+      "raw_bytes": 9812,
+      "raw_sha256": "982ff869e292a9308f2ba49b4f10c9414893fa3636149f3fa52791a6f62f94eb",
+      "source": "/workspace/airi-offline-training/scripts/research-training/modular-growth-20261116/PLAN.md",
+      "stored_bytes": 4287,
+      "stored_sha256": "50be73eae4431308ab6a983cc271faf9c04e5aa8921ac69e2c057f840d7502fa"
+    },
+    "research-sources/compare_native.py.gz": {
+      "raw_bytes": 4265,
+      "raw_sha256": "887ef8f5638bb01696e0953b6d0aff33df11e04562df653e1b788a7d5a20202c",
+      "source": "/workspace/airi-offline-training/scripts/research-training/modular-growth-20261116/compare_native.py",
+      "stored_bytes": 1675,
+      "stored_sha256": "2b6f8b682fb471a6604cedb5c730393590e38ad6e98b5d4423eff53391810287"
+    },
+    "research-sources/curriculum.py.gz": {
+      "raw_bytes": 14194,
+      "raw_sha256": "13bb3a72d6eb02923d93a156c0c95c3037b56ea21e743493783d981968e7f911",
+      "source": "/workspace/airi-offline-training/scripts/research-training/modular-growth-20261116/curriculum.py",
+      "stored_bytes": 4799,
+      "stored_sha256": "028eae8fbc665b62004da4b262f5d1861736a96b5614a6ff2671461628484f07"
+    },
+    "research-sources/run_growth.py.gz": {
+      "raw_bytes": 6212,
+      "raw_sha256": "7b19c819791a1aafdf0efaad03de105c2efc7b73b3284b13c3958ef8b438d522",
+      "source": "/workspace/airi-offline-training/scripts/research-training/modular-growth-20261116/run_growth.py",
+      "stored_bytes": 2481,
+      "stored_sha256": "a5d92be4f43b53100320358f74dcb0bfd026049ec6fa85462db62320771328f8"
+    }
+  },
+  "format": "gzip level9, empty filename, mtime0; raw and stored SHA256",
+  "native_comparison": {
+    "case_selection_verified_against_precommitted_final": true,
+    "cases": 24,
+    "counts": {
+      "in_context": 0,
+      "plain": 0,
+      "program": 24
+    },
+    "driver_bound_by_evidence_archive": true,
+    "driver_hash_preregistered_in_native_report": false,
+    "greedy_rng_unchanged": true,
+    "model_revision": 4,
+    "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79"
+  },
+  "repository_dependency": {
+    "historical_native_outputs": "scripts/research-training/learnability-20261115/evidence/REPORT.json.gz",
+    "stable_contract": {
+      "path": "scripts/assistant-runtime/skills/stable_contracts.json.gz",
+      "raw_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+      "stored_sha256": "0709a96ed6c284ff143a2c132b84dc707f8e9f82c77aa2affc3ac7396be1e0a9"
+    }
+  },
+  "schema": 1,
+  "scope": "Six bounded symbolic programs learned from labeled examples with persistent modular retention; no neural update or Transformer superiority claim.",
+  "source_verification": {
+    "deployment-regression": {
+      "all_preregistered_source_hashes_verified": true,
+      "compiler_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "current_source_differences": []
+    },
+    "qualified-run": {
+      "all_preregistered_source_hashes_verified": true,
+      "compiler_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "current_source_differences": [
+        "chat.py"
+      ]
+    }
+  },
+  "uncompressed_documents": {
+    "../REPRODUCTION.md": {
+      "bytes": 9294,
+      "sha256": "c02a4078587b56f714dbd4b34e36578a1f669286dff8edce88a7ee5b034bb5c6"
+    },
+    "SUMMARY.json": {
+      "bytes": 9286,
+      "sha256": "2ae1d3c29c0eec737431ea808a06147864cf99d95f0f3e6133367795f56e65da"
+    }
+  }
+}
