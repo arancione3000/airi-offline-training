@@ -1,0 +1,101 @@
+{
+  "checked_at_utc": "2026-11-16T22:39:08.834537+00:00",
+  "implementation_pull_request": "https://github.com/arancione3000/airi-offline-training/pull/15",
+  "implementation_merge": "4116dbbd0a19302b3e411c71211fa541d5d111c6",
+  "ci_success": [
+    43971310291,
+    43971297431
+  ],
+  "live_supervisor_initial_success": 43971589118,
+  "explicit_successor_confirmed_running": 43971779345,
+  "supervisor_dispatched_update_success": 43971615534,
+  "published_bank_commit": "baee0946bc189d928612601daf6a6ac4deda2f33",
+  "published_progress": {
+    "activated": 2,
+    "after_revision": 14,
+    "after_sha256": "c6b8e8fb2e6a5c3b9e0070c430fe4d80378c0ce08926e1dfb8a4cde898726a6e",
+    "audit": {
+      "by_family": {
+        "auto_v1_account_lower": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_contact": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_customer_reference": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_email_alias": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_label_upper": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_order_reference": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_remaining": {
+          "correct": 20,
+          "total": 20
+        },
+        "auto_v1_tracking_reverse": {
+          "correct": 20,
+          "total": 20
+        }
+      },
+      "correct": 160,
+      "passed": true,
+      "total": 160
+    },
+    "before_revision": 12,
+    "before_sha256": "a67ebec2535a686779dd63231cf139fdcefb452428d08ed7c75928569cc755d9",
+    "capacity": 32,
+    "catalog_size": 12,
+    "checked_at_utc": "2026-11-16T22:36:12.363222+00:00",
+    "neural_weights_changed": false,
+    "preregistration_sha256": "d5fa258584c4809e9033c756353ae275938e6151295e61479371d28142793410",
+    "publication": {
+      "main_copy_updated": true,
+      "snapshot_committed": true
+    },
+    "published": true,
+    "remaining_families": 4,
+    "report_sha256": "be25fd7f8a759d730afef0fd1d2568529fd5293518c9c3b8d52b6a5fb8255d2b",
+    "schema": 1,
+    "scope": "finite authored procedural templates; independent exact labels, not general chat or neural improvement",
+    "seed": 43971615534,
+    "stable_gate": {
+      "cases": 989,
+      "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+      "failed_cases": [],
+      "learned_intercepts": 0,
+      "passed": true,
+      "scope": "routing validation; not a new neural certificate",
+      "unchanged_native_routes": 965
+    },
+    "status": "updated",
+    "stored_expert_contracts_passed": 280
+  },
+  "local_private_revision": 18,
+  "local_health_report_raw_sha256": "53be2aaa6102e29bb583f11ae3274c7732f198cda047e724cff630cd61aa533e",
+  "local_health_counts": {
+    "catalog": 240,
+    "stored": 360,
+    "historical_routes": 989
+  },
+  "unit_tests": {
+    "assistant": 111,
+    "frozen_training": 7,
+    "native_controller": 30
+  },
+  "compiler_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+  "comparison_index_sha256": "d359dbcf78aff5e8ba12a14a2ca5dc86c410873059e32e5255cc69c451b79d6c",
+  "native_weights_changed": false,
+  "scope": "bounded procedural gains; exact wording remains a limitation; no general Transformer superiority or strict platform timing guarantee"
+}

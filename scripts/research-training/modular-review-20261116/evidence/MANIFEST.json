@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "scope": "same frozen small Airi native model; bounded system ablation, not general Transformer superiority or equal training compute",
+  "artifacts": [
+    {
+      "path": "CASES.json.gz",
+      "raw_bytes": 9216,
+      "stored_bytes": 1156,
+      "raw_sha256": "2f931c4ae32c8b9cd05f3872d2f2b51febbcd6455f0990544eebf6582dd09b89",
+      "stored_sha256": "fe0f0bfaf7d0f0f400bb5f37cd50f61eaea8663bcbaa4f47fbdca34ba56d68ce"
+    },
+    {
+      "path": "PREREGISTRATION.json.gz",
+      "raw_bytes": 2184,
+      "stored_bytes": 1201,
+      "raw_sha256": "9b9b8b71b8d1bf519000bd4d77d428cb9e6fb8542c2cd0f6792faff4402f208a",
+      "stored_sha256": "ce58779ece706d4163e5db3fbd3c87dbb1cafb3b839f9979bc80ed047a7973a4"
+    },
+    {
+      "path": "REPORT.json.gz",
+      "raw_bytes": 36120,
+      "stored_bytes": 3977,
+      "raw_sha256": "9ec0feb024f5a14790a4aa51d9a99488ee599472e205090802be0c5c77281178",
+      "stored_sha256": "55d79bcaa149a71a056e58c7abd81f03a03986e0d6a210a2a2adf399abe9719d"
+    },
+    {
+      "path": "bank.json.gz",
+      "raw_bytes": 49612,
+      "stored_bytes": 5721,
+      "raw_sha256": "3602dbadb75a18e65c88ea9834b8b933f7bd100bf1830cb813813c5da5139040",
+      "stored_sha256": "968327eb992877f6e1a5390d5ddebbc1855de6e44c04d1623f2da92333803bbe"
+    },
+    {
+      "path": "compare-as-run.py.gz",
+      "raw_bytes": 10326,
+      "stored_bytes": 3720,
+      "raw_sha256": "c6149d59234403b9fd6a7812e3cf216579b8ac218ed033dce1df609cf5e92bf8",
+      "stored_sha256": "a4f73148102a1e530e1c11bd2a96090a65363b6c05c12b9b3347465e0b2d271f"
+    },
+    {
+      "path": "sources/assistant.py.gz",
+      "raw_bytes": 1336,
+      "stored_bytes": 592,
+      "raw_sha256": "cf0f54af68ab918ff6dc27a6e063860a5a2c9657c357e199fc63934345b66389",
+      "stored_sha256": "b555a54a31b5ed8d65edc930d70caa64babfc8aaa7e2087dcc4dfd3e7dbe8be6"
+    },
+    {
+      "path": "sources/auto_curriculum.py.gz",
+      "raw_bytes": 7761,
+      "stored_bytes": 2621,
+      "raw_sha256": "f066fb8a4ec2539fb02ae0b1a69e319434d4a1cb3de45e7096a08a26b75d92db",
+      "stored_sha256": "6053cd1b9caa445e7c43e3b5f64c5a2fe5aa375212205f1dbf4505e3b5276588"
+    },
+    {
+      "path": "sources/auto_update.py.gz",
+      "raw_bytes": 7997,
+      "stored_bytes": 2895,
+      "raw_sha256": "988edab96ef53617e69fa6a26469971d3f924c42234a72cb663f7973e682ec8a",
+      "stored_sha256": "4aada686e4dcf05b0ca1c0d5d9fee0b06284d63b18431895c05c2dfd5149364c"
+    },
+    {
+      "path": "sources/chat.py.gz",
+      "raw_bytes": 5372,
+      "stored_bytes": 2023,
+      "raw_sha256": "2e248b154fc0466985165279db6f1d03fa09feb9718a4332d0c9e31f6f207786",
+      "stored_sha256": "7ef8dc067279e063f1420d3c7e36a1527610f18b5f626f9952bbd63a72d1119e"
+    },
+    {
+      "path": "sources/context_memory.py.gz",
+      "raw_bytes": 18315,
+      "stored_bytes": 6148,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "stored_sha256": "f46a03d355e0ca5f511faff7b19306afb1f6da4717c6df63973efc5016793e2b"
+    },
+    {
+      "path": "sources/evaluate.py.gz",
+      "raw_bytes": 8932,
+      "stored_bytes": 2878,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "stored_sha256": "47236736f56d35d636ef7a5e7095b51d4a4f5dd41643b56e41d614fbc39ba6d2"
+    },
+    {
+      "path": "sources/learn.py.gz",
+      "raw_bytes": 5767,
+      "stored_bytes": 1972,
+      "raw_sha256": "06798c3761c9f27c0f0ecce776ee51bf5dcf439242d0e41c1246edbca2e81f98",
+      "stored_sha256": "2cc6a178ad5e91fbea11a7f73b413544648a89ee49aedb5ac3b883c8dd16a514"
+    },
+    {
+      "path": "sources/managed_skills.py.gz",
+      "raw_bytes": 2304,
+      "stored_bytes": 981,
+      "raw_sha256": "d415e0952570ef0f06788a5af2d3e31cae0a590928ad3db2cc75506f962609d2",
+      "stored_sha256": "0fc948f06631690934951dfa1d1b1c9f383c4d56d5ea305e313861791fc86df0"
+    },
+    {
+      "path": "sources/skill_bank.py.gz",
+      "raw_bytes": 13324,
+      "stored_bytes": 3982,
+      "raw_sha256": "3e144719e3aaae6323943d0f97ab00fe51b9237169c880853569aa47cb785109",
+      "stored_sha256": "50afa9aefedb409d3da1f37e70604247aab7ab2fcc653d15d7ddbdb0710b2300"
+    },
+    {
+      "path": "sources/skill_programs.py.gz",
+      "raw_bytes": 16734,
+      "stored_bytes": 5599,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "stored_sha256": "e84bc7d213303957fde20a046aed6d9d50e9806a72c4ff29337242c3a9c09609"
+    },
+    {
+      "path": "sources/skill_validation.py.gz",
+      "raw_bytes": 1524,
+      "stored_bytes": 702,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "stored_sha256": "c9b85bb46e25f7aa145fd155240a625825ca6126c2ca018567e181688c29523c"
+    },
+    {
+      "path": "sources/skills/stable_contracts.json.gz.gz",
+      "raw_bytes": 58503,
+      "stored_bytes": 58541,
+      "raw_sha256": "0709a96ed6c284ff143a2c132b84dc707f8e9f82c77aa2affc3ac7396be1e0a9",
+      "stored_sha256": "6c926c1be809f6a4544c80f5a9968dedbf9b649e36c703f114ceda6d7b058a97"
+    }
+  ]
+}

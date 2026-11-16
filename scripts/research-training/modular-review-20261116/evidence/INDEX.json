@@ -1,0 +1,15 @@
+{
+  "scope": "original immutable endpoint and separately labeled post-review in-range diagnostic",
+  "runs": [
+    {
+      "directory": ".",
+      "manifest_sha256": "4a322074303bd921e22a684142004edd671e42ed480a83743a8c5378f5fb13da",
+      "artifacts": 17
+    },
+    {
+      "directory": "supplement",
+      "manifest_sha256": "56245dda41bbb4d6256a2f9dd9c536d4a7377a216bbb59c48a13512262a03bd6",
+      "artifacts": 4
+    }
+  ]
+}

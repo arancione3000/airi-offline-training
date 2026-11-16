@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "scope": "separate post-review confirmation after detecting first endpoint used numeric values outside declared range; no code or expert changes",
+  "artifacts": [
+    {
+      "path": "CASES.json.gz",
+      "raw_bytes": 860,
+      "stored_bytes": 301,
+      "raw_sha256": "b9be6b2baf7ec7b5f5aade2fa21dd9f6d798e87fbdd4d3cf5536df7dda965dc6",
+      "stored_sha256": "4147dc7b06f44457128b064fd39eaf75eeea499f13df03533c0b1bbc075fbb03"
+    },
+    {
+      "path": "PREREGISTRATION.json.gz",
+      "raw_bytes": 705,
+      "stored_bytes": 470,
+      "raw_sha256": "2da6bad71d31f0562c217485908703bf205c03c79204c2be2f98c713cb3757ae",
+      "stored_sha256": "648726e9bfbedeac9253c9029a9cb28e61c4e43c127d23861002aed2a8d4e66b"
+    },
+    {
+      "path": "REPORT.json.gz",
+      "raw_bytes": 4932,
+      "stored_bytes": 1146,
+      "raw_sha256": "f197c53d9f91425f02b2ee6aec80a0c9f88f1db2792cd7a26026f71fdde7a873",
+      "stored_sha256": "3205a83202db409fc3958378540efd7e8bb83f9c91c681521bd51792d5c256a4"
+    },
+    {
+      "path": "supplement-as-run.py.gz",
+      "raw_bytes": 4798,
+      "stored_bytes": 1998,
+      "raw_sha256": "d42916c14497878d9c19102b8882d8435952579a9009409bc37468e395fd6196",
+      "stored_sha256": "b2f427c4d1696d5292d112b08d4f76cbd2767cc6ad6add79af7e34331b8681fa"
+    }
+  ]
+}

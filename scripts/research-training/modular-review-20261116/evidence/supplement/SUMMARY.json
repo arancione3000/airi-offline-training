@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "native_weights_revalidated": true,
+  "native_weights_changed": false,
+  "greedy_rng_unchanged": true,
+  "bank_revision": 12,
+  "scope": "separate post-review confirmation after detecting first endpoint used numeric values outside declared range; no code or expert changes",
+  "summary": {
+    "count": 3,
+    "native_plain_correct": 0,
+    "native_8_examples_correct": 0,
+    "composed_correct": 3
+  },
+  "model_revision": 4,
+  "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "preregistration_time_utc": "2026-11-16T22:35:06.482295+00:00",
+  "seed": 20261116223647
+}

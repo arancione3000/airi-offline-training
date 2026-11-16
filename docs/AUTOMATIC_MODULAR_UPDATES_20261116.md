@@ -8,6 +8,11 @@ Native weights are unchanged.
 
 ## What runs without this chat
 
+The initial hourly trigger missed many deliveries. A [renewable supervisor](MODULAR_REVIEW_20261116.md)
+now observes successful run times, explicitly dispatches due cycles and hands
+off to a new observer; calendar/native-completion triggers provide recovery.
+GitHub availability still prevents a hard wall-clock guarantee.
+
 `.github/workflows/airi-modular-auto-update.yml` runs hourly at minute23, subject
 to GitHub scheduling delays, and accepts manual dispatch. Each run checks out
 current main and learns at most two missing families from a fixed12-family catalog.

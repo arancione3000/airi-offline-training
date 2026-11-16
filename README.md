@@ -18,6 +18,10 @@ regression checks, and audits without duplicate training when its12-family catal
 is complete. It uses exact reference labels and no paid model/API. Local private
 banks preserve their additions when importing newly installed bundled experts.
 
+The [latest review and repairs](docs/MODULAR_REVIEW_20261116.md) document explicit
+supervisor renewal, two registry fixes, and a fresh comparison that exposes both
+procedural gains and failure on new question wording.
+
 It can recall explicit names, residences and topics from the current conversation,
 with source spans, corrections and conservative abstention. Native fallback uses the
 existing hash-verified approved model loader and requires the usual native runtime

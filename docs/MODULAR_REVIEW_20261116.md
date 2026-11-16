@@ -41,9 +41,48 @@ training modules were modified.
 
 ## Effectiveness evidence
 
-The earlier24-case actual comparison found24/24 learned-program answers versus
-0/24 for the same native model, both plain and with eight TRAIN demonstrations.
-That narrow result concerns exact templates and known operations; it does not
-establish general Transformer superiority. A fresh fixed-bank12 review separately
-tests known templates, paraphrases and expert-abstention boundaries. Its complete
-inputs, source snapshots and results are recorded with the review evidence.
+The fresh fixed-bank12 review used the same verified revision4 checkpoint,
+greedy decoding and actual native generation, plain and with the expert's eight
+stored TRAIN demonstrations. No prompts were truncated.
+
+| Fresh condition | Composed assistant | Native plain | Native8TRAIN |
+| --- | --- | --- | --- |
+| Original12 new-value cases, known wording | 9/12 | 0/12 | 0/12 |
+| Six semantic question paraphrases | 0/6 | 0/6 | 0/6 |
+| Separate post-review arithmetic diagnostic, inside bounds | 3/3 | 0/3 | 0/3 |
+
+Three original arithmetic inputs exceeded the declared integer bound of1,000,000.
+The experts correctly abstained, but native fallback was wrong. Those failures
+remain in the original9/12 result. All nine original text cases were correct.
+The separately preregistered in-range diagnostic is explicitly post-review and
+is not pooled into a new blind12/12 claim. No program or weight changed.
+
+Experts also abstained correctly on6/6 quoted sources. All240 stored contracts
+and989 old routing checks passed. Those989 checks inherit native behavior; they
+are not fresh neural generation on989 questions. Checkpoint hashes and RNG
+remained unchanged. The comparator is the small Airi native model, not current
+strong pretrained Transformers or an equal-compute architectural benchmark.
+
+The modules provide useful bounded procedural behavior, while new wording and
+out-of-range fallback remain substantial limitations. General conversation and
+Transformer-class superiority are unproven. See [complete results](../scripts/research-training/modular-review-20261116/RESULTS.md)
+and [frozen inputs, code and reproduction](../scripts/research-training/modular-review-20261116/REPRODUCTION.md).
+
+## Live activation
+
+PR15 merged as4116dbbd0a19302b3e411c71211fa541d5d111c6 after both GitHub checks
+passed. The60-second observer test43971589118 succeeded, dispatched update
+43971615534 and explicitly renewed observer43971779345. The recovered update
+published12→14 experts after160/160 audit cases and the full candidate test suite.
+The replacement observer was confirmed running. This verifies live handoff,
+not merely a cron configuration or a simulated timer.
+
+The persistent local private bank had independently completed the catalog at18
+experts. A fresh operational audit passed240/240 catalog probes,360 stored expert
+contracts and989 historical routes; the actual chat CLI returned90−30=60 through
+its learned expert. Private and public banks have different training histories;
+their revisions must not be conflated. This local audit is monitoring, not another
+blind study. The public bank still has four catalog families pending.
+
+Validation passed111 assistant tests,7 frozen-training tests and30 native-controller
+tests. The frozen31 training modules and compiler hash remain unchanged.

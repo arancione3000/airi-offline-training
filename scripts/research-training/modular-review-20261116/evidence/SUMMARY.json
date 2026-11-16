@@ -1,0 +1,41 @@
+{
+  "complete": true,
+  "preregistration_sha256": "9b9b8b71b8d1bf519000bd4d77d428cb9e6fb8542c2cd0f6792faff4402f208a",
+  "bank_revision": 12,
+  "summary": {
+    "known_template": {
+      "count": 12,
+      "native_plain_correct": 0,
+      "native_8_examples_correct": 0,
+      "composed_correct": 9,
+      "expert_abstentions": 3
+    },
+    "new_wording": {
+      "count": 6,
+      "native_plain_correct": 0,
+      "native_8_examples_correct": 0,
+      "composed_correct": 0,
+      "expert_abstentions": 6
+    }
+  },
+  "negative_expert_abstentions": 6,
+  "negative_count": 6,
+  "stable_gate": {
+    "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+    "cases": 989,
+    "learned_intercepts": 0,
+    "unchanged_native_routes": 965,
+    "failed_cases": [],
+    "passed": true,
+    "scope": "routing validation; not a new neural certificate"
+  },
+  "stored_contracts_passed": 240,
+  "greedy_rng_unchanged": true,
+  "native_weights_revalidated": true,
+  "native_weights_changed": false,
+  "scope": "same frozen small Airi native model; bounded system ablation, not general Transformer superiority or equal training compute",
+  "model_revision": 4,
+  "weights_digest": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "preregistration_time_utc": "2026-11-16T22:30:04.816559+00:00",
+  "seed": 20261116230519
+}
