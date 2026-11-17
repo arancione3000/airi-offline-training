@@ -1,0 +1,55 @@
+{
+  "checked_at_utc": "2026-11-17T06:40:56.150835+00:00",
+  "pull_request": "https://github.com/arancione3000/airi-offline-training/pull/16",
+  "implementation_merge": "7d206a68918d67b03264f93c142fe66e10f9b2dd",
+  "verified_source_head": "3ab15f774e382a87fc132cacd3cd901408f4744f",
+  "ci_success": [
+    44032425085,
+    44032418211
+  ],
+  "live_research_run": {
+    "id": 44032722900,
+    "conclusion": "success",
+    "input_check": "unchanged",
+    "dependency_install": "skipped",
+    "encoder_download": "skipped",
+    "training": "skipped",
+    "model_publication": "skipped",
+    "unchanged_report": "success"
+  },
+  "local_tests": {
+    "assistant": 136,
+    "frozen_training": 7,
+    "native_controller": 30
+  },
+  "default_query_model_activated": false,
+  "procedural_experts": 18,
+  "research_models_rejected": 4,
+  "qualification_cases": {
+    "positive": 144,
+    "negative": 108,
+    "counterfactual_values_per_question": 2
+  },
+  "v1": {
+    "positive_correct": 12,
+    "false_answers": 0
+  },
+  "v2": {
+    "stage": "TRAIN-only rejection; qualification not evaluated"
+  },
+  "v3": {
+    "positive_correct": 38,
+    "false_answers": 6
+  },
+  "v4": {
+    "positive_correct": 30,
+    "false_answers": 0
+  },
+  "final_test_observed": false,
+  "evidence_manifest_sha256": "fa061bb52ad2f6758152a58c6555903167b33604a1c62ee77a2bc07201851049",
+  "encoder_manifest_sha256": "cc8b18e67149e51f66d9b2174c9793299a11effb3b0e0bbc59439fcc68ff3206",
+  "encoder_license": "Apache-2.0",
+  "pretrained_encoder_weights_in_git": false,
+  "native_weights_modified_by_research": false,
+  "scope": "No claim of superiority to modern strong Transformers; rejected candidates do not replace existing chat routes"
+}
