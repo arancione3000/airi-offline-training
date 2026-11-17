@@ -1,0 +1,107 @@
+{
+  "approved_router": null,
+  "corpus_manifest_sha256": "6ce00c926513aca84c95141e6b54c88f96bdf8afd22282fe8ab3d2c16b2f1f10",
+  "final_observed": false,
+  "gate": {
+    "historical_gate_required": true,
+    "negative_false_answers_required": 0,
+    "positive_coverage_at_least": 0.5,
+    "stored_expert_failures_required": 0
+  },
+  "schema": 1,
+  "scope": "three observed qualification failures and one TRAIN-only rejection; no activation, blind FINAL result or superiority claim",
+  "trials": {
+    "encoder-run": {
+      "activated": false,
+      "false_answers": 0,
+      "final_observed": false,
+      "historical_gate": {
+        "cases": 989,
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "failed_cases": [],
+        "learned_intercepts": 0,
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate",
+        "unchanged_native_routes": 965
+      },
+      "label": "V4 frozen Transformer encoder",
+      "model_file_sha256": "7caf2fdea9322f437883da95ecd68509182d16fc046387ee94ebd91f9e6d22e7",
+      "model_payload_sha256": "bef03a2e531a581d5c4c2cc6d70765728b9b3cd947c4ff5bd9d79f29374ba0cc",
+      "negative_total": 108,
+      "passed": false,
+      "positive_correct": 30,
+      "positive_total": 144,
+      "stored_contracts": 360,
+      "stored_failures": 0
+    },
+    "factorized-run": {
+      "activated": false,
+      "false_answers": 6,
+      "final_observed": false,
+      "historical_gate": {
+        "cases": 989,
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "failed_cases": [],
+        "learned_intercepts": 0,
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate",
+        "unchanged_native_routes": 965
+      },
+      "label": "V3 factorized lexical",
+      "model_file_sha256": "0c12252f7e94e5a96d89814bd4bd51499ac3821fd0ecc976a17f440ec0bdfbca",
+      "model_payload_sha256": "27f0311f3458e63933e1f108786306b8548c520a72289918f627aaf4a52912a2",
+      "negative_total": 108,
+      "passed": false,
+      "positive_correct": 38,
+      "positive_total": 144,
+      "stored_contracts": 360,
+      "stored_failures": 0
+    },
+    "first-run": {
+      "activated": false,
+      "false_answers": 0,
+      "final_observed": false,
+      "historical_gate": {
+        "cases": 989,
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "failed_cases": [],
+        "learned_intercepts": 0,
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate",
+        "unchanged_native_routes": 965
+      },
+      "label": "V1 centroid/nearest lexical",
+      "model_file_sha256": "b5d49c5e64d2c6cad699d60090625a45a35ee32fc39bc0ce4278ca9f57417b8e",
+      "model_payload_sha256": "4b07fce39055e8d8af623ab4f091bf4835108369a99a97f8140235080c9dbbf2",
+      "negative_total": 108,
+      "passed": false,
+      "positive_correct": 12,
+      "positive_total": 144,
+      "stored_contracts": 360,
+      "stored_failures": 0
+    },
+    "linear-train-only": {
+      "activated": false,
+      "calibration": {
+        "accepted_correct": 0,
+        "false_accepts": null,
+        "method": "TRAIN grouped fivefold; averaged multiclass hinge40epochs; TFIDF; fixed softmax scale4",
+        "negative_rows": 90,
+        "positive_rows": 180,
+        "precision_gate_passed": false,
+        "wrong_classes": null
+      },
+      "final_observed": false,
+      "label": "V2 multiclass hinge lexical",
+      "model_file_sha256": "c67b4f89ba6298853cd4c520792d9071fcac55b9894373718c2492469163386e",
+      "model_payload_sha256": "e90b5a28b12074b8d044ff9a03b548b1cb5bdeae1a835ef3123e3e8ace0087cf",
+      "qualification_observed": false,
+      "stage": "TRAIN calibration only",
+      "thresholds": {
+        "margin": 1.0,
+        "overlap": 0.35,
+        "score": 1.0
+      }
+    }
+  }
+}

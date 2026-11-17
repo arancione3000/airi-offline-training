@@ -1,0 +1,595 @@
+{
+  "artifacts": {
+    "ENCODER_MANIFEST.json.gz": {
+      "bytes": 569,
+      "raw_bytes": 1153,
+      "raw_sha256": "cc8b18e67149e51f66d9b2174c9793299a11effb3b0e0bbc59439fcc68ff3206",
+      "role": "pinned external encoder file hashes and Apache-2.0 metadata; pretrained weights excluded",
+      "sha256": "4ee200fada04ee05754475cfda218b2482108ac459675614f00a34694cc533ef"
+    },
+    "bank.json.gz": {
+      "bytes": 8459,
+      "raw_bytes": 76277,
+      "raw_sha256": "eb9da6eca878924d5d8d5b2b41b7100fd1cd1fcad8adf647832862711d7df903",
+      "role": "exact eighteen-expert synthetic procedural bank used by every trial",
+      "sha256": "3a23df4db240f9cfd90a68669b41b6da99c66f0b200bd20f49ffa36540b503a1"
+    },
+    "encoder-run/FREEZE.json.gz": {
+      "bytes": 361,
+      "raw_bytes": 542,
+      "raw_sha256": "84e3bb631fbdcb85a6a4d5da41ec28258d6a3be71c63822ce76a056440ab9d89",
+      "role": "original observed run record",
+      "sha256": "26de1e441da2ff0405cd5e255bb02742ef8acc6d13e4cc9947733e649fd59fdb"
+    },
+    "encoder-run/PREREGISTRATION.json.gz": {
+      "bytes": 1659,
+      "raw_bytes": 4192,
+      "raw_sha256": "d6470ad0d853f0e3a48cf4e5e4bc6a5dd6325b292b2afdadd1fa9ac6fb061c42",
+      "role": "original observed run record",
+      "sha256": "60aa019ff9e087756de4a87f9dd5c6e25899935cde39d9aefa87dfba5ce1cd62"
+    },
+    "encoder-run/QUALIFICATION_REPORT.json.gz": {
+      "bytes": 7696,
+      "raw_bytes": 147173,
+      "raw_sha256": "7d78e106db146e6220337127b8df5c6be516dd332119967e1220495cff142d0e",
+      "role": "original observed run record",
+      "sha256": "76a93a2ba78ed567210f0a8cb38665b20b41a423cc14ffbb2b0af6cb1ae72259"
+    },
+    "encoder-run/RESULT.json.gz": {
+      "bytes": 91,
+      "raw_bytes": 88,
+      "raw_sha256": "26133287b96f9788146a9fdf13a6f858147213f37b6b9d5a43b81595df783cbd",
+      "role": "original observed run record",
+      "sha256": "b31636d3c0f05a9ceb23d1a70ca727754cd08c23b0eb7a26e52d151a7bc6c46b"
+    },
+    "encoder-run/candidate.json.gz": {
+      "bytes": 81975,
+      "raw_bytes": 219634,
+      "raw_sha256": "7caf2fdea9322f437883da95ecd68509182d16fc046387ee94ebd91f9e6d22e7",
+      "role": "rejected candidate, archived for reproduction; never approved",
+      "sha256": "e16dd0dcacb87dc0f414a1807cf98c1e967719f09b9a955bcc754565ebb6aa82"
+    },
+    "encoder-run/sources/assistant.py.gz": {
+      "bytes": 650,
+      "raw_bytes": 1760,
+      "raw_sha256": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f15cad82805ca14269f44eef5e654e56ecf60860c051355277211dcdb3d6dd92"
+    },
+    "encoder-run/sources/auto_curriculum.py.gz": {
+      "bytes": 2621,
+      "raw_bytes": 7761,
+      "raw_sha256": "f066fb8a4ec2539fb02ae0b1a69e319434d4a1cb3de45e7096a08a26b75d92db",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "6053cd1b9caa445e7c43e3b5f64c5a2fe5aa375212205f1dbf4505e3b5276588"
+    },
+    "encoder-run/sources/auto_update.py.gz": {
+      "bytes": 2895,
+      "raw_bytes": 7997,
+      "raw_sha256": "988edab96ef53617e69fa6a26469971d3f924c42234a72cb663f7973e682ec8a",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "4aada686e4dcf05b0ca1c0d5d9fee0b06284d63b18431895c05c2dfd5149364c"
+    },
+    "encoder-run/sources/chat.py.gz": {
+      "bytes": 2105,
+      "raw_bytes": 5719,
+      "raw_sha256": "06b9d59c06bc7cd9b19516f8ed478095bcfe74c890999c0c7c3b1ecaa9d68100",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "70bef750786495f3ce588f019fa202b7ed64ae69489ae3746691396c4f76843e"
+    },
+    "encoder-run/sources/context_memory.py.gz": {
+      "bytes": 6148,
+      "raw_bytes": 18315,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f46a03d355e0ca5f511faff7b19306afb1f6da4717c6df63973efc5016793e2b"
+    },
+    "encoder-run/sources/evaluate.py.gz": {
+      "bytes": 2878,
+      "raw_bytes": 8932,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "47236736f56d35d636ef7a5e7095b51d4a4f5dd41643b56e41d614fbc39ba6d2"
+    },
+    "encoder-run/sources/flexible_skills.py.gz": {
+      "bytes": 1279,
+      "raw_bytes": 3528,
+      "raw_sha256": "9daf38321b01fb8049ffed8b46154873a7d8d46f6a6b66bda4c4ebf3a55a7ffb",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "6261107edf27aec735bd6c4e4914990b4cdb96559c6c59b72a026c0e3e92a769"
+    },
+    "encoder-run/sources/learn.py.gz": {
+      "bytes": 1972,
+      "raw_bytes": 5767,
+      "raw_sha256": "06798c3761c9f27c0f0ecce776ee51bf5dcf439242d0e41c1246edbca2e81f98",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2cc6a178ad5e91fbea11a7f73b413544648a89ee49aedb5ac3b883c8dd16a514"
+    },
+    "encoder-run/sources/managed_skills.py.gz": {
+      "bytes": 981,
+      "raw_bytes": 2304,
+      "raw_sha256": "d415e0952570ef0f06788a5af2d3e31cae0a590928ad3db2cc75506f962609d2",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "0fc948f06631690934951dfa1d1b1c9f383c4d56d5ea305e313861791fc86df0"
+    },
+    "encoder-run/sources/query_learning.py.gz": {
+      "bytes": 1465,
+      "raw_bytes": 3724,
+      "raw_sha256": "0115863c71c27cff9e7973ad5e434382d8a66d75ace34ff7a7b44cefcad76fdc",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "e170bdf891cfa2e0b12fac30b81248f998065a08154522945dd468845c1efaca"
+    },
+    "encoder-run/sources/query_router.py.gz": {
+      "bytes": 4798,
+      "raw_bytes": 14309,
+      "raw_sha256": "f63e56ec42888556f3d7cd3beaa97e27a330e3bce7db6264c23cac0096281957",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2aee5f1cd0596e468aba88b18f9a7bc16c580652b8ee1267bca1aaee3a6d3b9e"
+    },
+    "encoder-run/sources/query_router_encoder.py.gz": {
+      "bytes": 4070,
+      "raw_bytes": 13138,
+      "raw_sha256": "3da47784352b7bd096cfac92d170a8c30bc6bbf5a010362a4bfd707b9a01c465",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "8cf7b4a798e8f361b8adaf1adfca1ade9f34de74a5ba3cfa28ba9df38f63aea8"
+    },
+    "encoder-run/sources/query_router_factorized.py.gz": {
+      "bytes": 6418,
+      "raw_bytes": 20896,
+      "raw_sha256": "1f7bebf07df22bc0483805d4db9317a30e5fa6f5794473c8c4ffa3304f3e9516",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "eea046635f637096ca1bf5ffee844d2e3cd5f5cbee5cacfdb7b269f953b4d924"
+    },
+    "encoder-run/sources/query_router_linear.py.gz": {
+      "bytes": 5368,
+      "raw_bytes": 16413,
+      "raw_sha256": "261a0a5dd6bd5f17b93978e4bf2794c73fc6ba58765f7232466fa1f9a4ce20d1",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f731ac7bb2091794534f265205abb29405c9880ba874d60eb9b9dc36c30c21b4"
+    },
+    "encoder-run/sources/semantic_encoder.py.gz": {
+      "bytes": 2013,
+      "raw_bytes": 5293,
+      "raw_sha256": "2f550e524c03fa804a9df982e590ea7b9651ec16d024faa4c104a9f67fcab6bd",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f9275616e29cfaa3b73d7e7e4424b675949443f72338d60964a94e0bd480940a"
+    },
+    "encoder-run/sources/skill_bank.py.gz": {
+      "bytes": 3982,
+      "raw_bytes": 13324,
+      "raw_sha256": "3e144719e3aaae6323943d0f97ab00fe51b9237169c880853569aa47cb785109",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "50afa9aefedb409d3da1f37e70604247aab7ab2fcc653d15d7ddbdb0710b2300"
+    },
+    "encoder-run/sources/skill_programs.py.gz": {
+      "bytes": 5599,
+      "raw_bytes": 16734,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "e84bc7d213303957fde20a046aed6d9d50e9806a72c4ff29337242c3a9c09609"
+    },
+    "encoder-run/sources/skill_validation.py.gz": {
+      "bytes": 702,
+      "raw_bytes": 1524,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "c9b85bb46e25f7aa145fd155240a625825ca6126c2ca018567e181688c29523c"
+    },
+    "encoder-run/sources/supervise.py.gz": {
+      "bytes": 1964,
+      "raw_bytes": 4850,
+      "raw_sha256": "97c211de52ae3959b55003a97af575733636f0740cb1ff006de055a1c447a75c",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "5cabc0ca31f5c4c89cf06d7d3721c4eb5c69a6129ad8831ad57d3f725750e60d"
+    },
+    "factorized-run/FREEZE.json.gz": {
+      "bytes": 359,
+      "raw_bytes": 549,
+      "raw_sha256": "88dc44fff171933857c15a019de8d22d5400459e1779194f2c168a162b56f379",
+      "role": "original observed run record",
+      "sha256": "6940bb7f4b4afe7671c0268519de8562426fc06061b1ed91b0daa3c47276438d"
+    },
+    "factorized-run/MODEL_METADATA.json.gz": {
+      "bytes": 7151,
+      "raw_bytes": 72195,
+      "raw_sha256": "fdb11d16a5970f6b1a636f4d002faa8842968e1a69be2934da5eed04a68beaa2",
+      "role": "model identity/calibration/full non-weight payload; no large numeric weights",
+      "sha256": "ad6f26122d9bc5a099e2964b2bb8ac550a3e234aef568e3ca961733f1d6a8f71"
+    },
+    "factorized-run/PREREGISTRATION.json.gz": {
+      "bytes": 1570,
+      "raw_bytes": 3880,
+      "raw_sha256": "298afa565bb876af2e69e7fce25e38fbf8b79fafc07dd77814965da7f2fb58f2",
+      "role": "original observed run record",
+      "sha256": "f1510af0184cf4ab8c0a9e5b799e4b2fc91a41efd464fb6a92264086c5ba3ed0"
+    },
+    "factorized-run/QUALIFICATION_REPORT.json.gz": {
+      "bytes": 8566,
+      "raw_bytes": 162629,
+      "raw_sha256": "4c4fb1a3e65ea6e11b44792651171949f0a52cc768e4f7a75544a8a91fbca903",
+      "role": "original observed run record",
+      "sha256": "bd5d5b2768caa575dc0a28f06662618adb1b1bba579c77faf5b716ddb5657555"
+    },
+    "factorized-run/RESULT.json.gz": {
+      "bytes": 91,
+      "raw_bytes": 88,
+      "raw_sha256": "26133287b96f9788146a9fdf13a6f858147213f37b6b9d5a43b81595df783cbd",
+      "role": "original observed run record",
+      "sha256": "b31636d3c0f05a9ceb23d1a70ca727754cd08c23b0eb7a26e52d151a7bc6c46b"
+    },
+    "factorized-run/sources/assistant.py.gz": {
+      "bytes": 650,
+      "raw_bytes": 1760,
+      "raw_sha256": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f15cad82805ca14269f44eef5e654e56ecf60860c051355277211dcdb3d6dd92"
+    },
+    "factorized-run/sources/auto_curriculum.py.gz": {
+      "bytes": 2621,
+      "raw_bytes": 7761,
+      "raw_sha256": "f066fb8a4ec2539fb02ae0b1a69e319434d4a1cb3de45e7096a08a26b75d92db",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "6053cd1b9caa445e7c43e3b5f64c5a2fe5aa375212205f1dbf4505e3b5276588"
+    },
+    "factorized-run/sources/auto_update.py.gz": {
+      "bytes": 2895,
+      "raw_bytes": 7997,
+      "raw_sha256": "988edab96ef53617e69fa6a26469971d3f924c42234a72cb663f7973e682ec8a",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "4aada686e4dcf05b0ca1c0d5d9fee0b06284d63b18431895c05c2dfd5149364c"
+    },
+    "factorized-run/sources/chat.py.gz": {
+      "bytes": 2105,
+      "raw_bytes": 5719,
+      "raw_sha256": "06b9d59c06bc7cd9b19516f8ed478095bcfe74c890999c0c7c3b1ecaa9d68100",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "70bef750786495f3ce588f019fa202b7ed64ae69489ae3746691396c4f76843e"
+    },
+    "factorized-run/sources/context_memory.py.gz": {
+      "bytes": 6148,
+      "raw_bytes": 18315,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f46a03d355e0ca5f511faff7b19306afb1f6da4717c6df63973efc5016793e2b"
+    },
+    "factorized-run/sources/evaluate.py.gz": {
+      "bytes": 2878,
+      "raw_bytes": 8932,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "47236736f56d35d636ef7a5e7095b51d4a4f5dd41643b56e41d614fbc39ba6d2"
+    },
+    "factorized-run/sources/flexible_skills.py.gz": {
+      "bytes": 988,
+      "raw_bytes": 2412,
+      "raw_sha256": "f524f9cef39331ab7ad286c966e74406a11c18bd5402a9c26707d8f3464d0b9d",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "91e9fea99b3d9d19f4808377cd1a190abfda32fa1c9f26ea4d5bba2b81ab4faa"
+    },
+    "factorized-run/sources/learn.py.gz": {
+      "bytes": 1972,
+      "raw_bytes": 5767,
+      "raw_sha256": "06798c3761c9f27c0f0ecce776ee51bf5dcf439242d0e41c1246edbca2e81f98",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2cc6a178ad5e91fbea11a7f73b413544648a89ee49aedb5ac3b883c8dd16a514"
+    },
+    "factorized-run/sources/managed_skills.py.gz": {
+      "bytes": 981,
+      "raw_bytes": 2304,
+      "raw_sha256": "d415e0952570ef0f06788a5af2d3e31cae0a590928ad3db2cc75506f962609d2",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "0fc948f06631690934951dfa1d1b1c9f383c4d56d5ea305e313861791fc86df0"
+    },
+    "factorized-run/sources/query_learning.py.gz": {
+      "bytes": 1465,
+      "raw_bytes": 3724,
+      "raw_sha256": "0115863c71c27cff9e7973ad5e434382d8a66d75ace34ff7a7b44cefcad76fdc",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "e170bdf891cfa2e0b12fac30b81248f998065a08154522945dd468845c1efaca"
+    },
+    "factorized-run/sources/query_router.py.gz": {
+      "bytes": 4798,
+      "raw_bytes": 14309,
+      "raw_sha256": "f63e56ec42888556f3d7cd3beaa97e27a330e3bce7db6264c23cac0096281957",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2aee5f1cd0596e468aba88b18f9a7bc16c580652b8ee1267bca1aaee3a6d3b9e"
+    },
+    "factorized-run/sources/query_router_factorized.py.gz": {
+      "bytes": 6418,
+      "raw_bytes": 20896,
+      "raw_sha256": "1f7bebf07df22bc0483805d4db9317a30e5fa6f5794473c8c4ffa3304f3e9516",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "eea046635f637096ca1bf5ffee844d2e3cd5f5cbee5cacfdb7b269f953b4d924"
+    },
+    "factorized-run/sources/query_router_linear.py.gz": {
+      "bytes": 5368,
+      "raw_bytes": 16413,
+      "raw_sha256": "261a0a5dd6bd5f17b93978e4bf2794c73fc6ba58765f7232466fa1f9a4ce20d1",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f731ac7bb2091794534f265205abb29405c9880ba874d60eb9b9dc36c30c21b4"
+    },
+    "factorized-run/sources/skill_bank.py.gz": {
+      "bytes": 3982,
+      "raw_bytes": 13324,
+      "raw_sha256": "3e144719e3aaae6323943d0f97ab00fe51b9237169c880853569aa47cb785109",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "50afa9aefedb409d3da1f37e70604247aab7ab2fcc653d15d7ddbdb0710b2300"
+    },
+    "factorized-run/sources/skill_programs.py.gz": {
+      "bytes": 5599,
+      "raw_bytes": 16734,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "e84bc7d213303957fde20a046aed6d9d50e9806a72c4ff29337242c3a9c09609"
+    },
+    "factorized-run/sources/skill_validation.py.gz": {
+      "bytes": 702,
+      "raw_bytes": 1524,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "c9b85bb46e25f7aa145fd155240a625825ca6126c2ca018567e181688c29523c"
+    },
+    "factorized-run/sources/supervise.py.gz": {
+      "bytes": 1964,
+      "raw_bytes": 4850,
+      "raw_sha256": "97c211de52ae3959b55003a97af575733636f0740cb1ff006de055a1c447a75c",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "5cabc0ca31f5c4c89cf06d7d3721c4eb5c69a6129ad8831ad57d3f725750e60d"
+    },
+    "first-run/FREEZE.json.gz": {
+      "bytes": 337,
+      "raw_bytes": 501,
+      "raw_sha256": "5669012b5d4fea7e436ed79510e1d8b8b518dd1527e8f5691a888bb54f68e24a",
+      "role": "original observed run record",
+      "sha256": "647ce8a90c1da069ea60a1cb0ab049ab9e410fb768c4f69e6cd4d8370bb09dba"
+    },
+    "first-run/PREREGISTRATION.json.gz": {
+      "bytes": 1470,
+      "raw_bytes": 3562,
+      "raw_sha256": "aab7cc962540e773e88a6fbca33a090f53337277823fdd2e9469b99d4c341a32",
+      "role": "original observed run record",
+      "sha256": "7a71809e8359db88280aa331e62cd5a83a1228e6dd8a465002015ba55f8aefdb"
+    },
+    "first-run/QUALIFICATION_REPORT.json.gz": {
+      "bytes": 6310,
+      "raw_bytes": 125935,
+      "raw_sha256": "111f27c5be2b415b2d93d38f8de42acbab55ecad4a231ee6ce03af5ffe2312b8",
+      "role": "original observed run record",
+      "sha256": "6a0f164115852a34b184c868dfb44ba5ddafc9775e23d39668802782cfbcbb08"
+    },
+    "first-run/RESULT.json.gz": {
+      "bytes": 91,
+      "raw_bytes": 88,
+      "raw_sha256": "26133287b96f9788146a9fdf13a6f858147213f37b6b9d5a43b81595df783cbd",
+      "role": "original observed run record",
+      "sha256": "b31636d3c0f05a9ceb23d1a70ca727754cd08c23b0eb7a26e52d151a7bc6c46b"
+    },
+    "first-run/candidate.json.gz": {
+      "bytes": 4857,
+      "raw_bytes": 47994,
+      "raw_sha256": "b5d49c5e64d2c6cad699d60090625a45a35ee32fc39bc0ce4278ca9f57417b8e",
+      "role": "rejected candidate, archived for reproduction; never approved",
+      "sha256": "9191e059f7e6a8d54d7a3270416f55a52ed979fde35ad93f7a49df4fc32eee73"
+    },
+    "first-run/sources/assistant.py.gz": {
+      "bytes": 650,
+      "raw_bytes": 1760,
+      "raw_sha256": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f15cad82805ca14269f44eef5e654e56ecf60860c051355277211dcdb3d6dd92"
+    },
+    "first-run/sources/auto_curriculum.py.gz": {
+      "bytes": 2621,
+      "raw_bytes": 7761,
+      "raw_sha256": "f066fb8a4ec2539fb02ae0b1a69e319434d4a1cb3de45e7096a08a26b75d92db",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "6053cd1b9caa445e7c43e3b5f64c5a2fe5aa375212205f1dbf4505e3b5276588"
+    },
+    "first-run/sources/auto_update.py.gz": {
+      "bytes": 2895,
+      "raw_bytes": 7997,
+      "raw_sha256": "988edab96ef53617e69fa6a26469971d3f924c42234a72cb663f7973e682ec8a",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "4aada686e4dcf05b0ca1c0d5d9fee0b06284d63b18431895c05c2dfd5149364c"
+    },
+    "first-run/sources/chat.py.gz": {
+      "bytes": 2023,
+      "raw_bytes": 5372,
+      "raw_sha256": "2e248b154fc0466985165279db6f1d03fa09feb9718a4332d0c9e31f6f207786",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "7ef8dc067279e063f1420d3c7e36a1527610f18b5f626f9952bbd63a72d1119e"
+    },
+    "first-run/sources/context_memory.py.gz": {
+      "bytes": 6148,
+      "raw_bytes": 18315,
+      "raw_sha256": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "f46a03d355e0ca5f511faff7b19306afb1f6da4717c6df63973efc5016793e2b"
+    },
+    "first-run/sources/evaluate.py.gz": {
+      "bytes": 2878,
+      "raw_bytes": 8932,
+      "raw_sha256": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "47236736f56d35d636ef7a5e7095b51d4a4f5dd41643b56e41d614fbc39ba6d2"
+    },
+    "first-run/sources/flexible_skills.py.gz": {
+      "bytes": 908,
+      "raw_bytes": 2147,
+      "raw_sha256": "5ab5fb1facd375de6c6c8b6c58cfa29d6581de077c02b501fb6b84d2b31690b1",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "ed7bd89e0ac7124243d1a504e1c2cb359485912e9fbaf9a08fca511867d67798"
+    },
+    "first-run/sources/learn.py.gz": {
+      "bytes": 1972,
+      "raw_bytes": 5767,
+      "raw_sha256": "06798c3761c9f27c0f0ecce776ee51bf5dcf439242d0e41c1246edbca2e81f98",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2cc6a178ad5e91fbea11a7f73b413544648a89ee49aedb5ac3b883c8dd16a514"
+    },
+    "first-run/sources/managed_skills.py.gz": {
+      "bytes": 981,
+      "raw_bytes": 2304,
+      "raw_sha256": "d415e0952570ef0f06788a5af2d3e31cae0a590928ad3db2cc75506f962609d2",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "0fc948f06631690934951dfa1d1b1c9f383c4d56d5ea305e313861791fc86df0"
+    },
+    "first-run/sources/query_learning.py.gz": {
+      "bytes": 1452,
+      "raw_bytes": 3695,
+      "raw_sha256": "92468db025913f4384c208c7a597fd55f201b8ebe1093d94f95d04c9d29f92c1",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "cb5d96563bea6b7ac5a58c4327c9a5bfe1cd2b0705dd459082294e9c9b7f815b"
+    },
+    "first-run/sources/query_router.py.gz": {
+      "bytes": 4798,
+      "raw_bytes": 14309,
+      "raw_sha256": "f63e56ec42888556f3d7cd3beaa97e27a330e3bce7db6264c23cac0096281957",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "2aee5f1cd0596e468aba88b18f9a7bc16c580652b8ee1267bca1aaee3a6d3b9e"
+    },
+    "first-run/sources/skill_bank.py.gz": {
+      "bytes": 3982,
+      "raw_bytes": 13324,
+      "raw_sha256": "3e144719e3aaae6323943d0f97ab00fe51b9237169c880853569aa47cb785109",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "50afa9aefedb409d3da1f37e70604247aab7ab2fcc653d15d7ddbdb0710b2300"
+    },
+    "first-run/sources/skill_programs.py.gz": {
+      "bytes": 5599,
+      "raw_bytes": 16734,
+      "raw_sha256": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "e84bc7d213303957fde20a046aed6d9d50e9806a72c4ff29337242c3a9c09609"
+    },
+    "first-run/sources/skill_validation.py.gz": {
+      "bytes": 702,
+      "raw_bytes": 1524,
+      "raw_sha256": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "c9b85bb46e25f7aa145fd155240a625825ca6126c2ca018567e181688c29523c"
+    },
+    "first-run/sources/supervise.py.gz": {
+      "bytes": 1964,
+      "raw_bytes": 4850,
+      "raw_sha256": "97c211de52ae3959b55003a97af575733636f0740cb1ff006de055a1c447a75c",
+      "role": "exact as-run assistant source verified against preregistration",
+      "sha256": "5cabc0ca31f5c4c89cf06d7d3721c4eb5c69a6129ad8831ad57d3f725750e60d"
+    },
+    "linear-train-only/MODEL_METADATA.json.gz": {
+      "bytes": 5994,
+      "raw_bytes": 65493,
+      "raw_sha256": "67940e22befb3d35d3cd2ad04d7633f3ec0c1d7edd911b90ea48df4af8cd0c5d",
+      "role": "TRAIN-only prototype identity and calibration; weights omitted",
+      "sha256": "d9ae0c8a7997b497a6512eec13266ccc48a4d378653c837fe1c711027fd9fdec"
+    },
+    "precommitted/DIAGNOSTIC.json.gz": {
+      "bytes": 433,
+      "raw_bytes": 1552,
+      "raw_sha256": "9438281852a86cf8b1f45ea78604a2d8323c4b05b9e0f897e31e9b9508593970",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "421af5cd203dbde79c9cd05e27a8516a5c03c07324e022623267a3d95512795e"
+    },
+    "precommitted/FAMILIES.json.gz": {
+      "bytes": 812,
+      "raw_bytes": 5286,
+      "raw_sha256": "aeb0f0f5d0e126965ba6fd68d29c2091ef0d79bc11248b019642a08e0bc3e69d",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba"
+    },
+    "precommitted/FINAL.json.gz": {
+      "bytes": 3340,
+      "raw_bytes": 46957,
+      "raw_sha256": "99978c51758c6af8cfb07a8fa2d425f9fe87a4c5c9251ab671ff3484073f6e20",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "65ac0f497c3a84e510dd635863660e86932c885a7f6621cd5739798d24d6207f"
+    },
+    "precommitted/MANIFEST.json.gz": {
+      "bytes": 697,
+      "raw_bytes": 1453,
+      "raw_sha256": "6ce00c926513aca84c95141e6b54c88f96bdf8afd22282fe8ab3d2c16b2f1f10",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "06305d0a383036d07379ec900bfab864c4420737e2eadd348c3c959e9b4de49d"
+    },
+    "precommitted/QUALIFICATION.json.gz": {
+      "bytes": 2340,
+      "raw_bytes": 32203,
+      "raw_sha256": "fde01ac6e4a4f5498064473889c7d5d4a364ce92bb45e695e05f6b4a5894b2ff",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4"
+    },
+    "precommitted/TRAIN.json.gz": {
+      "bytes": 4193,
+      "raw_bytes": 66901,
+      "raw_sha256": "a836950a41ed70071d7c787b8d34320b2d47b1a9c8936d35ca9f968ac90e9f36",
+      "role": "original fixed corpus; FINAL copied and hashed, never evaluated",
+      "sha256": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a"
+    },
+    "research-sources/PLAN.md.gz": {
+      "bytes": 1194,
+      "raw_bytes": 2292,
+      "raw_sha256": "5922b8ab57f9817108d959db086f1df77e9e2ef91fdf006c8bd7d0cbcb145d28",
+      "role": "research entrypoint at closure; only runtime sources above are bound by historical preregistrations",
+      "sha256": "cf52f093965dafa2b977360c97cf029952f96c63f72046a71f5ca4f3ac854b47"
+    },
+    "research-sources/curriculum.py.gz": {
+      "bytes": 4515,
+      "raw_bytes": 13737,
+      "raw_sha256": "516053d0cbd40d1627ec6f9f7edcc30e1ab2059c90c6f56f5b7c94ab090b2f2d",
+      "role": "research entrypoint at closure; only runtime sources above are bound by historical preregistrations",
+      "sha256": "374ff9e38628dd14a4b4298f416ea5f270a54cee4813908fe7dc6f80cbfe52e7"
+    },
+    "research-sources/download_encoder.py.gz": {
+      "bytes": 888,
+      "raw_bytes": 1989,
+      "raw_sha256": "1b246aab306ea504784b64fe27603c07299572d59e6a0c1d0ac2855109599c79",
+      "role": "research entrypoint at closure; only runtime sources above are bound by historical preregistrations",
+      "sha256": "2195c559f86b4b24b44e43664cac397d7c3cdde4a4ff1ec35d76035d32dc06ad"
+    },
+    "research-sources/run.py.gz": {
+      "bytes": 1759,
+      "raw_bytes": 4685,
+      "raw_sha256": "494df82cf95ce46796bae51bf8f15ea0a358fd59a84fd79d74afa2c999147d3f",
+      "role": "research entrypoint at closure; only runtime sources above are bound by historical preregistrations",
+      "sha256": "822ad2d35f7c03bbe9af132368638ddbc0a4125802b31908c0c603acc0d3b050"
+    }
+  },
+  "created_at_utc": "2026-11-16T23:27:54.924279+00:00",
+  "external_encoder": {
+    "license": "apache-2.0",
+    "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "url": "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/tree/e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "weights_archived": false
+  },
+  "format": "deterministic gzip, mtime0; paths relative to evidence root",
+  "schema": 1,
+  "scope": "synthetic fixed corpus, rejected-model records and exact as-run assistant sources; FINAL opaque payload retained without evaluation",
+  "source_validation": {
+    "encoder-run": {
+      "all_corpus_hashes_match": true,
+      "all_preregistered_sources_match": true,
+      "sources": 19
+    },
+    "factorized-run": {
+      "all_corpus_hashes_match": true,
+      "all_preregistered_sources_match": true,
+      "sources": 17
+    },
+    "first-run": {
+      "all_corpus_hashes_match": true,
+      "all_preregistered_sources_match": true,
+      "sources": 15
+    }
+  },
+  "uncompressed_documents": {
+    "SUMMARY.json": {
+      "bytes": 3932,
+      "sha256": "71d724d4787a6acd4da67ee1d5e82c68decc9092a6a7112b66f0a16344c68608"
+    }
+  },
+  "weights_omitted": [
+    "linear-train-only",
+    "factorized-run"
+  ]
+}

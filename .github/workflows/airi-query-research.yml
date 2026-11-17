@@ -1,0 +1,82 @@
+name: AIRI gated question research
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 3 * * *'
+  workflow_run:
+    workflows: ['AIRI automatic modular updates']
+    branches: [main]
+    types: [completed]
+permissions:
+  contents: write
+concurrency:
+  group: airi-query-research
+  cancel-in-progress: false
+jobs:
+  experiment:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.path == '.github/workflows/airi-modular-auto-update.yml'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Configure local encoder cache
+        run: echo "AIRI_QUERY_ENCODER_CACHE=$RUNNER_TEMP/query-encoder" >> "$GITHUB_ENV"
+      - name: Check whether trusted experiment inputs changed
+        id: input
+        run: echo "needed=$(python scripts/research-training/semantic-routing-20261116/cycle.py --needed)" >> "$GITHUB_OUTPUT"
+      - name: Install optional local encoder runtime
+        if: steps.input.outputs.needed == 'true'
+        run: python -m pip install -r scripts/research-training/semantic-routing-20261116/requirements-encoder.txt
+      - uses: actions/cache@v4
+        if: steps.input.outputs.needed == 'true'
+        with:
+          path: ${{ runner.temp }}/query-encoder
+          key: query-encoder-e8f8c211226b894fcb81acc59f3b34ba3efd5f42-quant8-v1
+      - name: Verify pinned encoder files
+        if: steps.input.outputs.needed == 'true'
+        run: python scripts/research-training/semantic-routing-20261116/download_encoder.py --output "$AIRI_QUERY_ENCODER_CACHE"
+      - name: Stage only independently qualified question models
+        if: steps.input.outputs.needed == 'true'
+        run: python scripts/research-training/semantic-routing-20261116/cycle.py --output "$RUNNER_TEMP/query-trial"
+      - name: Verify staged behavior before publication
+        if: steps.input.outputs.needed == 'true'
+        run: |
+          python -m unittest discover -s tests/assistant-runtime -q
+          python -m unittest discover -s tests/continuous-training -q
+      - name: Save research verdict and qualified model data
+        if: steps.input.outputs.needed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- scripts/assistant-runtime/queries/research-state.json
+          for name in approved-router.json retention.json.gz; do
+            if test -f "scripts/assistant-runtime/queries/$name"; then git add -- "scripts/assistant-runtime/queries/$name"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          python - <<'PY'
+          import subprocess
+          paths=set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())
+          assert paths <= {'scripts/assistant-runtime/queries/research-state.json','scripts/assistant-runtime/queries/approved-router.json','scripts/assistant-runtime/queries/retention.json.gz'}
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'research: record gated question-model outcome [skip ci]'
+          gh auth setup-git
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.input.outputs.needed == 'true'
+        with:
+          name: question-research-${{ github.run_id }}
+          path: ${{ runner.temp }}/query-trial/
+          retention-days: 14
+      - name: Report an unchanged experiment without retraining
+        if: steps.input.outputs.needed != 'true'
+        run: echo 'No new trusted data or learner changes; previous verdict retained, no training or improvement claimed.' >> "$GITHUB_STEP_SUMMARY"

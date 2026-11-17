@@ -1,0 +1,1 @@
+{"action":"rejected","input_sha256":"83998e054e0ce8b0e10883ef5b6352244ceb92c89b81e1511f384e666fa6f391","model_staged":false,"neural_weights_changed":false,"result":{"activated":false,"final_observed":false,"reason":"qualification failed"},"scope":"operational replay after publication, not a new blind confirmation"}
