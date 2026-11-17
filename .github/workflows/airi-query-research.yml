@@ -19,7 +19,6 @@ jobs:
     timeout-minutes: 10
     env:
       PYTHONDONTWRITEBYTECODE: '1'
-      AIRI_QUERY_ENCODER_CACHE: ${{ runner.temp }}/query-encoder
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,6 +27,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Configure local encoder cache
+        run: echo "AIRI_QUERY_ENCODER_CACHE=$RUNNER_TEMP/query-encoder" >> "$GITHUB_ENV"
       - name: Check whether trusted experiment inputs changed
         id: input
         run: echo "needed=$(python scripts/research-training/semantic-routing-20261116/cycle.py --needed)" >> "$GITHUB_OUTPUT"
