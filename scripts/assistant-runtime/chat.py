@@ -44,6 +44,7 @@ def main():
     p.add_argument('--native-only', action='store_true', help='Bypass contextual memory for an explicitly neural-only measurement')
     p.add_argument('--skills',type=Path,help='Persistent learned skill bank; default private bank or the bundled qualified bank')
     p.add_argument('--no-skills',action='store_true',help='Disable learned experts while keeping the stable memory/native assistant')
+    p.add_argument('--no-paraphrases',action='store_true',help='Keep only exact expert questions and contextual memory')
     p.add_argument('--learn',type=Path,help='Learn and qualify explicitly trusted labeled lessons, then exit')
     a = p.parse_args()
     if (a.checkpoint is None) != (a.model_record is None):
@@ -55,7 +56,8 @@ def main():
         print(json.dumps({'results':learn_file(a.learn,bank),'registry':bank.status()},ensure_ascii=False));return
     native = VerifiedNative(cache=a.cache, checkpoint=a.checkpoint, record=record)
     bank=None if a.no_skills or a.native_only else selected_bank(a.skills)
-    assistant = AiriAssistant(native,skill_bank=bank)
+    from flexible_skills import default_router
+    assistant = AiriAssistant(native,skill_bank=bank,query_router=None if a.no_paraphrases else default_router(bank))
 
     def respond(messages):
         if a.native_only:
@@ -84,7 +86,9 @@ def main():
             try:
                 bank=private_bank(a.skills)
                 result=learn_file(Path(text[7:].strip()),bank)
-                if not a.no_skills and not a.native_only:assistant.skill_bank=bank
+                if not a.no_skills and not a.native_only:
+                    assistant.skill_bank=bank
+                    assistant.query_router=None if a.no_paraphrases else default_router(bank)
                 print(json.dumps({'learning':result,'registry':bank.status()},ensure_ascii=False))
             except (ValueError,OSError) as error:
                 print(f'Lezione rifiutata ({type(error).__name__}).',file=sys.stderr)

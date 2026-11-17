@@ -8,6 +8,8 @@ on:
       - '.github/workflows/verify-assistant-runtime.yml'
       - '.github/workflows/airi-modular-auto-update.yml'
       - '.github/workflows/airi-modular-supervisor.yml'
+      - '.github/workflows/airi-query-research.yml'
+      - 'scripts/research-training/semantic-routing-20261116/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -16,6 +18,8 @@ on:
       - '.github/workflows/verify-assistant-runtime.yml'
       - '.github/workflows/airi-modular-auto-update.yml'
       - '.github/workflows/airi-modular-supervisor.yml'
+      - '.github/workflows/airi-query-research.yml'
+      - 'scripts/research-training/semantic-routing-20261116/**'
   workflow_dispatch:
 permissions:
   contents: read

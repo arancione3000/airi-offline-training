@@ -104,6 +104,22 @@ change the production provider, approved model pointer or frozen training servic
 
 ## Verification
 
+Question routing remains an optional experimental component. Four lexical and
+semantic candidates are archived in the [research results](../research-training/semantic-routing-20261116/RESULTS.md);
+they did not meet qualification and are not enabled by default. `--no-paraphrases`
+keeps exact expert routing even if a future qualified question model is installed.
+The API accepts `query_router=LearnedQueryRouter(bank,path,backend=...)` for controlled
+experiments; it classifies the original question globally, requires a unique
+compatible source, and preserves source spans. The exact compiler stays unchanged.
+
+The separate `AIRI gated question research` workflow runs on new trusted inputs
+and program bindings, with an unchanged-input check before installing optional
+dependencies or training. Rejected candidates retain the prior model. Accepted
+candidates must pass qualification, the final replay and every stored previously
+qualified paraphrase before the workflow runs the full assistant tests and may
+publish model data. Existing memory/exact experts keep priority. Repeated runs
+on published test data are operational checks, not new blind experiments.
+
 Automatic curriculum cycles can run independently of incoming lesson files:
 
 ```sh

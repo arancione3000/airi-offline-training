@@ -22,6 +22,14 @@ The [latest review and repairs](docs/MODULAR_REVIEW_20261116.md) document explic
 supervisor renewal, two registry fixes, and a fresh comparison that exposes both
 procedural gains and failure on new question wording.
 
+The [next research phase](scripts/research-training/semantic-routing-20261116/RESULTS.md)
+records four learned-question routing hypotheses, including a pinned open
+multilingual Transformer encoder. None cleared the predefined qualification
+gate, so none replaces default routing. A gated research workflow retries only
+when trusted examples, learner code or program bindings change. The [research
+objective](docs/RESEARCH_OBJECTIVE.md) defines the evidence required before making
+any claim of superiority over modern strong Transformers.
+
 It can recall explicit names, residences and topics from the current conversation,
 with source spans, corrections and conservative abstention. Native fallback uses the
 existing hash-verified approved model loader and requires the usual native runtime
