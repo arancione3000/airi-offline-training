@@ -63,9 +63,11 @@ def evaluate(bank,model_path,rows,families,*,value_offset=0,backend=None):
             result=composed(row['messages']);answer=None if result is None else result['answer']
             old.append(answer==row['answer'])
     result={'positive_correct':sum(r['correct'] for r in positives),'positive_total':len(positives),
+            'wrong_positive_answers':sum(r['prediction'] is not None and not r['correct'] for r in positives),
             'negative_total':len(negatives),'false_answers':sum(not r['correct'] for r in negatives),
             'stored_contracts':len(old),'stored_failures':sum(not ok for ok in old),
             'historical_gate':gate.last_report,'observations':observations}
     result['passed']=(bool(positives) and result['positive_correct']>=len(positives)*.5
-                      and result['false_answers']==0 and result['stored_failures']==0 and gate.last_report['passed'])
+                      and result['wrong_positive_answers']==0 and result['false_answers']==0
+                      and result['stored_failures']==0 and gate.last_report['passed'])
     return result

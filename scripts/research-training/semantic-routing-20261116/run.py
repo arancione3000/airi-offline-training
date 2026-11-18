@@ -48,7 +48,7 @@ def main():
     source={str(path):sha(path) for path in RUNTIME.glob('*.py')}
     inputs={str(path):sha(path) for path in a.corpus.glob('*.json')}
     prereg={'source_hashes':source,'input_hashes':inputs,'bank':bank.status(),
-            'rule':'TRAIN-only LOO thresholds; QUAL0false and>=50%positive; FINALendpoint never selects model; unsupported old exact-query abstention grammar is explicitly expanded'}
+            'rule':'TRAIN-only calibration; qualification and final require >=50% correct positives, no wrong answers and no retention regressions; final data never selects a model'}
     write(a.output/'PREREGISTRATION.json',prereg)
     (a.output/'sources').mkdir()
     for path in RUNTIME.glob('*.py'):(a.output/'sources'/(path.name+'.gz')).write_bytes(gzip.compress(path.read_bytes(),mtime=0))

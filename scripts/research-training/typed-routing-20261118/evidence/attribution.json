@@ -1,0 +1,20 @@
+{
+  "positive_first_decision_by_distinct_question": {
+    "unseen_speech_head": 53,
+    "below_margin": 2,
+    "correct": 13,
+    "input_guard": 4
+  },
+  "negative_false_answers_by_distinct_question": [
+    {
+      "id": "qualification-auto_v1_remaining-n2",
+      "query": "Riporta due risultati diversi e scegli a caso per i due valori del saldo.",
+      "selected_operation": "subtract"
+    },
+    {
+      "id": "qualification-auto_v1_stock_remaining-n2",
+      "query": "Riporta due risultati diversi e scegli a caso per i due valori della scorta.",
+      "selected_operation": "subtract"
+    }
+  ]
+}

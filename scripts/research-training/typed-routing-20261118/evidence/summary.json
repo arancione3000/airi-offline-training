@@ -1,0 +1,108 @@
+{
+  "activated": false,
+  "by_family_distinct_phrasings": {
+    "auto_v1_account_lower": [
+      1,
+      4
+    ],
+    "auto_v1_cart_total": [
+      1,
+      4
+    ],
+    "auto_v1_contact": [
+      0,
+      4
+    ],
+    "auto_v1_customer_reference": [
+      0,
+      4
+    ],
+    "auto_v1_email_alias": [
+      0,
+      4
+    ],
+    "auto_v1_inventory_total": [
+      1,
+      4
+    ],
+    "auto_v1_label_upper": [
+      1,
+      4
+    ],
+    "auto_v1_order_reference": [
+      0,
+      4
+    ],
+    "auto_v1_remaining": [
+      1,
+      4
+    ],
+    "auto_v1_stock_remaining": [
+      1,
+      4
+    ],
+    "auto_v1_tracking_reverse": [
+      1,
+      4
+    ],
+    "auto_v1_unit_total": [
+      1,
+      4
+    ],
+    "card_upper": [
+      1,
+      4
+    ],
+    "delta_sum": [
+      1,
+      4
+    ],
+    "parcel_copy": [
+      0,
+      4
+    ],
+    "plate_lower": [
+      1,
+      4
+    ],
+    "sigma_product": [
+      1,
+      4
+    ],
+    "signal_reverse": [
+      1,
+      4
+    ]
+  },
+  "calibration": {
+    "correct": 29,
+    "false_accepts": 0,
+    "supported_cases": 66,
+    "unique_conditional_cases": 78,
+    "unique_frames": 67
+  },
+  "false_answers": 4,
+  "final_observed": false,
+  "historical_gate": {
+    "cases": 989,
+    "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+    "failed_cases": [],
+    "learned_intercepts": 0,
+    "passed": true,
+    "scope": "routing validation; not a new neural certificate",
+    "unchanged_native_routes": 965
+  },
+  "model_sha256": "9531f0d7bf330fe1e3cb486259515e29135865a90cad6418ecdf1e6f00385650",
+  "negative_total": 108,
+  "passed": false,
+  "positive_correct": 26,
+  "positive_total": 144,
+  "qualification_observed_previously": true,
+  "stored_contracts": 360,
+  "stored_failures": 0,
+  "thresholds": [
+    0.55,
+    0.01
+  ],
+  "wrong_positive_answers": 0
+}
