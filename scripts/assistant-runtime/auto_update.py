@@ -27,7 +27,7 @@ def _source_hashes():
     root=Path(__file__).resolve().parent
     paths=[root/name for name in ('auto_update.py','auto_curriculum.py','skill_programs.py',
            'skill_bank.py','context_memory.py','skill_validation.py')]
-    paths.append(root/'skills/stable_contracts.json.gz')
+    paths.extend((root/'skills/stable_contracts.json.gz', root/'skills/v5-fragments.json'))
     return {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
 
 
@@ -36,13 +36,13 @@ def cycle(bank, *, seed, limit=2, report_dir=None, progress=None):
     original,_=bank._read();before=digest(original)
     acquired={entry['lesson_id'] for entry in original['entries']}
     pending=[family for family in CATALOG if family['id'] not in acquired]
-    selected=pending[:min(limit,MAX_SKILLS-len(original['entries']))]
-    selected_ids={family['id'] for family in selected}
-    bundles={family['id']:build(family['id'],seed) for family in CATALOG
-             if family['id'] in acquired or family['id'] in selected_ids}
+    admission_limit=min(limit,MAX_SKILLS-len(original['entries']))
+    candidates=pending if admission_limit else []
+    included=acquired | {family['id'] for family in candidates}
+    bundles={family['id']:build(family['id'],seed) for family in CATALOG if family['id'] in included}
     sources=_source_hashes()
     prereg={'schema':1,'curriculum_version':VERSION,'seed':seed,'source_hashes':sources,
-            'starting_bank_sha256':before,'selected':[f['id'] for f in selected],
+            'starting_bank_sha256':before,'candidate_order':[f['id'] for f in candidates], 'admission_limit':admission_limit,
             'bundle_sha256':{key:digest(value) for key,value in bundles.items()},
             'rule':'TRAIN selects program; qualification and heldout only accept/reject; no retries on a failed seed'}
     if report_dir is not None:
@@ -52,14 +52,24 @@ def cycle(bank, *, seed, limit=2, report_dir=None, progress=None):
     with tempfile.TemporaryDirectory(prefix='airi-auto-update-') as directory:
         staged=SkillBank(Path(directory)/'candidate.json');staged._write(original)
         growth=[]
-        for family in selected:
+        selected=[]
+        for family in candidates:
             gate=StableGate()
             transition=staged.learn(bundles[family['id']]['lesson'],regression_gate=gate)
             growth.append({'lesson_id':family['id'],'transition':transition,'stable_gate':gate.last_report})
-            if transition['action']!='activated':raise RegistryError('automatic candidate admission failed: '+family['id'])
+            if transition['action']=='rejected':
+                continue
+            if transition['action']!='activated':
+                raise RegistryError('unexpected admission outcome: '+family['id'])
+            selected.append(family)
+            if len(selected)==admission_limit:
+                break
         proposal,_=staged._read()
         observations=[];by_family={}
+        audited=acquired | {family['id'] for family in selected}
         for family_id,bundle in bundles.items():
+            if family_id not in audited:
+                continue
             values=[]
             for row in bundle['heldout']:
                 result=_route(proposal['entries'],row['messages'])
@@ -100,6 +110,7 @@ def cycle(bank, *, seed, limit=2, report_dir=None, progress=None):
                 if digest(current)!=before:raise RegistryError('concurrent bank update; candidate not published')
                 publication=bank._write(proposal)
             report.update(status='updated',published=True,publication=publication)
+        elif candidates:report['status']='rejected'
         else:report['status']='capacity' if pending else 'audited'
         if report_dir is not None:_write_json(report_dir/'REPORT.json',report)
         if progress is not None and selected:
