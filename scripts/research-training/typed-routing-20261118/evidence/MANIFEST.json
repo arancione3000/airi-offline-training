@@ -1,0 +1,44 @@
+{
+  "compressed_inputs": {
+    "bank.json.gz": "3a23df4db240f9cfd90a68669b41b6da99c66f0b200bd20f49ffa36540b503a1",
+    "precommitted/FAMILIES.json.gz": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba",
+    "precommitted/QUALIFICATION.json.gz": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4",
+    "precommitted/TRAIN.json.gz": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a"
+  },
+  "encoder_manifest_sha256": "cc8b18e67149e51f66d9b2174c9793299a11effb3b0e0bbc59439fcc68ff3206",
+  "model_sha256": "9531f0d7bf330fe1e3cb486259515e29135865a90cad6418ecdf1e6f00385650",
+  "raw_artifacts": {
+    "attribution.json": "1efaee57e7e3c66f37df696363348861ddc8ba29171a4a3aee4f2a1f96a427d2",
+    "bank.json": "eb9da6eca878924d5d8d5b2b41b7100fd1cd1fcad8adf647832862711d7df903",
+    "candidate.json": "ce87ffe0108ede77ba692fb293eefc17bac73a386f88bcaab71efaccdf3ac554",
+    "qualification.json": "ebc0b9c4cfe390788fe8ba988b29905cc9ea7e6db81829b4990a1b10fa34ad8d",
+    "summary.json": "56902bcb7f439fde0f35a3e6d8666f85f45158c4c4a729c62813dbeb94e70382"
+  },
+  "research_sources": {
+    "diagnose.py": "32cc4a1119d07865770cd2cb24c0c38c0c50c0c3e593dfb9de879be4e3e951b0",
+    "experiment.py": "d054dcc480d3f42b72cd96be2105ff06377ce0974623be6aed4cb956f4d26013",
+    "test_typed_router.py": "27f46af536c6d7011b89452addac47b197010b83f9c512de832ce56a3ec5be0f",
+    "typed_router.py": "ee2759e8b791d1afd38f8d7be628eaffa35f577393ff47fb4eaa80c9c14c0f07"
+  },
+  "runtime_sources": {
+    "assistant.py": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+    "auto_curriculum.py": "f066fb8a4ec2539fb02ae0b1a69e319434d4a1cb3de45e7096a08a26b75d92db",
+    "auto_update.py": "988edab96ef53617e69fa6a26469971d3f924c42234a72cb663f7973e682ec8a",
+    "chat.py": "06b9d59c06bc7cd9b19516f8ed478095bcfe74c890999c0c7c3b1ecaa9d68100",
+    "context_memory.py": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+    "evaluate.py": "17fa5b0e05dc891580f2653a3c18f87e3e342ffacd36f0a190cbdb55b23400d8",
+    "flexible_skills.py": "9daf38321b01fb8049ffed8b46154873a7d8d46f6a6b66bda4c4ebf3a55a7ffb",
+    "learn.py": "06798c3761c9f27c0f0ecce776ee51bf5dcf439242d0e41c1246edbca2e81f98",
+    "managed_skills.py": "d415e0952570ef0f06788a5af2d3e31cae0a590928ad3db2cc75506f962609d2",
+    "query_learning.py": "afd152cc95aa7818d7edf5fee03050caca74f87d6233646ecf62fc27dab9c90a",
+    "query_router.py": "f63e56ec42888556f3d7cd3beaa97e27a330e3bce7db6264c23cac0096281957",
+    "query_router_encoder.py": "3da47784352b7bd096cfac92d170a8c30bc6bbf5a010362a4bfd707b9a01c465",
+    "query_router_factorized.py": "1f7bebf07df22bc0483805d4db9317a30e5fa6f5794473c8c4ffa3304f3e9516",
+    "query_router_linear.py": "261a0a5dd6bd5f17b93978e4bf2794c73fc6ba58765f7232466fa1f9a4ce20d1",
+    "semantic_encoder.py": "2f550e524c03fa804a9df982e590ea7b9651ec16d024faa4c104a9f67fcab6bd",
+    "skill_bank.py": "3e144719e3aaae6323943d0f97ab00fe51b9237169c880853569aa47cb785109",
+    "skill_programs.py": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+    "skill_validation.py": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+    "supervise.py": "97c211de52ae3959b55003a97af575733636f0740cb1ff006de055a1c447a75c"
+  }
+}
