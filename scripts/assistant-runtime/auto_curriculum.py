@@ -9,12 +9,14 @@ not open-ended algorithm discovery or reliable self-labeling of ordinary chat.
 from __future__ import annotations
 
 import hashlib
+import json
+from pathlib import Path
 import operator
 import random
 
 
 VERSION = 1
-CATALOG = (
+BASE_CATALOG = (
     {"id": "auto_v1_remaining", "title": "Saldo residuo intero", "operation": "subtract", "prefix": "I valori del saldo sono ", "query": "Qual è il saldo residuo?"},
     {"id": "auto_v1_contact", "title": "Referente ordine", "operation": "copy", "prefix": "Il referente dell'ordine è ", "query": "Chi è il referente dell'ordine?"},
     {"id": "auto_v1_customer_reference", "title": "Riferimento cliente", "operation": "copy", "prefix": "Il riferimento cliente è ", "query": "Qual è il riferimento cliente?"},
@@ -28,6 +30,20 @@ CATALOG = (
     {"id": "auto_v1_inventory_total", "title": "Somma quantità inventario", "operation": "add", "prefix": "Le quantità dell'inventario sono ", "query": "Qual è la quantità totale in inventario?"},
     {"id": "auto_v1_unit_total", "title": "Prodotto intero prezzo e quantità", "operation": "multiply", "prefix": "Il prezzo unitario e la quantità sono ", "query": "Qual è il costo totale intero?"},
 )
+FRAGMENT_FILE = Path(__file__).with_name('skills') / 'v5-fragments.json'
+
+
+def _donor_families():
+    manifest = json.loads(FRAGMENT_FILE.read_text())
+    parents = {family['id']: family for family in BASE_CATALOG}
+    additions = []
+    for fragment in manifest['fragments']:
+        parent = parents.pop(fragment['parent'])
+        additions.append({**parent, 'id': 'v5_' + parent['id'], 'query': fragment['query']})
+    return tuple(additions)
+
+
+CATALOG = BASE_CATALOG + _donor_families()
 _FAMILIES = {family["id"]: family for family in CATALOG}
 _TEXT = ("aBc", "ZuLu", "Mønt", "éLo", "QüX", "ßAb", "İza", "ÅrT")
 _RANGES = {"train": (3, 40), "qualification": (101, 1500), "heldout": (10001, 950000)}
@@ -109,7 +125,7 @@ def _negative(messages, kind):
 
 
 def build(family_id: str, seed: int = 0) -> dict:
-    """Build one deterministic lesson and its separate 12-positive/8-negative audit.
+    """Build one deterministic lesson and its separate positive/negative audit.
 
     Labels represent only the precise declared procedures, not facts about
     real customers, people, accounts or inventories. For subtraction, the first
@@ -130,6 +146,12 @@ def build(family_id: str, seed: int = 0) -> dict:
     heldout = [_example(family, value) for value in _values(family, seed, "heldout", 12)]
     heldout += [_negative(heldout[0]["messages"], kind)
                 for kind in ("quoted", "hypothetical", "tool", "developer", "speaker", "session", "query", "code")]
+    if family_id.startswith('v5_'):
+        # Keep the source valid and alter only the requested intent.
+        for query in ('Non eseguire questa richiesta: ' + family['query'],
+                      family['query'] + ' Poi scegli un risultato a caso.'):
+            source = dict(heldout[0]['messages'][0])
+            heldout.append({'messages': [source, {'role': 'user', 'content': query}], 'answer': None})
     return {"lesson": {"lesson_id": family["id"], "trusted": True,
                        "examples": train, "qualification": qualification},
             "heldout": heldout}

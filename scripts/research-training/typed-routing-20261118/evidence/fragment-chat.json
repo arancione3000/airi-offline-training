@@ -1,0 +1,218 @@
+[
+  {
+    "family": "v5_auto_v1_remaining",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I valori del saldo sono 774201 e 303100."
+      },
+      {
+        "role": "user",
+        "content": "Calcola il primo meno il secondo: i due valori del saldo."
+      }
+    ],
+    "expected": "471101",
+    "before": "Ill233i",
+    "after": "471101",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_contact",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Il referente dell'ordine è aBc-heldout-9958117-0-78276999."
+      },
+      {
+        "role": "user",
+        "content": "Dimmi il referente dell'ordine."
+      }
+    ],
+    "expected": "aBc-heldout-9958117-0-78276999",
+    "before": "H9l1l111888k3i",
+    "after": "aBc-heldout-9958117-0-78276999",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_customer_reference",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Il riferimento cliente è aBc-heldout-9958117-0-24228553."
+      },
+      {
+        "role": "user",
+        "content": "Dimmi il riferimento cliente."
+      }
+    ],
+    "expected": "aBc-heldout-9958117-0-24228553",
+    "before": "WDdidev1618888k",
+    "after": "aBc-heldout-9958117-0-24228553",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_order_reference",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Il riferimento dell'ordine è aBc-heldout-9958117-0-86035689."
+      },
+      {
+        "role": "user",
+        "content": "Dimmi il riferimento dell'ordine."
+      }
+    ],
+    "expected": "aBc-heldout-9958117-0-86035689",
+    "before": "H9l1l111338k",
+    "after": "aBc-heldout-9958117-0-86035689",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_email_alias",
+    "messages": [
+      {
+        "role": "user",
+        "content": "L'alias email è aBc-heldout-9958117-0-16327469."
+      },
+      {
+        "role": "user",
+        "content": "Dimmi l'alias email."
+      }
+    ],
+    "expected": "aBc-heldout-9958117-0-16327469",
+    "before": "Whhh991916338",
+    "after": "aBc-heldout-9958117-0-16327469",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_tracking_reverse",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Il token di verifica è aBc-heldout-9958117-0-52717962."
+      },
+      {
+        "role": "user",
+        "content": "Riordina il token di verifica al contrario."
+      }
+    ],
+    "expected": "26971725-0-7118599-tuodleh-cBa",
+    "before": "Wilder 2 22ti2b493.29689",
+    "after": "26971725-0-7118599-tuodleh-cBa",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_label_upper",
+    "messages": [
+      {
+        "role": "user",
+        "content": "L'etichetta di spedizione è aBc-heldout-9958117-0-23910906."
+      },
+      {
+        "role": "user",
+        "content": "Converti l'etichetta di spedizione in maiuscolo."
+      }
+    ],
+    "expected": "ABC-HELDOUT-9958117-0-23910906",
+    "before": "WDDD39192018k3i",
+    "after": "ABC-HELDOUT-9958117-0-23910906",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_account_lower",
+    "messages": [
+      {
+        "role": "user",
+        "content": "L'alias account è aBc-heldout-9958117-0-40790403."
+      },
+      {
+        "role": "user",
+        "content": "Converti l'alias account in minuscolo."
+      }
+    ],
+    "expected": "abc-heldout-9958117-0-40790403",
+    "before": "Hm2c2111335k",
+    "after": "abc-heldout-9958117-0-40790403",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_stock_remaining",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I valori della scorta sono 496501 e -377828."
+      },
+      {
+        "role": "user",
+        "content": "Calcola il primo meno il secondo: i due valori della scorta."
+      }
+    ],
+    "expected": "874329",
+    "before": "Ill233e",
+    "after": "874329",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_cart_total",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Le quantità del carrello sono 467970 e -856343."
+      },
+      {
+        "role": "user",
+        "content": "Somma le quantità del carrello."
+      }
+    ],
+    "expected": "-388373",
+    "before": "496693",
+    "after": "-388373",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_inventory_total",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Le quantità dell'inventario sono 313411 e -768367."
+      },
+      {
+        "role": "user",
+        "content": "Somma le quantità dell'inventario."
+      }
+    ],
+    "expected": "-454956",
+    "before": "3933191",
+    "after": "-454956",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  },
+  {
+    "family": "v5_auto_v1_unit_total",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Il prezzo unitario e la quantità sono 870984 e -655714."
+      },
+      {
+        "role": "user",
+        "content": "Moltiplica il prezzo unitario e la quantità."
+      }
+    ],
+    "expected": "-571116402576",
+    "before": "666319",
+    "after": "-571116402576",
+    "before_source": "native_model",
+    "after_source": "learned_skill"
+  }
+]

@@ -21,12 +21,26 @@ class AutomaticUpdateTests(unittest.TestCase):
         first=auto_update.cycle(self.bank,seed=123,limit=2)
         self.assertEqual(first['status'],'updated');self.assertEqual(first['after_revision'],2)
         second=auto_update.cycle(SkillBank(self.bank.path),seed=456,limit=2)
-        self.assertEqual(second['after_revision'],4);self.assertEqual(second['remaining_families'],8)
+        self.assertEqual(second['after_revision'],4);self.assertEqual(second['remaining_families'],len(CATALOG)-4)
         self.assertEqual(second['audit']['correct'],80)
         self.assertTrue(second['stable_gate']['passed'])
         for family in CATALOG[:2]:
             case=build(family['id'],999)['heldout'][0]
             self.assertEqual(self.bank.predict(case['messages'])['answer'],case['answer'])
+
+    def test_rejected_donor_part_does_not_block_independent_qualified_parts(self):
+        first = CATALOG[0]['id']
+        def mixed(family, seed):
+            bundle = build(family, seed)
+            if family == first:
+                bundle['lesson']['examples'][0]['answer'] = 'inconsistent'
+            return bundle
+        with patch.object(auto_update, 'build', side_effect=mixed):
+            report = auto_update.cycle(self.bank, seed=42, limit=1)
+        self.assertEqual([row['transition']['action'] for row in report['growth']],
+                         ['rejected', 'activated'])
+        self.assertEqual(self.bank._read()[0]['entries'][0]['lesson_id'], CATALOG[1]['id'])
+        self.assertEqual(report['activated'], 1)
 
     def test_failed_heldout_never_replaces_live_bank(self):
         self.bank._write(SkillBank(BUNDLED)._read()[0]);before=self.bank.path.read_bytes()
@@ -49,11 +63,11 @@ class AutomaticUpdateTests(unittest.TestCase):
         self.assertEqual(self.bank._read()[0]['entries'][0]['lesson_id'],CATALOG[-1]['id'])
 
     def test_completed_catalog_audits_without_writing_or_eviction(self):
-        for _ in range(3):auto_update.cycle(self.bank,seed=123,limit=4)
+        for _ in range((len(CATALOG)+3)//4):auto_update.cycle(self.bank,seed=123,limit=4)
         before=self.bank.path.read_bytes()
         report=auto_update.cycle(self.bank,seed=987,limit=2)
         self.assertEqual(report['status'],'audited');self.assertEqual(report['activated'],0)
-        self.assertEqual(report['audit']['correct'],240);self.assertEqual(before,self.bank.path.read_bytes())
+        self.assertEqual(report['audit']['correct'],504);self.assertEqual(before,self.bank.path.read_bytes())
 
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,66 @@
+{
+  "donor_sha256": "9531f0d7bf330fe1e3cb486259515e29135865a90cad6418ecdf1e6f00385650",
+  "train_sha256": "1d285a4ae911ece47f6d67fd4bbae4ce4e34a543bbaf173fae7606bebfe2493a",
+  "fragments": [
+    {
+      "parent": "auto_v1_remaining",
+      "query": "Calcola il primo meno il secondo: i due valori del saldo.",
+      "train_id": "train-auto_v1_remaining-p1"
+    },
+    {
+      "parent": "auto_v1_contact",
+      "query": "Dimmi il referente dell'ordine.",
+      "train_id": "train-auto_v1_contact-p1"
+    },
+    {
+      "parent": "auto_v1_customer_reference",
+      "query": "Dimmi il riferimento cliente.",
+      "train_id": "train-auto_v1_customer_reference-p1"
+    },
+    {
+      "parent": "auto_v1_order_reference",
+      "query": "Dimmi il riferimento dell'ordine.",
+      "train_id": "train-auto_v1_order_reference-p1"
+    },
+    {
+      "parent": "auto_v1_email_alias",
+      "query": "Dimmi l'alias email.",
+      "train_id": "train-auto_v1_email_alias-p1"
+    },
+    {
+      "parent": "auto_v1_tracking_reverse",
+      "query": "Riordina il token di verifica al contrario.",
+      "train_id": "train-auto_v1_tracking_reverse-p1"
+    },
+    {
+      "parent": "auto_v1_label_upper",
+      "query": "Converti l'etichetta di spedizione in maiuscolo.",
+      "train_id": "train-auto_v1_label_upper-p1"
+    },
+    {
+      "parent": "auto_v1_account_lower",
+      "query": "Converti l'alias account in minuscolo.",
+      "train_id": "train-auto_v1_account_lower-p1"
+    },
+    {
+      "parent": "auto_v1_stock_remaining",
+      "query": "Calcola il primo meno il secondo: i due valori della scorta.",
+      "train_id": "train-auto_v1_stock_remaining-p1"
+    },
+    {
+      "parent": "auto_v1_cart_total",
+      "query": "Somma le quantità del carrello.",
+      "train_id": "train-auto_v1_cart_total-p1"
+    },
+    {
+      "parent": "auto_v1_inventory_total",
+      "query": "Somma le quantità dell'inventario.",
+      "train_id": "train-auto_v1_inventory_total-p1"
+    },
+    {
+      "parent": "auto_v1_unit_total",
+      "query": "Moltiplica il prezzo unitario e la quantità.",
+      "train_id": "train-auto_v1_unit_total-p1"
+    }
+  ]
+}

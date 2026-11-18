@@ -81,10 +81,19 @@ def _validate_payload(value):
 def _empty():return {'schema':1,'revision':0,'engine_sha256':ENGINE_SHA256,'entries':[]}
 
 
+def _matching_experts(entries, messages):
+    if not isinstance(messages, (list, tuple)) or not messages or not isinstance(messages[-1], dict):
+        return
+    question = messages[-1].get('content')
+    for entry in entries:
+        if entry['program']['query'] == question:
+            yield entry
+
+
 def _route(entries,messages):
     memory=resolve(messages)
     if memory is not None:return memory
-    for entry in entries:
+    for entry in _matching_experts(entries, messages):
         result=skill_programs.predict(entry['program'],messages)
         if result is not None:return result
     return None
@@ -182,7 +191,7 @@ class SkillBank:
 
     def predict(self,messages):
         value,recovered=self._read()
-        for entry in value['entries']:
+        for entry in _matching_experts(value['entries'], messages):
             result=skill_programs.predict(entry['program'],messages)
             if result is not None:
                 return {**result,'skill_id':entry['id'],'skill_revision':value['revision'],
@@ -222,7 +231,7 @@ class SkillBank:
             if not new_coverage:return {'action':'rejected','reason':'no new qualified coverage'}
             proposal=deepcopy(state);proposal['entries'].append(entry);proposal['revision']+=1
             def route(messages):
-                for e in proposal['entries']:
+                for e in _matching_experts(proposal['entries'], messages):
                     result=skill_programs.predict(e['program'],messages)
                     if result is not None:return result
                 return None

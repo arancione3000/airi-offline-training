@@ -25,7 +25,7 @@ class AutoCurriculumTests(unittest.TestCase):
         with self.assertRaises(ValueError):reference("execute", "x")
 
     def test_catalog_is_finite_unique_deterministic_and_covers_all_operations(self):
-        self.assertEqual(len(CATALOG), 12)
+        self.assertEqual(len(CATALOG), 24)
         self.assertEqual(len({r["id"] for r in CATALOG}), len(CATALOG))
         self.assertEqual({r["operation"] for r in CATALOG}, set(OPERATIONS))
         for family in CATALOG:
@@ -40,8 +40,9 @@ class AutoCurriculumTests(unittest.TestCase):
             bundle = build(family["id"], 20261116)
             lesson = bundle["lesson"]
             partitions = [lesson["examples"], lesson["qualification"], bundle["heldout"]]
-            self.assertEqual([len(rows) for rows in partitions], [8, 12, 20])
-            self.assertEqual([sum(r["answer"] is None for r in rows) for rows in partitions], [0, 4, 8])
+            extra = 2 if family['id'].startswith('v5_') else 0
+            self.assertEqual([len(rows) for rows in partitions], [8, 12, 20 + extra])
+            self.assertEqual([sum(r["answer"] is None for r in rows) for rows in partitions], [0, 4, 8 + extra])
             self.assertEqual(set(lesson), {"lesson_id", "trusted", "examples", "qualification"})
             prior_contexts, prior_sources, prior_operands = set(), set(), set()
             for rows in partitions:
