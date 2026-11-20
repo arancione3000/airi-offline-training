@@ -1,0 +1,138 @@
+[
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Il prezzo unitario e la quantità sono 567007 e 242869."
+      },
+      {
+        "role": "user",
+        "content": "Calcola il prodotto tra il prezzo unitario e la quantità."
+      }
+    ],
+    "expected": "137708423083",
+    "before": "49631",
+    "after": "137708423083",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "La targa porta il testo ÁbC-80914-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Converti il testo della targa in minuscolo."
+      }
+    ],
+    "expected": "ábc-80914-1-qzé",
+    "before": "Bruno",
+    "after": "ábc-80914-1-qzé",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "La tessera porta il testo ÁbC-80915-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Converti il testo della tessera in maiuscolo."
+      }
+    ],
+    "expected": "ÁBC-80915-1-QZÉ",
+    "before": "b09anc",
+    "after": "ÁBC-80915-1-QZÉ",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Il codice del pacco è ÁbC-80916-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Dimmi il codice del pacco."
+      }
+    ],
+    "expected": "ÁbC-80916-1-qZé",
+    "before": "H19thn",
+    "after": "ÁbC-80916-1-qZé",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Il token di verifica è ÁbC-80917-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Inverti il token di verifica."
+      }
+    ],
+    "expected": "éZq-1-71908-CbÁ",
+    "before": "p09ki",
+    "after": "éZq-1-71908-CbÁ",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Gli interi sigma sono 567042 e 242884."
+      },
+      {
+        "role": "user",
+        "content": "Moltiplica i due interi sigma."
+      }
+    ],
+    "expected": "137725429128",
+    "before": "3666333",
+    "after": "137725429128",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Il referente dell'ordine è ÁbC-80919-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Mostrami il referente dell'ordine."
+      }
+    ],
+    "expected": "ÁbC-80919-1-qZé",
+    "before": "P39lar",
+    "after": "ÁbC-80919-1-qZé",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  },
+  {
+    "request": [
+      {
+        "role": "user",
+        "content": "Il riferimento cliente è ÁbC-80920-1-qZé."
+      },
+      {
+        "role": "user",
+        "content": "Mostrami il riferimento cliente."
+      }
+    ],
+    "expected": "ÁbC-80920-1-qZé",
+    "before": "H19pa",
+    "after": "ÁbC-80920-1-qZé",
+    "before_route": "native_model",
+    "after_route": "verified_exact_alias"
+  }
+]

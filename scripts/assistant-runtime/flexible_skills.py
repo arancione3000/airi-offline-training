@@ -13,7 +13,26 @@ from skill_bank import RegistryError
 DEFAULT_MODEL=Path(__file__).resolve().parent/'queries/approved-router.json'
 
 
+class _QuestionRoutes:
+    def __init__(self, aliases, semantic):
+        self.aliases = aliases
+        self.semantic = semantic
+
+    def predict(self, messages):
+        owned, answer = self.aliases.match(messages)
+        if owned or self.semantic is None:
+            return answer
+        return self.semantic.predict(messages)
+
+
 def default_router(bank):
+    if bank is None:
+        return None
+    from exact_aliases import AliasRouter
+    return _QuestionRoutes(AliasRouter(bank), _semantic_router(bank))
+
+
+def _semantic_router(bank):
     if bank is None or not DEFAULT_MODEL.exists():return None
     try:
         if DEFAULT_MODEL.is_symlink() or DEFAULT_MODEL.stat().st_size>3*1024*1024:return None
