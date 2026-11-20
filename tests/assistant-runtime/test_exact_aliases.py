@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts/assistant-runtime'))
@@ -95,6 +95,36 @@ class ExactTransferTests(unittest.TestCase):
                        condition='supported_paraphrase', id='1')
         rows = [example, {**example, 'lesson_id': None}]
         self.assertEqual(transfer.catalog(rows, [dict(lesson_id='a', program_id='id')], []), {})
+
+    def test_cross_component_gate_preserves_earlier_semantic_answers(self):
+        self.cycle(1)
+        state = self.bank._read()[0]
+        aliases = read_aliases(self.state)
+        query, binding = next(iter(aliases.items()))
+        _, families = transfer.read_corpus()
+        family = next(row for row in families if row['id'] == binding['lesson_id'])
+        messages, expected = transfer.case(family, query, 54000, 0)
+        competitor = next(row for row in families if row['id'] != family['id'])
+        other_source = transfer.case(competitor, query, 54000, 0)[0][0]
+        ambiguous = [messages[0], other_source, messages[-1]]
+        semantic = Mock(predict=lambda value: {'answer': expected} if value == ambiguous else None)
+        checks = [{'messages': ambiguous, 'expected': expected}]
+        self.assertTrue(transfer.audit_candidate(state, {}, semantic, checks, seed=23)['passed'])
+        with self.assertRaisesRegex(RegistryError, 'qualified semantic behavior would regress'):
+            transfer.audit_candidate(state, aliases, semantic, checks, seed=23)
+
+    def test_cross_component_gate_blocks_semantic_answers_to_alias_negative(self):
+        self.cycle(1)
+        state = self.bank._read()[0]
+        aliases = read_aliases(self.state)
+        query, binding = next(iter(aliases.items()))
+        _, families = transfer.read_corpus()
+        family = next(row for row in families if row['id'] == binding['lesson_id'])
+        messages, expected = transfer.case(family, query, 1023, 1)
+        messages[-1]['content'] = 'Non farlo. ' + query
+        semantic = Mock(predict=lambda value: {'answer': expected} if value == messages else None)
+        with self.assertRaisesRegex(RegistryError, 'alias source/intent boundary'):
+            transfer.audit_candidate(state, aliases, semantic, [], seed=23)
 
 
 if __name__ == '__main__':
