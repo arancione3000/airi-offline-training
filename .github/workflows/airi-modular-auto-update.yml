@@ -27,11 +27,14 @@ jobs:
         id: cycle
         run: |
           python scripts/assistant-runtime/auto_update.py --bank scripts/assistant-runtime/skills/approved-bank.json --limit 2 --seed "$GITHUB_RUN_ID" --report-dir "$RUNNER_TEMP/modular-cycle" --progress scripts/assistant-runtime/skills/auto-progress.json
+          python scripts/research-training/exact-transfer-20261120/cycle.py --limit 8 --seed "$GITHUB_RUN_ID" --report "$RUNNER_TEMP/modular-cycle/ALIASES.json"
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import json,os
           from pathlib import Path
           report=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json').read_text())
-          print('changed='+str(bool(report['activated'])).lower())
+          aliases=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/ALIASES.json').read_text())
+          assert aliases['audit']['passed']
+          print('changed='+str(bool(report['activated'] or aliases['activated'])).lower())
           PY
       - name: Verify the candidate through the full assistant suite
         if: steps.cycle.outputs.changed == 'true'
@@ -58,11 +61,14 @@ jobs:
           if test -f scripts/assistant-runtime/skills/auto-progress.json; then
             git add -- scripts/assistant-runtime/skills/auto-progress.json
           fi
+          if test -f scripts/assistant-runtime/queries/approved-aliases.json; then
+            git add -- scripts/assistant-runtime/queries/approved-aliases.json
+          fi
           if git diff --cached --quiet; then exit 0; fi
           python - <<'PY'
           import subprocess
           paths=set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())
-          assert paths <= {'scripts/assistant-runtime/skills/approved-bank.json','scripts/assistant-runtime/skills/auto-progress.json'}
+          assert paths <= {'scripts/assistant-runtime/skills/approved-bank.json','scripts/assistant-runtime/skills/auto-progress.json','scripts/assistant-runtime/queries/approved-aliases.json'}
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -84,6 +90,10 @@ jobs:
           import json,os
           from pathlib import Path
           path=Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json')
+          alias_path=path.with_name('ALIASES.json')
+          if alias_path.exists():
+              a=json.loads(alias_path.read_text())
+              print(f"Exact questions added {a['activated']}, installed {a['total_aliases']}, pending {a['remaining']}.")
           if path.exists():
               r=json.loads(path.read_text())
               print(f"Candidate status: {r['status']}; acquired: {r['activated']}; revision: {r['after_revision']}; pending families: {r['remaining_families']}.")

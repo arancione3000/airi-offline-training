@@ -1,0 +1,47 @@
+{
+  "parser_sha256": "57097ae3123d4c78de78af60029479a5d56f7b6af2760313233a2ea48bec64a8",
+  "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+  "eligible": false,
+  "results": {
+    "qualification": {
+      "positive_correct": 90,
+      "positive_total": 144,
+      "wrong_positive_answers": 0,
+      "negative_total": 108,
+      "false_answers": 0,
+      "stored_contracts": 600,
+      "stored_failures": 0,
+      "historical_gate": {
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "cases": 989,
+        "learned_intercepts": 0,
+        "unchanged_native_routes": 965,
+        "failed_cases": [],
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate"
+      },
+      "passed": true,
+      "distinct_positive_phrases_correct": 45
+    },
+    "challenge": {
+      "positive_correct": 18,
+      "positive_total": 72,
+      "wrong_positive_answers": 0,
+      "negative_total": 144,
+      "false_answers": 0,
+      "stored_contracts": 600,
+      "stored_failures": 0,
+      "historical_gate": {
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "cases": 989,
+        "learned_intercepts": 0,
+        "unchanged_native_routes": 965,
+        "failed_cases": [],
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate"
+      },
+      "passed": false,
+      "distinct_positive_phrases_correct": 9
+    }
+  }
+}

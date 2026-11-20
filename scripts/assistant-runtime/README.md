@@ -147,3 +147,9 @@ a separate32-case native/composed comparison are archived in the result evidence
 See [plan](../../docs/ARCHITECTURE_IMPROVEMENT_PLAN_20261115.md),
 [results](../../docs/ARCHITECTURE_IMPROVEMENT_RESULTS_20261115.md), and
 [neural curriculum experiment](../research-training/compositional-20261115/RESULTS.md).
+
+### Trasferimento automatico delle richieste italiane
+
+A ogni ciclo modulare il servizio considera fino a otto formulazioni TRAIN con un'etichetta univoca e una procedura approvata. Le associazioni verificate entrano in `queries/approved-aliases.json`. La chat carica gli aggiornamenti durante l'uso. Le associazioni riutilizzano i programmi del banco e conservano la provenienza dei valori. La memoria e le richieste canoniche mantengono la precedenza.
+
+Il ciclo verifica la risposta e l'identità della procedura su due valori nuovi per formulazione, i contesti incompatibili e i controlli storici. La pubblicazione su GitHub richiede anche il successo dei test della chat. Con il banco di novembre ci sono 150 formulazioni aggiuntive disponibili. Dopo l'esaurimento, i cicli verificano la conservazione delle risposte. Le misure sulla comprensione di nuove formulazioni sono in [RESULTS.json](../research-training/intent-20261120/RESULTS.json).
