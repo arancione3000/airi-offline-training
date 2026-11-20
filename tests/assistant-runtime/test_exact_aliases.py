@@ -25,6 +25,10 @@ class ExactTransferTests(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         self.state = Path(tmp.name) / 'aliases.json'
+        fixture = patch.multiple(transfer, DEFAULT_MODEL=Path(tmp.name) / 'router.json',
+                                 SEMANTIC_RETENTION=Path(tmp.name) / 'retention.json.gz')
+        fixture.start()
+        self.addCleanup(fixture.stop)
         self.bank = SkillBank(Path(tmp.name) / 'bank.json')
         self.bank.path.write_bytes(BUNDLED.read_bytes())
 

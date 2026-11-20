@@ -85,6 +85,8 @@ def run(output):
         except RegistryError as error:
             eligible=False
             state.update(reason=str(error),composition_audit={'passed':False})
+            state['result']={**result,'standalone_eligible_for_activation':True,
+                             'eligible_for_activation':False}
         if eligible:
             retained={digest(row['messages']):row for row in old}
             for row in qualification+final:
