@@ -1,0 +1,21 @@
+{
+  "seed": 20261120,
+  "steps": 240,
+  "rank": 16,
+  "lr": 0.003,
+  "source": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "script_sha256": "484aba4b0fda9196911ace5c481b32d68ad3c2f42a445a5cc6a7e8c794a7179c",
+  "split_sha256": {
+    "AUTHORED_CURRICULUM.json": "7636f8610e883877ee149a5676a78a4d96f706b5c6d40a4441224115cb24f56f",
+    "human-train.jsonl": "2d4d347b0b97991cceeff85f2d3dafaeefad5aabd7b4339422c878dfb20e970e",
+    "human-development.jsonl": "0c2e6f4b1c4a5a1a3def5a0e0f604b346075dc0d5db5cbe5592ffc9d1dac33ed"
+  },
+  "sampled_rows": {
+    "context": 128,
+    "calculation": 128,
+    "copy_and_recall": 128,
+    "dialogue_it": 128,
+    "dialogue_en": 128
+  },
+  "gate": "2 development gains; zero legacy or development losses; all 897 TRAIN certificates; human NLL <= 2% increase for IT and EN"
+}
