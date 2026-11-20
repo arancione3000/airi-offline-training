@@ -10,6 +10,7 @@ on:
       - '.github/workflows/airi-modular-supervisor.yml'
       - '.github/workflows/airi-query-research.yml'
       - 'scripts/research-training/semantic-routing-20261116/**'
+      - 'scripts/research-training/intent-transfer-20261120/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -20,6 +21,7 @@ on:
       - '.github/workflows/airi-modular-supervisor.yml'
       - '.github/workflows/airi-query-research.yml'
       - 'scripts/research-training/semantic-routing-20261116/**'
+      - 'scripts/research-training/intent-transfer-20261120/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -36,6 +38,8 @@ jobs:
           python-version: '3.12'
       - name: Verify memory precision, boundaries, provenance and actual CLI
         run: python -m unittest discover -s tests/assistant-runtime -v
+      - name: Check donor selection and rejection of conflicting proposals
+        run: python -m unittest discover -s scripts/research-training/intent-transfer-20261120 -v
       - name: Verify independent functionality and inherited native preservation
         run: |
           python scripts/assistant-runtime/evaluate.py --output assistant-ci --prepare-only --seed 202611152254

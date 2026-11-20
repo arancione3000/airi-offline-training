@@ -1,0 +1,29 @@
+{
+  "base_commit": "55f835f203beb1e3d67be7bef9bd76b8734dda38",
+  "service": "frozen source check with constant classifier output",
+  "pairs_per_history": 100,
+  "experts": 30,
+  "bound_programs": 18,
+  "turns": {
+    "2": {
+      "before": {
+        "cpu_ms_p50": 0.4881,
+        "cpu_ms_p95": 0.6412
+      },
+      "after": {
+        "cpu_ms_p50": 0.0431,
+        "cpu_ms_p95": 0.0702
+      }
+    },
+    "64": {
+      "before": {
+        "cpu_ms_p50": 5.0925,
+        "cpu_ms_p95": 5.5918
+      },
+      "after": {
+        "cpu_ms_p50": 0.6664,
+        "cpu_ms_p95": 0.7389
+      }
+    }
+  }
+}

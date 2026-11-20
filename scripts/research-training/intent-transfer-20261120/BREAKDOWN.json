@@ -1,0 +1,20 @@
+{
+  "parser": {
+    "no full operation rule": 9,
+    "missing or ambiguous named object": 15,
+    "input syntax": 3,
+    "accepted": 1
+  },
+  "learned_train": {
+    "unseen word prefix": 9,
+    "input syntax or missing or ambiguous named object": 17,
+    "accepted": 1,
+    "input guard": 1
+  },
+  "learned_expanded": {
+    "unseen word prefix": 6,
+    "input syntax or missing or ambiguous named object": 17,
+    "insufficient margin": 4,
+    "input guard": 1
+  }
+}

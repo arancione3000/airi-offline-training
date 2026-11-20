@@ -58,7 +58,8 @@ class LearnedQueryRouter:
         self.compiled=self.backend.compile_model(self.model) if frozen and hasattr(self.backend,'compile_model') else None
 
     def predict(self,messages):
-        if skill_programs._eligible(messages) is None:return None
+        sources = skill_programs._eligible(messages)
+        if not sources:return None
         original=messages[-1]['content']
         try:
             model=self.model if self.model is not None else self.backend.read_model(self.path)
@@ -67,13 +68,25 @@ class LearnedQueryRouter:
         state=self.snapshot if self.snapshot is not None else self.bank._read()[0]
         bindings={row['program_id']:row for row in model['bindings']}
         compatible=[]
+        matched_program = None
         for entry in state['entries']:
             binding=bindings.get(entry['id'])
-            if binding is None:continue
-            if binding['canonical_query']!=entry['program']['query']:raise RegistryError('query binding mismatch')
-            rewritten=list(messages);rewritten[-1]={**messages[-1],'content':binding['canonical_query']}
-            result=skill_programs.predict(entry['program'],rewritten)
-            if result is not None:compatible.append((entry,binding,result))
+            program = entry['program']
+            if binding is not None and binding['canonical_query'] != program['query']:
+                raise RegistryError('query binding mismatch')
+            # The bank has already validated the program. Source eligibility is
+            # independent of the question and needs to be computed only once.
+            result = skill_programs._predict_valid(program, sources)
+            if result is None:
+                continue
+            # A newly installed expert can bring a second compatible source,
+            # even when the frozen question model has no binding for it.
+            if matched_program is not None and (program['source'] != matched_program['source']
+                                                or program['operation'] != matched_program['operation']):
+                return None
+            matched_program = program
+            if binding is not None:
+                compatible.append((entry, binding, result))
         if len(compatible)!=1:return None
         # This existence check changes no class scores: the query classifier
         # still ranks ALL classes, never just the compatible source family.

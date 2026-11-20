@@ -1,0 +1,581 @@
+{
+  "rows": [
+    {
+      "id": "ground-prospect-parcel_copy-1",
+      "query": "Che identificativo hanno assegnato a quel pacco? Ricopialo qui.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-parcel_copy-2",
+      "query": "Passami pari pari il codice che contraddistingue il collo.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-parcel_copy-3",
+      "query": "Trascrivi il codice che identifica il contenitore per il vetro.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-parcel_copy-4",
+      "query": "Quanti caratteri compongono l’identificativo del pacco?",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": "parcel_copy",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-signal_reverse-1",
+      "query": "Leggi da destra a sinistra la sequenza che hai acquisito come segnale.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-signal_reverse-2",
+      "query": "Del segnale appena registrato vorrei i caratteri dall’ultimo al primo.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-signal_reverse-3",
+      "query": "Leggi all’indietro la sequenza delle fermate.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-signal_reverse-4",
+      "query": "Metti in ordine alfabetico i caratteri del segnale che hai rilevato.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": "signal_reverse",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-card_upper-1",
+      "query": "Scrivi in maiuscolo ciò che c’è scritto sulla tessera.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-card_upper-2",
+      "query": "Della tessera mi serve la scritta, tutta in lettere grandi.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-card_upper-3",
+      "query": "Riscrivi in maiuscolo l’iscrizione sul medaglione.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-card_upper-4",
+      "query": "Trascrivi solo le vocali che compaiono sulla tessera.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": "card_upper",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-plate_lower-1",
+      "query": "Riporta in minuscolo la scritta che compare sulla targa.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-plate_lower-2",
+      "query": "Devo ricopiare cosa c’è sulla targa, me lo scrivi tutto con lettere minuscole?",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-plate_lower-3",
+      "query": "Scrivi in minuscolo l’incisione della coppa.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-plate_lower-4",
+      "query": "Leggimi all’inverso la scritta apposta sulla targa.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": "plate_lower",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-delta_sum-1",
+      "query": "Quanto fanno in tutto i numeri della coppia delta?",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-delta_sum-2",
+      "query": "Somma tra loro le due letture indicate come delta.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-delta_sum-3",
+      "query": "Fammi il totale delle due letture omega.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-delta_sum-4",
+      "query": "Tra i numeri associati a delta qual è il maggiore?",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": "delta_sum",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-sigma_product-1",
+      "query": "Fai il prodotto dei numeri della coppia sigma.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-sigma_product-2",
+      "query": "Prendi i numeri interi contrassegnati con sigma e moltiplicali tra loro.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-sigma_product-3",
+      "query": "Moltiplica fra loro le due misure lambda.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-sigma_product-4",
+      "query": "Per la coppia sigma voglio la somma dei numeri.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": "sigma_product",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_remaining-1",
+      "query": "Mi calcoli il primo importo meno il secondo fra quelli indicati per il saldo?",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_remaining-2",
+      "query": "Dalle due cifre relative al saldo ricava il risultato togliendo la seconda dalla prima.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_remaining-3",
+      "query": "Per i due tempi sul giro calcola il primo meno il secondo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_remaining-4",
+      "query": "Dammi la media dei due importi che figurano sotto saldo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_remaining",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_contact-1",
+      "query": "Chi è la persona di riferimento per quest’ordine? Dammi il nome come compare.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_contact-2",
+      "query": "Mi serve il nominativo del contatto incaricato di seguire l’ordine.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_contact-3",
+      "query": "Mi serve il nominativo di chi segue il reclamo.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_contact-4",
+      "query": "Dammi le iniziali della persona incaricata dell’ordine.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": "auto_v1_contact",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_customer_reference-1",
+      "query": "Dammi il riferimento che identifica il cliente.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_customer_reference-2",
+      "query": "Il cliente ha un proprio riferimento: riportamelo identico a come compare.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_customer_reference-3",
+      "query": "Qual è il riferimento che identifica il fornitore?",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_customer_reference-4",
+      "query": "Del riferimento associato al cliente conta solo le cifre.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_order_reference-1",
+      "query": "Qual è il riferimento assegnato a questo ordine?",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_order_reference-2",
+      "query": "Ricopia la sigla di riferimento che contraddistingue l’ordine.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_order_reference-3",
+      "query": "Ricopia la sigla che identifica il preventivo.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_order_reference-4",
+      "query": "Trasforma in minuscolo il riferimento assegnato all’ordine.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_order_reference",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_email_alias-1",
+      "query": "Quale alias è stato dato all’indirizzo di posta elettronica?",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_email_alias-2",
+      "query": "Ricopia qui il nome alternativo utilizzato per la mail.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_email_alias-3",
+      "query": "Ricopia il nome alternativo della stampante.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_email_alias-4",
+      "query": "Dell’alias usato per la posta mostra soltanto gli ultimi due caratteri.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": "auto_v1_email_alias",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_tracking_reverse-1",
+      "query": "Riscrivimi a ritroso il token usato per la verifica.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_tracking_reverse-2",
+      "query": "Per il gettone di verifica fammi leggere i caratteri nell’ordine opposto.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_tracking_reverse-3",
+      "query": "Mostrami al contrario i caratteri del token per il parcheggio.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_tracking_reverse-4",
+      "query": "Ricava le lettere maiuscole dal token con cui si fa la verifica.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_label_upper-1",
+      "query": "Mi occorre tutta in maiuscolo la dicitura sull’etichetta applicata alla spedizione.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_label_upper-2",
+      "query": "Scrivi a lettere maiuscole quel che riporta il cartellino di spedizione.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_label_upper-3",
+      "query": "Metti in maiuscolo il cartellino con il prezzo esposto in vetrina.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_label_upper-4",
+      "query": "Quante lettere ci sono sul cartellino della spedizione?",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": "auto_v1_label_upper",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_account_lower-1",
+      "query": "Scrivimi in minuscolo lo pseudonimo usato per l’account.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_account_lower-2",
+      "query": "Riporta con le lettere tutte minuscole il nome alternativo associato all’utenza.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_account_lower-3",
+      "query": "Scrivi in minuscolo il soprannome del capitano.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_account_lower-4",
+      "query": "Mostrami in ordine inverso l’alias associato all’account.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": "auto_v1_account_lower",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_stock_remaining-1",
+      "query": "Tra i due numeri riportati per la scorta togli il secondo dal primo.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_stock_remaining-2",
+      "query": "Quanto viene il primo dato di scorta meno quello che lo segue?",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_stock_remaining-3",
+      "query": "Per le due altezze della scaffalatura togli la seconda dalla prima.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_stock_remaining-4",
+      "query": "Calcola il totale delle due cifre relative alla scorta.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_cart_total-1",
+      "query": "Quanto fanno insieme i due quantitativi messi nel carrello?",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_cart_total-2",
+      "query": "Somma i numeri che si riferiscono al carrello della spesa.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_cart_total-3",
+      "query": "Somma le due quantità elencate nella ricetta.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_cart_total-4",
+      "query": "Trova il minore dei due quantitativi nel carrello.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_cart_total",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_inventory_total-1",
+      "query": "Mi fai il totale dei quantitativi che compaiono nell’inventario?",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_inventory_total-2",
+      "query": "Addiziona i due numeri registrati nell’elenco inventariale.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_inventory_total-3",
+      "query": "Addiziona i due numeri registrati nel bollettino meteo.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_inventory_total-4",
+      "query": "Dammi il prodotto dei due numeri che compaiono nell’inventario.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "unsupported_action"
+    },
+    {
+      "id": "ground-prospect-auto_v1_unit_total-1",
+      "query": "Moltiplica il costo di un pezzo per il numero di pezzi.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "condition": "affirmative_1"
+    },
+    {
+      "id": "ground-prospect-auto_v1_unit_total-2",
+      "query": "Quanto si spende in totale con quel prezzo per unità e quel quantitativo?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "condition": "affirmative_2"
+    },
+    {
+      "id": "ground-prospect-auto_v1_unit_total-3",
+      "query": "Moltiplica la lunghezza del tavolo per la larghezza.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "ground-prospect-auto_v1_unit_total-4",
+      "query": "Somma il costo per singolo pezzo e il numero di pezzi.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_unit_total",
+      "condition": "unsupported_action"
+    }
+  ],
+  "value_offset": 64000
+}

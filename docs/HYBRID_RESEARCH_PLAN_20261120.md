@@ -13,3 +13,5 @@ L'obiettivo è un sistema che acquisisca capacità rapidamente, conservi quelle 
 ## Velocità e evoluzione successiva
 
 Verificare il costo del percorso di chat a parità di richieste, banco e risposte. Conservare la verifica di integrità quando il banco cambia e misurare latenza a freddo e a caldo. Le fasi successive richiedono meccanismi di trasferimento semanticamente più ampi e confronti contro modelli identificati. Il confronto dovrà coprire ragionamento, lingua e memoria, oltre a tempi, costo di aggiornamento e regressioni su dati indipendenti.
+
+La prova successiva ha confrontato selezione dei donatori per operazione, classificazione con 140 etichette aggiuntive e tre router basati su Transformer. Una seconda prova ha misurato quanto il riconoscimento di oggetti con nomi alternativi contribuisca all'esecuzione di richieste nuove. [Protocollo e risultati](../scripts/research-training/intent-transfer-20261120/README.md)

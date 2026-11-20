@@ -60,5 +60,18 @@ class FlexibleSkillTests(unittest.TestCase):
         with patch('query_router.read_model',return_value=self.model),patch('query_router.predict',return_value=self.route):
             self.assertEqual(self.router.predict(self.request())['answer'],'Beta')
 
+    def test_source_from_new_unbound_expert_can_veto_a_stale_router(self):
+        third = lesson('third', 'Third: ', 'What is the third value?')
+        self.bank.learn(third)
+        messages = self.request()
+        messages.insert(1, third['qualification'][0]['messages'][0])
+        with patch('query_router.read_model', return_value=self.model), patch('query_router.predict', return_value=self.route):
+            self.assertIsNone(self.router.predict(messages))
+
+    def test_new_question_for_the_same_recipe_preserves_existing_paraphrases(self):
+        self.bank.learn(lesson('alternate', 'Packet: ', 'Give the original packet value.'))
+        with patch('query_router.read_model', return_value=self.model), patch('query_router.predict', return_value=self.route):
+            self.assertEqual(self.router.predict(self.request())['answer'], 'Beta')
+
 
 if __name__=='__main__':unittest.main()
