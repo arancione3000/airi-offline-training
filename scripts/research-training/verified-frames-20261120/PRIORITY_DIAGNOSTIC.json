@@ -1,0 +1,86 @@
+{
+  "observed_pool_diagnostic": true,
+  "verification_budget": 16,
+  "methods": {
+    "reach": {
+      "repetitions": [
+        {
+          "accepted": 9,
+          "recombined_pairs": 19
+        },
+        {
+          "accepted": 9,
+          "recombined_pairs": 19
+        },
+        {
+          "accepted": 7,
+          "recombined_pairs": 17
+        },
+        {
+          "accepted": 8,
+          "recombined_pairs": 18
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 8,
+          "recombined_pairs": 18
+        },
+        {
+          "accepted": 8,
+          "recombined_pairs": 18
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        }
+      ],
+      "means": {
+        "accepted": 8.625,
+        "recombined_pairs": 18.625
+      }
+    },
+    "v5_times_reach": {
+      "repetitions": [
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 11,
+          "recombined_pairs": 21
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        },
+        {
+          "accepted": 10,
+          "recombined_pairs": 20
+        }
+      ],
+      "means": {
+        "accepted": 10.125,
+        "recombined_pairs": 20.125
+      }
+    }
+  }
+}

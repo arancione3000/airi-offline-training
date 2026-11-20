@@ -1,0 +1,730 @@
+{
+  "freeze_sha256": "66b92800c61e7679c33cdd12c70654bcaffe26a9bda9a7aba294c3907b32465a",
+  "pool_size": 84,
+  "pool_positive": 42,
+  "scoring_seconds": {
+    "grammar": 0.010259352002321975,
+    "tfidf": 0.930525891999423,
+    "v5": 2.7030146309989505
+  },
+  "budgets": {
+    "8": {
+      "random": {
+        "repetitions": [
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 1
+          },
+          {
+            "accepted": 3,
+            "frames": 3,
+            "recombined_pairs": 1
+          },
+          {
+            "accepted": 2,
+            "frames": 2,
+            "recombined_pairs": 0
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 4
+          },
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 7
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 4.5,
+          "frames": 4.5,
+          "recombined_pairs": 3.25
+        }
+      },
+      "tfidf": {
+        "repetitions": [
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 1
+          },
+          {
+            "accepted": 3,
+            "frames": 3,
+            "recombined_pairs": 1
+          },
+          {
+            "accepted": 2,
+            "frames": 2,
+            "recombined_pairs": 0
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 4
+          },
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 7
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 4.5,
+          "frames": 4.5,
+          "recombined_pairs": 3.25
+        }
+      },
+      "v5": {
+        "repetitions": [
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 3
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 6.0,
+          "frames": 6.0,
+          "recombined_pairs": 3.0
+        }
+      },
+      "grammar": {
+        "repetitions": [
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 3
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 2
+          },
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 2
+          },
+          {
+            "accepted": 3,
+            "frames": 3,
+            "recombined_pairs": 1
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 4
+          },
+          {
+            "accepted": 4,
+            "frames": 4,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 6,
+            "frames": 6,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 7
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 4.75,
+          "frames": 4.75,
+          "recombined_pairs": 3.75
+        }
+      }
+    },
+    "16": {
+      "random": {
+        "repetitions": [
+          {
+            "accepted": 9,
+            "frames": 9,
+            "recombined_pairs": 7
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 4
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 10,
+            "frames": 10,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 8,
+            "frames": 8,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 13,
+            "frames": 13,
+            "recombined_pairs": 12
+          }
+        ],
+        "fixed_seed_execution": {
+          "recombined": {
+            "positive": 62,
+            "correct": 14,
+            "wrong_positive": 0,
+            "negative": 360,
+            "false_positive": 0,
+            "new_correct": 14
+          },
+          "independent": {
+            "positive": 72,
+            "correct": 0,
+            "wrong_positive": 0,
+            "negative": 144,
+            "false_positive": 0,
+            "new_correct": 0
+          },
+          "retention": {
+            "passed": true,
+            "historical": 989,
+            "stored": 600,
+            "stored_failures": 0
+          },
+          "passed": false
+        },
+        "mean": {
+          "accepted": 8.875,
+          "frames": 8.875,
+          "recombined_pairs": 7.125
+        }
+      },
+      "tfidf": {
+        "repetitions": [
+          {
+            "accepted": 9,
+            "frames": 9,
+            "recombined_pairs": 7
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 4
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 10,
+            "frames": 10,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 8,
+            "frames": 8,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 13,
+            "frames": 13,
+            "recombined_pairs": 12
+          }
+        ],
+        "fixed_seed_execution": {
+          "recombined": {
+            "positive": 62,
+            "correct": 14,
+            "wrong_positive": 0,
+            "negative": 360,
+            "false_positive": 0,
+            "new_correct": 14
+          },
+          "independent": {
+            "positive": 72,
+            "correct": 0,
+            "wrong_positive": 0,
+            "negative": 144,
+            "false_positive": 0,
+            "new_correct": 0
+          },
+          "retention": {
+            "passed": true,
+            "historical": 989,
+            "stored": 600,
+            "stored_failures": 0
+          },
+          "passed": false
+        },
+        "mean": {
+          "accepted": 8.875,
+          "frames": 8.875,
+          "recombined_pairs": 7.125
+        }
+      },
+      "v5": {
+        "repetitions": [
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 6
+          }
+        ],
+        "fixed_seed_execution": {
+          "recombined": {
+            "positive": 62,
+            "correct": 12,
+            "wrong_positive": 0,
+            "negative": 360,
+            "false_positive": 0,
+            "new_correct": 12
+          },
+          "independent": {
+            "positive": 72,
+            "correct": 0,
+            "wrong_positive": 0,
+            "negative": 144,
+            "false_positive": 0,
+            "new_correct": 0
+          },
+          "retention": {
+            "passed": true,
+            "historical": 989,
+            "stored": 600,
+            "stored_failures": 0
+          },
+          "passed": false
+        },
+        "mean": {
+          "accepted": 12.0,
+          "frames": 12.0,
+          "recombined_pairs": 6.0
+        }
+      },
+      "grammar": {
+        "repetitions": [
+          {
+            "accepted": 9,
+            "frames": 9,
+            "recombined_pairs": 7
+          },
+          {
+            "accepted": 12,
+            "frames": 12,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 5,
+            "frames": 5,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 8,
+            "frames": 8,
+            "recombined_pairs": 7
+          },
+          {
+            "accepted": 10,
+            "frames": 10,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 7,
+            "frames": 7,
+            "recombined_pairs": 5
+          },
+          {
+            "accepted": 9,
+            "frames": 9,
+            "recombined_pairs": 7
+          },
+          {
+            "accepted": 13,
+            "frames": 13,
+            "recombined_pairs": 12
+          }
+        ],
+        "fixed_seed_execution": {
+          "recombined": {
+            "positive": 62,
+            "correct": 14,
+            "wrong_positive": 0,
+            "negative": 360,
+            "false_positive": 0,
+            "new_correct": 14
+          },
+          "independent": {
+            "positive": 72,
+            "correct": 0,
+            "wrong_positive": 0,
+            "negative": 144,
+            "false_positive": 0,
+            "new_correct": 0
+          },
+          "retention": {
+            "passed": true,
+            "historical": 989,
+            "stored": 600,
+            "stored_failures": 0
+          },
+          "passed": false
+        },
+        "mean": {
+          "accepted": 9.125,
+          "frames": 9.125,
+          "recombined_pairs": 7.5
+        }
+      }
+    },
+    "32": {
+      "random": {
+        "repetitions": [
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 18,
+            "frames": 18,
+            "recombined_pairs": 9
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 19,
+            "frames": 19,
+            "recombined_pairs": 15
+          },
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 8
+          },
+          {
+            "accepted": 22,
+            "frames": 22,
+            "recombined_pairs": 16
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 17.25,
+          "frames": 17.25,
+          "recombined_pairs": 13.0
+        }
+      },
+      "tfidf": {
+        "repetitions": [
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 18,
+            "frames": 18,
+            "recombined_pairs": 9
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 19,
+            "frames": 19,
+            "recombined_pairs": 15
+          },
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 8
+          },
+          {
+            "accepted": 22,
+            "frames": 22,
+            "recombined_pairs": 16
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 17.25,
+          "frames": 17.25,
+          "recombined_pairs": 13.0
+        }
+      },
+      "v5": {
+        "repetitions": [
+          {
+            "accepted": 23,
+            "frames": 23,
+            "recombined_pairs": 13
+          },
+          {
+            "accepted": 24,
+            "frames": 24,
+            "recombined_pairs": 11
+          },
+          {
+            "accepted": 22,
+            "frames": 22,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 21,
+            "frames": 21,
+            "recombined_pairs": 11
+          },
+          {
+            "accepted": 23,
+            "frames": 23,
+            "recombined_pairs": 18
+          },
+          {
+            "accepted": 20,
+            "frames": 20,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 23,
+            "frames": 23,
+            "recombined_pairs": 14
+          },
+          {
+            "accepted": 25,
+            "frames": 25,
+            "recombined_pairs": 17
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 22.625,
+          "frames": 22.625,
+          "recombined_pairs": 13.5
+        }
+      },
+      "grammar": {
+        "repetitions": [
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 19,
+            "frames": 19,
+            "recombined_pairs": 10
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 19,
+            "frames": 19,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 17,
+            "frames": 17,
+            "recombined_pairs": 16
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 12
+          },
+          {
+            "accepted": 15,
+            "frames": 15,
+            "recombined_pairs": 8
+          },
+          {
+            "accepted": 22,
+            "frames": 22,
+            "recombined_pairs": 16
+          }
+        ],
+        "fixed_seed_execution": null,
+        "mean": {
+          "accepted": 17.375,
+          "frames": 17.375,
+          "recombined_pairs": 13.25
+        }
+      }
+    }
+  },
+  "independent_baseline": {
+    "positive": 72,
+    "correct": 0,
+    "wrong_positive": 0,
+    "negative": 144,
+    "false_positive": 0,
+    "new_correct": 0
+  },
+  "recombined_baseline": {
+    "positive": 62,
+    "correct": 0,
+    "wrong_positive": 0,
+    "negative": 360,
+    "false_positive": 0,
+    "new_correct": 0
+  }
+}

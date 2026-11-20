@@ -1,0 +1,34 @@
+{
+  "reach": {
+    "execution": {
+      "positive": 38,
+      "correct": 28,
+      "wrong_positive": 0,
+      "negative": 242,
+      "false_positive": 0,
+      "new_correct": 28
+    },
+    "retention": {
+      "passed": true,
+      "historical": 989,
+      "stored": 600,
+      "stored_failures": 0
+    }
+  },
+  "v5_times_reach": {
+    "execution": {
+      "positive": 38,
+      "correct": 30,
+      "wrong_positive": 0,
+      "negative": 242,
+      "false_positive": 0,
+      "new_correct": 30
+    },
+    "retention": {
+      "passed": true,
+      "historical": 989,
+      "stored": 600,
+      "stored_failures": 0
+    }
+  }
+}

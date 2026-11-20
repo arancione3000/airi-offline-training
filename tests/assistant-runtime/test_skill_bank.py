@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts/assistant-runtime'))
+import skill_bank
 from skill_bank import SkillBank,RegistryError
 from assistant import AiriAssistant
 
@@ -59,6 +60,35 @@ class BankTests(unittest.TestCase):
         self.assertEqual(SkillBank(self.path).status()['revision'],2)
         self.assertEqual(SkillBank(self.path).predict(lesson()['qualification'][0]['messages'])['answer'],'Beta')
 
+    def test_unchanged_snapshot_bytes_share_validation_but_not_mutable_data(self):
+        self.bank.learn(lesson())
+        reader = SkillBank(self.path)
+        with patch.object(skill_bank, '_validate_payload', wraps=skill_bank._validate_payload) as validate:
+            payload, _ = reader._read()
+            payload['entries'].clear()
+            payload, _ = reader._read_file(self.path)
+            payload['entries'][0]['program']['query'] = 'overwritten by caller'
+            row = lesson()['qualification'][0]
+            self.assertEqual(reader.predict(row['messages'])['answer'], row['answer'])
+            self.assertEqual(validate.call_count, 1)
+
+    def test_warm_snapshot_cache_rejects_modified_bytes_and_symlinks(self):
+        self.bank.learn(lesson())
+        row = lesson()['qualification'][0]
+        self.assertEqual(self.bank.predict(row['messages'])['answer'], row['answer'])
+        snapshot = next(self.bank.snapshots.glob('*.json'))
+        raw = self.path.read_bytes()
+        self.path.write_bytes(b'[' + raw[1:])
+        self.assertTrue(self.bank.status()['recovered_from_snapshot'])
+        self.path.unlink()
+        valid_bytes = self.path.with_name('outside.json')
+        valid_bytes.write_bytes(raw)
+        self.path.symlink_to(valid_bytes)
+        self.assertTrue(self.bank.status()['recovered_from_snapshot'])
+        snapshot.write_bytes(b'[' + raw[1:])
+        with self.assertRaises(RegistryError):
+            self.bank.status()
+
     def test_complete_registry_damage_falls_back_without_touching_base(self):
         self.path.write_text('{bad')
         a=AiriAssistant(lambda messages:'stable',skill_bank=self.bank)
@@ -80,7 +110,6 @@ class BankTests(unittest.TestCase):
         self.assertTrue(self.bank.status()['recovered_from_snapshot'])
 
     def test_seed_revision_zero_does_not_consume_expert_capacity(self):
-        import skill_bank
         with patch.object(skill_bank,'MAX_SKILLS',2):
             self.bank._write(skill_bank._empty())
             self.bank.learn(lesson())

@@ -103,6 +103,7 @@ class SkillBank:
     def __init__(self,path):
         self.path=Path(path)
         self.snapshots=self.path.parent/(self.path.name+'.revisions')
+        self._validated_snapshot = None
 
     def _read_file(self,path):
         fd=os.open(path,os.O_RDONLY|os.O_NONBLOCK|getattr(os,'O_NOFOLLOW',0))
@@ -110,10 +111,23 @@ class SkillBank:
             if not stat.S_ISREG(os.fstat(f.fileno()).st_mode):raise RegistryError('registry is not a regular file')
             raw=f.read(MAX_BYTES+1)
         if len(raw)>MAX_BYTES:raise RegistryError('registry exceeds byte limit')
+        # Reopen and read each time so changed bytes, invalid paths and newer
+        # snapshots go through normal recovery. Only skip validation of bytes
+        # this bank has already checked against the same engine and limits.
+        scope = (ENGINE_SHA256, MAX_SKILLS, MAX_CHECKS)
+        cached = self._validated_snapshot
+        if cached is not None:
+            prior_bytes, prior_scope, payload, checksum = cached
+            if scope == prior_scope and raw == prior_bytes:
+                return deepcopy(payload), checksum
         try:
             wrapper=json.loads(raw)
             if not isinstance(wrapper,dict) or set(wrapper)!={'payload','sha256'} or wrapper['sha256']!=digest(wrapper['payload']):raise RegistryError('registry checksum mismatch')
-            return _validate_payload(wrapper['payload']),wrapper['sha256']
+            payload = _validate_payload(wrapper['payload'])
+            checksum = wrapper['sha256']
+            result = deepcopy(payload)
+            self._validated_snapshot = (raw, scope, payload, checksum)
+            return result, checksum
         except RecursionError as error:
             # A bounded byte count does not bound JSON nesting. Treat damaged
             # nested data like other corruption so snapshots/native can recover.
@@ -147,7 +161,7 @@ class SkillBank:
         revision=candidates[0][0]
         if len({x[1] for x in candidates if x[0]==revision})>1:raise RegistryError('conflicting registry revisions')
         chosen=candidates[0]
-        return deepcopy(chosen[2]),bool(chosen[3] and (errors or main_revision!=chosen[0]))
+        return chosen[2],bool(chosen[3] and (errors or main_revision!=chosen[0]))
 
     @contextmanager
     def _lock(self):
