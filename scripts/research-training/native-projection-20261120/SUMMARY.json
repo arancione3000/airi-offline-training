@@ -1,0 +1,374 @@
+{
+  "source": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "candidate": "144d516373decf7709ac5c7e1bbcff70cc242688d65250c56469e2f13db3d9a4",
+  "optimizer_steps": 240,
+  "scale": 0.13901558071374895,
+  "retained": 897,
+  "legacy": {
+    "total": 92,
+    "before": 23,
+    "after": 22,
+    "by_family": {
+      "phrase-it-0": [
+        1,
+        0,
+        1
+      ],
+      "phrase-it-1": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-2": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-3": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-4": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-5": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-6": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-7": [
+        1,
+        1,
+        1
+      ],
+      "addition-unseen-operands": [
+        0,
+        0,
+        8
+      ],
+      "memory-unseen-name": [
+        0,
+        0,
+        4
+      ],
+      "extra-heldout-dialogue": [
+        4,
+        4,
+        12
+      ],
+      "extra-heldout-memory": [
+        0,
+        0,
+        4
+      ],
+      "context-name": [
+        0,
+        0,
+        8
+      ],
+      "context-location": [
+        0,
+        0,
+        8
+      ],
+      "context-topic": [
+        0,
+        0,
+        8
+      ],
+      "context-correction": [
+        0,
+        0,
+        8
+      ],
+      "foundation-heldout-copy": [
+        2,
+        2,
+        8
+      ],
+      "foundation-heldout-recall": [
+        2,
+        2,
+        8
+      ],
+      "phrase-en-0": [
+        0,
+        0,
+        1
+      ],
+      "phrase-en-1": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-2": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-3": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-5": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-6": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-7": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-8": [
+        1,
+        1,
+        1
+      ]
+    },
+    "gains": [],
+    "losses": [
+      0
+    ]
+  },
+  "development": {
+    "total": 195,
+    "before": 34,
+    "after": 33,
+    "by_family": {
+      "phrase-it-0": [
+        1,
+        0,
+        1
+      ],
+      "phrase-it-1": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-2": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-3": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-4": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-5": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-6": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-7": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-8": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-9": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-10": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-11": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-12": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-13": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-14": [
+        1,
+        1,
+        1
+      ],
+      "phrase-it-15": [
+        0,
+        0,
+        1
+      ],
+      "addition-unseen-operands": [
+        0,
+        0,
+        96
+      ],
+      "memory-unseen-name": [
+        0,
+        0,
+        4
+      ],
+      "phrase-en-0": [
+        0,
+        0,
+        1
+      ],
+      "phrase-en-1": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-2": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-3": [
+        0,
+        0,
+        1
+      ],
+      "phrase-en-5": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-6": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-7": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-8": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-9": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-10": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-11": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-12": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-13": [
+        1,
+        1,
+        1
+      ],
+      "phrase-en-14": [
+        0,
+        0,
+        1
+      ],
+      "phrase-en-15": [
+        0,
+        0,
+        1
+      ],
+      "extra-heldout-dialogue": [
+        4,
+        4,
+        12
+      ],
+      "extra-heldout-memory": [
+        0,
+        0,
+        4
+      ],
+      "context-name": [
+        0,
+        0,
+        8
+      ],
+      "context-location": [
+        0,
+        0,
+        8
+      ],
+      "context-topic": [
+        0,
+        0,
+        8
+      ],
+      "context-correction": [
+        0,
+        0,
+        8
+      ],
+      "foundation-heldout-copy": [
+        2,
+        2,
+        8
+      ],
+      "foundation-heldout-recall": [
+        2,
+        2,
+        8
+      ]
+    },
+    "gains": [],
+    "losses": [
+      0
+    ]
+  },
+  "before_nll": {
+    "it": 3.6143102645874023,
+    "en": 3.372692757365953
+  },
+  "after_nll": {
+    "it": 3.5485916137695312,
+    "en": 3.3308520895171294
+  },
+  "qualified": false,
+  "final": null
+}
