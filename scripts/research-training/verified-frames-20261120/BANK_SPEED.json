@@ -1,0 +1,31 @@
+{
+  "baseline_ref": "07424b75b806f5ae9712c1a8fb8ed53df63a15aa",
+  "bank_revision": 30,
+  "aliases": 32,
+  "measurements": {
+    "before": {
+      "cold": {
+        "turns": 9,
+        "p50_ms": 93.540813,
+        "p95_ms": 114.454495
+      },
+      "warm": {
+        "turns": 180,
+        "p50_ms": 91.58245149999999,
+        "p95_ms": 112.644311
+      }
+    },
+    "after": {
+      "cold": {
+        "turns": 9,
+        "p50_ms": 50.178008,
+        "p95_ms": 74.121812
+      },
+      "warm": {
+        "turns": 180,
+        "p50_ms": 6.627446,
+        "p95_ms": 10.163648
+      }
+    }
+  }
+}

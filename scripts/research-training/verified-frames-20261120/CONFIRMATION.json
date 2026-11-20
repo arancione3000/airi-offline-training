@@ -1,0 +1,87 @@
+{
+  "freeze_sha256": "5a2e891a3b3f1aeaaf30a83fdf47bbaef61ced4e3720d81e5b57d26b2c10ca50",
+  "pool_size": 56,
+  "possible_pairs": 19,
+  "results": {
+    "reach": {
+      "repetitions": [
+        {
+          "useful_labels": 8,
+          "recombined_pairs": 14
+        },
+        {
+          "useful_labels": 6,
+          "recombined_pairs": 12
+        },
+        {
+          "useful_labels": 10,
+          "recombined_pairs": 16
+        },
+        {
+          "useful_labels": 8,
+          "recombined_pairs": 14
+        },
+        {
+          "useful_labels": 10,
+          "recombined_pairs": 16
+        },
+        {
+          "useful_labels": 8,
+          "recombined_pairs": 14
+        },
+        {
+          "useful_labels": 7,
+          "recombined_pairs": 13
+        },
+        {
+          "useful_labels": 6,
+          "recombined_pairs": 12
+        }
+      ],
+      "mean": {
+        "useful_labels": 7.875,
+        "recombined_pairs": 13.875
+      }
+    },
+    "v5_times_reach": {
+      "repetitions": [
+        {
+          "useful_labels": 9,
+          "recombined_pairs": 15
+        },
+        {
+          "useful_labels": 9,
+          "recombined_pairs": 15
+        },
+        {
+          "useful_labels": 12,
+          "recombined_pairs": 18
+        },
+        {
+          "useful_labels": 8,
+          "recombined_pairs": 14
+        },
+        {
+          "useful_labels": 11,
+          "recombined_pairs": 17
+        },
+        {
+          "useful_labels": 11,
+          "recombined_pairs": 17
+        },
+        {
+          "useful_labels": 10,
+          "recombined_pairs": 16
+        },
+        {
+          "useful_labels": 8,
+          "recombined_pairs": 14
+        }
+      ],
+      "mean": {
+        "useful_labels": 9.75,
+        "recombined_pairs": 15.75
+      }
+    }
+  }
+}
