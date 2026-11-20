@@ -23,6 +23,28 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check whether the installed question model needs the encoder
+        id: encoder
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          model=Path('scripts/assistant-runtime/queries/approved-router.json')
+          needed=model.exists() and json.loads(model.read_bytes())['schema']==4
+          print('needed='+str(needed).lower())
+          PY
+          echo "AIRI_QUERY_ENCODER_CACHE=$RUNNER_TEMP/query-encoder" >> "$GITHUB_ENV"
+      - name: Install pinned local encoder runtime for the cross-component audit
+        if: steps.encoder.outputs.needed == 'true'
+        run: python -m pip install -r scripts/research-training/semantic-routing-20261116/requirements-encoder.txt
+      - uses: actions/cache@v4
+        if: steps.encoder.outputs.needed == 'true'
+        with:
+          path: ${{ runner.temp }}/query-encoder
+          key: query-encoder-e8f8c211226b894fcb81acc59f3b34ba3efd5f42-quant8-v1
+      - name: Verify pinned encoder files
+        if: steps.encoder.outputs.needed == 'true'
+        run: python scripts/research-training/semantic-routing-20261116/download_encoder.py --output "$AIRI_QUERY_ENCODER_CACHE"
       - name: Learn at most two procedural families and audit new values
         id: cycle
         run: |
@@ -50,12 +72,17 @@ jobs:
           import json, os
           from pathlib import Path
           report=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/REPORT.json').read_text())
+          aliases=json.loads(Path(os.environ['RUNNER_TEMP'],'modular-cycle/ALIASES.json').read_text())
           assert report['audit']['passed'] and report['stable_gate']['passed']
+          assert aliases['audit']['passed'] and aliases['bank_sha256']==report['after_sha256']
           assert report['neural_weights_changed'] is False
           if report['activated']:
               assert report['status']=='updated' and report['published']
               bank=json.loads(Path('scripts/assistant-runtime/skills/approved-bank.json').read_text())
               assert bank['sha256']==report['after_sha256']
+          if aliases['activated']:
+              state=json.loads(Path('scripts/assistant-runtime/queries/approved-aliases.json').read_text())
+              assert state['sha256']==aliases['aliases_sha256']
           PY
           git add -- scripts/assistant-runtime/skills/approved-bank.json
           if test -f scripts/assistant-runtime/skills/auto-progress.json; then

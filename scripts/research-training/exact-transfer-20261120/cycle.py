@@ -15,12 +15,18 @@ HERE = Path(__file__).resolve().parent
 RUNTIME = HERE.parent.parent / 'assistant-runtime'
 sys.path.insert(0, str(RUNTIME))
 from exact_aliases import DEFAULT, MAX_ALIASES, read_aliases, resolve_alias
+from flexible_skills import DEFAULT_MODEL, LearnedQueryRouter, _semantic_router
 from learn import BUNDLED
 from query_learning import bindings, case
 from skill_bank import SkillBank, RegistryError, _route, canonical, digest
 from skill_validation import StableGate
 
 CORPUS = HERE.parent / 'semantic-routing-20261116/evidence/precommitted'
+SEMANTIC_RETENTION = DEFAULT_MODEL.with_name('retention.json.gz')
+
+
+def read_semantic_retention(path=SEMANTIC_RETENTION):
+    return json.loads(gzip.decompress(path.read_bytes())) if path.exists() else []
 
 
 def write_atomic(path, value):
@@ -69,7 +75,7 @@ def catalog(rows, approved, entries, retained=()):
     return {query: binding for _, query, binding in sorted(ordered)}
 
 
-def audit(state, aliases, families, negatives, seed):
+def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_checks=()):
     definitions = {family['id']: family for family in families}
     # The independently defined oracle bounds operands to the existing DSL domain.
     offset = 1000 + seed % 80000
@@ -80,7 +86,9 @@ def audit(state, aliases, families, negatives, seed):
         if result is not None:
             return result
         binding = aliases.get(messages[-1]['content']) if messages else None
-        return resolve_alias(state, messages, binding) if binding else None
+        if binding is not None:
+            return resolve_alias(state, messages, binding)
+        return semantic.predict(messages) if semantic is not None else None
 
     # An exact expert can later take priority for a retained alias. It must
     # implement the same program semantics and reproduce its source evidence.
@@ -131,8 +139,36 @@ def audit(state, aliases, families, negatives, seed):
     historical = StableGate()
     if not historical(composed):
         raise RegistryError('historical contract failed')
-    return dict(passed=True, positive_total=positives, negative_total=rejected,
-                stored_contracts=stored, historical_cases=historical.last_report['cases'])
+    for row in semantic_checks:
+        prediction = composed(row['messages'])
+        if prediction is None and row.get('allow_abstention', False):
+            continue
+        answer = prediction['answer'] if prediction is not None else None
+        if answer != row['expected']:
+            raise RegistryError('qualified semantic behavior would regress or answer incorrectly')
+    report = dict(passed=True, positive_total=positives, negative_total=rejected,
+                  stored_contracts=stored, historical_cases=historical.last_report['cases'])
+    if semantic_checks:
+        report['semantic_checks'] = len(semantic_checks)
+    return report
+
+
+def read_corpus():
+    rows = json.loads(gzip.decompress((CORPUS / 'TRAIN.json.gz').read_bytes()))['rows']
+    families = json.loads(gzip.decompress((CORPUS / 'FAMILIES.json.gz').read_bytes()))['families']
+    return rows, families
+
+
+def audit_candidate(state, aliases, semantic, checks, *, seed):
+    rows, families = read_corpus()
+    return audit(state, aliases, families, [r for r in rows if r['lesson_id'] is None],
+                 seed, semantic=semantic, semantic_checks=checks)
+
+
+def semantic_state():
+    """Capture inputs so the admission and final write refer to the same data."""
+    return tuple(path.read_bytes() if path.exists() else None
+                 for path in (DEFAULT_MODEL, SEMANTIC_RETENTION))
 
 
 def cycle(bank_path, state_path, *, limit, seed):
@@ -140,8 +176,7 @@ def cycle(bank_path, state_path, *, limit, seed):
         raise ValueError('invalid limit or seed')
     bank = SkillBank(bank_path)
     state = bank._read()[0]
-    rows = json.loads(gzip.decompress((CORPUS / 'TRAIN.json.gz').read_bytes()))['rows']
-    families = json.loads(gzip.decompress((CORPUS / 'FAMILIES.json.gz').read_bytes()))['families']
+    rows, families = read_corpus()
     old = read_aliases(state_path)
     candidates = catalog(rows, bindings(bank, families), state['entries'], old)
     if any(candidates.get(query) != binding for query, binding in old.items()):
@@ -149,14 +184,31 @@ def cycle(bank_path, state_path, *, limit, seed):
     remaining = [q for q in candidates if q not in old]
     selected = remaining[:min(limit, MAX_ALIASES - len(old))]
     proposal = {**old, **{q: candidates[q] for q in selected}}
-    audited = audit(state, proposal, families, [r for r in rows if r['lesson_id'] is None], seed)
+    installed = semantic_state()
+    semantic = None
+    checks = read_semantic_retention(SEMANTIC_RETENTION)
+    if installed[0] is not None:
+        runtime_router = _semantic_router(bank)
+        if runtime_router is None:
+            raise RegistryError('installed semantic model is unavailable')
+        semantic = LearnedQueryRouter(bank, runtime_router.path, frozen=True,
+                                       backend=runtime_router.backend)
+        if semantic.snapshot != state:
+            raise RegistryError('concurrent bank update; retry with latest state')
+        if not checks:
+            raise RegistryError('installed semantic model lacks qualified cases')
+    elif checks:
+        raise RegistryError('qualified semantic cases lack their installed model')
+    audited = audit(state, proposal, families, [r for r in rows if r['lesson_id'] is None],
+                    seed, semantic=semantic, semantic_checks=checks)
     if selected:
         state_path.parent.mkdir(parents=True, exist_ok=True)
         lock = os.open(state_path.parent, os.O_RDONLY | os.O_DIRECTORY)
         try:
             fcntl.flock(lock, fcntl.LOCK_EX)
             with bank._lock():
-                if bank._read()[0] != state or read_aliases(state_path) != old:
+                if (bank._read()[0] != state or read_aliases(state_path) != old
+                        or semantic_state() != installed):
                     raise RegistryError('concurrent update; retry with latest state')
                 write_atomic(state_path, dict(schema=1, aliases=proposal, sha256=digest(proposal)))
         finally:
