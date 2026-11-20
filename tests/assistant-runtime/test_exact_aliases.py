@@ -97,11 +97,11 @@ class ExactTransferTests(unittest.TestCase):
         self.assertEqual(transfer.catalog(rows, [dict(lesson_id='a', program_id='id')], []), {})
 
     def test_cross_component_gate_preserves_earlier_semantic_answers(self):
-        self.cycle(1)
         state = self.bank._read()[0]
-        aliases = read_aliases(self.state)
+        rows, families = transfer.read_corpus()
+        labels = transfer.bindings(self.bank, families)
+        aliases = transfer.catalog(rows, labels, state['entries'])
         query, binding = next(iter(aliases.items()))
-        _, families = transfer.read_corpus()
         family = next(row for row in families if row['id'] == binding['lesson_id'])
         messages, expected = transfer.case(family, query, 54000, 0)
         competitor = next(row for row in families if row['id'] != family['id'])
@@ -110,8 +110,17 @@ class ExactTransferTests(unittest.TestCase):
         semantic = Mock(predict=lambda value: {'answer': expected} if value == ambiguous else None)
         checks = [{'messages': ambiguous, 'expected': expected}]
         self.assertTrue(transfer.audit_candidate(state, {}, semantic, checks, seed=23)['passed'])
-        with self.assertRaisesRegex(RegistryError, 'qualified semantic behavior would regress'):
-            transfer.audit_candidate(state, aliases, semantic, checks, seed=23)
+        model = self.state.with_name('approved-router.json')
+        retention = self.state.with_name('retention.json.gz')
+        model.write_text('fixture model')
+        retention.write_bytes(gzip.compress(json.dumps(checks).encode()))
+        semantic.snapshot = state
+        with patch.multiple(transfer, DEFAULT_MODEL=model, SEMANTIC_RETENTION=retention), \
+                patch.object(transfer, '_semantic_router', return_value=Mock(path=model)), \
+                patch.object(transfer, 'LearnedQueryRouter', return_value=semantic):
+            with self.assertRaisesRegex(RegistryError, 'qualified semantic behavior would regress'):
+                self.cycle(1)
+        self.assertFalse(self.state.exists())
 
     def test_cross_component_gate_blocks_semantic_answers_to_alias_negative(self):
         self.cycle(1)

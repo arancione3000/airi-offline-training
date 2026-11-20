@@ -32,13 +32,13 @@ class QueryCycleTests(unittest.TestCase):
         self.patcher=patch.multiple(cycle,**settings);self.patcher.start();self.addCleanup(self.patcher.stop)
         self.fingerprint=patch.object(cycle,'fingerprint',return_value='new-inputs');self.fingerprint.start();self.addCleanup(self.fingerprint.stop)
 
-    def fake_trial(self,eligible):
+    def fake_trial(self,eligible,*,qualification=(),final=()):
         def execute(command,**_):
             trial=Path(command[-1]);trial.mkdir(parents=True)
             (trial/'RESULT.json').write_text(json.dumps({'eligible_for_activation':eligible}))
             (trial/'candidate.json').write_text('{}')
-            for name in ('QUALIFICATION_REPORT', 'FINAL_REPORT'):
-                (trial/(name+'.json')).write_text('{"observations":[]}')
+            for split, observations in (('QUALIFICATION',qualification),('FINAL',final)):
+                (trial/(split+'_REPORT.json')).write_text(json.dumps({'observations':observations}))
         return execute
 
     def test_identical_inputs_do_not_train_or_rewrite_verdict(self):
@@ -79,7 +79,31 @@ class QueryCycleTests(unittest.TestCase):
         with patch.object(cycle.subprocess,'run',side_effect=self.fake_trial(True)),patch('query_router_encoder.read_model',return_value={'sha256':'candidate'}),patch.object(cycle,'LearnedQueryRouter',return_value=routed),patch.object(cycle,'exact_transfer',return_value=module),patch('query_router_encoder.write_model',side_effect=AssertionError('regressing candidate must not publish')):
             result=cycle.run(self.root/'out')
         self.assertEqual(result['action'],'rejected');self.assertIn('regress',result['reason'])
+        self.assertEqual(result['composition_audit'],{'passed':False})
+        self.assertFalse(result['result']['eligible_for_activation'])
         self.assertEqual(self.model.read_bytes(),previous)
+
+    def test_composed_gate_persists_final_success_only_as_retention(self):
+        bank=SkillBank(self.runtime/'skills/approved-bank.json');bank.learn(lesson())
+        messages=lesson()['qualification'][0]['messages']
+        messages[-1]['content']='Please report this packet.'
+        observed={'messages':messages,'expected':'Beta','correct':True}
+        routed=Mock(snapshot=bank._read()[0],predict=lambda value: {'answer':'Beta'} if value==messages else None)
+        with patch.object(cycle,'HERE',PATH.parent):
+            module=cycle.exact_transfer()
+        model={'sha256':'candidate'}
+        with patch.object(cycle.subprocess,'run',side_effect=self.fake_trial(True,final=[observed])), \
+                patch('query_router_encoder.read_model',return_value=model), \
+                patch.object(cycle,'LearnedQueryRouter',return_value=routed), \
+                patch.object(cycle,'exact_transfer',return_value=module), \
+                patch('query_router_encoder.write_model') as write:
+            result=cycle.run(self.root/'out')
+        self.assertTrue(result['model_staged'])
+        self.assertFalse(result['retention_used_for_training'])
+        self.assertEqual(result['composition_audit']['semantic_checks'],1)
+        self.assertEqual(json.loads(gzip.decompress(self.retention.read_bytes())),
+                         [{'messages':messages,'expected':'Beta'}])
+        write.assert_called_once_with(self.model,model)
 
 
 if __name__=='__main__':unittest.main()
