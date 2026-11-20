@@ -1,0 +1,237 @@
+{
+  "arms": [
+    "approved",
+    "v6",
+    "parser",
+    "primary",
+    "learned_train",
+    "primary_plus_train",
+    "learned_expanded",
+    "primary_plus_expanded",
+    "minilm_v4",
+    "minilm_v5",
+    "selected_parts",
+    "selected_global"
+  ],
+  "selection": {
+    "development": {
+      "approved": {
+        "add": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "multiply": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "reverse": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        }
+      },
+      "learned_expanded": {
+        "add": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 4,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "multiply": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "reverse": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 1,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 2,
+          "wrong_executions": 0
+        }
+      },
+      "minilm_v4": {
+        "add": {
+          "correct_wordings": 4,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "multiply": {
+          "correct_wordings": 1,
+          "wrong_executions": 0
+        },
+        "reverse": {
+          "correct_wordings": 1,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 1,
+          "wrong_executions": 0
+        }
+      },
+      "minilm_v5": {
+        "add": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 9,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 3,
+          "wrong_executions": 2
+        },
+        "multiply": {
+          "correct_wordings": 3,
+          "wrong_executions": 2
+        },
+        "reverse": {
+          "correct_wordings": 2,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 3,
+          "wrong_executions": 2
+        }
+      },
+      "parser": {
+        "add": {
+          "correct_wordings": 6,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 9,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 5,
+          "wrong_executions": 0
+        },
+        "multiply": {
+          "correct_wordings": 4,
+          "wrong_executions": 0
+        },
+        "reverse": {
+          "correct_wordings": 6,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 4,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 5,
+          "wrong_executions": 0
+        }
+      },
+      "v6": {
+        "add": {
+          "correct_wordings": 7,
+          "wrong_executions": 0
+        },
+        "copy": {
+          "correct_wordings": 7,
+          "wrong_executions": 0
+        },
+        "lowercase": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "multiply": {
+          "correct_wordings": 4,
+          "wrong_executions": 0
+        },
+        "reverse": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        },
+        "subtract": {
+          "correct_wordings": 0,
+          "wrong_executions": 0
+        },
+        "uppercase": {
+          "correct_wordings": 3,
+          "wrong_executions": 0
+        }
+      }
+    },
+    "global_winner": "parser",
+    "minimum_correct_wordings": 2,
+    "tie_order": [
+      "approved",
+      "v6",
+      "parser",
+      "minilm_v4",
+      "minilm_v5",
+      "learned_expanded"
+    ],
+    "winners": {
+      "add": "v6",
+      "copy": "parser",
+      "lowercase": "parser",
+      "multiply": "v6",
+      "reverse": "parser",
+      "subtract": "parser",
+      "uppercase": "parser"
+    }
+  },
+  "sha256": {
+    "aliases": "fbe2524f2c5f1bf2ed83cadea9eea4f7bb47bb163aaa202823d83d31c7ed816a",
+    "bank": "4460b73bad38102bc9a72c3ff52238b2d1e82a5dad7dd883a0f47e49de4c4614",
+    "confirmation": "2c398e661781d456ad9d1f8b2ffc08315d13c156922c71d61254d026a20b30cf",
+    "control": "ca29020951012ee876d472266d3a6d15d4dc8ea73e91a17e9b4aa474990f10ab",
+    "families": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba",
+    "frames_challenge": "5761c835efbd2de88ac6e59a83bac2d1e449b157240fac2b3704a3b378d99300",
+    "harness": "bdd8fee9b7da9a40f3b0fc0141f8422ce610c9df9628774af88b3fb5e73073dd",
+    "learner": "47a8f56dae1ebbf0fec6b2e6be0265af935ecd2c07a18dd3d4368e618b606a8a",
+    "parser": "1eafc8993c1731fa2584532893c7a418f3888d7288b23d0e1cb108e291dc7cb0",
+    "pool": "3162d364f9493f4abd3e49e8f71dba48197cbcefb6ede6a4c1ab74e51fc3e5d0",
+    "prospective": "8e7bb5d6803fcaca13ec866aa1774d0222584ef3eb1df03324ea7b5bdf952825",
+    "qualification": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4",
+    "selector": "a17b5066c5d4f16783b80c9e3cdb2fb7a8c81e737963c27e653211f02cb6b61c",
+    "train": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a",
+    "v6": "57097ae3123d4c78de78af60029479a5d56f7b6af2760313233a2ea48bec64a8",
+    "v6_challenge": "26eedc54d3a7cbfb9c933fcb6366b123f7d5abdadfd4a5e33dc4fffa03954894"
+  }
+}

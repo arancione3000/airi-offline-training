@@ -1,0 +1,635 @@
+{
+  "rows": [
+    {
+      "id": "p02a59e214a22",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "riferimento dell'ordine",
+      "category": "counterfactual",
+      "query": "Se il riferimento dell'ordine fosse assente, quale testo sostitutivo useresti?"
+    },
+    {
+      "id": "p04060f54e9bc",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "token di verifica",
+      "category": "compound",
+      "query": "Rovescia il token di verifica, poi ripeti il risultato due volte."
+    },
+    {
+      "id": "p0409ea20cff3",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "operation": "uppercase",
+      "object": "etichetta di spedizione",
+      "category": "direct",
+      "query": "Come apparirebbe l'etichetta di spedizione con ogni lettera maiuscola?"
+    },
+    {
+      "id": "p0634317496e9",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "alias email",
+      "category": "different_output",
+      "query": "Dell'alias email mi basta il carattere iniziale. Qual è?"
+    },
+    {
+      "id": "p0b08847faba3",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "alias email",
+      "category": "compound",
+      "query": "Ricopia l'alias email e subito sotto scrivi quanto è lungo."
+    },
+    {
+      "id": "p10af2a92f078",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "operation": "copy",
+      "object": "referente dell'ordine",
+      "category": "direct",
+      "query": "Per parlare con la persona giusta, che nome trovo come referente dell'ordine?"
+    },
+    {
+      "id": "p182d2699e099",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "alias account",
+      "category": "different_output",
+      "query": "Quanto è lungo l'alias account una volta convertito in minuscolo?"
+    },
+    {
+      "id": "p18eb05c42dec",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "operation": "lowercase",
+      "object": "alias account",
+      "category": "direct",
+      "query": "Porta in minuscolo ogni lettera dell'alias account."
+    },
+    {
+      "id": "p1c1889f8e950",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "alias account",
+      "category": "comparison",
+      "query": "Nell'alias account compare più spesso una maiuscola o una minuscola?"
+    },
+    {
+      "id": "p1cd0487cf1f5",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "etichetta di spedizione",
+      "category": "mentioned",
+      "query": "Mia sorella ha scritto «etichetta di spedizione in maiuscolo». È una frase completa?"
+    },
+    {
+      "id": "p254e9e0a0199",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "operation": "copy",
+      "object": "codice del pacco",
+      "category": "direct",
+      "query": "Puoi riportarmi, carattere per carattere, il codice del pacco?"
+    },
+    {
+      "id": "p2f54b19efa2b",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "segnale",
+      "category": "meaning",
+      "query": "In elettronica, che significa invertire la polarità di un segnale?"
+    },
+    {
+      "id": "p31e2bf3e8734",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "operation": "subtract",
+      "object": "scorta",
+      "category": "direct",
+      "query": "Prendi il primo dei valori della scorta e sottraigli il secondo."
+    },
+    {
+      "id": "p332fc7316698",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "token di verifica",
+      "category": "scope",
+      "query": "Inverti il token di verifica tenendo fermo il primo carattere."
+    },
+    {
+      "id": "p337aaa3d555e",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "prezzo unitario e quantità",
+      "category": "scope",
+      "query": "Calcola la spesa con una unità in meno rispetto alla quantità indicata."
+    },
+    {
+      "id": "p376a44355e87",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "operation": "multiply",
+      "object": "prezzo unitario e quantità",
+      "category": "direct",
+      "query": "Fai prezzo unitario per quantità e dimmi la cifra che ottieni."
+    },
+    {
+      "id": "p3c447d152b7e",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "operation": "add",
+      "object": "coppia delta",
+      "category": "direct",
+      "query": "Quanto vale il primo numero della coppia delta più il secondo?"
+    },
+    {
+      "id": "p4110482ae222",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "operation": "add",
+      "object": "inventario",
+      "category": "direct",
+      "query": "Sommami le due quantità dell'inventario."
+    },
+    {
+      "id": "p424131559e91",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "interi sigma",
+      "category": "different_output",
+      "query": "Il prodotto dei due interi sigma è pari oppure dispari?"
+    },
+    {
+      "id": "p438a6e5e4eef",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "prezzo unitario e quantità",
+      "category": "mentioned",
+      "query": "«Fai prezzo unitario per quantità» funziona come titolo di un esercizio?"
+    },
+    {
+      "id": "p46871c0a8937",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "operation": "reverse",
+      "object": "segnale",
+      "category": "direct",
+      "query": "Rovescia l'ordine dei caratteri del segnale e mostrami il risultato."
+    },
+    {
+      "id": "p498a22044266",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "etichetta di spedizione",
+      "category": "negation",
+      "query": "Non scrivere l'etichetta di spedizione in maiuscolo. Descrivimi il suo formato."
+    },
+    {
+      "id": "p53d40f387273",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "operation": "lowercase",
+      "object": "targa",
+      "category": "direct",
+      "query": "Mi serve la targa trascritta interamente in minuscolo."
+    },
+    {
+      "id": "p55f752d383f1",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "inventario",
+      "category": "compound",
+      "query": "Somma le quantità dell'inventario e dividi il totale per due."
+    },
+    {
+      "id": "p56937df1f123",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "referente dell'ordine",
+      "category": "mentioned",
+      "query": "La frase «chi è il referente dell'ordine?» è troppo diretta per una mail?"
+    },
+    {
+      "id": "p654ec590a57e",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "alias account",
+      "category": "negation",
+      "query": "Evita di riscrivere l'alias account in minuscolo. Ha già quel formato?"
+    },
+    {
+      "id": "p67b6283ada5a",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "coppia delta",
+      "category": "mentioned",
+      "query": "«Somma i due numeri della coppia delta» sarebbe una buona traccia per un esercizio?"
+    },
+    {
+      "id": "p67fc22723ad3",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "operation": "multiply",
+      "object": "prezzo unitario e quantità",
+      "category": "direct",
+      "query": "A quanto ammonta la spesa per tutte le unità a quel prezzo unitario?"
+    },
+    {
+      "id": "p698b5ce39918",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "carrello",
+      "category": "negation",
+      "query": "Non calcolare la somma. Le quantità del carrello sono entrambe positive?"
+    },
+    {
+      "id": "p6a302f169bd7",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "operation": "multiply",
+      "object": "interi sigma",
+      "category": "direct",
+      "query": "Quanto fa il primo intero sigma per il secondo?"
+    },
+    {
+      "id": "p6aff09dc3af2",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "segnale",
+      "category": "different_output",
+      "query": "Se leggo il segnale da destra, quale carattere incontro per primo?"
+    },
+    {
+      "id": "p6b66160a3da3",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "operation": "uppercase",
+      "object": "tessera",
+      "category": "direct",
+      "query": "Trascrivimi il testo della tessera usando esclusivamente maiuscole."
+    },
+    {
+      "id": "p6bfd0b2f76c9",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "token di verifica",
+      "category": "mentioned",
+      "query": "«Dammi il token di verifica al contrario» si può formulare in modo più gentile?"
+    },
+    {
+      "id": "p6f8b4e7cf3ce",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "tessera",
+      "category": "different_output",
+      "query": "Dimmi quante lettere della tessera sono già in maiuscolo."
+    },
+    {
+      "id": "p755f05aaacb9",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "riferimento cliente",
+      "category": "comparison",
+      "query": "Il riferimento cliente e il riferimento dell'ordine coincidono?"
+    },
+    {
+      "id": "p75ff1582a802",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "prezzo unitario e quantità",
+      "category": "compound",
+      "query": "Moltiplica prezzo unitario e quantità, poi aggiungi cinque euro per la consegna."
+    },
+    {
+      "id": "p7a5c1a00636f",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "etichetta di spedizione",
+      "category": "comparison",
+      "query": "Nell'etichetta di spedizione prevalgono le maiuscole o le minuscole?"
+    },
+    {
+      "id": "p7bc607478668",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "coppia delta",
+      "category": "different_output",
+      "query": "Qual è la cifra delle unità della somma della coppia delta?"
+    },
+    {
+      "id": "p7c8285fa1f91",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "operation": "uppercase",
+      "object": "etichetta di spedizione",
+      "category": "direct",
+      "query": "Vorrei una copia dell'etichetta di spedizione in stampatello maiuscolo."
+    },
+    {
+      "id": "p7f2df260a9cc",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "operation": "add",
+      "object": "carrello",
+      "category": "direct",
+      "query": "A quante unità arrivo mettendo insieme le due quantità del carrello?"
+    },
+    {
+      "id": "p7faffad1ebd6",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "operation": "copy",
+      "object": "codice del pacco",
+      "category": "negation",
+      "query": "Non riportare il codice del pacco. Dimmi soltanto se contiene cifre."
+    },
+    {
+      "id": "p8175ebcef381",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "scorta",
+      "category": "wrong_direction",
+      "query": "Della scorta prendi il secondo valore e sottraigli il primo."
+    },
+    {
+      "id": "p8369511eaaf8",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "operation": "add",
+      "object": "carrello",
+      "category": "direct",
+      "query": "Quale totale si ottiene dalle quantità che ho nel carrello?"
+    },
+    {
+      "id": "p83a0416c4ec7",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "interi sigma",
+      "category": "comparison",
+      "query": "Il prodotto degli interi sigma supera la loro somma?"
+    },
+    {
+      "id": "p85ea06d5aae9",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "operation": "reverse",
+      "object": "segnale",
+      "category": "direct",
+      "query": "Leggendo il segnale da destra verso sinistra, cosa ottieni?"
+    },
+    {
+      "id": "p86658bc65b3a",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "operation": "subtract",
+      "object": "scorta",
+      "category": "direct",
+      "query": "Quanto rimane della scorta se dal primo valore togli il secondo?"
+    },
+    {
+      "id": "p8a7194778242",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "targa",
+      "category": "compound",
+      "query": "Scrivi la targa in minuscolo e aggiungi una x in coda."
+    },
+    {
+      "id": "p8f889b3e27c7",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "operation": "lowercase",
+      "object": "alias account",
+      "category": "direct",
+      "query": "Come verrebbe l'alias account usando soltanto il minuscolo?"
+    },
+    {
+      "id": "p910d82001058",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "carrello",
+      "category": "scope",
+      "query": "Somma le quantità del carrello escludendo quella più bassa."
+    },
+    {
+      "id": "p9a936242aa96",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "operation": "multiply",
+      "object": "interi sigma",
+      "category": "direct",
+      "query": "Moltiplica fra loro gli interi sigma. Che numero viene fuori?"
+    },
+    {
+      "id": "pa09b8aae18ee",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "tessera",
+      "category": "scope",
+      "query": "Metti in maiuscolo soltanto la prima lettera della tessera."
+    },
+    {
+      "id": "pa3023a60b9d9",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "scorta",
+      "category": "scope",
+      "query": "Mi serve la distanza fra i due valori della scorta, sempre positiva o nulla."
+    },
+    {
+      "id": "pa8918687c4b5",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "scorta",
+      "category": "mentioned",
+      "query": "«Quanto rimane della scorta?» è una domanda aperta o chiusa?"
+    },
+    {
+      "id": "pac17d1885698",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "operation": "uppercase",
+      "object": "tessera",
+      "category": "compound",
+      "query": "Trascrivi la tessera in maiuscolo e separa ogni lettera con un trattino."
+    },
+    {
+      "id": "pac3daad0f75e",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "operation": "subtract",
+      "object": "saldo",
+      "category": "direct",
+      "query": "Per il saldo, fai il primo valore meno il secondo. Quanto viene?"
+    },
+    {
+      "id": "pb6664552b0de",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "targa",
+      "category": "mentioned",
+      "query": "Sto correggendo «targa in minuscolo». Che parte del discorso è «minuscolo»?"
+    },
+    {
+      "id": "pc0f3edc0e0b7",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "operation": "reverse",
+      "object": "token di verifica",
+      "category": "direct",
+      "query": "Mi riscrivi il token di verifica partendo dall'ultimo carattere e arrivando al primo?"
+    },
+    {
+      "id": "pc35babf32869",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "operation": "reverse",
+      "object": "segnale",
+      "category": "negation",
+      "query": "Evita di leggere il segnale a ritroso. Quanti caratteri contiene?"
+    },
+    {
+      "id": "pdad6a2585675",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "saldo",
+      "category": "wrong_direction",
+      "query": "Per il saldo, fai il secondo valore meno il primo. Quanto viene?"
+    },
+    {
+      "id": "pdc393a113199",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "operation": "copy",
+      "object": "riferimento dell'ordine",
+      "category": "direct",
+      "query": "Mi passi il riferimento dell'ordine esattamente com'è?"
+    },
+    {
+      "id": "pe1df33f9a814",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "operation": "subtract",
+      "object": "saldo",
+      "category": "direct",
+      "query": "Quale saldo resta dopo aver detratto il secondo importo dal primo?"
+    },
+    {
+      "id": "pe6dc063daf37",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "operation": "copy",
+      "object": "alias email",
+      "category": "direct",
+      "query": "Ho bisogno di ricopiare l'alias email. Me lo detti uguale?"
+    },
+    {
+      "id": "pe6eae2dda94e",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "operation": "lowercase",
+      "object": "targa",
+      "category": "direct",
+      "query": "Riscrivimi il testo della targa con tutte le lettere minuscole."
+    },
+    {
+      "id": "pebc68118b140",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "operation": "uppercase",
+      "object": "tessera",
+      "category": "direct",
+      "query": "Metti tutte le lettere della tessera in maiuscolo, per favore."
+    },
+    {
+      "id": "pec3360c50ccb",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "saldo",
+      "category": "compound",
+      "query": "Calcola il saldo residuo e poi raddoppialo."
+    },
+    {
+      "id": "pecb39c6dfd0a",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "operation": "multiply",
+      "object": "interi sigma",
+      "category": "negation",
+      "query": "Non moltiplicare gli interi sigma. Mi serve il maggiore dei due."
+    },
+    {
+      "id": "pf0d54a569c0d",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "operation": "reverse",
+      "object": "token di verifica",
+      "category": "direct",
+      "query": "Del token di verifica mi occorre la sequenza a ritroso."
+    },
+    {
+      "id": "pf71e9d8584d4",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "operation": "lowercase",
+      "object": "targa",
+      "category": "scope",
+      "query": "Sulla targa converti in minuscolo unicamente l'ultima lettera."
+    },
+    {
+      "id": "pf92c117e6cf8",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "operation": "subtract",
+      "object": "saldo",
+      "category": "different_output",
+      "query": "Il saldo residuo sarebbe maggiore di zero?"
+    },
+    {
+      "id": "pfaea88470b97",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "operation": "add",
+      "object": "inventario",
+      "category": "comparison",
+      "query": "Nell'inventario quale delle due quantità va aumentata per pareggiare l'altra?"
+    }
+  ],
+  "value_offset": 91000
+}

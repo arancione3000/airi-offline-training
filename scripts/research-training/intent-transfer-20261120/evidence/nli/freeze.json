@@ -1,0 +1,43 @@
+{
+  "calibration_repair": {
+    "corrected_sha256": "ed0a7546ebfe4cfc21c97e6f7abe021ba0f1d09c6c36d739560f2fa5d2988375",
+    "original_sha256": "e733d7c2e62955aa94852adc03d0349c128cf4c268ae446179b1115b44ecc515",
+    "reason": "Original aborted before evaluation: three supported TRAIN frame/operation pairs also received synthetic negative labels. Trusted labels now override synthetic alternatives."
+  },
+  "driver_sha256": "769647200b7b685f06bc5067cf1c7779d7c6205f2bac9f7c52e5ea7cebaf6ac7",
+  "inputs": {
+    "aliases": "fbe2524f2c5f1bf2ed83cadea9eea4f7bb47bb163aaa202823d83d31c7ed816a",
+    "bank": "4460b73bad38102bc9a72c3ff52238b2d1e82a5dad7dd883a0f47e49de4c4614",
+    "families": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba",
+    "frames_challenge": "5761c835efbd2de88ac6e59a83bac2d1e449b157240fac2b3704a3b378d99300",
+    "harness": "bdd8fee9b7da9a40f3b0fc0141f8422ce610c9df9628774af88b3fb5e73073dd",
+    "learner": "47a8f56dae1ebbf0fec6b2e6be0265af935ecd2c07a18dd3d4368e618b606a8a",
+    "nli": "ed0a7546ebfe4cfc21c97e6f7abe021ba0f1d09c6c36d739560f2fa5d2988375",
+    "prospective": "8e7bb5d6803fcaca13ec866aa1774d0222584ef3eb1df03324ea7b5bdf952825",
+    "qualification": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4",
+    "train": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a",
+    "v6": "57097ae3123d4c78de78af60029479a5d56f7b6af2760313233a2ea48bec64a8",
+    "v6_challenge": "26eedc54d3a7cbfb9c933fcb6366b123f7d5abdadfd4a5e33dc4fffa03954894"
+  },
+  "reference_sha256": "ddabfc55c5db0c045ba3a4ac7c49a5c877ccc88b836f6163052c43cf87241155",
+  "runtime_sha256": {
+    "assistant.py": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+    "flexible_skills.py": "2c94fbc0d93ed1aec727554ffa4b7ff1d20d34b056f133eb7dd6fdeaa9b2beb5",
+    "skill_bank.py": "b08985487b0c2a21b0a4bd8e9374916592c974e71391f2167d2ca40eb7c8032c",
+    "skill_programs.py": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00"
+  },
+  "train_calibration": {
+    "calibration_cases": 240,
+    "calibration_correct": 0,
+    "calibration_false": 0,
+    "entailment_floor": 2.0,
+    "files": {
+      "config.json": "e08b628c4d46c8601dda34ddb40a7857e5961870b80482382d420db6dfb6e00e",
+      "model.onnx": "79f8cda2b1230585a95ea0514a6f1bd21c5c986ba0529bb3261213a3e195fa6e",
+      "tokenizer.json": "b2116c05e7305eea30394284760789681c5b3440dd4cd9a8c77539da68f9e8a6"
+    },
+    "margin": 2.0,
+    "nli_revision": "0a71e92a985b6e1ad1828cf67ce9c459639c1dca",
+    "supported_cases": 66
+  }
+}
