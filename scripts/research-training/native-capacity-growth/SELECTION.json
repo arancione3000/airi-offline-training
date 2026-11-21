@@ -1,0 +1,10 @@
+{
+  "passed_screen": false,
+  "independent_qualification_performed": false,
+  "promotion_authorized": false,
+  "rejection_reasons": [
+    "trained branch did not retain all 897 protected TRAIN certificates",
+    "at least one sampled previously correct answer regressed",
+    "trained branch acquired no correct answer in sampled generation"
+  ]
+}

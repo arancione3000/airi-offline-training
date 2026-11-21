@@ -1,0 +1,432 @@
+{
+  "domain_pairs": 4128,
+  "approved_base_nodes": 29,
+  "candidate_enumeration": {
+    "recipe_count": 2015,
+    "distinct_valid_output_tables": 1055,
+    "candidate_tables_sha256": "fd76e74712821b8f596472afdcd42210765d59c5590d9dc203694f9cf05f25f5",
+    "invalid_recipes": 0,
+    "executed_cells": 8317920,
+    "reused_recipe_evaluations": 0,
+    "reused_cells": 0
+  },
+  "source_sha256": {
+    "synthesis": "de628ef78993510b750964fb51ce2c3637e4540ab844d7619de8f4e07b6e72a5",
+    "fixtures": "a511b01dbdcfd98175431492190392faa9907f8474d02e0a98c3c5470a1d6066",
+    "verifier": "5d459f4610edd2980f2ac5150350b079285d8cf7b472561126a02c8b1c3ce74e"
+  },
+  "tasks": {
+    "sum": {
+      "outcome": "verified",
+      "in_hypothesis_space": true,
+      "queried_examples": 2,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": -41,
+          "remaining_candidates": 7
+        },
+        {
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "label": -79,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "add",
+        "deps": [
+          "a",
+          "b"
+        ]
+      },
+      "qualification": {
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    },
+    "product": {
+      "outcome": "verified",
+      "in_hypothesis_space": true,
+      "queried_examples": 1,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": -912,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "multiply",
+        "deps": [
+          "a",
+          "b"
+        ]
+      },
+      "qualification": {
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    },
+    "difference_reversed": {
+      "outcome": "verified",
+      "in_hypothesis_space": true,
+      "queried_examples": 3,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 73,
+          "remaining_candidates": 9
+        },
+        {
+          "index": 2080,
+          "input": [
+            1,
+            -16
+          ],
+          "label": -17,
+          "remaining_candidates": 2
+        },
+        {
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "label": 48,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "add",
+        "deps": [
+          "headroom",
+          "negative_completed_floor"
+        ]
+      },
+      "qualification": {
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    },
+    "absolute_dividend": {
+      "outcome": "verified",
+      "in_hypothesis_space": true,
+      "queried_examples": 3,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 57,
+          "remaining_candidates": 9
+        },
+        {
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "label": 64,
+          "remaining_candidates": 3
+        },
+        {
+          "index": 2158,
+          "input": [
+            3,
+            -2
+          ],
+          "label": 3,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "absolute",
+        "deps": [
+          "a"
+        ]
+      },
+      "qualification": {
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    },
+    "negated_floor_quotient": {
+      "outcome": "verified",
+      "in_hypothesis_space": true,
+      "queried_examples": 2,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 4,
+          "remaining_candidates": 16
+        },
+        {
+          "index": 37,
+          "input": [
+            -63,
+            -11
+          ],
+          "label": -5,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "negate",
+        "deps": [
+          "floor_q"
+        ]
+      },
+      "qualification": {
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    },
+    "absolute_sum": {
+      "outcome": "rejected_by_exhaustive_verifier",
+      "in_hypothesis_space": false,
+      "queried_examples": 1,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 41,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "subtract",
+        "deps": [
+          "negative_completed_floor",
+          "remaining_after_previous"
+        ]
+      },
+      "qualification": {
+        "status": "rejected",
+        "version": 1,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "target",
+          "index": 1599,
+          "input": [
+            -15,
+            16
+          ],
+          "expected": 1,
+          "actual": -1
+        }
+      }
+    },
+    "squared_sum": {
+      "outcome": "abstained_no_hypotheses",
+      "in_hypothesis_space": false,
+      "queried_examples": 1,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 1681,
+          "remaining_candidates": 0
+        }
+      ]
+    },
+    "maximum": {
+      "outcome": "abstained_no_hypotheses",
+      "in_hypothesis_space": false,
+      "queried_examples": 2,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 16,
+          "remaining_candidates": 17
+        },
+        {
+          "index": 2285,
+          "input": [
+            7,
+            -3
+          ],
+          "label": 7,
+          "remaining_candidates": 0
+        }
+      ]
+    },
+    "minimum_magnitude": {
+      "outcome": "rejected_by_exhaustive_verifier",
+      "in_hypothesis_space": false,
+      "queried_examples": 3,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 16,
+          "remaining_candidates": 17
+        },
+        {
+          "index": 2285,
+          "input": [
+            7,
+            -3
+          ],
+          "label": 3,
+          "remaining_candidates": 2
+        },
+        {
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "label": 16,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "absolute",
+        "deps": [
+          "b"
+        ]
+      },
+      "qualification": {
+        "status": "rejected",
+        "version": 1,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "target",
+          "index": 1568,
+          "input": [
+            -15,
+            -16
+          ],
+          "expected": 15,
+          "actual": 16
+        }
+      }
+    },
+    "gcd": {
+      "outcome": "rejected_by_exhaustive_verifier",
+      "in_hypothesis_space": false,
+      "queried_examples": 2,
+      "queries": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 1,
+          "remaining_candidates": 5
+        },
+        {
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "label": 1,
+          "remaining_candidates": 1
+        }
+      ],
+      "recipe": {
+        "op": "absolute",
+        "deps": [
+          "direction_unit"
+        ]
+      },
+      "qualification": {
+        "status": "rejected",
+        "version": 1,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 29,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "target",
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "expected": 16,
+          "actual": 1
+        }
+      }
+    }
+  },
+  "total_solved": 5,
+  "total_abstained": 2,
+  "total_rejected": 3
+}

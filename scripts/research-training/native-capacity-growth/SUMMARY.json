@@ -1,0 +1,58 @@
+{
+  "source_sha256": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "parameters_before": 50164416,
+  "parameters_after": 50182848,
+  "parameters_added": 18432,
+  "zero_initialization": {
+    "full_native_forward_probes": 30,
+    "positions": 1668,
+    "largest_absolute_logit_difference": 0.0,
+    "greedy_ids_identical": true
+  },
+  "training": [
+    {
+      "step": 1,
+      "acquisition_nll": 0.2419550120830536,
+      "retention_kl": -1.5463457181397189e-09,
+      "up_gradient_norm": 0.0,
+      "down_gradient_norm": 0.6577672362327576
+    },
+    {
+      "step": 2,
+      "acquisition_nll": 0.31242868304252625,
+      "retention_kl": 0.00022309372434392571,
+      "up_gradient_norm": 0.15587195754051208,
+      "down_gradient_norm": 0.486853688955307
+    },
+    {
+      "step": 64,
+      "acquisition_nll": 0.0762324184179306,
+      "retention_kl": 0.002319676335901022,
+      "up_gradient_norm": 0.13536129891872406,
+      "down_gradient_norm": 0.09916485846042633
+    }
+  ],
+  "retention_at_initialization": {
+    "kept": 897,
+    "total": 897,
+    "maximum_absolute_logit_change": 0.0
+  },
+  "retention_after_training": {
+    "kept": 889,
+    "total": 897,
+    "maximum_absolute_logit_change": 10.572839736938477
+  },
+  "full_native_retention_after_training": [
+    30,
+    30
+  ],
+  "sampled_greedy": {
+    "before": 3,
+    "after": 1,
+    "total": 24,
+    "gains": 0,
+    "losses": 2
+  },
+  "branch_roundtrip_exact": true,
+  "promoted": false
+}

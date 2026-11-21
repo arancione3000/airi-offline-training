@@ -1,0 +1,1514 @@
+{
+  "domain_size": 4128,
+  "number_of_targets": 10,
+  "compiler_sha256": "d7fd72d43916448e454d25c74f1a16674f5f03eec1f05bf1d550c5c941803bc2",
+  "test_sha256": "8cca2af2da9129ddedd6b795b7f1238c1e06f93683073bc96135475b34787e32",
+  "results": {
+    "shallow": {
+      "verified": 1,
+      "scalar_labels": 19,
+      "cases": {
+        "product_plus_divider": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -896
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 945
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "absolute_difference": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 17
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "sum_times_difference": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 2993
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "maximum_negated_operands": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 2
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "absolute_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": 5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "maximum_dividend_divisor_magnitude": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "product_offset_by_dividend": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -855
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "remainder_parity": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "qualification_rejected",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 0
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 0
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "trunc_q",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "squared_norm": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 3505
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "conditional_sign": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        }
+      }
+    },
+    "deep_arithmetic_only": {
+      "verified": 6,
+      "scalar_labels": 21,
+      "cases": {
+        "product_plus_divider": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "add",
+              "deps": [
+                "b",
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -896
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 945
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                "b",
+                [
+                  "multiply",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 4,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "absolute_difference": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "subtract",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 17
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 48
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                [
+                  "subtract",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 3,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "sum_times_difference": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "b",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "subtract",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 2993
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "subtract",
+                [
+                  "multiply",
+                  "a",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "b",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 2,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "maximum_negated_operands": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 2
+            }
+          ],
+          "qualifications": [],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "absolute_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": 5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "maximum_dividend_divisor_magnitude": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            }
+          ],
+          "qualifications": [],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "product_offset_by_dividend": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -855
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": -17
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                [
+                  "negate",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 6,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "remainder_parity": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 0
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 0
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "trunc_q",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "squared_norm": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "b",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 3505
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                [
+                  "multiply",
+                  "a",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "b",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 1,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "conditional_sign": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            }
+          ],
+          "qualifications": [],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        }
+      }
+    },
+    "deep_with_macros": {
+      "verified": 8,
+      "scalar_labels": 23,
+      "cases": {
+        "product_plus_divider": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "add",
+              "deps": [
+                "b",
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -896
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 945
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                "b",
+                [
+                  "multiply",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 4,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "absolute_difference": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "subtract",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 17
+            },
+            {
+              "index": 1024,
+              "input": [
+                -32,
+                -16
+              ],
+              "label": 16
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                [
+                  "subtract",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 5,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "sum_times_difference": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "b",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "subtract",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 2993
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "subtract",
+                [
+                  "multiply",
+                  "a",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "b",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 2,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "maximum_negated_operands": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "negate",
+              "deps": [
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            },
+            "growth_recipe_3": {
+              "op": "subtract",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            },
+            "growth_recipe_4": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_3"
+              ]
+            },
+            "growth_recipe_5": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_2",
+                "growth_recipe_4"
+              ]
+            },
+            "growth_recipe_6": {
+              "op": "floor_quotient",
+              "deps": [
+                "growth_recipe_5",
+                "two_units"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_6",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 2
+            },
+            {
+              "index": 2096,
+              "input": [
+                1,
+                1
+              ],
+              "label": -1
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "maximum",
+                [
+                  "negate",
+                  "a"
+                ],
+                [
+                  "negate",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 4,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "absolute_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": 5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "maximum_dividend_divisor_magnitude": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "add",
+              "deps": [
+                "a",
+                "growth_recipe_0"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "subtract",
+              "deps": [
+                "a",
+                "growth_recipe_0"
+              ]
+            },
+            "growth_recipe_3": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_2"
+              ]
+            },
+            "growth_recipe_4": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_1",
+                "growth_recipe_3"
+              ]
+            },
+            "growth_recipe_5": {
+              "op": "floor_quotient",
+              "deps": [
+                "growth_recipe_4",
+                "two_units"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_5",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 16
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "maximum",
+                "a",
+                [
+                  "absolute",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 2,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "product_offset_by_dividend": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -855
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": -17
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                [
+                  "negate",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 6,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "remainder_parity": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 0
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 0
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "trunc_q",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "squared_norm": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "b",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_2",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 3505
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "add",
+                [
+                  "multiply",
+                  "a",
+                  "a"
+                ],
+                [
+                  "multiply",
+                  "b",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 1,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "conditional_sign": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            }
+          ],
+          "qualifications": [],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        }
+      }
+    }
+  }
+}
