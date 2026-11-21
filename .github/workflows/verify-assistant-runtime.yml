@@ -15,6 +15,8 @@ on:
       - 'scripts/research-training/joint-action-20261121/**'
       - 'scripts/research-training/certified-procedure-transfer/**'
       - 'scripts/research-training/incremental-procedure-verification/**'
+      - 'scripts/research-training/procedural-capacity-growth/**'
+      - 'scripts/research-training/native-capacity-growth/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -30,6 +32,8 @@ on:
       - 'scripts/research-training/joint-action-20261121/**'
       - 'scripts/research-training/certified-procedure-transfer/**'
       - 'scripts/research-training/incremental-procedure-verification/**'
+      - 'scripts/research-training/procedural-capacity-growth/**'
+      - 'scripts/research-training/native-capacity-growth/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -57,6 +61,14 @@ jobs:
           python -m unittest discover -s scripts/research-training/incremental-procedure-verification -v
           python scripts/research-training/incremental-procedure-verification/benchmark.py "$RUNNER_TEMP/incremental-procedure-verification.json" --repeats 1
           python scripts/research-training/incremental-procedure-verification/synthesis.py --output "$RUNNER_TEMP/incremental-procedure-synthesis.json"
+      - name: Verify automatic procedural capacity growth
+        run: |
+          python -m unittest discover -s scripts/research-training/procedural-capacity-growth -v
+          python scripts/research-training/procedural-capacity-growth/synthesis_growth.py "$RUNNER_TEMP/procedural-capacity-growth.json"
+          python scripts/research-training/procedural-capacity-growth/fresh_coverage.py "$RUNNER_TEMP/procedural-capacity-fresh.json"
+          cmp "$RUNNER_TEMP/procedural-capacity-fresh.json" scripts/research-training/procedural-capacity-growth/evidence/FRESH.json
+          python scripts/research-training/procedural-capacity-growth/replay_cycle.py "$RUNNER_TEMP/procedural-capacity-restart"
+          python scripts/research-training/native-capacity-growth/selection.py
       - name: Verify independent functionality and inherited native preservation
         run: |
           python scripts/assistant-runtime/evaluate.py --output assistant-ci --prepare-only --seed 202611152254

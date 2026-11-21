@@ -1,0 +1,1600 @@
+{
+  "domain_pairs": 4128,
+  "shallow_enumeration": {
+    "recipe_count": 2015,
+    "distinct_valid_output_tables": 1055,
+    "candidate_tables_sha256": "fd76e74712821b8f596472afdcd42210765d59c5590d9dc203694f9cf05f25f5",
+    "invalid_recipes": 0,
+    "executed_cells": 8317920,
+    "reused_recipe_evaluations": 0,
+    "reused_cells": 0,
+    "approved_columns_used": 29
+  },
+  "levels": {
+    "1": {
+      "approved": 5,
+      "tasks": {
+        "sum": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -41
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": -79
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "product": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -912
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "multiply",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "difference_reversed": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": -17
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 48
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_dividend": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "a"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 3
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "a"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "negated_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": -5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "negate",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_sum": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "qualification_rejected",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 41
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "negative_completed_floor",
+                "remaining_after_previous"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "squared_sum": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1681
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "maximum": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            }
+          ],
+          "qualifications": [],
+          "deep_search": null
+        },
+        "minimum_magnitude": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "qualification_rejected",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 3
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 16
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "gcd": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "qualification_rejected",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 1
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "direction_unit"
+              ]
+            }
+          ],
+          "deep_search": null
+        }
+      }
+    },
+    "2_arithmetic_only": {
+      "approved": 7,
+      "tasks": {
+        "sum": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -41
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": -79
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "product": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -912
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "multiply",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "difference_reversed": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": -17
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 48
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_dividend": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "a"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 3
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "a"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "negated_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": -5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "negate",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_sum": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 41
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 15
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "negative_completed_floor",
+                "remaining_after_previous"
+              ]
+            },
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                [
+                  "add",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 21,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "squared_sum": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1681
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "multiply",
+                [
+                  "add",
+                  "a",
+                  "b"
+                ],
+                [
+                  "add",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 1,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "maximum": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            }
+          ],
+          "qualifications": [],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 0,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "minimum_magnitude": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 3
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 16
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 5,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "gcd": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "no_candidate",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 1
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 1
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "direction_unit"
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 2635,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 34,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        }
+      }
+    },
+    "2": {
+      "approved": 9,
+      "tasks": {
+        "sum": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -41
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": -79
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "product": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "multiply",
+              "deps": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": -912
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "multiply",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "difference_reversed": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 73
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": -17
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 48
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "add",
+                "headroom",
+                "negative_completed_floor"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_dividend": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "a"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 57
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 64
+            },
+            {
+              "index": 2158,
+              "input": [
+                3,
+                -2
+              ],
+              "label": 3
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                "a"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "negated_floor_quotient": {
+          "status": "accepted",
+          "depth": 1,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "negate",
+              "deps": [
+                "floor_q"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_0",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 4
+            },
+            {
+              "index": 37,
+              "input": [
+                -63,
+                -11
+              ],
+              "label": -5
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": true,
+              "expression": [
+                "negate",
+                "floor_q"
+              ]
+            }
+          ],
+          "deep_search": null
+        },
+        "absolute_sum": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 41
+            },
+            {
+              "index": 2080,
+              "input": [
+                1,
+                -16
+              ],
+              "label": 15
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "subtract",
+                "negative_completed_floor",
+                "remaining_after_previous"
+              ]
+            },
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "absolute",
+                [
+                  "add",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 21,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "squared_sum": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "multiply",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_0"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_1",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1681
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "multiply",
+                [
+                  "add",
+                  "a",
+                  "b"
+                ],
+                [
+                  "add",
+                  "a",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 1,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "maximum": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "add",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "subtract",
+              "deps": [
+                "a",
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_1"
+              ]
+            },
+            "growth_recipe_3": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_2"
+              ]
+            },
+            "growth_recipe_4": {
+              "op": "floor_quotient",
+              "deps": [
+                "growth_recipe_3",
+                "two_units"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_4",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 7
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": -16
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "maximum",
+                "a",
+                "b"
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 2,
+            "trigger": "no_candidate",
+            "recipe_budget_reached": false
+          }
+        },
+        "minimum_magnitude": {
+          "status": "accepted",
+          "depth": 2,
+          "graph_additions": {
+            "growth_recipe_0": {
+              "op": "absolute",
+              "deps": [
+                "a"
+              ]
+            },
+            "growth_recipe_1": {
+              "op": "absolute",
+              "deps": [
+                "b"
+              ]
+            },
+            "growth_recipe_2": {
+              "op": "add",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            },
+            "growth_recipe_3": {
+              "op": "subtract",
+              "deps": [
+                "growth_recipe_0",
+                "growth_recipe_1"
+              ]
+            },
+            "growth_recipe_4": {
+              "op": "absolute",
+              "deps": [
+                "growth_recipe_3"
+              ]
+            },
+            "growth_recipe_5": {
+              "op": "subtract",
+              "deps": [
+                "growth_recipe_2",
+                "growth_recipe_4"
+              ]
+            },
+            "growth_recipe_6": {
+              "op": "floor_quotient",
+              "deps": [
+                "growth_recipe_5",
+                "two_units"
+              ]
+            }
+          },
+          "output_node": "growth_recipe_6",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 16
+            },
+            {
+              "index": 2285,
+              "input": [
+                7,
+                -3
+              ],
+              "label": 3
+            },
+            {
+              "index": 0,
+              "input": [
+                -64,
+                -16
+              ],
+              "label": 16
+            },
+            {
+              "index": 15,
+              "input": [
+                -64,
+                -1
+              ],
+              "label": 1
+            },
+            {
+              "index": 1568,
+              "input": [
+                -15,
+                -16
+              ],
+              "label": 15
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "b"
+              ]
+            },
+            {
+              "depth": 2,
+              "admitted": true,
+              "expression": [
+                "minimum",
+                [
+                  "absolute",
+                  "a"
+                ],
+                [
+                  "absolute",
+                  "b"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 23,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        },
+        "gcd": {
+          "status": "abstained",
+          "depth": null,
+          "graph_additions": {},
+          "output_node": null,
+          "reason": "qualification_rejected",
+          "labels": [
+            {
+              "index": 255,
+              "input": [
+                -57,
+                16
+              ],
+              "label": 1
+            },
+            {
+              "index": 1,
+              "input": [
+                -64,
+                -15
+              ],
+              "label": 1
+            },
+            {
+              "index": 2221,
+              "input": [
+                5,
+                -3
+              ],
+              "label": 1
+            }
+          ],
+          "qualifications": [
+            {
+              "depth": 1,
+              "admitted": false,
+              "expression": [
+                "absolute",
+                "direction_unit"
+              ]
+            },
+            {
+              "depth": 2,
+              "admitted": false,
+              "expression": [
+                "minimum",
+                "direction_unit",
+                [
+                  "absolute",
+                  "a"
+                ]
+              ]
+            }
+          ],
+          "deep_search": {
+            "recipes": 3967,
+            "sample_size": 64,
+            "derived_feature_tables": 31,
+            "complete_finalists": 60,
+            "trigger": "qualification_rejected",
+            "recipe_budget_reached": false
+          }
+        }
+      }
+    }
+  },
+  "negative_control": {
+    "task": "absolute_sum",
+    "conflicting_index": 0,
+    "result": {
+      "status": "abstained",
+      "depth": null,
+      "graph_additions": {},
+      "output_node": null,
+      "reason": "qualification_rejected",
+      "labels": [
+        {
+          "index": 255,
+          "input": [
+            -57,
+            16
+          ],
+          "label": 41
+        },
+        {
+          "index": 2080,
+          "input": [
+            1,
+            -16
+          ],
+          "label": 15
+        }
+      ],
+      "qualifications": [
+        {
+          "depth": 1,
+          "admitted": false,
+          "expression": [
+            "subtract",
+            "negative_completed_floor",
+            "remaining_after_previous"
+          ]
+        },
+        {
+          "depth": 2,
+          "admitted": false,
+          "expression": [
+            "absolute",
+            [
+              "add",
+              "a",
+              "b"
+            ]
+          ]
+        }
+      ],
+      "deep_search": {
+        "recipes": 3967,
+        "sample_size": 64,
+        "derived_feature_tables": 31,
+        "complete_finalists": 21,
+        "trigger": "qualification_rejected",
+        "recipe_budget_reached": false
+      }
+    }
+  },
+  "sha256": {
+    "synthesis_growth.py": "d7fd72d43916448e454d25c74f1a16674f5f03eec1f05bf1d550c5c941803bc2",
+    "fixtures.py": "a511b01dbdcfd98175431492190392faa9907f8474d02e0a98c3c5470a1d6066",
+    "synthesis.py": "de628ef78993510b750964fb51ce2c3637e4540ab844d7619de8f4e07b6e72a5",
+    "verifier.py": "5d459f4610edd2980f2ac5150350b079285d8cf7b472561126a02c8b1c3ce74e",
+    "scope_stress.py": "ec7b523ec076b35488ad35255431260a7e909d4a83a7c6e3369675b2b27efdcd"
+  },
+  "bounds": {
+    "sample_size": 64,
+    "deep_recipes": 12000,
+    "complete_finalists": 64,
+    "labels_per_task": 16,
+    "max_qualifications": 8,
+    "recent_approved_columns": 48,
+    "constant_columns": 3
+  }
+}

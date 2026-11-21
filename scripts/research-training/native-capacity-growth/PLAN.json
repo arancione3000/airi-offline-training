@@ -1,0 +1,16 @@
+{
+  "seed": 20261121,
+  "addition_width": 64,
+  "steps": 64,
+  "source_sha256": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "script_sha256": "3b8898b62673d8f67becaf7f9f7af3e7dcf0f1c6eed97c825e899366d930b6c1",
+  "train_sha256": "7636f8610e883877ee149a5676a78a4d96f706b5c6d40a4441224115cb24f56f",
+  "ledger_sha256": "d977083b9ecf127554b5812aac4524f6f8d5be085c1b1d634d151029eaf98609",
+  "train_rows": [
+    48,
+    48
+  ],
+  "greedy_max_new_tokens": 24,
+  "legacy_sample": 12,
+  "development_sample": 12
+}
