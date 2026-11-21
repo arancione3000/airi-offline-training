@@ -13,6 +13,7 @@ on:
       - 'scripts/research-training/intent-transfer-20261120/**'
       - 'scripts/research-training/exact-transfer-20261120/**'
       - 'scripts/research-training/joint-action-20261121/**'
+      - 'scripts/research-training/certified-procedure-transfer/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -26,6 +27,7 @@ on:
       - 'scripts/research-training/intent-transfer-20261120/**'
       - 'scripts/research-training/exact-transfer-20261120/**'
       - 'scripts/research-training/joint-action-20261121/**'
+      - 'scripts/research-training/certified-procedure-transfer/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -44,6 +46,10 @@ jobs:
         run: python -m unittest discover -s tests/assistant-runtime -v
       - name: Check donor selection and rejection of conflicting proposals
         run: python -m unittest discover -s scripts/research-training/intent-transfer-20261120 -v
+      - name: Verify shared procedural learning and retention
+        run: |
+          python -m unittest discover -s scripts/research-training/certified-procedure-transfer -v
+          python scripts/research-training/certified-procedure-transfer/trial.py "$RUNNER_TEMP/certified-procedure-transfer"
       - name: Verify independent functionality and inherited native preservation
         run: |
           python scripts/assistant-runtime/evaluate.py --output assistant-ci --prepare-only --seed 202611152254
