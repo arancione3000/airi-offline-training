@@ -1,0 +1,55 @@
+name: Verify Airi Android chat
+on:
+  pull_request:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/verify-mobile.yml'
+      - 'scripts/assistant-runtime/**'
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/verify-mobile.yml'
+      - 'scripts/assistant-runtime/**'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s mobile/server -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Assemble and verify an ephemeral Android build
+        run: |
+          sdk="$RUNNER_TEMP/airi-sdk"
+          mkdir -p "$sdk"
+          (
+            cd "$sdk"
+            curl -fLsS --retry 2 https://dl.google.com/android/repository/build-tools_r35_linux.zip -o tools.zip
+            curl -fLsS --retry 2 https://dl.google.com/android/repository/platform-35_r02.zip -o platform.zip
+            curl -fLsS --retry 2 https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.38.0/ecj-3.38.0.jar -o ecj.jar
+            sha256sum -c <<'CHECKSUMS'
+          bd3a4966912eb8b30ed0d00b0cda6b6543b949d5ffe00bea54c04c81e1561d88  tools.zip
+          0988cacad01b38a18a47bac14a0695f246bc76c1b06c0eeb8eb0dc825ab0c8e0  platform.zip
+          97c566b120009c203a2fc8b291f4a9adbc171cf1ccb70f06f6b4e1828c00ce8e  ecj.jar
+          CHECKSUMS
+            unzip -q tools.zip
+            unzip -q platform.zip
+          )
+          export ANDROID_BUILD_TOOLS="$sdk/android-15"
+          export ANDROID_PLATFORM_JAR="$sdk/android-35/android.jar"
+          export AIRI_ECJ_JAR="$sdk/ecj.jar"
+          export AIRI_ANDROID_KEYSTORE="$RUNNER_TEMP/mobile-ci.p12"
+          export AIRI_ANDROID_KEYPASS="$(python -c 'import secrets; print(secrets.token_hex(24))')"
+          keytool -genkeypair -storetype PKCS12 -keystore "$AIRI_ANDROID_KEYSTORE" -storepass:env AIRI_ANDROID_KEYPASS -alias airi -keyalg RSA -keysize 2048 -validity 2 -dname 'CN=Airi Android CI'
+          mobile/android/build.sh "$RUNNER_TEMP/Airi-Chat.apk"
