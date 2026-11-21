@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airi.chat"
-    android:versionCode="1" android:versionName="1.0.0">
+    android:versionCode="2" android:versionName="1.1.0">
     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:label="Airi Chat" android:icon="@drawable/airi_icon"
         android:theme="@android:style/Theme.Material.NoActionBar"
-        android:allowBackup="false" android:usesCleartextTraffic="true">
+        android:allowBackup="false" android:extractNativeLibs="true" android:usesCleartextTraffic="false">
         <activity android:name=".MainActivity" android:exported="true"
             android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="adjustResize">
             <intent-filter>
