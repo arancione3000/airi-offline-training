@@ -1,0 +1,40 @@
+name: Verify Airi Android chat
+on:
+  pull_request:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/verify-mobile.yml'
+      - 'scripts/assistant-runtime/**'
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/verify-mobile.yml'
+      - 'scripts/assistant-runtime/**'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s mobile/server -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Assemble and verify an ephemeral Android build
+        run: |
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          export ANDROID_BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          export ANDROID_PLATFORM_JAR="$ANDROID_HOME/platforms/android-35/android.jar"
+          export AIRI_ANDROID_KEYSTORE="$RUNNER_TEMP/mobile-ci.p12"
+          export AIRI_ANDROID_KEYPASS="$(python -c 'import secrets; print(secrets.token_hex(24))')"
+          keytool -genkeypair -storetype PKCS12 -keystore "$AIRI_ANDROID_KEYSTORE" -storepass:env AIRI_ANDROID_KEYPASS -alias airi -keyalg RSA -keysize 2048 -validity 2 -dname 'CN=Airi Android CI'
+          mobile/android/build.sh "$RUNNER_TEMP/Airi-Chat.apk"
