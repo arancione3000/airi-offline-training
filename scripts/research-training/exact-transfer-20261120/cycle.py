@@ -14,6 +14,8 @@ HERE = Path(__file__).resolve().parent
 # HERE is scripts/research-training/<experiment>.
 RUNTIME = HERE.parent.parent / 'assistant-runtime'
 sys.path.insert(0, str(RUNTIME))
+sys.path.insert(0, str(HERE.parent / 'joint-action-20261121'))
+from freeze_donations import reviewed_rows
 from exact_aliases import DEFAULT, MAX_ALIASES, read_aliases, resolve_alias
 from flexible_skills import DEFAULT_MODEL, LearnedQueryRouter, _semantic_router
 from learn import BUNDLED
@@ -23,6 +25,7 @@ from skill_validation import StableGate
 
 CORPUS = HERE.parent / 'semantic-routing-20261116/evidence/precommitted'
 SEMANTIC_RETENTION = DEFAULT_MODEL.with_name('retention.json.gz')
+DONATION_RECEIPT_SHA256 = 'e906ceeefc381f0e090495e2e6dc73da6a9b95f125ea79022fa49346a018f637'
 
 
 def read_semantic_retention(path=SEMANTIC_RETENTION):
@@ -56,7 +59,10 @@ def catalog(rows, approved, entries, retained=()):
     for row in rows:
         labels[row['query']].add(row['lesson_id'])
     installed = {entry['program']['query'] for entry in entries}
-    bound = {b['lesson_id']: b['program_id'] for b in approved}
+    programs = defaultdict(set)
+    for binding in approved:
+        programs[binding['lesson_id']].add(binding['program_id'])
+    bound = {family: next(iter(ids)) for family, ids in programs.items() if len(ids) == 1}
     result = {}
     for row in rows:
         family, query = row['lesson_id'], row['query']
@@ -75,7 +81,7 @@ def catalog(rows, approved, entries, retained=()):
     return {query: binding for _, query, binding in sorted(ordered)}
 
 
-def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_checks=()):
+def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_checks=(), unconfirmed=()):
     definitions = {family['id']: family for family in families}
     # The independently defined oracle bounds operands to the existing DSL domain.
     offset = 1000 + seed % 80000
@@ -128,6 +134,20 @@ def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_
         if composed(case(family, row['query'], i + offset, 0)[0]) is not None:
             raise RegistryError('unsupported TRAIN request intercepted')
         rejected += 1
+    # A valid example missed by the donor remains eligible for previous or
+    # future qualified semantic routes. Verify any answer that route gives.
+    for i, row in enumerate(unconfirmed):
+        family = definitions[row['source_lesson_id']]
+        for variant in (0, 1):
+            messages, gold = case(family, row['query'], i + offset, variant)
+            prediction = composed(messages)
+            if prediction is None:
+                continue
+            canonical_question = {**messages[-1], 'content': family['canonical_query']}
+            reference = _route(entries, [*messages[:-1], canonical_question])
+            if (reference is None or prediction['answer'] != gold or
+                    any(prediction.get(key) != reference[key] for key in ('source', 'operation', 'provenance'))):
+                raise RegistryError('unconfirmed donor request produced an incorrect answer')
 
     stored = 0
     for entry in entries:
@@ -148,6 +168,7 @@ def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_
             raise RegistryError('qualified semantic behavior would regress or answer incorrectly')
     report = dict(passed=True, positive_total=positives, negative_total=rejected,
                   stored_contracts=stored, historical_cases=historical.last_report['cases'])
+    report['unconfirmed_donor_executions'] = 2 * len(unconfirmed)
     if semantic_checks:
         report['semantic_checks'] = len(semantic_checks)
     return report
@@ -156,13 +177,14 @@ def audit(state, aliases, families, negatives, seed, *, semantic=None, semantic_
 def read_corpus():
     rows = json.loads(gzip.decompress((CORPUS / 'TRAIN.json.gz').read_bytes()))['rows']
     families = json.loads(gzip.decompress((CORPUS / 'FAMILIES.json.gz').read_bytes()))['families']
-    return rows, families
+    return rows + reviewed_rows(families, DONATION_RECEIPT_SHA256), families
 
 
 def audit_candidate(state, aliases, semantic, checks, *, seed):
     rows, families = read_corpus()
     return audit(state, aliases, families, [r for r in rows if r['lesson_id'] is None],
-                 seed, semantic=semantic, semantic_checks=checks)
+                 seed, semantic=semantic, semantic_checks=checks,
+                 unconfirmed=[r for r in rows if r['condition'] == 'unconfirmed_donation'])
 
 
 def semantic_state():
@@ -200,7 +222,8 @@ def cycle(bank_path, state_path, *, limit, seed):
     elif checks:
         raise RegistryError('qualified semantic cases lack their installed model')
     audited = audit(state, proposal, families, [r for r in rows if r['lesson_id'] is None],
-                    seed, semantic=semantic, semantic_checks=checks)
+                    seed, semantic=semantic, semantic_checks=checks,
+                    unconfirmed=[r for r in rows if r['condition'] == 'unconfirmed_donation'])
     if selected:
         state_path.parent.mkdir(parents=True, exist_ok=True)
         lock = os.open(state_path.parent, os.O_RDONLY | os.O_DIRECTORY)
@@ -208,12 +231,13 @@ def cycle(bank_path, state_path, *, limit, seed):
             fcntl.flock(lock, fcntl.LOCK_EX)
             with bank._lock():
                 if (bank._read()[0] != state or read_aliases(state_path) != old
-                        or semantic_state() != installed):
+                        or semantic_state() != installed or read_corpus() != (rows, families)):
                     raise RegistryError('concurrent update; retry with latest state')
                 write_atomic(state_path, dict(schema=1, aliases=proposal, sha256=digest(proposal)))
         finally:
             os.close(lock)
     return dict(status='updated' if selected else 'audited', activated=len(selected),
+                joint_donations_activated=sum(candidates[q]['train_id'].startswith('joint-donor-') for q in selected),
                 total_aliases=len(proposal), remaining=len(remaining)-len(selected),
                 audit=audited, seed=seed, bank_sha256=digest(state), aliases_sha256=digest(proposal),
                 train_sha256=digest(rows), scope='exact reviewed TRAIN questions on independent values')

@@ -1,0 +1,36 @@
+{
+  "sha256": {
+    "harness": "171096d7958155f1c593ce0d1dbd404c4989fa874f3736e328c0e2136fa3de5e",
+    "bank": "4460b73bad38102bc9a72c3ff52238b2d1e82a5dad7dd883a0f47e49de4c4614",
+    "aliases": "8ea3c8dfdd8dec80caa6499da1f43d0884538d77f73d06e0838b3edae3a7ecca",
+    "grounding": "b7f579b6ba2c99bfff964bb27a85f057fd15022d28dc40905ed310fe9a9ec7ad",
+    "parser": "1eafc8993c1731fa2584532893c7a418f3888d7288b23d0e1cb108e291dc7cb0",
+    "previous_evaluator": "bdd8fee9b7da9a40f3b0fc0141f8422ce610c9df9628774af88b3fb5e73073dd",
+    "train": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a",
+    "families": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba",
+    "qualification": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4",
+    "previous_requests": "8e7bb5d6803fcaca13ec866aa1774d0222584ef3eb1df03324ea7b5bdf952825",
+    "alternative_names": "e818658ca35a3746547cef573af1eef78d34a44e2d08da8b589d9931ea3253c7",
+    "v6_challenge": "26eedc54d3a7cbfb9c933fcb6366b123f7d5abdadfd4a5e33dc4fffa03954894",
+    "frames_challenge": "5761c835efbd2de88ac6e59a83bac2d1e449b157240fac2b3704a3b378d99300",
+    "assistant.py": "a07e042dca4e1b7b83d501fdd1a04ad5949b106fa96f9a253565cc3c66f4d29b",
+    "flexible_skills.py": "2c94fbc0d93ed1aec727554ffa4b7ff1d20d34b056f133eb7dd6fdeaa9b2beb5",
+    "exact_aliases.py": "b7fbaf90793896d4672328690ae3dcea0b4fc2471ea9e468a3ec49736933ea0b",
+    "skill_programs.py": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+    "skill_bank.py": "b08985487b0c2a21b0a4bd8e9374916592c974e71391f2167d2ca40eb7c8032c",
+    "query_learning.py": "afd152cc95aa7818d7edf5fee03050caca74f87d6233646ecf62fc27dab9c90a",
+    "skill_validation.py": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778",
+    "context_memory.py": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+    "stable_contracts": "0709a96ed6c284ff143a2c132b84dc707f8e9f82c77aa2affc3ac7396be1e0a9",
+    "joint": "8e0c35bb9a39d3fc81d3ab42af78528a3e003d215ade158edde85f52870f458d"
+  },
+  "methods": [
+    "approved",
+    "grounded_parser",
+    "joint"
+  ],
+  "prospective_sha256": "aa808942ff23461fa4c58feba2398a117866cfa97d7ba00497dbeda773e0e63a",
+  "smoke": false,
+  "experts": 30,
+  "aliases": 112
+}

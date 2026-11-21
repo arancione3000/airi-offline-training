@@ -1,0 +1,142 @@
+[
+  {
+    "activated": 8,
+    "aliases_sha256": "10e2839a5ca079a170bb3260c898cd3056b8cd5578e0ad23575521764ed2e7f9",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1266,
+      "passed": true,
+      "positive_total": 316,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 40,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112101,
+    "status": "updated",
+    "total_aliases": 158,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 8,
+    "aliases_sha256": "6512a4ca981dc19b50b35a56a7c4d20d0d3197e050697303ad7f2a37429729dd",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1322,
+      "passed": true,
+      "positive_total": 332,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 32,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112102,
+    "status": "updated",
+    "total_aliases": 166,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 8,
+    "aliases_sha256": "17965012394efd219d55bb60d89de8560e295fd34a0ea2d3eaaf8e3b2a2aeb90",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1378,
+      "passed": true,
+      "positive_total": 348,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 24,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112103,
+    "status": "updated",
+    "total_aliases": 174,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 8,
+    "aliases_sha256": "ca0bcefe5f2b3c764650170efd579432235600cc7dea7235c85f9a64c10e0c0d",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1434,
+      "passed": true,
+      "positive_total": 364,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 16,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112104,
+    "status": "updated",
+    "total_aliases": 182,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 8,
+    "aliases_sha256": "8109db75cd3e3cb29e807117c607562c2f757822427812a22bf0fe12eafbdf82",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1490,
+      "passed": true,
+      "positive_total": 380,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 8,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112105,
+    "status": "updated",
+    "total_aliases": 190,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 8,
+    "aliases_sha256": "b0c976afb52d500f186cd84da383fed57554879adf374900cd80155b446aad7a",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1546,
+      "passed": true,
+      "positive_total": 396,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 8,
+    "remaining": 0,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112106,
+    "status": "updated",
+    "total_aliases": 198,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  },
+  {
+    "activated": 0,
+    "aliases_sha256": "b0c976afb52d500f186cd84da383fed57554879adf374900cd80155b446aad7a",
+    "audit": {
+      "historical_cases": 989,
+      "negative_total": 1546,
+      "passed": true,
+      "positive_total": 396,
+      "stored_contracts": 600,
+      "unconfirmed_donor_executions": 44
+    },
+    "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+    "joint_donations_activated": 0,
+    "remaining": 0,
+    "scope": "exact reviewed TRAIN questions on independent values",
+    "seed": 2026112107,
+    "status": "audited",
+    "total_aliases": 198,
+    "train_sha256": "e119aa3595d1cb8d0796134b66de989e1854216b55eba94941a8653d40928060"
+  }
+]

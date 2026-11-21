@@ -11,6 +11,8 @@ on:
       - '.github/workflows/airi-query-research.yml'
       - 'scripts/research-training/semantic-routing-20261116/**'
       - 'scripts/research-training/intent-transfer-20261120/**'
+      - 'scripts/research-training/exact-transfer-20261120/**'
+      - 'scripts/research-training/joint-action-20261121/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -22,6 +24,8 @@ on:
       - '.github/workflows/airi-query-research.yml'
       - 'scripts/research-training/semantic-routing-20261116/**'
       - 'scripts/research-training/intent-transfer-20261120/**'
+      - 'scripts/research-training/exact-transfer-20261120/**'
+      - 'scripts/research-training/joint-action-20261121/**'
   workflow_dispatch:
 permissions:
   contents: read

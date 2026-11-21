@@ -1,0 +1,725 @@
+{
+  "rows": [
+    {
+      "query": "Riscrivi per intero il testo della targa in caratteri minuscoli.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "condition": "canonical_affirmative",
+      "id": "jc2-001"
+    },
+    {
+      "query": "La combinazione impressa sulla placca di immatricolazione mi serve tutta in minuscolo.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-002"
+    },
+    {
+      "query": "Scrivimi in maiuscolo l'etichetta nutrizionale riportata sulla confezione.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-003"
+    },
+    {
+      "query": "Dammi soltanto le iniziali del referente dell'ordine.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": "auto_v1_contact",
+      "condition": "incompatible_action",
+      "id": "jc2-004"
+    },
+    {
+      "query": "Dal segnale acquisito estrai unicamente i caratteri in posizione pari.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": "signal_reverse",
+      "condition": "incompatible_action",
+      "id": "jc2-005"
+    },
+    {
+      "query": "Quale riferimento contraddistingue il preventivo che precede l'acquisto?",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-006"
+    },
+    {
+      "query": "Che codice identifica proprio questa commessa? Riportalo per intero.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-007"
+    },
+    {
+      "query": "Del mio profilo ti ho dato il nome alternativo: mi serve con tutte le lettere piccole, in minuscolo.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-008"
+    },
+    {
+      "query": "Andrea dice che domani potrebbe chiederci di rovesciare il segnale acquisito. Per ora prendine solo nota.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": "signal_reverse",
+      "condition": "indirect_or_compound",
+      "id": "jc2-009"
+    },
+    {
+      "query": "Quante unità rimangono in magazzino togliendo dal primo numero di giacenza il secondo che ti ho dato?",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-010"
+    },
+    {
+      "query": "Vorrei una sola cifra che sommi le due quantità del carrello.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "condition": "canonical_affirmative",
+      "id": "jc2-011"
+    },
+    {
+      "query": "Porta in minuscolo il soprannome della squadra di pallavolo.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-012"
+    },
+    {
+      "query": "Della sequenza catturata dal ricevitore dammi la lettura a ritroso.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-013"
+    },
+    {
+      "query": "Del codice del pacco voglio soltanto il numero di caratteri.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": "parcel_copy",
+      "condition": "incompatible_action",
+      "id": "jc2-014"
+    },
+    {
+      "query": "Mi occorre il codice del pacco, identico a quello che ti ho lasciato.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "condition": "canonical_affirmative",
+      "id": "jc2-015"
+    },
+    {
+      "query": "Mi trascrivi il codice della raccomandata? Si tratta di una lettera.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-016"
+    },
+    {
+      "query": "Rovescia i caratteri del numero di serie del lettore ottico.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-017"
+    },
+    {
+      "query": "Un esempio di richiesta diretta potrebbe essere «Dimmi l'alias email». Quante parole contiene questo esempio?",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": "auto_v1_email_alias",
+      "condition": "indirect_or_compound",
+      "id": "jc2-018"
+    },
+    {
+      "query": "Calcola lo scarto assoluto fra i due valori del saldo, ignorando il segno.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_remaining",
+      "condition": "incompatible_action",
+      "id": "jc2-019"
+    },
+    {
+      "query": "Per la coppia contrassegnata da delta, fammi l'addizione dei numeri che hai ricevuto.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-020"
+    },
+    {
+      "query": "Nel token di verifica scambia solamente i primi due caratteri.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "incompatible_action",
+      "id": "jc2-021"
+    },
+    {
+      "query": "Ad ogni quantità dell'inventario aggiungi un'unità e mostrami separatamente i due risultati.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "incompatible_action",
+      "id": "jc2-022"
+    },
+    {
+      "query": "«Calcolate la scorta che rimane togliendo il secondo valore dal primo»: questo è il quesito che il docente ha cancellato.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "indirect_or_compound",
+      "id": "jc2-023"
+    },
+    {
+      "query": "Per i due valori della scorta, sottrai il secondo dato dal primo.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "canonical_affirmative",
+      "id": "jc2-024"
+    },
+    {
+      "query": "Dai due valori del saldo ricava il residuo sottraendo il secondo dal primo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "condition": "canonical_affirmative",
+      "id": "jc2-025"
+    },
+    {
+      "query": "Moltiplica il prezzo unitario per la quantità, poi sottrai uno sconto di cinque euro.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_unit_total",
+      "condition": "incompatible_action",
+      "id": "jc2-026"
+    },
+    {
+      "query": "Somma le quantità indicate nelle due righe del reso merce.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-027"
+    },
+    {
+      "query": "Ordina i due valori delta dal minore al maggiore.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": "delta_sum",
+      "condition": "incompatible_action",
+      "id": "jc2-028"
+    },
+    {
+      "query": "Per la ristampa metti tutta l'etichetta di spedizione in maiuscolo.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "condition": "canonical_affirmative",
+      "id": "jc2-029"
+    },
+    {
+      "query": "Rileggi il segnale acquisito partendo dall'ultimo carattere e tornando fino al primo.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "condition": "canonical_affirmative",
+      "id": "jc2-030"
+    },
+    {
+      "query": "Sulla lavagna ho annotato la domanda «Mi passi il codice del pacco?». La punteggiatura va bene?",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": "parcel_copy",
+      "condition": "indirect_or_compound",
+      "id": "jc2-031"
+    },
+    {
+      "query": "Mi passi il referente dell'ordine, con il nome esattamente com'è registrato?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "condition": "canonical_affirmative",
+      "id": "jc2-032"
+    },
+    {
+      "query": "Mostrami solo la parte dell'alias email che precede il primo trattino.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": "auto_v1_email_alias",
+      "condition": "incompatible_action",
+      "id": "jc2-033"
+    },
+    {
+      "query": "Trasforma in maiuscolo la scritta sul biglietto d'ingresso cartaceo.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-034"
+    },
+    {
+      "query": "Leggi a ritroso i caratteri del segnale di prova simulato, distinto dalla rilevazione.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-035"
+    },
+    {
+      "query": "Riporta qui il riferimento cliente conservando tutti i caratteri.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "canonical_affirmative",
+      "id": "jc2-036"
+    },
+    {
+      "query": "Lo stagista mi ha chiesto di sommare i due valori delta; ti sto raccontando com'è andata la riunione.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": "delta_sum",
+      "condition": "indirect_or_compound",
+      "id": "jc2-037"
+    },
+    {
+      "query": "Puoi scrivere a tutte maiuscole il cartellino da apporre sul collo in partenza?",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-038"
+    },
+    {
+      "query": "Il collega suggeriva di farsi dare il riferimento cliente. Puoi dirmi in che modo formulare educatamente la domanda?",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "indirect_or_compound",
+      "id": "jc2-039"
+    },
+    {
+      "query": "Restituiscimi l'etichetta di spedizione in maiuscolo affiancata alla sua lunghezza.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": "auto_v1_label_upper",
+      "condition": "incompatible_action",
+      "id": "jc2-040"
+    },
+    {
+      "query": "Mi dai tutta in minuscolo la sigla che compare sul contrassegno assicurativo?",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-041"
+    },
+    {
+      "query": "Converti le lettere del testo della targa in numeri in base alla loro posizione nell'alfabeto.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": "plate_lower",
+      "condition": "incompatible_action",
+      "id": "jc2-042"
+    },
+    {
+      "query": "Puoi copiarmi il riferimento dell'ordine così come compare?",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "condition": "canonical_affirmative",
+      "id": "jc2-043"
+    },
+    {
+      "query": "Che differenza c'è tra dire «prezzo unitario» e dire «prezzo unitario moltiplicato per la quantità»?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_unit_total",
+      "condition": "indirect_or_compound",
+      "id": "jc2-044"
+    },
+    {
+      "query": "Trascrivi l'alias email che ti ho indicato, compresi eventuali simboli.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "condition": "canonical_affirmative",
+      "id": "jc2-045"
+    },
+    {
+      "query": "Per i due valori della temperatura sottrai la seconda lettura dalla prima.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-046"
+    },
+    {
+      "query": "Se un giorno dovessi chiederti la somma delle quantità dell'inventario, quali dati ti occorrerebbero?",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "indirect_or_compound",
+      "id": "jc2-047"
+    },
+    {
+      "query": "La dicitura «referente dell'ordine» indica una persona o un numero?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": "auto_v1_contact",
+      "condition": "indirect_or_compound",
+      "id": "jc2-048"
+    },
+    {
+      "query": "Per le due quantità del carrello indica quale rappresenta la quota maggiore.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_cart_total",
+      "condition": "incompatible_action",
+      "id": "jc2-049"
+    },
+    {
+      "query": "Passami l'identificativo del collo che dobbiamo consegnare.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-050"
+    },
+    {
+      "query": "La richiesta di sommare le quantità del carrello è stata ritirata. Puoi spiegare cosa vuol dire ritirare una richiesta?",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_cart_total",
+      "condition": "indirect_or_compound",
+      "id": "jc2-051"
+    },
+    {
+      "query": "Quanto costa l'intera partita di pezzi al costo per pezzo che ti ho comunicato? Usa il numero di pezzi indicato.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-052"
+    },
+    {
+      "query": "Dei due livelli del serbatoio voglio il primo meno il secondo.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-053"
+    },
+    {
+      "query": "Scrivi in maiuscolo solo la parola iniziale del testo della tessera.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": "card_upper",
+      "condition": "incompatible_action",
+      "id": "jc2-054"
+    },
+    {
+      "query": "Vorrei il testo della tessera scritto tutto con lettere maiuscole.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "condition": "canonical_affirmative",
+      "id": "jc2-055"
+    },
+    {
+      "query": "Prendi i due valori della scorta e sottrai il primo al secondo, in quest'ordine.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_stock_remaining",
+      "condition": "incompatible_action",
+      "id": "jc2-056"
+    },
+    {
+      "query": "Oscura gli ultimi tre caratteri del riferimento cliente con degli asterischi.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "incompatible_action",
+      "id": "jc2-057"
+    },
+    {
+      "query": "Ho immaginato una schermata che mostra l'alias account in minuscolo. Secondo te che vantaggio avrebbe?",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": "auto_v1_account_lower",
+      "condition": "indirect_or_compound",
+      "id": "jc2-058"
+    },
+    {
+      "query": "Presentami l'alias account interamente in minuscolo.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "condition": "canonical_affirmative",
+      "id": "jc2-059"
+    },
+    {
+      "query": "Riportami il nome alternativo del canale radio.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-060"
+    },
+    {
+      "query": "Per la scheda dell'acquirente mi serve l'identificativo assegnato a chi ha comprato.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-061"
+    },
+    {
+      "query": "Magari dopo mi sarà utile conoscere il riferimento dell'ordine, ma adesso lascialo da parte.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_order_reference",
+      "condition": "indirect_or_compound",
+      "id": "jc2-062"
+    },
+    {
+      "query": "Mi calcoli quanto valgono, sommati, i due valori delta?",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "condition": "canonical_affirmative",
+      "id": "jc2-063"
+    },
+    {
+      "query": "Sul badge c'è una scritta: riportamela in stampatello maiuscolo.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-064"
+    },
+    {
+      "query": "Riscrivi in forma interrogativa la frase «Sottrai il secondo valore del saldo dal primo».",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_remaining",
+      "condition": "indirect_or_compound",
+      "id": "jc2-065"
+    },
+    {
+      "query": "Ho indicato due importi di bilancio in sequenza: dimmi quanto rimane del primo dopo aver tolto il successivo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-066"
+    },
+    {
+      "query": "Fai la somma delle unità elencate nelle due voci del prospetto inventariale.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-067"
+    },
+    {
+      "query": "Se deciderò di procedere più tardi, dovrai moltiplicare i due interi sigma. Aspetta la mia decisione.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": "sigma_product",
+      "condition": "indirect_or_compound",
+      "id": "jc2-068"
+    },
+    {
+      "query": "L'istruzione di invertire il token di verifica compare due volte nel manuale. Mi consigli di togliere la ripetizione?",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "indirect_or_compound",
+      "id": "jc2-069"
+    },
+    {
+      "query": "Sto usando la coppia epsilon: sommane i valori.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-070"
+    },
+    {
+      "query": "Dammi il token di verifica con i caratteri nell'ordine opposto all'originale.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "canonical_affirmative",
+      "id": "jc2-071"
+    },
+    {
+      "query": "Inverti la sequenza di simboli che serve per convalidare l'accesso.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-072"
+    },
+    {
+      "query": "Quanto si ottiene facendo la moltiplicazione della coppia che porta la sigla sigma?",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-073"
+    },
+    {
+      "query": "Moltiplica la distanza in chilometri per il consumo al chilometro e dammi i litri complessivi.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-074"
+    },
+    {
+      "query": "Somma i conteggi delle due liste dei desideri.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-075"
+    },
+    {
+      "query": "Devo compilare una rubrica: passami il nome alternativo della casella di posta.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-076"
+    },
+    {
+      "query": "Trova il prodotto dei due interi sigma che ti ho appena indicato.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "condition": "canonical_affirmative",
+      "id": "jc2-077"
+    },
+    {
+      "query": "Quando il corriere avrà approvato il testo, converti in maiuscolo l'etichetta di spedizione. Per adesso il testo è in revisione.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": "auto_v1_label_upper",
+      "condition": "indirect_or_compound",
+      "id": "jc2-078"
+    },
+    {
+      "query": "Moltiplicando il prezzo unitario per la quantità, che spesa ottengo?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "condition": "canonical_affirmative",
+      "id": "jc2-079"
+    },
+    {
+      "query": "Qual è il nominativo del referente del reclamo post-vendita?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-080"
+    },
+    {
+      "query": "Metti insieme con un'addizione i conteggi degli articoli nel cestino della spesa online.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-081"
+    },
+    {
+      "query": "Dei due interi sigma mi interessa il resto della divisione del primo per il secondo.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": "sigma_product",
+      "condition": "incompatible_action",
+      "id": "jc2-082"
+    },
+    {
+      "query": "Nell'alias account cambia in minuscolo soltanto la lettera finale.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": "auto_v1_account_lower",
+      "condition": "incompatible_action",
+      "id": "jc2-083"
+    },
+    {
+      "query": "È grammaticalmente corretta l'espressione «testo della targa in minuscolo»?",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": "plate_lower",
+      "condition": "indirect_or_compound",
+      "id": "jc2-084"
+    },
+    {
+      "query": "Moltiplica fra loro i due interi identificati dalla lettera omega.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-085"
+    },
+    {
+      "query": "Passami il riferimento del fornitore come risulta in anagrafica.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "condition": "foreign_object",
+      "id": "jc2-086"
+    },
+    {
+      "query": "Metti in maiuscolo il testo della tessera soltanto dopo il via del responsabile; il via deve ancora arrivare.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": "card_upper",
+      "condition": "indirect_or_compound",
+      "id": "jc2-087"
+    },
+    {
+      "query": "Che totale formano insieme le due quantità dell'inventario?",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "condition": "canonical_affirmative",
+      "id": "jc2-088"
+    },
+    {
+      "query": "Separa con un punto ogni carattere del riferimento dell'ordine.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_order_reference",
+      "condition": "incompatible_action",
+      "id": "jc2-089"
+    },
+    {
+      "query": "Per parlare di questa commessa, qual è il nominativo della persona indicata come contatto?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "condition": "paraphrased_affirmative",
+      "id": "jc2-090"
+    }
+  ],
+  "value_offset": 56000
+}
