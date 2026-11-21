@@ -1,0 +1,58 @@
+name: Verify and publish Airi Chat Android 1.1.0
+on:
+  push:
+    branches: [publish/android-v1.1.0]
+permissions:
+  contents: read
+jobs:
+  android:
+    if: github.repository == 'arancione3000/airi-offline-training'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify the staged APK and wait for the public model
+        run: |
+          sha256sum --check <<'CHECKSUM'
+          196f8150718324c0e78f221b9d0779f0a04c4850f8f593de58bab72496b987d9  mobile/release/Airi-Chat.apk
+          CHECKSUM
+          curl --fail --silent --show-error --location --max-time 20 --retry 2 \
+            https://github.com/arancione3000/airi-offline-training/releases/download/airi-chat-android-v1.0.0/Airi-Chat.apk \
+            -o /tmp/airi-chat-1.0.apk
+          curl --fail --silent --show-error --location --max-time 15 --retry-connrefused \
+            --retry-all-errors --retry 20 --retry-delay 8 \
+            https://raw.githubusercontent.com/arancione3000/airi-offline-training/airi-android-current/models/AIRI_ANDROID_CURRENT.json \
+            -o /tmp/android-model.json
+      - name: Enable hardware acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test the upgrade, automatic model download and offline replies
+        uses: ReactiveCircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          api-level: 30
+          target: default
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -cores 4 -memory 3072
+          disable-animations: true
+          script: python mobile/release/smoke-device.py
+  publish:
+    needs: android
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Publish the verified signed APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create airi-chat-android-v1.1.0 mobile/release/Airi-Chat.apk \
+            --target 2c2edd0f0063f37d6c6e464dc51d2009cb526a0b \
+            --title 'Airi Chat per Android 1.1.0' --notes-file mobile/release/NOTES.md --latest=false
