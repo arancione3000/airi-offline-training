@@ -1,14 +1,14 @@
 package com.airi.chat;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.text.InputType;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,7 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -34,22 +33,32 @@ public final class MainActivity extends Activity {
     private static final int OWN = Color.rgb(36, 80, 78);
 
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
+    private final ExecutorService updates = Executors.newSingleThreadExecutor();
+    private final Handler clock = new Handler(Looper.getMainLooper());
+    private final Runnable checkForUpdate = new Runnable() {
+        @Override public void run() {
+            prepareModel();
+            clock.postDelayed(this, 30 * 60 * 1000L);
+        }
+    };
     private final ArrayList<JSONObject> history = new ArrayList<>();
-    private SharedPreferences preferences;
+    private AiriModels models;
     private LinearLayout feed;
     private ScrollView scroll;
     private TextView status;
     private EditText input;
     private Button send;
     private Button clear;
-    private Button settings;
+    private Button retry;
     private boolean busy;
+    private boolean updating;
 
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
         getWindow().setStatusBarColor(BACKGROUND);
         getWindow().setNavigationBarColor(BACKGROUND);
-        preferences = getSharedPreferences("connection", MODE_PRIVATE);
+        models = AiriModels.from(this);
+        deleteSharedPreferences("connection");
         LinearLayout screen = vertical();
         screen.setBackgroundColor(BACKGROUND);
         screen.setPadding(dp(18), dp(14), dp(18), dp(12));
@@ -60,16 +69,17 @@ public final class MainActivity extends Activity {
         TextView brand = text("Airi", 31, LIGHT);
         brand.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         title.addView(brand);
-        status = text("Connessione", 13, MUTED);
+        status = text("Avvio di Airi", 13, MUTED);
         status.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
         title.addView(status);
         top.addView(title, new LinearLayout.LayoutParams(0, -2, 1));
         clear = button("Nuova", PANEL, LIGHT);
-        settings = button("Server", PANEL, LIGHT);
+        retry = button("Riprova", PANEL, LIGHT);
+        retry.setVisibility(View.GONE);
         top.addView(clear);
-        LinearLayout.LayoutParams settingsParams = new LinearLayout.LayoutParams(-2, -2);
-        settingsParams.leftMargin = dp(6);
-        top.addView(settings, settingsParams);
+        LinearLayout.LayoutParams retryParams = new LinearLayout.LayoutParams(-2, -2);
+        retryParams.leftMargin = dp(6);
+        top.addView(retry, retryParams);
         screen.addView(top);
 
         scroll = new ScrollView(this);
@@ -99,7 +109,7 @@ public final class MainActivity extends Activity {
         screen.addView(composer);
         setContentView(screen);
 
-        settings.setOnClickListener(view -> showSettings());
+        retry.setOnClickListener(view -> prepareModel());
         clear.setOnClickListener(view -> { history.clear(); welcome(); });
         input.setOnEditorActionListener((view, action, event) -> {
             if (action == EditorInfo.IME_ACTION_SEND) { sendMessage(); return true; }
@@ -107,125 +117,102 @@ public final class MainActivity extends Activity {
         });
         send.setOnClickListener(view -> sendMessage());
         welcome();
-        if (address().isEmpty()) showSettings();
-        else checkConnection();
+        updateControls();
     }
 
     private void welcome() {
         feed.removeAllViews();
-        TextView line = text(address().isEmpty() ? "Collega il server di Airi per iniziare." : "Scrivi per iniziare la conversazione.", 16, MUTED);
+        TextView line = text("Scrivi per iniziare la conversazione.", 16, MUTED);
         line.setPadding(dp(8), dp(9), dp(8), dp(9));
         feed.addView(line);
     }
 
-    private String address() { return preferences.getString("address", ""); }
-    private String token() { return preferences.getString("token", ""); }
-
-    private void showSettings() {
-        LinearLayout layout = vertical();
-        layout.setPadding(dp(22), dp(12), dp(22), 0);
-        EditText addressInput = new EditText(this);
-        addressInput.setSingleLine();
-        addressInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
-        addressInput.setHint("https:// oppure IP locale");
-        addressInput.setText(address());
-        layout.addView(text("Indirizzo del server", 14, MUTED));
-        layout.addView(addressInput);
-        EditText tokenInput = new EditText(this);
-        tokenInput.setSingleLine();
-        tokenInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        tokenInput.setText(token());
-        layout.addView(text("Chiave di accesso", 14, MUTED));
-        layout.addView(tokenInput);
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Server Airi").setView(layout)
-                .setNegativeButton("Annulla", null).setPositiveButton("Collega", null).create();
-        dialog.setOnShowListener(unused -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-            String next = addressInput.getText().toString().trim();
-            String key = tokenInput.getText().toString().trim();
-            try {
-                new AiriConnection(next, key);
-            } catch (IllegalArgumentException invalid) {
-                addressInput.setError(invalid.getMessage());
-                return;
-            }
-            if (!next.equals(address()) || !key.equals(token())) {
-                history.clear();
-            }
-            preferences.edit().putString("address", next).putString("token", key).apply();
-            if (history.isEmpty()) welcome();
-            dialog.dismiss();
-            checkConnection();
-        }));
-        dialog.show();
-        if (address().isEmpty()) status.setText("Server da configurare");
+    @Override protected void onStart() {
+        super.onStart();
+        clock.post(checkForUpdate);
     }
 
-    private void checkConnection() {
-        String host = address(), key = token();
-        status.setText("Connessione in corso");
-        worker.submit(() -> {
+    @Override protected void onStop() {
+        clock.removeCallbacks(checkForUpdate);
+        super.onStop();
+    }
+
+    private void prepareModel() {
+        if (updating || isDestroyed()) return;
+        updating = true;
+        retry.setVisibility(View.GONE);
+        if (models.revision() < 0) status.setText("Preparazione di Airi · al primo avvio serve Internet");
+        updates.submit(() -> {
+            models.restore();
+            if (models.revision() >= 0) runOnUiThread(this::showModel);
             try {
-                JSONObject result = new AiriConnection(host, key).request("/v1/status", null);
-                if (result.optInt("api_version") != 1) throw new IllegalArgumentException();
-                runOnUiThread(() -> {
-                    if (host.equals(address()) && key.equals(token())) {
-                        status.setText(result.isNull("model_revision") ? "Server raggiunto · modello in caricamento"
-                                : "Connessa · revisione " + result.optInt("model_revision"));
-                    }
-                });
-            } catch (Exception failed) {
-                runOnUiThread(() -> { if (host.equals(address()) && key.equals(token())) status.setText("Server non raggiungibile o chiave errata"); });
+                models.refresh();
+            } catch (Exception | LinkageError error) {
+                Log.w("Airi", "Caricamento del modello non riuscito", error);
             }
+            runOnUiThread(() -> {
+                if (isDestroyed()) return;
+                updating = false;
+                if (models.revision() >= 0) showModel();
+                else {
+                    status.setText("Download non riuscito · controlla la connessione");
+                    retry.setVisibility(View.VISIBLE);
+                }
+            });
         });
+    }
+
+    private void showModel() {
+        if (isDestroyed()) return;
+        if (!busy) status.setText("Sul telefono · revisione " + models.revision());
+        updateControls();
+    }
+
+    private void updateControls() {
+        send.setEnabled(!busy && models.revision() >= 0);
+        clear.setEnabled(!busy);
     }
 
     private void sendMessage() {
         String question = input.getText().toString().trim();
-        if (busy || question.isEmpty()) return;
-        if (address().isEmpty()) { showSettings(); return; }
+        if (busy || question.isEmpty() || models.revision() < 0) return;
         if (history.isEmpty()) feed.removeAllViews();
-        String host = address(), key = token();
         input.setText("");
         bubble(question, true);
         busy = true;
-        send.setEnabled(false); clear.setEnabled(false); settings.setEnabled(false);
+        updateControls();
         status.setText("Airi sta rispondendo");
+        JSONArray messages = new JSONArray(history);
         worker.submit(() -> {
             try {
-                JSONObject request = new JSONObject();
-                JSONArray messages = new JSONArray();
-                int start = Math.max(0, history.size() - 46);
-                for (int i = start; i < history.size(); i++) messages.put(history.get(i));
                 JSONObject user = message("user", question);
                 messages.put(user);
-                request.put("messages", messages);
-                while (request.toString().getBytes(StandardCharsets.UTF_8).length > 64000 && messages.length() > 1) {
-                    messages.remove(0); messages.remove(0);
-                }
-                JSONObject response = new AiriConnection(host, key).request("/v1/chat", request);
-                String answer = response.getString("answer");
+                String answer = models.answer(messages);
                 JSONObject reply = message("assistant", answer);
                 runOnUiThread(() -> {
-                    history.add(user); history.add(reply);
-                    if (history.size() > 46) { history.remove(0); history.remove(0); }
-                    if (answer.trim().isEmpty()) {
-                        history.remove(history.size() - 1); history.remove(history.size() - 1);
+                    if (isDestroyed()) return;
+                    if (answer.isEmpty()) {
                         bubble("Airi ha restituito una risposta vuota.", false);
-                    } else bubble(answer, false);
-                    status.setText(response.isNull("model_revision") ? "Connessa"
-                            : "Connessa · revisione " + response.optInt("model_revision"));
-                    ready();
+                    } else {
+                        history.add(user);
+                        history.add(reply);
+                        if (history.size() > 46) {
+                            history.remove(0);
+                            history.remove(0);
+                        }
+                        bubble(answer, false);
+                    }
+                    busy = false;
+                    showModel();
                 });
-            } catch (Exception error) {
+            } catch (Exception | LinkageError error) {
+                Log.w("Airi", "Not able to generate a reply", error);
                 runOnUiThread(() -> {
-                    String message = error instanceof java.io.IOException && error.getMessage() != null
-                            && (error.getMessage().startsWith("Airi") || error.getMessage().startsWith("Chiave")
-                                || error.getMessage().startsWith("Il") || error.getMessage().startsWith("L’indirizzo"))
-                            ? error.getMessage() : "Connessione interrotta. Controlla il server e riprova.";
-                    bubble(message, false);
+                    if (isDestroyed()) return;
+                    bubble("Airi non è riuscita a rispondere. Riprova.", false);
                     if (input.length() == 0) input.setText(question);
-                    status.setText("Invio non riuscito");
-                    ready();
+                    busy = false;
+                    showModel();
                 });
             }
         });
@@ -233,10 +220,6 @@ public final class MainActivity extends Activity {
 
     private static JSONObject message(String role, String value) throws Exception {
         return new JSONObject().put("role", role).put("content", value);
-    }
-
-    private void ready() {
-        busy = false; send.setEnabled(true); clear.setEnabled(true); settings.setEnabled(true);
     }
 
     private void bubble(String value, boolean own) {
@@ -290,6 +273,7 @@ public final class MainActivity extends Activity {
 
     @Override protected void onDestroy() {
         worker.shutdownNow();
+        updates.shutdownNow();
         super.onDestroy();
     }
 }
