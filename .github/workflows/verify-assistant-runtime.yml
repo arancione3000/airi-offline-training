@@ -14,6 +14,7 @@ on:
       - 'scripts/research-training/exact-transfer-20261120/**'
       - 'scripts/research-training/joint-action-20261121/**'
       - 'scripts/research-training/certified-procedure-transfer/**'
+      - 'scripts/research-training/incremental-procedure-verification/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -28,6 +29,7 @@ on:
       - 'scripts/research-training/exact-transfer-20261120/**'
       - 'scripts/research-training/joint-action-20261121/**'
       - 'scripts/research-training/certified-procedure-transfer/**'
+      - 'scripts/research-training/incremental-procedure-verification/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -50,6 +52,11 @@ jobs:
         run: |
           python -m unittest discover -s scripts/research-training/certified-procedure-transfer -v
           python scripts/research-training/certified-procedure-transfer/trial.py "$RUNNER_TEMP/certified-procedure-transfer"
+      - name: Verify incremental procedure updates
+        run: |
+          python -m unittest discover -s scripts/research-training/incremental-procedure-verification -v
+          python scripts/research-training/incremental-procedure-verification/benchmark.py "$RUNNER_TEMP/incremental-procedure-verification.json" --repeats 1
+          python scripts/research-training/incremental-procedure-verification/synthesis.py --output "$RUNNER_TEMP/incremental-procedure-synthesis.json"
       - name: Verify independent functionality and inherited native preservation
         run: |
           python scripts/assistant-runtime/evaluate.py --output assistant-ci --prepare-only --seed 202611152254

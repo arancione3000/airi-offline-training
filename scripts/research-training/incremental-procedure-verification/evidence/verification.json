@@ -1,0 +1,989 @@
+{
+  "domain_pairs": 4128,
+  "versions": 21,
+  "cpu_repeats": 5,
+  "preparation_cpu_ms_median": 33.552685,
+  "sha256": {
+    "verifier": "5d459f4610edd2980f2ac5150350b079285d8cf7b472561126a02c8b1c3ce74e",
+    "fixtures": "a511b01dbdcfd98175431492190392faa9907f8474d02e0a98c3c5470a1d6066"
+  },
+  "metrics": {
+    "full": {
+      "first": {
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0
+      },
+      "accepted_updates": 17,
+      "accepted_updates_total": {
+        "evaluated_nodes": 513,
+        "evaluated_cells": 2117664,
+        "reused_nodes": 0,
+        "compared_reference_cells": 2117664,
+        "compared_dependency_cells": 0
+      },
+      "rejected_updates": 3,
+      "cpu_ms": {
+        "first_median": 21.086821,
+        "accepted_updates_total_median": 337.494554,
+        "complete_sequence_median": 404.608608
+      }
+    },
+    "structural": {
+      "first": {
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0
+      },
+      "accepted_updates": 17,
+      "accepted_updates_total": {
+        "evaluated_nodes": 55,
+        "evaluated_cells": 227040,
+        "reused_nodes": 458,
+        "compared_reference_cells": 293088,
+        "compared_dependency_cells": 0
+      },
+      "rejected_updates": 3,
+      "cpu_ms": {
+        "first_median": 22.156994,
+        "accepted_updates_total_median": 37.129906,
+        "complete_sequence_median": 62.107141
+      }
+    },
+    "semantic": {
+      "first": {
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0
+      },
+      "accepted_updates": 17,
+      "accepted_updates_total": {
+        "evaluated_nodes": 23,
+        "evaluated_cells": 94944,
+        "reused_nodes": 490,
+        "compared_reference_cells": 160992,
+        "compared_dependency_cells": 78432
+      },
+      "rejected_updates": 3,
+      "cpu_ms": {
+        "first_median": 21.216262,
+        "accepted_updates_total_median": 20.281719,
+        "complete_sequence_median": 44.584499
+      }
+    }
+  },
+  "versions_by_method": {
+    "full": [
+      {
+        "name": "baseline",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 1,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "commute_completed_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "express_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 3,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "subtract_via_signed_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 4,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_foreign_rounding_convention",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "rejected",
+        "version": 4,
+        "evaluated_nodes": 6,
+        "evaluated_cells": 24768,
+        "reused_nodes": 0,
+        "compared_reference_cells": 24768,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "floor_q",
+          "index": 18,
+          "input": [
+            -64,
+            3
+          ],
+          "expected": -22,
+          "actual": -21
+        }
+      },
+      {
+        "name": "commute_reconstruction",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 5,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "combine_duplicate_terms",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 6,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "use_original_step_width",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 7,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_next_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 8,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "use_nonnegative_euclidean_remainder",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 9,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "express_previous_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 10,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_previous_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 11,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "previous_remainder_as_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 12,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "switch_internal_direction_convention",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "accepted",
+        "version": 13,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_reversed_step_width",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "rejected",
+        "version": 13,
+        "evaluated_nodes": 14,
+        "evaluated_cells": 57792,
+        "reused_nodes": 0,
+        "compared_reference_cells": 57792,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "next_boundary",
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "expected": -80,
+          "actual": -48
+        }
+      },
+      {
+        "name": "add_residue_diagnostics",
+        "nodes": 32,
+        "committed_sha256": "7bc6ffbe76631e32c413177d3c1e76528693a05bebca9660fa89858cb8aee298",
+        "status": "accepted",
+        "version": 14,
+        "evaluated_nodes": 32,
+        "evaluated_cells": 132096,
+        "reused_nodes": 0,
+        "compared_reference_cells": 132096,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "add_comparison_workflows",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "accepted",
+        "version": 15,
+        "evaluated_nodes": 34,
+        "evaluated_cells": 140352,
+        "reused_nodes": 0,
+        "compared_reference_cells": 140352,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_unimplemented_specification_change",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "rejected",
+        "version": 15,
+        "evaluated_nodes": 34,
+        "evaluated_cells": 140352,
+        "reused_nodes": 0,
+        "compared_reference_cells": 140352,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "gap_difference",
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "expected": 7,
+          "actual": -7
+        }
+      },
+      {
+        "name": "retire_unused_workflow",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 16,
+        "evaluated_nodes": 33,
+        "evaluated_cells": 136224,
+        "reused_nodes": 0,
+        "compared_reference_cells": 136224,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "restore_prior_product_and_commute_truncation",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 17,
+        "evaluated_nodes": 33,
+        "evaluated_cells": 136224,
+        "reused_nodes": 0,
+        "compared_reference_cells": 136224,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "restore_explicit_boundary_definitions",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 18,
+        "evaluated_nodes": 33,
+        "evaluated_cells": 136224,
+        "reused_nodes": 0,
+        "compared_reference_cells": 136224,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    ],
+    "structural": [
+      {
+        "name": "baseline",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 1,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "commute_completed_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 7,
+        "evaluated_cells": 28896,
+        "reused_nodes": 22,
+        "compared_reference_cells": 33024,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "express_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 3,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "subtract_via_signed_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 4,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 26,
+        "compared_reference_cells": 16512,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_foreign_rounding_convention",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "rejected",
+        "version": 4,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 5,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "floor_q",
+          "index": 18,
+          "input": [
+            -64,
+            3
+          ],
+          "expected": -22,
+          "actual": -21
+        }
+      },
+      {
+        "name": "commute_reconstruction",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 5,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "combine_duplicate_terms",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 6,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "use_original_step_width",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 7,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_next_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 8,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 26,
+        "compared_reference_cells": 16512,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "use_nonnegative_euclidean_remainder",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 9,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "express_previous_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 10,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_previous_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 11,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 26,
+        "compared_reference_cells": 16512,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "previous_remainder_as_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 12,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "switch_internal_direction_convention",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "accepted",
+        "version": 13,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 26,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_reversed_step_width",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "rejected",
+        "version": 13,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 13,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "next_boundary",
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "expected": -80,
+          "actual": -48
+        }
+      },
+      {
+        "name": "add_residue_diagnostics",
+        "nodes": 32,
+        "committed_sha256": "7bc6ffbe76631e32c413177d3c1e76528693a05bebca9660fa89858cb8aee298",
+        "status": "accepted",
+        "version": 14,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 29,
+        "compared_reference_cells": 16512,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "add_comparison_workflows",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "accepted",
+        "version": 15,
+        "evaluated_nodes": 2,
+        "evaluated_cells": 8256,
+        "reused_nodes": 32,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_unimplemented_specification_change",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "rejected",
+        "version": 15,
+        "evaluated_nodes": 0,
+        "evaluated_cells": 0,
+        "reused_nodes": 34,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "gap_difference",
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "expected": 7,
+          "actual": -7
+        }
+      },
+      {
+        "name": "retire_unused_workflow",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 16,
+        "evaluated_nodes": 0,
+        "evaluated_cells": 0,
+        "reused_nodes": 33,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "restore_prior_product_and_commute_truncation",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 17,
+        "evaluated_nodes": 18,
+        "evaluated_cells": 74304,
+        "reused_nodes": 15,
+        "compared_reference_cells": 78432,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "restore_explicit_boundary_definitions",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 18,
+        "evaluated_nodes": 6,
+        "evaluated_cells": 24768,
+        "reused_nodes": 27,
+        "compared_reference_cells": 28896,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      }
+    ],
+    "semantic": [
+      {
+        "name": "baseline",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 1,
+        "evaluated_nodes": 29,
+        "evaluated_cells": 119712,
+        "reused_nodes": 0,
+        "compared_reference_cells": 119712,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "commute_completed_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 2,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 24768,
+        "mismatch": null
+      },
+      {
+        "name": "express_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 3,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "subtract_via_signed_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 4,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 8256,
+        "mismatch": null
+      },
+      {
+        "name": "reject_foreign_rounding_convention",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "rejected",
+        "version": 4,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 5,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "floor_q",
+          "index": 18,
+          "input": [
+            -64,
+            3
+          ],
+          "expected": -22,
+          "actual": -21
+        }
+      },
+      {
+        "name": "commute_reconstruction",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 5,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "combine_duplicate_terms",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 6,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "use_original_step_width",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 7,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_next_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 8,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 4128,
+        "mismatch": null
+      },
+      {
+        "name": "use_nonnegative_euclidean_remainder",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 9,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "express_previous_negation_as_product",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 10,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "arithmetic_for_previous_amount",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 11,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 8256,
+        "mismatch": null
+      },
+      {
+        "name": "previous_remainder_as_sum",
+        "nodes": 29,
+        "committed_sha256": "d80e71a3a86ddeedd2154a12f6bdeb9e82e9be0796f21d0d08d867c80c01899c",
+        "status": "accepted",
+        "version": 12,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 28,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "switch_internal_direction_convention",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "accepted",
+        "version": 13,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 26,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_reversed_step_width",
+        "nodes": 29,
+        "committed_sha256": "a8c16b13aa45a9d4885fb204bb24a803df71b5bddada4532a2d3856e80612d9c",
+        "status": "rejected",
+        "version": 13,
+        "evaluated_nodes": 1,
+        "evaluated_cells": 4128,
+        "reused_nodes": 13,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "next_boundary",
+          "index": 0,
+          "input": [
+            -64,
+            -16
+          ],
+          "expected": -80,
+          "actual": -48
+        }
+      },
+      {
+        "name": "add_residue_diagnostics",
+        "nodes": 32,
+        "committed_sha256": "7bc6ffbe76631e32c413177d3c1e76528693a05bebca9660fa89858cb8aee298",
+        "status": "accepted",
+        "version": 14,
+        "evaluated_nodes": 3,
+        "evaluated_cells": 12384,
+        "reused_nodes": 29,
+        "compared_reference_cells": 16512,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "add_comparison_workflows",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "accepted",
+        "version": 15,
+        "evaluated_nodes": 2,
+        "evaluated_cells": 8256,
+        "reused_nodes": 32,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "reject_unimplemented_specification_change",
+        "nodes": 34,
+        "committed_sha256": "7aca66f069397893ec8455a64d8445306f6b0297cf2d04b58887081a8bb04397",
+        "status": "rejected",
+        "version": 15,
+        "evaluated_nodes": 0,
+        "evaluated_cells": 0,
+        "reused_nodes": 34,
+        "compared_reference_cells": 8256,
+        "compared_dependency_cells": 0,
+        "mismatch": {
+          "node": "gap_difference",
+          "index": 1,
+          "input": [
+            -64,
+            -15
+          ],
+          "expected": 7,
+          "actual": -7
+        }
+      },
+      {
+        "name": "retire_unused_workflow",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 16,
+        "evaluated_nodes": 0,
+        "evaluated_cells": 0,
+        "reused_nodes": 33,
+        "compared_reference_cells": 4128,
+        "compared_dependency_cells": 0,
+        "mismatch": null
+      },
+      {
+        "name": "restore_prior_product_and_commute_truncation",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 17,
+        "evaluated_nodes": 2,
+        "evaluated_cells": 8256,
+        "reused_nodes": 31,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 24768,
+        "mismatch": null
+      },
+      {
+        "name": "restore_explicit_boundary_definitions",
+        "nodes": 33,
+        "committed_sha256": "25076588751c6aaff7902921ea732c32c10073dcf80b59492fa5bd586703cb7f",
+        "status": "accepted",
+        "version": 18,
+        "evaluated_nodes": 2,
+        "evaluated_cells": 8256,
+        "reused_nodes": 31,
+        "compared_reference_cells": 12384,
+        "compared_dependency_cells": 8256,
+        "mismatch": null
+      }
+    ]
+  }
+}
