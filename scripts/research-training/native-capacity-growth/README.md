@@ -41,3 +41,16 @@ PYTHONPATH=/workspace/airi-lab/native-source/computer \
   /workspace/airi-lab/rev4/checkpoint /workspace/airi-lab/rev4/experiment \
   /tmp/airi-native-capacity-20261121/candidate-branch.pt /tmp/airi-guarded-projection-new.json
 ```
+
+## Condizionare l'espansione a una richiesta di somma
+
+Un secondo approccio monta un'uscita numerica con tre parametri addestrati su 480 esempi. La richiesta deve usare uno dei due formati esatti, in italiano o in inglese, e contenere due interi da 1 a 64. Il percorso estrae i due operandi, li passa al ramo appreso e rende il risultato in formato decimale. L'esperimento confronta il decoder nativo, un'uscita costante con lo stesso numero di parametri e l'uscita appresa su 24 coppie nuove, ciascuna in entrambe le lingue.
+
+Il decoder ottiene 2/48, l'uscita costante 0/48 e l'uscita appresa 48/48. Il ramo ricaricato riproduce tutti i 4.096 risultati del calcolo esatto nel dominio. La prova ha conservato le previsioni native su 887 righe protette e le risposte previste sulle dieci righe gestite dal ramo. La verifica nativa sulle 887 righe confronta i token attesi in presenza del prefisso corretto. I pesi originali hanno la stessa impronta. Il guadagno riguarda il percorso dedicato alla somma e il ramo è sperimentale. [Rapporto](localized-evidence/SUMMARY.json) · [Verifica dell'artefatto ricaricato](localized-evidence/DOMAIN-AUDIT.json)
+
+```sh
+PYTHONPATH=/workspace/airi-lab/native-source/computer \
+  /workspace/airi-lab/venv/bin/python -u scripts/research-training/native-capacity-growth/localized_trial.py \
+  /workspace/airi-lab/rev4/checkpoint /workspace/airi-lab/rev4/experiment \
+  /tmp/airi-localized-new
+```

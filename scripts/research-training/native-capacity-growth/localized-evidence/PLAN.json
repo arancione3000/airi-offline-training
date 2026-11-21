@@ -1,0 +1,10 @@
+{
+  "base_sha256": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "train_sha256": "7636f8610e883877ee149a5676a78a4d96f706b5c6d40a4441224115cb24f56f",
+  "script_sha256": "942eb2816b738fb865a064e73e152c5df933a75b4f09a3064bb392ac71921797",
+  "fresh_sha256": "70afde91a2a68db54a2ef3e52f38c4a33c137566f1ab195dfcc44de73bc01d62",
+  "rows_train": 480,
+  "rows_fresh": 48,
+  "max_native_tokens": 8,
+  "fit": "ordinary least-squares two numeric inputs plus bias"
+}
