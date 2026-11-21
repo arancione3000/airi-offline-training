@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "scope": "signed-integer-division.demo.v1",
+  "domain": {"numerator": [-64, 64], "divisor": [-16, 16], "exclude_zero_divisor": true},
+  "policies": ["floor", "truncation", "euclidean"],
+  "workflows": {
+    "quotient": "q",
+    "remainder": "r",
+    "completed_amount": "product",
+    "remaining_magnitude": "magnitude",
+    "exact_division": "exact",
+    "next_boundary": "next"
+  }
+}

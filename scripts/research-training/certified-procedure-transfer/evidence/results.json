@@ -1,0 +1,401 @@
+{
+  "contract_sha256": "2fc8d30c0777520bbd0dafbea1211cdb0a6d5a7de9524f21ea08282a438900b8",
+  "engine_sha256": "8b7c975d3781ce7d33f11753d1957c15c9be0f2c361462a8922849f724d31666",
+  "reference_sha256": "d96ca535c430aec7f10ca854bd814ff8c45853e2dcfbde7f47eb428ed1315c99",
+  "bank_sha256": "dec42d7fd87e1eae81fbf8e918f8497f2682bd0c778535e22bc4299517a579d8",
+  "policies": {
+    "floor": {
+      "shared": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "quotient",
+            -7,
+            2,
+            "-4"
+          ]
+        ],
+        "queries": 2,
+        "qualified_without_local_observations": 5,
+        "newly_resolved_without_local_observations": 4,
+        "learning_curve": [
+          {
+            "queries": 0,
+            "policies_remaining": [
+              "floor",
+              "truncation",
+              "euclidean"
+            ],
+            "fully_resolved_workflows": [
+              "exact_division"
+            ]
+          },
+          {
+            "queries": 1,
+            "policies_remaining": [
+              "floor",
+              "truncation"
+            ],
+            "fully_resolved_workflows": [
+              "exact_division"
+            ]
+          },
+          {
+            "queries": 2,
+            "policies_remaining": [
+              "floor"
+            ],
+            "fully_resolved_workflows": [
+              "quotient",
+              "remainder",
+              "completed_amount",
+              "remaining_magnitude",
+              "exact_division",
+              "next_boundary"
+            ]
+          }
+        ],
+        "evidence_sha256": "1b1d2e78e065a6cbc0e348785861e85527461b28557d8059545c9eecac5a62b9",
+        "receipt_sha256": "946d0e21048f5a1491841982ee1d03c9e32d369c3c1fb61e74cb08aa689ebe9e"
+      },
+      "independent": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "quotient",
+            -7,
+            2,
+            "-4"
+          ],
+          [
+            "remainder",
+            -7,
+            -3,
+            "-1"
+          ],
+          [
+            "remainder",
+            -7,
+            2,
+            "1"
+          ],
+          [
+            "completed_amount",
+            -7,
+            -3,
+            "-6"
+          ],
+          [
+            "completed_amount",
+            -7,
+            2,
+            "-8"
+          ],
+          [
+            "remaining_magnitude",
+            -7,
+            -3,
+            "1"
+          ],
+          [
+            "remaining_magnitude",
+            -7,
+            3,
+            "2"
+          ],
+          [
+            "next_boundary",
+            -7,
+            -3,
+            "-9"
+          ],
+          [
+            "next_boundary",
+            -7,
+            2,
+            "-6"
+          ]
+        ],
+        "per_workflow": {
+          "quotient": 2,
+          "remainder": 2,
+          "completed_amount": 2,
+          "remaining_magnitude": 2,
+          "exact_division": 0,
+          "next_boundary": 2
+        },
+        "total": 10,
+        "optimistic_minimum_total": 5
+      },
+      "qualification": {
+        "domain_pairs": 4128,
+        "all_executions": 24768,
+        "unseen_pair_executions": 24756,
+        "failures": 0,
+        "chat_cases": 42,
+        "chat_out_of_domain_abstentions": 5
+      }
+    },
+    "truncation": {
+      "shared": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "quotient",
+            -7,
+            2,
+            "-3"
+          ]
+        ],
+        "queries": 2,
+        "qualified_without_local_observations": 5,
+        "newly_resolved_without_local_observations": 4,
+        "learning_curve": [
+          {
+            "queries": 0,
+            "policies_remaining": [
+              "floor",
+              "truncation",
+              "euclidean"
+            ],
+            "fully_resolved_workflows": [
+              "exact_division"
+            ]
+          },
+          {
+            "queries": 1,
+            "policies_remaining": [
+              "floor",
+              "truncation"
+            ],
+            "fully_resolved_workflows": [
+              "exact_division"
+            ]
+          },
+          {
+            "queries": 2,
+            "policies_remaining": [
+              "truncation"
+            ],
+            "fully_resolved_workflows": [
+              "quotient",
+              "remainder",
+              "completed_amount",
+              "remaining_magnitude",
+              "exact_division",
+              "next_boundary"
+            ]
+          }
+        ],
+        "evidence_sha256": "2cf4f6beb884d31da37f03347d7ff5b29719224f017ddae25df4b91d1c978407",
+        "receipt_sha256": "16665b5ee5511c9c0a1fc66eb332a00a6fb2306001728494db92c15f5bb0dada"
+      },
+      "independent": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "quotient",
+            -7,
+            2,
+            "-3"
+          ],
+          [
+            "remainder",
+            -7,
+            -3,
+            "-1"
+          ],
+          [
+            "remainder",
+            -7,
+            2,
+            "-1"
+          ],
+          [
+            "completed_amount",
+            -7,
+            -3,
+            "-6"
+          ],
+          [
+            "completed_amount",
+            -7,
+            2,
+            "-6"
+          ],
+          [
+            "remaining_magnitude",
+            -7,
+            -3,
+            "1"
+          ],
+          [
+            "remaining_magnitude",
+            -7,
+            3,
+            "1"
+          ],
+          [
+            "next_boundary",
+            -7,
+            -3,
+            "-9"
+          ],
+          [
+            "next_boundary",
+            -7,
+            2,
+            "-4"
+          ]
+        ],
+        "per_workflow": {
+          "quotient": 2,
+          "remainder": 2,
+          "completed_amount": 2,
+          "remaining_magnitude": 2,
+          "exact_division": 0,
+          "next_boundary": 2
+        },
+        "total": 10,
+        "optimistic_minimum_total": 5
+      },
+      "qualification": {
+        "domain_pairs": 4128,
+        "all_executions": 24768,
+        "unseen_pair_executions": 24756,
+        "failures": 0,
+        "chat_cases": 42,
+        "chat_out_of_domain_abstentions": 5
+      }
+    },
+    "euclidean": {
+      "shared": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "3"
+          ]
+        ],
+        "queries": 1,
+        "qualified_without_local_observations": 5,
+        "newly_resolved_without_local_observations": 4,
+        "learning_curve": [
+          {
+            "queries": 0,
+            "policies_remaining": [
+              "floor",
+              "truncation",
+              "euclidean"
+            ],
+            "fully_resolved_workflows": [
+              "exact_division"
+            ]
+          },
+          {
+            "queries": 1,
+            "policies_remaining": [
+              "euclidean"
+            ],
+            "fully_resolved_workflows": [
+              "quotient",
+              "remainder",
+              "completed_amount",
+              "remaining_magnitude",
+              "exact_division",
+              "next_boundary"
+            ]
+          }
+        ],
+        "evidence_sha256": "a9050456b4ba58c43d68710975b86b0dab062b2ebc6a5bd32dd030c5563829e8",
+        "receipt_sha256": "9519bda2a2008e3bae837099e8383a8455b18f32b872f484cd095d0549127804"
+      },
+      "independent": {
+        "observations": [
+          [
+            "quotient",
+            -7,
+            -3,
+            "3"
+          ],
+          [
+            "remainder",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "completed_amount",
+            -7,
+            -3,
+            "-9"
+          ],
+          [
+            "remaining_magnitude",
+            -7,
+            -3,
+            "2"
+          ],
+          [
+            "next_boundary",
+            -7,
+            -3,
+            "-12"
+          ]
+        ],
+        "per_workflow": {
+          "quotient": 1,
+          "remainder": 1,
+          "completed_amount": 1,
+          "remaining_magnitude": 1,
+          "exact_division": 0,
+          "next_boundary": 1
+        },
+        "total": 5,
+        "optimistic_minimum_total": 5
+      },
+      "qualification": {
+        "domain_pairs": 4128,
+        "all_executions": 24768,
+        "unseen_pair_executions": 24762,
+        "failures": 0,
+        "chat_cases": 42,
+        "chat_out_of_domain_abstentions": 5
+      }
+    }
+  },
+  "retention": {
+    "historical_unchanged": 989,
+    "stored_unchanged": 600
+  },
+  "negative_controls": {
+    "tampered_policy_rejected": true,
+    "different_executor_rejected": true,
+    "different_contract_rejected": true,
+    "wrong_evidence_digest_rejected": true,
+    "impossible_observation_rejected": true,
+    "one_misbound_workflow_mismatches": 1626,
+    "coherently_wrong_trusted_workflow_mismatches": 1626
+  }
+}
