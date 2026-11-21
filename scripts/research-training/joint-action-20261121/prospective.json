@@ -1,0 +1,869 @@
+{
+  "rows": [
+    {
+      "id": "joint-independent-01-1",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "query": "Mi ridai il codice del pacco, identico a come l'ho scritto?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-01-2",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "query": "Devo compilare un modulo: mi serve l'identificativo del collo così com'è.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-01-3",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "expected_object": "parcel_copy",
+      "query": "Al punto di ritiro mi chiedono la sigla che identifica il pacco di cui ti ho parlato. Me la passi?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-01-4",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": "parcel_copy",
+      "query": "Quante cifre contiene il codice del pacco?",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-01-5",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Mi trascrivi il codice del punto di ritiro?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-01-6",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "expected_object": "parcel_copy",
+      "query": "Per il codice del pacco mi basta sapere se hai capito la richiesta, evita di riportarmelo.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-02-1",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "query": "Prendi il segnale acquisito e leggimelo dall'ultimo carattere fino al primo.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-02-2",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "query": "Vorrei la stringa del segnale ricevuto scritta al rovescio.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-02-3",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "expected_object": "signal_reverse",
+      "query": "Quella sequenza appena catturata dal ricevitore: cosa ottengo se ne percorro i caratteri partendo dalla fine?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-02-4",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": "signal_reverse",
+      "query": "Per il segnale acquisito vorrei tutti i caratteri in ordine alfabetico.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-02-5",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Leggi a ritroso i caratteri del nominativo del trasmettitore.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-02-6",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "expected_object": "signal_reverse",
+      "query": "Prima di invertire il segnale acquisito, spiegami il procedimento e aspetta il mio via.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-03-1",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "query": "Come viene il testo della tessera scritto tutto in maiuscolo?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-03-2",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "query": "Puoi battere la scritta sul tesserino usando soltanto lettere maiuscole?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-03-3",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "expected_object": "card_upper",
+      "query": "Mi serve per la stampa la dicitura che compare sulla tessera che ti ho descritto, tutta a lettere grandi, comprese le iniziali interne.",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-03-4",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": "card_upper",
+      "query": "Scrivi il testo della tessera con la sola iniziale maiuscola.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-03-5",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Converti in maiuscolo il nome dell'ente che ha emesso la tessera.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-03-6",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "expected_object": "card_upper",
+      "query": "Sto preparando una guida. Come spiegheresti l'espressione «testo della tessera in maiuscolo»?",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-04-1",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "query": "Rendimi tutto minuscolo il testo della targa.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-04-2",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "query": "Trascrivi la scritta sulla targhetta usando soltanto lettere minuscole.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-04-3",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "expected_object": "plate_lower",
+      "query": "Nel campo del modulo va ciò che si legge sulla targa che ho indicato. Inseriscilo con tutte le lettere piccole.",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-04-4",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": "plate_lower",
+      "query": "Riscrivi il testo della targa con le vocali in maiuscolo.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-04-5",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Mi metti in minuscolo il nome della provincia d'immatricolazione?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-04-6",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "expected_object": "plate_lower",
+      "query": "Della dicitura della targa voglio sapere se è già tutta minuscola: rispondi sì oppure no.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-05-1",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "query": "Somma fra loro i due valori delta che ho dato.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-05-2",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "query": "Che cifra viene mettendo insieme i due numeri della coppia delta?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-05-3",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "expected_object": "delta_sum",
+      "query": "Nel passaggio contrassegnato con delta ti ho lasciato due numeri. Quale risultato ottieni con l'addizione?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-05-4",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": "delta_sum",
+      "query": "Quanto vale la media dei due valori delta?",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-05-5",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Calcola la somma dei due valori gamma.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-05-6",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "expected_object": "delta_sum",
+      "query": "Per ora dimmi solo quale simbolo useresti per sommare la coppia delta. Mi servirà il totale più avanti.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-06-1",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "query": "Puoi darmi il prodotto dei due interi sigma?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-06-2",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "query": "Moltiplica fra loro le due cifre della coppia sigma.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-06-3",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "expected_object": "sigma_product",
+      "query": "Per la riga che porta il simbolo sigma ti ho dato un paio di numeri: quanto fa l'uno per l'altro?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-06-4",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": "sigma_product",
+      "query": "Dai due interi sigma ricava il quoziente del primo per il secondo.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-06-5",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Quanto fa il prodotto della coppia di interi omega?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-06-6",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "expected_object": "sigma_product",
+      "query": "Se volessi chiedere il prodotto dei due interi sigma, come dovrei formulare la domanda?",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-07-1",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "query": "Con i due valori del saldo calcola il primo meno il secondo.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-07-2",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "query": "Delle due cifre contabili che ti ho indicato per il saldo, quanto resta togliendo la seconda dalla prima?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-07-3",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "expected_object": "auto_v1_remaining",
+      "query": "Il primo importo del saldo è il punto di partenza. Se gli sottrai l'altro importo riportato, che cifra rimane?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-07-4",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_remaining",
+      "query": "Per i due valori del saldo fai il secondo meno il primo.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-07-5",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Il residuo del mutuo si ottiene dal primo importo meno il secondo: mi dai quel risultato?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-07-6",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_remaining",
+      "query": "Spiegami a parole perché sottrarre il secondo valore del saldo dal primo è diverso dal fare il contrario.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-08-1",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "query": "Come si chiama il referente dell'ordine che ti ho indicato?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-08-2",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "query": "Mi passi il nominativo della persona di contatto per l'ordine?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-08-3",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "expected_object": "auto_v1_contact",
+      "query": "Devo sentire chi fa da referente per quell'ordinazione. Con quale nome me l'hai visto registrare?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-08-4",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": "auto_v1_contact",
+      "query": "Riportami soltanto le iniziali del referente dell'ordine.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-08-5",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Mi dai il nome del corriere incaricato della consegna?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-08-6",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "expected_object": "auto_v1_contact",
+      "query": "Del referente dell'ordine voglio solo sapere se il nome comprende un trattino.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-09-1",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "query": "Mi scrivi il riferimento cliente esattamente come compare?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-09-2",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "query": "Mi occorre l'identificativo assegnato al cliente. Puoi trascriverlo?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-09-3",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "expected_object": "auto_v1_customer_reference",
+      "query": "Sto cercando il cliente nell'anagrafica: con quale riferimento lo devo cercare secondo il dato che ti ho dato?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-09-4",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_customer_reference",
+      "query": "Togli le cifre dal riferimento cliente prima di restituirmelo.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-09-5",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Puoi ricopiare il riferimento della fattura del cliente?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-09-6",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_customer_reference",
+      "query": "Quale comando useresti per farti mostrare il riferimento cliente? Dammi un esempio di domanda.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-10-1",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "query": "Vorrei ricopiare il riferimento dell'ordine. Mi dai la stringa esatta?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-10-2",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "query": "Con quale identificativo è registrata l'ordinazione?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-10-3",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "expected_object": "auto_v1_order_reference",
+      "query": "Sto riaprendo la pratica d'ordine che ti ho indicato. Quale riferimento devo inserire per ritrovarla?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-10-4",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_order_reference",
+      "query": "Riordina dal più piccolo al più grande i caratteri del riferimento dell'ordine.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-10-5",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Trascrivimi il numero del documento di trasporto che accompagna l'ordine.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-10-6",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "expected_object": "auto_v1_order_reference",
+      "query": "Prima di copiare il riferimento dell'ordine voglio che tu mi dica a cosa serve quel riferimento.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-11-1",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "query": "Per l'alias email, puoi ricopiarmi il valore indicato?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-11-2",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "query": "Quale alias di posta elettronica avevo specificato?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-11-3",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "expected_object": "auto_v1_email_alias",
+      "query": "Ho bisogno del nome alternativo associato alla casella di posta, nella grafia in cui te l'ho dato.",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-11-4",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": "auto_v1_email_alias",
+      "query": "Estrai le ultime due lettere dell'alias email.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-11-5",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Qual è l'indirizzo del server di posta in arrivo?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-11-6",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "expected_object": "auto_v1_email_alias",
+      "query": "Dimmi se l'alias email è più lungo di dieci caratteri, senza mostrarmi il valore.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-12-1",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "query": "Mi leggi il token di verifica a ritroso?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-12-2",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "query": "Inverti l'ordine dei caratteri che compongono il codice di verifica.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-12-3",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "expected_object": "auto_v1_tracking_reverse",
+      "query": "Quella sequenza che serve a completare la verifica: com'è scritta se parti dall'ultimo simbolo e risali fino al primo?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-12-4",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": "auto_v1_tracking_reverse",
+      "query": "Del token di verifica voglio una copia identica all'originale.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-12-5",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Scrivi da destra verso sinistra il codice di recupero del disco.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-12-6",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "expected_object": "auto_v1_tracking_reverse",
+      "query": "Per documentare il test mi occorre la definizione di token di verifica inverso, non il risultato di un'inversione.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-13-1",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "query": "Metti l'etichetta di spedizione tutta in maiuscolo.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-13-2",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "query": "Trascrivimi in lettere maiuscole la dicitura del cartellino di spedizione.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-13-3",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "expected_object": "auto_v1_label_upper",
+      "query": "Sull'adesivo che accompagna la spedizione c'è la scritta che ti ho dato. Come apparirebbe usando maiuscole per tutte le lettere?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-13-4",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": "auto_v1_label_upper",
+      "query": "Mi traduci in francese il testo dell'etichetta di spedizione?",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-13-5",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Scrivi in maiuscolo il nome della città di destinazione.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-13-6",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "expected_object": "auto_v1_label_upper",
+      "query": "Devo spiegare al collega come mettere in maiuscolo l'etichetta di spedizione. Scrivimi le istruzioni.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-14-1",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "query": "Puoi scrivere in minuscolo l'alias account?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-14-2",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "query": "Ridammi l'alias del profilo convertito interamente in lettere minuscole.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-14-3",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "expected_object": "auto_v1_account_lower",
+      "query": "Il nome alternativo collegato a quell'account mi serve per un modulo che accetta solo minuscole. Come lo inserisco?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-14-4",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": "auto_v1_account_lower",
+      "query": "Per l'alias account inverti maiuscole e minuscole di ogni lettera.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-14-5",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Metti in minuscolo il nome del gestore dell'account.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-14-6",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "expected_object": "auto_v1_account_lower",
+      "query": "Per il momento controlla solo se l'alias account contiene qualche maiuscola.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-15-1",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "query": "Considera i due valori della scorta: dal primo togli il secondo e dimmi quanto resta.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-15-2",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "query": "Per le due cifre della giacenza mi occorre la differenza in quest'ordine, prima meno seconda.",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-15-3",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "expected_object": "auto_v1_stock_remaining",
+      "query": "Per il conteggio della scorta parto dalla prima quantità che ti ho segnalato. Quanto rimane dopo averci sottratto l'altra?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-15-4",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_stock_remaining",
+      "query": "Per i due valori della scorta mi serve la differenza assoluta.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-15-5",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Per le due misure della capacità del deposito fai la prima meno la seconda.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-15-6",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "expected_object": "auto_v1_stock_remaining",
+      "query": "Fammi una domanda che un magazziniere potrebbe fare per conoscere la scorta residua partendo da quei due valori.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-16-1",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "query": "Che totale ottengo sommando le quantità del carrello?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-16-2",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "query": "Puoi addizionare i due conteggi che figurano nel cestino degli acquisti?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-16-3",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "expected_object": "auto_v1_cart_total",
+      "query": "Sto per confermare gli acquisti: quanti articoli ho in tutto se metto insieme le due quantità che ti ho indicato per il carrello?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-16-4",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_cart_total",
+      "query": "Moltiplica tra loro le quantità del carrello.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-16-5",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Somma le quantità dei due articoli nella lista dei desideri.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-16-6",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_cart_total",
+      "query": "Vorrei solo stabilire quale operazione serva per calcolare il totale delle quantità nel carrello. Scrivi il nome dell'operazione.",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-17-1",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "query": "Dammi il totale delle quantità dell'inventario che ti ho passato.",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-17-2",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "query": "Qual è la somma delle due consistenze registrate in inventario?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-17-3",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "expected_object": "auto_v1_inventory_total",
+      "query": "Sto chiudendo l'inventario e ho trascritto due quantità. Quante unità risultano complessivamente?",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-17-4",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_inventory_total",
+      "query": "Tra le due quantità dell'inventario qual è la maggiore?",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-17-5",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Quante unità prevedono in totale le due stime di vendita?",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-17-6",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_inventory_total",
+      "query": "Calcola la somma delle quantità dell'inventario solo quando te lo chiederò di nuovo. Per adesso rispondi «ricevuto».",
+      "condition": "nonrequest_or_compound"
+    },
+    {
+      "id": "joint-independent-18-1",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "query": "Moltiplica il prezzo unitario e la quantità: qual è l'importo?",
+      "condition": "canonical_affirmative"
+    },
+    {
+      "id": "joint-independent-18-2",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "query": "Quanto spendo prendendo il numero di pezzi indicato al prezzo per pezzo che ti ho dato?",
+      "condition": "paraphrased_affirmative"
+    },
+    {
+      "id": "joint-independent-18-3",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "expected_object": "auto_v1_unit_total",
+      "query": "Mi occorre il costo complessivo della riga di acquisto, moltiplicando il costo di un pezzo per il numero di pezzi riportato.",
+      "condition": "contextual_affirmative"
+    },
+    {
+      "id": "joint-independent-18-4",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_unit_total",
+      "query": "Dividi il prezzo unitario per la quantità.",
+      "condition": "wrong_action"
+    },
+    {
+      "id": "joint-independent-18-5",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": null,
+      "query": "Calcola il valore della merce assicurata moltiplicando il premio unitario per il numero di polizze.",
+      "condition": "unsupported_object"
+    },
+    {
+      "id": "joint-independent-18-6",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "expected_object": "auto_v1_unit_total",
+      "query": "Fammi vedere la formula con cui moltiplicheresti prezzo unitario e quantità, scritta usando lettere al posto dei numeri.",
+      "condition": "nonrequest_or_compound"
+    }
+  ],
+  "value_offset": 61000
+}
