@@ -1,0 +1,25 @@
+name: Publish Airi Chat Android 1.0.0
+on:
+  push:
+    branches: [publish/android-v1.0.0]
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: github.repository == 'arancione3000/airi-offline-training'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify and publish the signed APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha256sum --check <<'CHECKSUM'
+          71108655a1a652d973209475a153b16e31b6a7e580cdd5d2a974abca8734a8ef  mobile/release/Airi-Chat.apk
+          CHECKSUM
+          gh release create airi-chat-android-v1.0.0 mobile/release/Airi-Chat.apk \
+            --target 8e8487b6050cbae1aea596f76e360afedc13f164 \
+            --title 'Airi Chat per Android 1.0.0' --notes-file mobile/release/NOTES.md --latest=false
