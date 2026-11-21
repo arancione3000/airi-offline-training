@@ -1,0 +1,134 @@
+{
+  "bank_fingerprint": "517ed46b54ab97185e797c8e44153b991785e21993df43b82ff28b5c7d93eefc",
+  "reference_sha256": "27e96168dc1be40393a8080615f9d89d8a6d3067a4c8b93d2282285866abead2",
+  "state_sha256": "605ef38ecc7da6a257fe23e9d3059fdc2bb82145fea89f3ec37ed373af628bfa",
+  "approved_tasks": [
+    "minimum_magnitude",
+    "squared_sum"
+  ],
+  "previously_unqueried_inputs_per_task": {
+    "squared_sum": [
+      [
+        -13,
+        5
+      ],
+      [
+        12,
+        -11
+      ],
+      [
+        -41,
+        -16
+      ],
+      [
+        64,
+        -13
+      ],
+      [
+        -64,
+        16
+      ],
+      [
+        0,
+        -9
+      ],
+      [
+        27,
+        2
+      ],
+      [
+        11,
+        -16
+      ]
+    ],
+    "minimum_magnitude": [
+      [
+        -13,
+        5
+      ],
+      [
+        12,
+        -11
+      ],
+      [
+        -41,
+        -16
+      ],
+      [
+        64,
+        -13
+      ],
+      [
+        -64,
+        16
+      ],
+      [
+        0,
+        -9
+      ],
+      [
+        27,
+        2
+      ],
+      [
+        11,
+        -16
+      ]
+    ]
+  },
+  "new_chat_cases_passed": 16,
+  "different_speaker_does_not_shadow_authorized_source": true,
+  "native_fallback_cases_not_intercepted": [
+    "missing_source",
+    "different_speaker",
+    "different_session",
+    "assistant_values",
+    "assistant_call",
+    "tool_message",
+    "two_different_sources",
+    "two_identical_sources",
+    "zero_divisor",
+    "left_above_domain",
+    "left_below_domain",
+    "right_above_domain",
+    "right_below_domain",
+    "unrecognized_task",
+    "rejected_task",
+    "invalid_number",
+    "question_embedded_in_other_text",
+    "source_embedded_in_other_text"
+  ],
+  "standalone_cli_cases_passed": {
+    "squared_sum": {
+      "input": [
+        -13,
+        5
+      ],
+      "answer": "64",
+      "source": "certified_procedure"
+    },
+    "minimum_magnitude": {
+      "input": [
+        -13,
+        5
+      ],
+      "answer": "5",
+      "source": "certified_procedure"
+    }
+  },
+  "wrong_reference_pin_rejected_by_cli": true,
+  "registry_byte_identical_after_chat": true,
+  "route_retention": {
+    "historical_unchanged": 989,
+    "stored_unchanged": 600,
+    "aliases_unchanged": 198,
+    "historical_ledger_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d"
+  },
+  "live_reload": {
+    "approved_update_visible_without_restart": true,
+    "rollback_rejected": true,
+    "recovered_after_valid_snapshot": true,
+    "initial_fingerprint": "e984979893b8febfbec2c24fd901e14b6420dd95110064f6aac1e8d3fedff05c",
+    "updated_fingerprint": "517ed46b54ab97185e797c8e44153b991785e21993df43b82ff28b5c7d93eefc"
+  }
+}

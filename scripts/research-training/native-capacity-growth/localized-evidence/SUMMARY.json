@@ -1,0 +1,607 @@
+{
+  "fit": {
+    "coefficients": [
+      1.0000000000000007,
+      0.9999999999999996
+    ],
+    "bias": 9.992007221626409e-16,
+    "rank": 3,
+    "training_maximum_absolute_error": 1.4210854715202004e-14,
+    "constant_control_rank": 1,
+    "parameters_before": 50164416,
+    "parameters_after": 50164419
+  },
+  "fresh_generation_comparison": {
+    "native": 2,
+    "constant_control": 0,
+    "learned": 48,
+    "total": 48,
+    "rows": [
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 1 + 13?"
+          }
+        ],
+        "expected": "14",
+        "native": "14",
+        "constant_control": "17",
+        "learned": "14"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 1 + 13?"
+          }
+        ],
+        "expected": "14",
+        "native": "14",
+        "constant_control": "17",
+        "learned": "14"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 2 + 17?"
+          }
+        ],
+        "expected": "19",
+        "native": "21",
+        "constant_control": "17",
+        "learned": "19"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 2 + 17?"
+          }
+        ],
+        "expected": "19",
+        "native": "20",
+        "constant_control": "17",
+        "learned": "19"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 3 + 19?"
+          }
+        ],
+        "expected": "22",
+        "native": "21",
+        "constant_control": "17",
+        "learned": "22"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 3 + 19?"
+          }
+        ],
+        "expected": "22",
+        "native": "21",
+        "constant_control": "17",
+        "learned": "22"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 4 + 23?"
+          }
+        ],
+        "expected": "27",
+        "native": "18",
+        "constant_control": "17",
+        "learned": "27"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 4 + 23?"
+          }
+        ],
+        "expected": "27",
+        "native": "16",
+        "constant_control": "17",
+        "learned": "27"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 5 + 29?"
+          }
+        ],
+        "expected": "34",
+        "native": "25",
+        "constant_control": "17",
+        "learned": "34"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 5 + 29?"
+          }
+        ],
+        "expected": "34",
+        "native": "24",
+        "constant_control": "17",
+        "learned": "34"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 6 + 31?"
+          }
+        ],
+        "expected": "37",
+        "native": "18",
+        "constant_control": "17",
+        "learned": "37"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 6 + 31?"
+          }
+        ],
+        "expected": "37",
+        "native": "18",
+        "constant_control": "17",
+        "learned": "37"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 7 + 37?"
+          }
+        ],
+        "expected": "44",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "44"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 7 + 37?"
+          }
+        ],
+        "expected": "44",
+        "native": "25",
+        "constant_control": "17",
+        "learned": "44"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 8 + 41?"
+          }
+        ],
+        "expected": "49",
+        "native": "19",
+        "constant_control": "17",
+        "learned": "49"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 8 + 41?"
+          }
+        ],
+        "expected": "49",
+        "native": "19",
+        "constant_control": "17",
+        "learned": "49"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 9 + 43?"
+          }
+        ],
+        "expected": "52",
+        "native": "25",
+        "constant_control": "17",
+        "learned": "52"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 9 + 43?"
+          }
+        ],
+        "expected": "52",
+        "native": "24",
+        "constant_control": "17",
+        "learned": "52"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 10 + 47?"
+          }
+        ],
+        "expected": "57",
+        "native": "24",
+        "constant_control": "17",
+        "learned": "57"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 10 + 47?"
+          }
+        ],
+        "expected": "57",
+        "native": "24",
+        "constant_control": "17",
+        "learned": "57"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 11 + 53?"
+          }
+        ],
+        "expected": "64",
+        "native": "24",
+        "constant_control": "17",
+        "learned": "64"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 11 + 53?"
+          }
+        ],
+        "expected": "64",
+        "native": "23",
+        "constant_control": "17",
+        "learned": "64"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 12 + 59?"
+          }
+        ],
+        "expected": "71",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "71"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 12 + 59?"
+          }
+        ],
+        "expected": "71",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "71"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 13 + 61?"
+          }
+        ],
+        "expected": "74",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 13 + 61?"
+          }
+        ],
+        "expected": "74",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 14 + 64?"
+          }
+        ],
+        "expected": "78",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "78"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 14 + 64?"
+          }
+        ],
+        "expected": "78",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "78"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 15 + 15?"
+          }
+        ],
+        "expected": "30",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "30"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 15 + 15?"
+          }
+        ],
+        "expected": "30",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "30"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 16 + 16?"
+          }
+        ],
+        "expected": "32",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "32"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 16 + 16?"
+          }
+        ],
+        "expected": "32",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "32"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 17 + 34?"
+          }
+        ],
+        "expected": "51",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "51"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 17 + 34?"
+          }
+        ],
+        "expected": "51",
+        "native": "27",
+        "constant_control": "17",
+        "learned": "51"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 18 + 27?"
+          }
+        ],
+        "expected": "45",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "45"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 18 + 27?"
+          }
+        ],
+        "expected": "45",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "45"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 19 + 49?"
+          }
+        ],
+        "expected": "68",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "68"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 19 + 49?"
+          }
+        ],
+        "expected": "68",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "68"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 20 + 54?"
+          }
+        ],
+        "expected": "74",
+        "native": "33",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 20 + 54?"
+          }
+        ],
+        "expected": "74",
+        "native": "33",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 31 + 57?"
+          }
+        ],
+        "expected": "88",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "88"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 31 + 57?"
+          }
+        ],
+        "expected": "88",
+        "native": "26",
+        "constant_control": "17",
+        "learned": "88"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 39 + 60?"
+          }
+        ],
+        "expected": "99",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "99"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 39 + 60?"
+          }
+        ],
+        "expected": "99",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "99"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 56 + 18?"
+          }
+        ],
+        "expected": "74",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 56 + 18?"
+          }
+        ],
+        "expected": "74",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "74"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Quanto fa 64 + 64?"
+          }
+        ],
+        "expected": "128",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "128"
+      },
+      {
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is 64 + 64?"
+          }
+        ],
+        "expected": "128",
+        "native": "28",
+        "constant_control": "17",
+        "learned": "128"
+      }
+    ]
+  },
+  "protected": {
+    "native_top1_kept": 887,
+    "native_top1_total": 887,
+    "routed_rendered_kept": 10,
+    "routed_rendered_total": 10
+  },
+  "adverse_requests_abstained": 6,
+  "frozen_parent_sha256": "57bdb933b82bd8807af5c8b6b545c27ee9114ee4f4c59022434d39b6bf771c79",
+  "promotion_authorized": false
+}

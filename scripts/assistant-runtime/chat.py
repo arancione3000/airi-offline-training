@@ -46,9 +46,17 @@ def main():
     p.add_argument('--no-skills',action='store_true',help='Disable learned experts while keeping the stable memory/native assistant')
     p.add_argument('--no-paraphrases',action='store_true',help='Keep only exact expert questions and contextual memory')
     p.add_argument('--learn',type=Path,help='Learn and qualify explicitly trusted labeled lessons, then exit')
+    p.add_argument('--procedures', type=Path, help='Open a verified procedural growth snapshot')
+    p.add_argument('--procedure-reference', type=Path, help='Independent arithmetic reference manifest')
+    p.add_argument('--procedure-reference-sha256', help='Trusted SHA-256 of the reference manifest')
     a = p.parse_args()
     if (a.checkpoint is None) != (a.model_record is None):
         p.error('--checkpoint and --model-record are required together')
+    growth = (a.procedures, a.procedure_reference, a.procedure_reference_sha256)
+    if any(value is not None for value in growth) and not all(growth):
+        p.error('--procedures, --procedure-reference and --procedure-reference-sha256 are required together')
+    if a.procedures and (a.native_only or a.no_skills or a.learn):
+        p.error('--procedures requires skill routing during chat')
     record = json.loads(a.model_record.read_text()) if a.model_record else None
     from learn import selected_bank,private_bank,learn_file
     if a.learn:
@@ -57,7 +65,19 @@ def main():
     native = VerifiedNative(cache=a.cache, checkpoint=a.checkpoint, record=record)
     bank=None if a.no_skills or a.native_only else selected_bank(a.skills)
     from flexible_skills import default_router
-    assistant = AiriAssistant(native,skill_bank=bank,query_router=None if a.no_paraphrases else default_router(bank))
+    procedures = None
+    if a.procedures:
+        from growth_routes import follow_verified_procedures, with_verified_procedures
+        try:
+            procedures = follow_verified_procedures(*growth)
+        except (OSError, ValueError, KeyError, TypeError, RecursionError) as error:
+            p.error(f'verified procedures unavailable ({error})')
+
+    def routes(skill_bank):
+        router = None if a.no_paraphrases else default_router(skill_bank)
+        return router if procedures is None else with_verified_procedures(router, procedures)
+
+    assistant = AiriAssistant(native, skill_bank=bank, query_router=routes(bank))
 
     def respond(messages):
         if a.native_only:
@@ -88,7 +108,7 @@ def main():
                 result=learn_file(Path(text[7:].strip()),bank)
                 if not a.no_skills and not a.native_only:
                     assistant.skill_bank=bank
-                    assistant.query_router=None if a.no_paraphrases else default_router(bank)
+                    assistant.query_router=routes(bank)
                 print(json.dumps({'learning':result,'registry':bank.status()},ensure_ascii=False))
             except (ValueError,OSError) as error:
                 print(f'Lezione rifiutata ({type(error).__name__}).',file=sys.stderr)
@@ -103,7 +123,8 @@ def main():
             print(f'Modello non disponibile ({type(error).__name__}); la memoria della conversazione resta utilizzabile.', file=sys.stderr)
             continue
         history.append({'role': 'assistant', 'content': result['answer']})
-        label = {'bounded_context_memory':'memoria','learned_skill':'abilità appresa','native_model':'modello'}[result['source']]
+        label = {'bounded_context_memory':'memoria','learned_skill':'abilità appresa','native_model':'modello',
+                 'certified_procedure':'procedura verificata'}[result['source']]
         if result.get('component_error'):print(result['component_error'],file=sys.stderr)
         print(f"Airi [{label}]: {result['answer']}")
 

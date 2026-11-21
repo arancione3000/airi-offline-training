@@ -68,6 +68,7 @@ jobs:
           python scripts/research-training/procedural-capacity-growth/fresh_coverage.py "$RUNNER_TEMP/procedural-capacity-fresh.json"
           cmp "$RUNNER_TEMP/procedural-capacity-fresh.json" scripts/research-training/procedural-capacity-growth/evidence/FRESH.json
           python scripts/research-training/procedural-capacity-growth/replay_cycle.py "$RUNNER_TEMP/procedural-capacity-restart"
+          python scripts/research-training/procedural-capacity-growth/chat_probe.py "$RUNNER_TEMP/procedural-capacity-chat"
           python scripts/research-training/native-capacity-growth/selection.py
       - name: Verify independent functionality and inherited native preservation
         run: |

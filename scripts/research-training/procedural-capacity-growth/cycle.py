@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import sys
 from tempfile import NamedTemporaryFile
 
@@ -30,7 +31,10 @@ def digest(value):
 
 
 def read(path):
-    with path.open('rb') as stream:
+    descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK)
+    with os.fdopen(descriptor, 'rb') as stream:
+        if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+            raise ValueError('snapshot must be a regular file')
         raw = stream.read(MAX_BYTES + 1)
     if len(raw) > MAX_BYTES:
         raise ValueError('snapshot too large')
@@ -109,19 +113,64 @@ def stage(engine, graph, additions, output, expected):
     return engine.update(updated, reference)['status'] == 'accepted'
 
 
-def restore_state(path, engine_id):
-    if not path.exists():
+LEGACY_CYCLE_SHA256 = '4cbd5af7e29fc4dc93883c71b60326b563842f7c07f7d1176decd70b934e5c07'
+
+
+def engine_fingerprint(*, legacy=False):
+    source_files = (Path(__file__), HERE / 'synthesis_growth.py', VERIFICATION / 'synthesis.py',
+                    VERIFICATION / 'verifier.py', VERIFICATION / 'fixtures.py')
+    hashes = [sha256(path.read_bytes()).hexdigest() for path in source_files]
+    if legacy:
+        hashes[0] = LEGACY_CYCLE_SHA256
+    return digest(hashes)
+
+
+def restore_state(path, engine_id, *, required=False):
+    try:
+        raw = read(path)
+    except FileNotFoundError:
+        if required:
+            raise
         return {'schema': 1, 'engine_sha256': engine_id, 'entries': []}
-    document = json.loads(read(path))
+    document = json.loads(raw)
     if type(document) is not dict or set(document) != {'payload', 'sha256'}:
         raise ValueError('invalid growth state')
     state = document['payload']
     if (digest(state) != document['sha256'] or type(state) is not dict
             or set(state) != {'schema', 'engine_sha256', 'entries'} or state['schema'] != 1
-            or state['engine_sha256'] != engine_id or type(state['entries']) is not list
+            or state['engine_sha256'] not in (engine_id, engine_fingerprint(legacy=True)) or type(state['entries']) is not list
             or len(state['entries']) > MAX_ATTEMPTS):
         raise ValueError('state checksum, schema or engine mismatch')
     return state
+
+
+def requalify(state, tasks):
+    """Replay the append-only journal against its independently pinned references."""
+    _, graph, reference, _ = next(scenarios())
+    engine = Verifier(INPUTS)
+    if engine.update(graph, reference)['status'] != 'accepted':
+        raise ValueError('starting procedures failed validation')
+    approved, attempted = {}, set()
+    for row in state['entries']:
+        if type(row) is not dict or row.get('status') not in ('accepted', 'rejected'):
+            raise ValueError('invalid learning record')
+        fields = {'task', 'reference_sha256', 'state_sha256', 'status'}
+        if row['status'] == 'accepted':
+            fields |= {'additions', 'output'}
+        if set(row) != fields or type(row['task']) is not str:
+            raise ValueError('invalid learning record fields')
+        name = row['task']
+        context = digest(graph)
+        if (name in approved or (name, context) in attempted or name not in tasks
+                or row['reference_sha256'] != digest(tasks[name]) or row['state_sha256'] != context):
+            raise ValueError('invalid learning sequence or existing task reference changed')
+        attempted.add((name, context))
+        if row['status'] == 'accepted':
+            if not stage(engine, graph, row['additions'], row['output'], tasks[name]):
+                raise ValueError('previously stored procedure failed requalification')
+            graph.update(row['additions'])
+            approved[name] = row['output']
+    return engine, graph, approved, attempted
 
 
 def cycle(state_path, tasks_path, pin):
@@ -130,40 +179,15 @@ def cycle(state_path, tasks_path, pin):
     if state_path.resolve() == tasks_path.resolve():
         raise ValueError('state and reference require separate paths')
     tasks = trusted_tasks(tasks_path, pin)
-    source_files = (Path(__file__), HERE / 'synthesis_growth.py', VERIFICATION / 'synthesis.py',
-                    VERIFICATION / 'verifier.py', VERIFICATION / 'fixtures.py')
-    engine_id = digest([sha256(path.read_bytes()).hexdigest() for path in source_files])
+    engine_id = engine_fingerprint()
     state_path.parent.mkdir(parents=True, exist_ok=True)
     lock_path = state_path.with_name(state_path.name + '.lock')
     with lock_path.open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         state = restore_state(state_path, engine_id)
-        _, graph, reference, _ = next(scenarios())
-        engine = Verifier(INPUTS)
-        if engine.update(graph, reference)['status'] != 'accepted':
-            raise ValueError('starting procedures failed validation')
-        approved, attempted = set(), set()
-        for row in state['entries']:
-            if type(row) is not dict or row.get('status') not in ('accepted', 'rejected'):
-                raise ValueError('invalid learning record')
-            fields = {'task', 'reference_sha256', 'state_sha256', 'status'}
-            if row['status'] == 'accepted':
-                fields |= {'additions', 'output'}
-            if set(row) != fields or type(row['task']) is not str:
-                raise ValueError('invalid learning record fields')
-            name = row['task']
-            context = digest(graph)
-            if (name in approved or (name, context) in attempted or name not in tasks
-                    or row['reference_sha256'] != digest(tasks[name]) or row['state_sha256'] != context):
-                raise ValueError('invalid learning sequence or existing task reference changed')
-            attempted.add((name, context))
-            if row['status'] == 'accepted':
-                if not stage(engine, graph, row['additions'], row['output'], tasks[name]):
-                    raise ValueError('previously stored procedure failed requalification')
-                graph.update(row['additions'])
-                approved.add(name)
+        engine, graph, approved, attempted = requalify(state, tasks)
         context = digest(graph)
-        remaining = sorted(name for name in tasks.keys() - approved if (name, context) not in attempted)
+        remaining = sorted(name for name in tasks.keys() - approved.keys() if (name, context) not in attempted)
         if not remaining:
             return {'status': 'audited', 'attempts': len(attempted), 'approved': len(approved),
                     'approved_nodes': len(graph), 'pending': 0}
@@ -184,12 +208,13 @@ def cycle(state_path, tasks_path, pin):
 
         trial = GrowingLearner(graph, engine.tables).learn(evidence.__getitem__, qualify, max_depth=2)
         state['entries'].append(record)
+        state['engine_sha256'] = engine_id
         write(state_path, state)
         attempted.add((name, context))
         if record['status'] == 'accepted':
-            approved.add(name)
+            approved[name] = record['output']
         next_context = digest(graph)
-        pending = sum((task, next_context) not in attempted for task in tasks.keys() - approved)
+        pending = sum((task, next_context) not in attempted for task in tasks.keys() - approved.keys())
         return {**record, 'approved': len(approved), 'approved_nodes': len(graph), 'pending': pending, 'trial': trial}
 
 
