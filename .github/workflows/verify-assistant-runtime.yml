@@ -68,6 +68,7 @@ jobs:
           cmp "$repair/CASES.json" "$RUNNER_TEMP/format-site/CASES.json"
           node --input-type=module --check < "$RUNNER_TEMP/format-site/app.js"
           node --input-type=module --check < "$RUNNER_TEMP/format-site/runtime-worker.js"
+          node --test "$repair/api/worker.test.mjs"
           python "$retail/run.py" "$retail/CASES.json" "$RUNNER_TEMP/retail-reconciliation.json"
           python - "$retail/AFTER_CONFLICT_FIX.json" "$RUNNER_TEMP/retail-reconciliation.json" <<'PY'
           import json
