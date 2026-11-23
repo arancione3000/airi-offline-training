@@ -157,5 +157,75 @@ class BankTests(unittest.TestCase):
         self.assertEqual(assistant.respond(messages)['answer'],'Beta')
         self.assertEqual(assistant.respond(messages)['source'],'learned_skill')
 
+    def test_shared_question_uses_only_agreeing_sources(self):
+        first = lesson()
+        second = lesson('other-format', 'Record: ')
+        for source in (first, second):
+            self.assertEqual(self.bank.learn(source)['action'], 'activated')
+        reader = SkillBank(self.path)
+        original = first['qualification'][0]['messages']
+        equivalent = second['qualification'][0]['messages']
+        disagreeing = second['qualification'][1]['messages']
+        self.assertEqual(reader.predict(equivalent)['answer'], 'Beta')
+        combined = [original[0], equivalent[0], original[-1]]
+        self.assertEqual(reader.predict(combined), reader.predict(original))
+        conflict = [original[0], disagreeing[0], original[-1]]
+        self.assertIsNone(reader.predict(conflict))
+        self.assertIsNone(reader.predict([conflict[1], conflict[0], conflict[-1]]))
+
+        # A third answer must not surface through a router or the native model.
+        router = type('Router', (), {'predict': lambda *_: self.fail('router ran on conflicting data')})()
+        assistant = AiriAssistant(
+            lambda _: self.fail('native model ran on conflicting data'), reader, router)
+        result = assistant.respond(conflict)
+        self.assertEqual(result['source'], 'source_conflict')
+        self.assertIsNone(result['provenance'])
+
+        # A format with two internally conflicting sources cannot be bypassed
+        # by a source that does match a different learned format.
+        same_format = first['qualification'][1]['messages'][0]
+        self.assertIsNone(reader.predict([original[0], same_format, equivalent[0], original[-1]]))
+
+    def test_numeric_agreement_compares_operands_even_when_results_match(self):
+        def subtraction(label, prefix, separator, pairs):
+            def row(left, right):
+                return {
+                    'messages': [{'role': 'user', 'content': f'{prefix}{left}{separator}{right}!'},
+                                 {'role': 'user', 'content': 'What is the remainder?'}],
+                    'answer': str(left - right),
+                }
+            return {
+                'lesson_id': label, 'trusted': True,
+                'examples': [row(left, right) for left, right in pairs[:4]],
+                'qualification': [row(left, right) for left, right in pairs[4:]]
+                    + [{'messages': [{'role': 'user', 'content': f'Unknown marker {i}'},
+                                     {'role': 'user', 'content': 'What is the remainder?'}],
+                        'answer': None} for i in range(4)],
+            }
+
+        pairs = [(11 + 7 * i, 4 + 3 * i) for i in range(12)]
+        first = subtraction('first', 'Shipment: ', ' cancelled ', pairs)
+        second = subtraction('second', 'Returns: ', ' reversed ', pairs)
+        for source in (first, second):
+            self.assertEqual(self.bank.learn(source)['action'], 'activated')
+        question = {'role': 'user', 'content': 'What is the remainder?'}
+        original = {'role': 'user', 'content': 'Shipment: 12 cancelled 2!'}
+        same_values = {'role': 'user', 'content': 'Returns: 12 reversed 2!'}
+        same_result = {'role': 'user', 'content': 'Returns: 14 reversed 4!'}
+        self.assertEqual(self.bank.predict([original, same_values, question])['answer'], '10')
+        self.assertIsNone(self.bank.predict([original, same_result, question]))
+
+    def test_admission_replays_prior_certificates_with_the_same_conflict_rule(self):
+        first = lesson()
+        second = lesson('other-format', 'Record: ')
+        # The first lesson was qualified when only the packet source was known.
+        first['qualification'][0]['messages'].insert(
+            0, second['qualification'][1]['messages'][0])
+        self.assertEqual(self.bank.learn(first)['action'], 'activated')
+        before = self.path.read_bytes()
+        result = self.bank.learn(second)
+        self.assertEqual(result['reason'], 'old/new skill interference')
+        self.assertEqual(self.path.read_bytes(), before)
+
 
 if __name__=='__main__':unittest.main()

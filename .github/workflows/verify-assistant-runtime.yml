@@ -17,6 +17,8 @@ on:
       - 'scripts/research-training/incremental-procedure-verification/**'
       - 'scripts/research-training/procedural-capacity-growth/**'
       - 'scripts/research-training/native-capacity-growth/**'
+      - 'scripts/research-training/adaptive-format-repair/**'
+      - 'scripts/research-training/retail-reconciliation/**'
   pull_request:
     paths:
       - 'scripts/assistant-runtime/**'
@@ -34,6 +36,8 @@ on:
       - 'scripts/research-training/incremental-procedure-verification/**'
       - 'scripts/research-training/procedural-capacity-growth/**'
       - 'scripts/research-training/native-capacity-growth/**'
+      - 'scripts/research-training/adaptive-format-repair/**'
+      - 'scripts/research-training/retail-reconciliation/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -50,6 +54,31 @@ jobs:
           python-version: '3.12'
       - name: Verify memory precision, boundaries, provenance and actual CLI
         run: python -m unittest discover -s tests/assistant-runtime -v
+      - name: Verify adaptive format repair and repeat both reconciliation tests
+        run: |
+          repair=scripts/research-training/adaptive-format-repair
+          retail=scripts/research-training/retail-reconciliation
+          python -m unittest discover -s "$repair" -v
+          python "$repair/cases.py" "$RUNNER_TEMP/format-cases.json"
+          cmp "$repair/CASES.json" "$RUNNER_TEMP/format-cases.json"
+          python "$repair/benchmark.py" "$RUNNER_TEMP/format-repair.json"
+          cmp "$repair/RESULTS.json" "$RUNNER_TEMP/format-repair.json"
+          python "$repair/build_web.py" "$RUNNER_TEMP/format-site"
+          cmp "$repair/repair.py" "$RUNNER_TEMP/format-site/repair.py"
+          cmp "$repair/CASES.json" "$RUNNER_TEMP/format-site/CASES.json"
+          node --input-type=module --check < "$RUNNER_TEMP/format-site/app.js"
+          node --input-type=module --check < "$RUNNER_TEMP/format-site/runtime-worker.js"
+          python "$retail/run.py" "$retail/CASES.json" "$RUNNER_TEMP/retail-reconciliation.json"
+          python - "$retail/AFTER_CONFLICT_FIX.json" "$RUNNER_TEMP/retail-reconciliation.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          stored, fresh = (json.loads(Path(name).read_text()) for name in sys.argv[1:])
+          assert stored['corpus_sha256'] == fresh['corpus_sha256']
+          for method, expected in stored['methods'].items():
+              assert fresh['methods'][method]['predictions'] == expected['predictions'], method
+          PY
       - name: Check donor selection and rejection of conflicting proposals
         run: python -m unittest discover -s scripts/research-training/intent-transfer-20261120 -v
       - name: Verify shared procedural learning and retention

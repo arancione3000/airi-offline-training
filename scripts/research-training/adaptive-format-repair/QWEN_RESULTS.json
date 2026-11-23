@@ -1,0 +1,899 @@
+{
+  "corpus_sha256": "9bd048c1db127b8939468c2544f1d8e7665f579ff9a227a4e46175d513c9311b",
+  "model": "Qwen2.5-1.5B-Instruct Q4_K_M",
+  "model_revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+  "model_sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+  "engine_sha256": "3109eb170fa18fb89519f999c2aa6596a9c8302d6ca75e7e33953f55cf22f257",
+  "temperature": 0,
+  "seed": 7,
+  "n_predict": 16,
+  "rounds": [
+    {
+      "id": "consegne",
+      "confirmed_mappings": [
+        [
+          "spedite",
+          "stornate"
+        ],
+        [
+          "consegnate",
+          "rese"
+        ]
+      ],
+      "qualification": {
+        "metrics": {
+          "correct_answers": 5,
+          "unsafe_answers": 6,
+          "wrong_answers": 3
+        },
+        "cases": [
+          {
+            "id": "consegne-qualification-0",
+            "kind": "clean",
+            "expected": -7720,
+            "status": "answered",
+            "answer": -7720,
+            "raw_output": "1614,9334"
+          },
+          {
+            "id": "consegne-qualification-1",
+            "kind": "clean",
+            "expected": 5241,
+            "status": "answered",
+            "answer": 7011,
+            "raw_output": "7011,00"
+          },
+          {
+            "id": "consegne-qualification-2",
+            "kind": "clean",
+            "expected": 2248,
+            "status": "answered",
+            "answer": 2248,
+            "raw_output": "3674,1426"
+          },
+          {
+            "id": "consegne-qualification-3",
+            "kind": "clean",
+            "expected": 1385,
+            "status": "answered",
+            "answer": 1385,
+            "raw_output": "5572,4187"
+          },
+          {
+            "id": "consegne-qualification-4",
+            "kind": "clean",
+            "expected": 267,
+            "status": "answered",
+            "answer": 6898,
+            "raw_output": "6898,00"
+          },
+          {
+            "id": "consegne-qualification-5",
+            "kind": "clean",
+            "expected": -6926,
+            "status": "answered",
+            "answer": -6926,
+            "raw_output": "794,7720"
+          },
+          {
+            "id": "consegne-qualification-6",
+            "kind": "clean",
+            "expected": 2463,
+            "status": "answered",
+            "answer": 2463,
+            "raw_output": "6218,3755"
+          },
+          {
+            "id": "consegne-qualification-7",
+            "kind": "clean",
+            "expected": -3181,
+            "status": "answered",
+            "answer": 3181,
+            "raw_output": "9682,6501"
+          },
+          {
+            "id": "consegne-qualification-negative-equal-net",
+            "kind": "equal_net_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 9042,
+            "raw_output": "9071,29"
+          },
+          {
+            "id": "consegne-qualification-negative-conflict",
+            "kind": "operand_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 365,
+            "raw_output": "4172,3807"
+          },
+          {
+            "id": "consegne-qualification-negative-missing",
+            "kind": "missing_field",
+            "expected": null,
+            "status": "answered",
+            "answer": 9907,
+            "raw_output": "9907,0"
+          },
+          {
+            "id": "consegne-qualification-negative-noise",
+            "kind": "extra_field",
+            "expected": null,
+            "status": "answered",
+            "answer": -4192,
+            "raw_output": "5777,9969"
+          },
+          {
+            "id": "consegne-qualification-negative-empty",
+            "kind": "no_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 0,
+            "raw_output": "0,0"
+          },
+          {
+            "id": "consegne-qualification-negative-mixed",
+            "kind": "unknown_source",
+            "expected": null,
+            "status": "answered",
+            "answer": -8417,
+            "raw_output": "324,8741"
+          }
+        ],
+        "invalid_output_reviews": 0
+      },
+      "historical_qualification": null,
+      "gate_passed": false,
+      "gate_failure_case_ids": [
+        "consegne-qualification-1",
+        "consegne-qualification-4",
+        "consegne-qualification-7",
+        "consegne-qualification-negative-equal-net",
+        "consegne-qualification-negative-conflict",
+        "consegne-qualification-negative-missing",
+        "consegne-qualification-negative-noise",
+        "consegne-qualification-negative-empty",
+        "consegne-qualification-negative-mixed"
+      ],
+      "final_shadow": {
+        "metrics": {
+          "correct_answers": 16,
+          "unsafe_answers": 7,
+          "wrong_answers": 4
+        },
+        "cases": [
+          {
+            "id": "consegne-duplicate-2",
+            "kind": "duplicates",
+            "expected": 5779,
+            "status": "answered",
+            "answer": 5779,
+            "raw_output": "7267,1488"
+          },
+          {
+            "id": "consegne-negative-equal-net",
+            "kind": "equal_net_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 68,
+            "raw_output": "2273,2205"
+          },
+          {
+            "id": "consegne-negative-empty",
+            "kind": "no_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 0,
+            "raw_output": "0,0"
+          },
+          {
+            "id": "consegne-old-1",
+            "kind": "clean",
+            "expected": 8977,
+            "status": "answered",
+            "answer": 8977,
+            "raw_output": "9138,161"
+          },
+          {
+            "id": "consegne-duplicate-3",
+            "kind": "duplicates",
+            "expected": -5374,
+            "status": "answered",
+            "answer": -5374,
+            "raw_output": "1699,7073"
+          },
+          {
+            "id": "consegne-new-7",
+            "kind": "clean",
+            "expected": 338,
+            "status": "answered",
+            "answer": 836,
+            "raw_output": "836,0"
+          },
+          {
+            "id": "consegne-negative-missing",
+            "kind": "missing_field",
+            "expected": null,
+            "status": "answered",
+            "answer": 2241,
+            "raw_output": "2241,0"
+          },
+          {
+            "id": "consegne-new-3",
+            "kind": "clean",
+            "expected": -1958,
+            "status": "answered",
+            "answer": -1958,
+            "raw_output": "7058,9016"
+          },
+          {
+            "id": "consegne-new-9",
+            "kind": "clean",
+            "expected": 837,
+            "status": "answered",
+            "answer": 837,
+            "raw_output": "1788,951"
+          },
+          {
+            "id": "consegne-old-2",
+            "kind": "clean",
+            "expected": -8141,
+            "status": "answered",
+            "answer": -8141,
+            "raw_output": "433,8574"
+          },
+          {
+            "id": "consegne-new-10",
+            "kind": "clean",
+            "expected": -3206,
+            "status": "answered",
+            "answer": 3206,
+            "raw_output": "6010,2804"
+          },
+          {
+            "id": "consegne-new-2",
+            "kind": "clean",
+            "expected": -4605,
+            "status": "answered",
+            "answer": -4605,
+            "raw_output": "4122,8727"
+          },
+          {
+            "id": "consegne-new-1",
+            "kind": "clean",
+            "expected": 5598,
+            "status": "answered",
+            "answer": 6318,
+            "raw_output": "6318,0"
+          },
+          {
+            "id": "consegne-unresolved",
+            "kind": "unresolved_format",
+            "expected": null,
+            "status": "answered",
+            "answer": 7665,
+            "raw_output": "8424,759"
+          },
+          {
+            "id": "consegne-new-5",
+            "kind": "clean",
+            "expected": 1494,
+            "status": "answered",
+            "answer": 1494,
+            "raw_output": "3729,2235"
+          },
+          {
+            "id": "consegne-old-0",
+            "kind": "clean",
+            "expected": -3381,
+            "status": "answered",
+            "answer": -3381,
+            "raw_output": "3903,7284"
+          },
+          {
+            "id": "consegne-new-6",
+            "kind": "clean",
+            "expected": 4002,
+            "status": "answered",
+            "answer": 4002,
+            "raw_output": "4628,626"
+          },
+          {
+            "id": "consegne-old-3",
+            "kind": "clean",
+            "expected": 445,
+            "status": "answered",
+            "answer": 445,
+            "raw_output": "1102,657"
+          },
+          {
+            "id": "consegne-duplicate-1",
+            "kind": "duplicates",
+            "expected": -1978,
+            "status": "answered",
+            "answer": -1978,
+            "raw_output": "2485,4463"
+          },
+          {
+            "id": "consegne-duplicate-0",
+            "kind": "duplicates",
+            "expected": -772,
+            "status": "answered",
+            "answer": -772,
+            "raw_output": "1091,1863"
+          },
+          {
+            "id": "consegne-new-4",
+            "kind": "clean",
+            "expected": -3975,
+            "status": "answered",
+            "answer": 3975,
+            "raw_output": "5753,1778"
+          },
+          {
+            "id": "consegne-new-8",
+            "kind": "clean",
+            "expected": -29,
+            "status": "answered",
+            "answer": -29,
+            "raw_output": "9510,9539"
+          },
+          {
+            "id": "consegne-negative-noise",
+            "kind": "extra_field",
+            "expected": null,
+            "status": "answered",
+            "answer": -4772,
+            "raw_output": "4398,9170"
+          },
+          {
+            "id": "consegne-new-11",
+            "kind": "clean",
+            "expected": 154,
+            "status": "answered",
+            "answer": 154,
+            "raw_output": "195,41"
+          },
+          {
+            "id": "consegne-new-0",
+            "kind": "clean",
+            "expected": -4118,
+            "status": "answered",
+            "answer": -4118,
+            "raw_output": "1757,5875"
+          },
+          {
+            "id": "consegne-negative-mixed",
+            "kind": "unknown_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 51,
+            "raw_output": "8564,8513"
+          },
+          {
+            "id": "consegne-negative-conflict",
+            "kind": "operand_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": -4702,
+            "raw_output": "2790,7492"
+          }
+        ],
+        "invalid_output_reviews": 0
+      }
+    },
+    {
+      "id": "ordini",
+      "confirmed_mappings": [
+        [
+          "spedite",
+          "stornate"
+        ],
+        [
+          "consegnate",
+          "rese"
+        ],
+        [
+          "evase",
+          "annullate"
+        ]
+      ],
+      "qualification": {
+        "metrics": {
+          "correct_nonanswers": 1,
+          "missed_answers": 8,
+          "needs_review_or_clarification": 9,
+          "unsafe_answers": 5
+        },
+        "cases": [
+          {
+            "id": "ordini-qualification-0",
+            "kind": "clean",
+            "expected": 3832,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-1",
+            "kind": "clean",
+            "expected": -858,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-2",
+            "kind": "clean",
+            "expected": -3848,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-3",
+            "kind": "clean",
+            "expected": 1708,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-4",
+            "kind": "clean",
+            "expected": 6523,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-5",
+            "kind": "clean",
+            "expected": 3536,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-6",
+            "kind": "clean",
+            "expected": 5049,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-7",
+            "kind": "clean",
+            "expected": -1816,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-negative-equal-net",
+            "kind": "equal_net_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": -1430,
+            "raw_output": "2673,4103"
+          },
+          {
+            "id": "ordini-qualification-negative-conflict",
+            "kind": "operand_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": -1097,
+            "raw_output": "6763,7860"
+          },
+          {
+            "id": "ordini-qualification-negative-missing",
+            "kind": "missing_field",
+            "expected": null,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-qualification-negative-noise",
+            "kind": "extra_field",
+            "expected": null,
+            "status": "answered",
+            "answer": 6358,
+            "raw_output": "6708,350"
+          },
+          {
+            "id": "ordini-qualification-negative-empty",
+            "kind": "no_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 0,
+            "raw_output": "0,0"
+          },
+          {
+            "id": "ordini-qualification-negative-mixed",
+            "kind": "unknown_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 8323,
+            "raw_output": "9147,824"
+          }
+        ],
+        "invalid_output_reviews": 0
+      },
+      "historical_qualification": {
+        "metrics": {
+          "correct_answers": 7,
+          "unsafe_answers": 6,
+          "wrong_answers": 1
+        },
+        "cases": [
+          {
+            "id": "consegne-qualification-0",
+            "kind": "clean",
+            "expected": -7720,
+            "status": "answered",
+            "answer": -7720,
+            "raw_output": "1614,9334"
+          },
+          {
+            "id": "consegne-qualification-1",
+            "kind": "clean",
+            "expected": 5241,
+            "status": "answered",
+            "answer": 5241,
+            "raw_output": "7011,1770"
+          },
+          {
+            "id": "consegne-qualification-2",
+            "kind": "clean",
+            "expected": 2248,
+            "status": "answered",
+            "answer": 2248,
+            "raw_output": "3674,1426"
+          },
+          {
+            "id": "consegne-qualification-3",
+            "kind": "clean",
+            "expected": 1385,
+            "status": "answered",
+            "answer": 1385,
+            "raw_output": "5572,4187"
+          },
+          {
+            "id": "consegne-qualification-4",
+            "kind": "clean",
+            "expected": 267,
+            "status": "answered",
+            "answer": 6898,
+            "raw_output": "6898,0000"
+          },
+          {
+            "id": "consegne-qualification-5",
+            "kind": "clean",
+            "expected": -6926,
+            "status": "answered",
+            "answer": -6926,
+            "raw_output": "794,7720"
+          },
+          {
+            "id": "consegne-qualification-6",
+            "kind": "clean",
+            "expected": 2463,
+            "status": "answered",
+            "answer": 2463,
+            "raw_output": "6218,3755"
+          },
+          {
+            "id": "consegne-qualification-7",
+            "kind": "clean",
+            "expected": -3181,
+            "status": "answered",
+            "answer": -3181,
+            "raw_output": "6501,9682"
+          },
+          {
+            "id": "consegne-qualification-negative-equal-net",
+            "kind": "equal_net_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 9042,
+            "raw_output": "9071,29"
+          },
+          {
+            "id": "consegne-qualification-negative-conflict",
+            "kind": "operand_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 365,
+            "raw_output": "4172,3807"
+          },
+          {
+            "id": "consegne-qualification-negative-missing",
+            "kind": "missing_field",
+            "expected": null,
+            "status": "answered",
+            "answer": 9907,
+            "raw_output": "9907,0"
+          },
+          {
+            "id": "consegne-qualification-negative-noise",
+            "kind": "extra_field",
+            "expected": null,
+            "status": "answered",
+            "answer": -4192,
+            "raw_output": "5777,9969"
+          },
+          {
+            "id": "consegne-qualification-negative-empty",
+            "kind": "no_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 0,
+            "raw_output": "0,0"
+          },
+          {
+            "id": "consegne-qualification-negative-mixed",
+            "kind": "unknown_source",
+            "expected": null,
+            "status": "answered",
+            "answer": -8417,
+            "raw_output": "324,8741"
+          }
+        ],
+        "invalid_output_reviews": 0
+      },
+      "gate_passed": false,
+      "gate_failure_case_ids": [
+        "ordini-qualification-0",
+        "ordini-qualification-1",
+        "ordini-qualification-2",
+        "ordini-qualification-3",
+        "ordini-qualification-4",
+        "ordini-qualification-5",
+        "ordini-qualification-6",
+        "ordini-qualification-7",
+        "ordini-qualification-negative-equal-net",
+        "ordini-qualification-negative-conflict",
+        "ordini-qualification-negative-noise",
+        "ordini-qualification-negative-empty",
+        "ordini-qualification-negative-mixed",
+        "consegne-qualification-4",
+        "consegne-qualification-negative-equal-net",
+        "consegne-qualification-negative-conflict",
+        "consegne-qualification-negative-missing",
+        "consegne-qualification-negative-noise",
+        "consegne-qualification-negative-empty",
+        "consegne-qualification-negative-mixed"
+      ],
+      "final_shadow": {
+        "metrics": {
+          "correct_answers": 6,
+          "correct_nonanswers": 3,
+          "missed_answers": 14,
+          "needs_review_or_clarification": 17,
+          "unsafe_answers": 4
+        },
+        "cases": [
+          {
+            "id": "ordini-new-1",
+            "kind": "clean",
+            "expected": -1219,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-old-2",
+            "kind": "clean",
+            "expected": 543,
+            "status": "answered",
+            "answer": 543,
+            "raw_output": "9169,8626"
+          },
+          {
+            "id": "ordini-new-0",
+            "kind": "clean",
+            "expected": -1712,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-10",
+            "kind": "clean",
+            "expected": -646,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-negative-noise",
+            "kind": "extra_field",
+            "expected": null,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-duplicate-2",
+            "kind": "duplicates",
+            "expected": -6868,
+            "status": "answered",
+            "answer": -6868,
+            "raw_output": "1432,8300"
+          },
+          {
+            "id": "ordini-negative-conflict",
+            "kind": "operand_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": -1073,
+            "raw_output": "7976,9049"
+          },
+          {
+            "id": "ordini-duplicate-3",
+            "kind": "duplicates",
+            "expected": -2791,
+            "status": "answered",
+            "answer": -2791,
+            "raw_output": "937,3728"
+          },
+          {
+            "id": "ordini-old-3",
+            "kind": "clean",
+            "expected": 742,
+            "status": "answered",
+            "answer": 742,
+            "raw_output": "1723,981"
+          },
+          {
+            "id": "ordini-new-6",
+            "kind": "clean",
+            "expected": 7503,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-duplicate-0",
+            "kind": "duplicates",
+            "expected": -7204,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-5",
+            "kind": "clean",
+            "expected": 6189,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-2",
+            "kind": "clean",
+            "expected": 3038,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-4",
+            "kind": "clean",
+            "expected": -1591,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-negative-empty",
+            "kind": "no_source",
+            "expected": null,
+            "status": "answered",
+            "answer": 0,
+            "raw_output": "0,0"
+          },
+          {
+            "id": "ordini-negative-mixed",
+            "kind": "unknown_source",
+            "expected": null,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-negative-equal-net",
+            "kind": "equal_net_conflict",
+            "expected": null,
+            "status": "answered",
+            "answer": 6377,
+            "raw_output": "7632,1255"
+          },
+          {
+            "id": "ordini-new-9",
+            "kind": "clean",
+            "expected": -568,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-old-0",
+            "kind": "clean",
+            "expected": 3742,
+            "status": "answered",
+            "answer": 3742,
+            "raw_output": "4562,820"
+          },
+          {
+            "id": "ordini-new-7",
+            "kind": "clean",
+            "expected": 5080,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-duplicate-1",
+            "kind": "duplicates",
+            "expected": -3004,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-3",
+            "kind": "clean",
+            "expected": -2940,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-new-8",
+            "kind": "clean",
+            "expected": -5438,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-old-1",
+            "kind": "clean",
+            "expected": 2016,
+            "status": "answered",
+            "answer": 2016,
+            "raw_output": "9821,7805"
+          },
+          {
+            "id": "ordini-new-11",
+            "kind": "clean",
+            "expected": -1877,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-negative-missing",
+            "kind": "missing_field",
+            "expected": null,
+            "status": "review",
+            "answer": null,
+            "raw_output": "REVISIONE"
+          },
+          {
+            "id": "ordini-unresolved",
+            "kind": "unresolved_format",
+            "expected": null,
+            "status": "answered",
+            "answer": -331,
+            "raw_output": "4859,5190"
+          }
+        ],
+        "invalid_output_reviews": 0
+      }
+    }
+  ]
+}

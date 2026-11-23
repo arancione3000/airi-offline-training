@@ -124,7 +124,7 @@ def main():
             continue
         history.append({'role': 'assistant', 'content': result['answer']})
         label = {'bounded_context_memory':'memoria','learned_skill':'abilità appresa','native_model':'modello',
-                 'certified_procedure':'procedura verificata'}[result['source']]
+                 'certified_procedure':'procedura verificata','source_conflict':'chiarimento'}[result['source']]
         if result.get('component_error'):print(result['component_error'],file=sys.stderr)
         print(f"Airi [{label}]: {result['answer']}")
 

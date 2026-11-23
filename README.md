@@ -1,5 +1,13 @@
 # Independent offline training
 
+**[Try the Airi reconciliation demo in your browser](https://airi-riconciliazione.arancione3000.chatgpt.site/).**
+
+The [adaptive reconciliation pilot](scripts/research-training/adaptive-format-repair/README.md)
+asks for the meaning of a new pair of field labels, verifies the proposed mapping
+against independent cases and preserves prior verified decisions before committing
+an update. See the [frozen benchmark](scripts/research-training/adaptive-format-repair/BENCHMARK.md)
+for coverage, comparisons and limits.
+
 ## Current experimental assistant
 
 Run `python scripts/assistant-runtime/chat.py` for the new assistant entry point.

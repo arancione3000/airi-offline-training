@@ -1,0 +1,534 @@
+{
+  "corpus_sha256": "0a0747e2e818e1cb7d9aff3b53032b33140f66851169deec404299fff170786d",
+  "counts": {
+    "train": 8,
+    "qualification": 24,
+    "final": 72
+  },
+  "lessons": [
+    {
+      "event": {
+        "action": "activated",
+        "skill_id": "a2432862ecf7e1da993fa29b5eca7bd55f470f7fe61ecced14867e7aeb0dbaa5",
+        "revision": 1,
+        "program": {
+          "version": 1,
+          "query": "Quante unità rimangono spedite al netto degli storni?",
+          "source": {
+            "prefix": "Riepilogo spedizioni: evase ",
+            "suffix": " unità.",
+            "separator": "; stornate "
+          },
+          "operation": "subtract"
+        },
+        "new_qualified_coverage": 8,
+        "snapshot_committed": true,
+        "main_copy_updated": true
+      },
+      "regression_gate": {
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "cases": 989,
+        "learned_intercepts": 0,
+        "unchanged_native_routes": 965,
+        "failed_cases": [],
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate"
+      },
+      "wall_ms": 20.395
+    },
+    {
+      "event": {
+        "action": "activated",
+        "skill_id": "4d7c64b425541676b9db5ee46ec4d1bf52753b6db381aca71126ea0aa4289f3c",
+        "revision": 2,
+        "program": {
+          "version": 1,
+          "query": "Quante unità rimangono spedite al netto degli storni?",
+          "source": {
+            "prefix": "Registro rimborsi: spedite ",
+            "suffix": " unità.",
+            "separator": "; rettificate "
+          },
+          "operation": "subtract"
+        },
+        "new_qualified_coverage": 8,
+        "snapshot_committed": true,
+        "main_copy_updated": true
+      },
+      "regression_gate": {
+        "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+        "cases": 989,
+        "learned_intercepts": 0,
+        "unchanged_native_routes": 965,
+        "failed_cases": [],
+        "passed": true,
+        "scope": "routing validation; not a new neural certificate"
+      },
+      "wall_ms": 21.774
+    }
+  ],
+  "methods": {
+    "airi_first": {
+      "totals": {
+        "correct_automation": 14,
+        "missed_automation": 34,
+        "correct_review": 20,
+        "unsafe_automation": 4
+      },
+      "by_case": {
+        "exact": {
+          "correct_automation": 14,
+          "missed_automation": 14
+        },
+        "paraphrase": {
+          "missed_automation": 12
+        },
+        "layout": {
+          "missed_automation": 8
+        },
+        "missing": {
+          "correct_review": 4
+        },
+        "money": {
+          "correct_review": 4
+        },
+        "wrong_operation": {
+          "correct_review": 4
+        },
+        "conflict": {
+          "correct_review": 4
+        },
+        "conflict_between_formats": {
+          "unsafe_automation": 4
+        },
+        "assistant_source": {
+          "correct_review": 4
+        }
+      },
+      "predictions": [
+        "2655",
+        "1292",
+        "443",
+        "59",
+        "2840",
+        "3027",
+        "2748",
+        "618",
+        "2131",
+        "2065",
+        "1456",
+        "1930",
+        "623",
+        "3475",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1198",
+        "3175",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1165",
+        "2158",
+        null,
+        null
+      ],
+      "median_ms": 0.44079,
+      "total_inference_ms": 37.612012
+    },
+    "airi_two": {
+      "totals": {
+        "correct_automation": 28,
+        "missed_automation": 20,
+        "correct_review": 20,
+        "unsafe_automation": 4
+      },
+      "by_case": {
+        "exact": {
+          "correct_automation": 28
+        },
+        "paraphrase": {
+          "missed_automation": 12
+        },
+        "layout": {
+          "missed_automation": 8
+        },
+        "missing": {
+          "correct_review": 4
+        },
+        "money": {
+          "correct_review": 4
+        },
+        "wrong_operation": {
+          "correct_review": 4
+        },
+        "conflict": {
+          "correct_review": 4
+        },
+        "conflict_between_formats": {
+          "unsafe_automation": 4
+        },
+        "assistant_source": {
+          "correct_review": 4
+        }
+      },
+      "predictions": [
+        "2655",
+        "1292",
+        "443",
+        "59",
+        "2840",
+        "3027",
+        "2748",
+        "618",
+        "2131",
+        "2065",
+        "1456",
+        "1930",
+        "623",
+        "3475",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1198",
+        "3175",
+        null,
+        null,
+        "291",
+        "1570",
+        "1329",
+        "1751",
+        "4885",
+        "244",
+        "4451",
+        "1119",
+        "1157",
+        "1891",
+        "3438",
+        "390",
+        "930",
+        "2696",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1165",
+        "2158",
+        null,
+        null
+      ],
+      "median_ms": 0.551247,
+      "total_inference_ms": 47.089011
+    },
+    "script": {
+      "totals": {
+        "correct_automation": 48,
+        "correct_review": 24
+      },
+      "by_case": {
+        "exact": {
+          "correct_automation": 28
+        },
+        "paraphrase": {
+          "correct_automation": 12
+        },
+        "layout": {
+          "correct_automation": 8
+        },
+        "missing": {
+          "correct_review": 4
+        },
+        "money": {
+          "correct_review": 4
+        },
+        "wrong_operation": {
+          "correct_review": 4
+        },
+        "conflict": {
+          "correct_review": 4
+        },
+        "conflict_between_formats": {
+          "correct_review": 4
+        },
+        "assistant_source": {
+          "correct_review": 4
+        }
+      },
+      "predictions": [
+        "2655",
+        "1292",
+        "443",
+        "59",
+        "2840",
+        "3027",
+        "2748",
+        "618",
+        "2131",
+        "2065",
+        "1456",
+        "1930",
+        "623",
+        "3475",
+        "622",
+        "677",
+        "7516",
+        "1293",
+        "633",
+        "3263",
+        "239",
+        "1666",
+        "478",
+        "5906",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "291",
+        "1570",
+        "1329",
+        "1751",
+        "4885",
+        "244",
+        "4451",
+        "1119",
+        "1157",
+        "1891",
+        "3438",
+        "390",
+        "930",
+        "2696",
+        "1239",
+        "1855",
+        "325",
+        "1367",
+        "795",
+        "2953",
+        "473",
+        "1212",
+        "6886",
+        "1166",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "median_ms": 0.003855,
+      "total_inference_ms": 0.762431
+    },
+    "qwen": {
+      "totals": {
+        "correct_automation": 26,
+        "missed_automation": 22,
+        "unsafe_automation": 5,
+        "correct_review": 19
+      },
+      "by_case": {
+        "exact": {
+          "correct_automation": 13,
+          "missed_automation": 15
+        },
+        "paraphrase": {
+          "correct_automation": 9,
+          "missed_automation": 3
+        },
+        "layout": {
+          "correct_automation": 4,
+          "missed_automation": 4
+        },
+        "missing": {
+          "unsafe_automation": 2,
+          "correct_review": 2
+        },
+        "money": {
+          "correct_review": 4
+        },
+        "wrong_operation": {
+          "correct_review": 4
+        },
+        "conflict": {
+          "correct_review": 4
+        },
+        "conflict_between_formats": {
+          "correct_review": 4
+        },
+        "assistant_source": {
+          "unsafe_automation": 3,
+          "correct_review": 1
+        }
+      },
+      "predictions": [
+        "2655",
+        "1292",
+        "443",
+        null,
+        "2840",
+        "3027",
+        "2748",
+        "618",
+        "2131",
+        "2065",
+        "1456",
+        "1930",
+        "623",
+        "3475",
+        "622",
+        "677",
+        null,
+        "1293",
+        "633",
+        "3263",
+        "239",
+        null,
+        "478",
+        "5906",
+        "362",
+        "2210",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "4180",
+        "826",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1239",
+        "1855",
+        null,
+        "1367",
+        "795",
+        null,
+        null,
+        null,
+        null,
+        "1166",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "1847"
+      ],
+      "median_ms": 721.731658,
+      "total_inference_ms": 61938.814237
+    }
+  },
+  "retention": {
+    "tested_first_format": 36,
+    "old_correct": 24,
+    "old_correct_lost": 0,
+    "old_incorrect_resolved": 0
+  }
+}

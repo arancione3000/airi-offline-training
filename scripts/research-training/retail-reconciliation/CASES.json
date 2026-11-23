@@ -1,0 +1,1602 @@
+{
+  "schema": 1,
+  "dataset_sha256": "f5385cbb54bbebf7196389109c6b0621faab0c304e3702548165e71c84aede8b",
+  "train": [
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1615; stornate 14 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1601"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2430; stornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2418"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 415; stornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "403"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 288; stornate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "282"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 350; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "344"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 6017; rettificate 38 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "5979"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2535; rettificate 20 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2515"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 4683; rettificate 21 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "4662"
+    }
+  ],
+  "qualification": [
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 234; stornate 10 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "224"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1798; stornate 34 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1764"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 4514; stornate 1447 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "3067"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1330; stornate 9 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1321"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 661; stornate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "655"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2255; stornate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2250"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 693; stornate 36 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "657"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 6724; stornate 17 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "6707"
+    },
+    {
+      "format": 0,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 665 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 687; stornate 195 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 5144; stornate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Riepilogo spedizioni: evase 454; stornate 17 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 793; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "787"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 217; rettificate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "212"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 291; rettificate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "279"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2373; rettificate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2360"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 434; rettificate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "422"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 492; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "486"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1721; rettificate 14 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1707"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 5504; rettificate 225 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "5279"
+    },
+    {
+      "format": 1,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 737 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 3138; rettificate 32 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 823; rettificate 20 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Registro rimborsi: spedite 3684; rettificate 33 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    }
+  ],
+  "final": [
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2668; stornate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2655"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1361; stornate 69 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1292"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 453; stornate 10 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "443"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 70; stornate 11 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "59"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2892; stornate 52 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2840"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 3051; stornate 24 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "3027"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2822; stornate 74 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2748"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 690; stornate 72 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "618"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2144; stornate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2131"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2091; stornate 26 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2065"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1461; stornate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1456"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1942; stornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1930"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 649; stornate 26 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "623"
+    },
+    {
+      "format": 0,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 3487; stornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "3475"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 634; stornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Qual è il saldo delle unità dopo gli storni?"
+        }
+      ],
+      "answer": "622"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 697; stornate 20 unità."
+        },
+        {
+          "role": "user",
+          "content": "Togliendo gli storni, quante unità restano spedite?"
+        }
+      ],
+      "answer": "677"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 7588; stornate 72 unità."
+        },
+        {
+          "role": "user",
+          "content": "Mi calcoli il netto delle quantità spedite?"
+        }
+      ],
+      "answer": "7516"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1317; stornate 24 unità."
+        },
+        {
+          "role": "user",
+          "content": "Qual è il saldo delle unità dopo gli storni?"
+        }
+      ],
+      "answer": "1293"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 639; stornate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Togliendo gli storni, quante unità restano spedite?"
+        }
+      ],
+      "answer": "633"
+    },
+    {
+      "format": 0,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 3299; stornate 36 unità."
+        },
+        {
+          "role": "user",
+          "content": "Mi calcoli il netto delle quantità spedite?"
+        }
+      ],
+      "answer": "3263"
+    },
+    {
+      "format": 0,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 251;\nstornate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "239"
+    },
+    {
+      "format": 0,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: stornate 12; evase 1678 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1666"
+    },
+    {
+      "format": 0,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 598;\nstornate 120 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "478"
+    },
+    {
+      "format": 0,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: stornate 157; evase 6063 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "5906"
+    },
+    {
+      "format": 0,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 362 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2210 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1397; stornate 505 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2626; stornate 44 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 974; stornate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 105; stornate 20 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "conflict",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 6140; stornate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1799; stornate 16 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "conflict",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 4600; stornate 24 unità."
+        },
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 8626; stornate 51 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "conflict_between_formats",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1235; stornate 37 unità."
+        },
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 238; rettificate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "conflict_between_formats",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 3889; stornate 714 unità."
+        },
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 5859; rettificate 191 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Riepilogo spedizioni: evase 4214; stornate 34 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 0,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Riepilogo spedizioni: evase 860; stornate 34 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 300; rettificate 9 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "291"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1576; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1570"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1424; rettificate 95 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1329"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1757; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1751"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 5210; rettificate 325 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "4885"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 250; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "244"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 4501; rettificate 50 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "4451"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1129; rettificate 10 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1119"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1165; rettificate 8 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1157"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1904; rettificate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1891"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 3463; rettificate 25 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "3438"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 449; rettificate 59 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "390"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 936; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "930"
+    },
+    {
+      "format": 1,
+      "kind": "exact",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2726; rettificate 30 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "2696"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1261; rettificate 22 unità."
+        },
+        {
+          "role": "user",
+          "content": "Qual è il saldo delle unità dopo gli storni?"
+        }
+      ],
+      "answer": "1239"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1870; rettificate 15 unità."
+        },
+        {
+          "role": "user",
+          "content": "Togliendo gli storni, quante unità restano spedite?"
+        }
+      ],
+      "answer": "1855"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 330; rettificate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Mi calcoli il netto delle quantità spedite?"
+        }
+      ],
+      "answer": "325"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1373; rettificate 6 unità."
+        },
+        {
+          "role": "user",
+          "content": "Qual è il saldo delle unità dopo gli storni?"
+        }
+      ],
+      "answer": "1367"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 848; rettificate 53 unità."
+        },
+        {
+          "role": "user",
+          "content": "Togliendo gli storni, quante unità restano spedite?"
+        }
+      ],
+      "answer": "795"
+    },
+    {
+      "format": 1,
+      "kind": "paraphrase",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2960; rettificate 7 unità."
+        },
+        {
+          "role": "user",
+          "content": "Mi calcoli il netto delle quantità spedite?"
+        }
+      ],
+      "answer": "2953"
+    },
+    {
+      "format": 1,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 485;\nrettificate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "473"
+    },
+    {
+      "format": 1,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: rettificate 10; spedite 1222 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1212"
+    },
+    {
+      "format": 1,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 7114;\nrettificate 228 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "6886"
+    },
+    {
+      "format": 1,
+      "kind": "layout",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: rettificate 32; spedite 1198 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": "1166"
+    },
+    {
+      "format": 1,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1212 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "missing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1710 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 1155; rettificate 24 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "money",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 306; rettificate 16 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quanto vale il saldo degli storni in euro?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2125; rettificate 17 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "wrong_operation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 5892; rettificate 82 unità."
+        },
+        {
+          "role": "user",
+          "content": "Somma le unità spedite e quelle stornate."
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "conflict",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2383; rettificate 23 unità."
+        },
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 979; rettificate 23 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "conflict",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 783; rettificate 12 unità."
+        },
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 3676; rettificate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "conflict_between_formats",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 2749; rettificate 13 unità."
+        },
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 1180; stornate 15 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "conflict_between_formats",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Registro rimborsi: spedite 211; rettificate 16 unità."
+        },
+        {
+          "role": "user",
+          "content": "Riepilogo spedizioni: evase 2219; stornate 61 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Registro rimborsi: spedite 409; rettificate 5 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "format": 1,
+      "kind": "assistant_source",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Registro rimborsi: spedite 1877; rettificate 30 unità."
+        },
+        {
+          "role": "user",
+          "content": "Quante unità rimangono spedite al netto degli storni?"
+        }
+      ],
+      "answer": null
+    }
+  ]
+}
