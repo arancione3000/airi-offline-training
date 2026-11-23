@@ -2,12 +2,12 @@
   "authorization": "User explicitly requested indefinite native training; no assistant automation or external teacher.",
   "chunk_seconds": 180,
   "dispatch": {
-    "job_index": 1354,
-    "key": "cf117ef86122a6a0085136a9ec080a50968901f97004e7c8c0e29749b1e6a020",
+    "job_index": 1355,
+    "key": "8b732061d3b05b68d539538c9ba8c7a7c56c848fddd5a70f1dc05322675448c4",
     "request_attempts": 1,
-    "requested_at": 1795451810.0480082,
-    "run_id": 45218504599,
-    "source_release": "airi-offline-666780-45217156595-1-1"
+    "requested_at": 1795452194.8262827,
+    "run_id": null,
+    "source_release": "airi-offline-666876-45218504599-1-2"
   },
   "enabled": true,
   "fingerprint": "46b83b573d1a1259d92a1d6b074464109899332da3647fe76efa5a1b39ccad01",
