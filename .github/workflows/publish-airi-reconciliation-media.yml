@@ -1,0 +1,28 @@
+name: Attach the Airi demo recording and screenshots
+on:
+  push:
+    branches: [publish/airi-reconciliation-media]
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: github.repository == 'arancione3000/airi-offline-training'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify and upload the recorded test
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: scripts/research-training/adaptive-format-repair/media
+        run: |
+          sha256sum --check <<'CHECKSUMS'
+          079eb184da2e2f1699da0fd065b214e7cb109e6e169fd3db8a6731590ac8b473  airi-demo.mp4
+          096deecb9ae8715b7581e323b303fa50a0bceebbf56281ff96c6be81c114e10f  01-domanda.png
+          ad46cf82eb149ac2dcfb72a8e6d73593129085a7eca25ea47eb175cc913ed985  02-approvazione.png
+          be3fb1584d9e79d10d8ae0b55b479d17caaab459d8f2105bbc4bf25120841f3f  03-conflitto.png
+          CHECKSUMS
+          gh release upload airi-riconciliazione-demo-v0.1.0 \
+            airi-demo.mp4 01-domanda.png 02-approvazione.png 03-conflitto.png
