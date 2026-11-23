@@ -1,0 +1,889 @@
+{
+  "schema": 1,
+  "seed": 429017,
+  "protected": [
+    {
+      "id": "old-clean-0",
+      "kind": "clean",
+      "reports": [
+        "spedite: 3490; stornate: 2501"
+      ],
+      "expected": 989
+    },
+    {
+      "id": "old-clean-1",
+      "kind": "clean",
+      "reports": [
+        "STORNATE = 7053\nSPEDITE : 5586"
+      ],
+      "expected": -1467
+    },
+    {
+      "id": "old-clean-2",
+      "kind": "clean",
+      "reports": [
+        " spedite = 3491 ; stornate : 208 "
+      ],
+      "expected": 3283
+    },
+    {
+      "id": "old-clean-3",
+      "kind": "clean",
+      "reports": [
+        "spedite: 2565; stornate: 1005"
+      ],
+      "expected": 1560
+    },
+    {
+      "id": "old-clean-4",
+      "kind": "clean",
+      "reports": [
+        "STORNATE = 4952\nSPEDITE : 1201"
+      ],
+      "expected": -3751
+    },
+    {
+      "id": "old-clean-5",
+      "kind": "clean",
+      "reports": [
+        " spedite = 1803 ; stornate : 1386 "
+      ],
+      "expected": 417
+    },
+    {
+      "id": "old-clean-6",
+      "kind": "clean",
+      "reports": [
+        "spedite: 2612; stornate: 3199"
+      ],
+      "expected": -587
+    },
+    {
+      "id": "old-clean-7",
+      "kind": "clean",
+      "reports": [
+        "STORNATE = 8463\nSPEDITE : 2401"
+      ],
+      "expected": -6062
+    },
+    {
+      "id": "old-clean-8",
+      "kind": "clean",
+      "reports": [
+        " spedite = 8845 ; stornate : 1387 "
+      ],
+      "expected": 7458
+    },
+    {
+      "id": "old-clean-9",
+      "kind": "clean",
+      "reports": [
+        "spedite: 3267; stornate: 3766"
+      ],
+      "expected": -499
+    },
+    {
+      "id": "old-clean-10",
+      "kind": "clean",
+      "reports": [
+        "STORNATE = 3472\nSPEDITE : 1333"
+      ],
+      "expected": -2139
+    },
+    {
+      "id": "old-clean-11",
+      "kind": "clean",
+      "reports": [
+        " spedite = 1342 ; stornate : 7518 "
+      ],
+      "expected": -6176
+    },
+    {
+      "id": "old-duplicate-0",
+      "kind": "duplicates",
+      "reports": [
+        "spedite: 3101; stornate: 7875",
+        "STORNATE = 7875\nSPEDITE : 3101"
+      ],
+      "expected": -4774
+    },
+    {
+      "id": "old-duplicate-1",
+      "kind": "duplicates",
+      "reports": [
+        "spedite: 5156; stornate: 5585",
+        "STORNATE = 5585\nSPEDITE : 5156"
+      ],
+      "expected": -429
+    },
+    {
+      "id": "old-duplicate-2",
+      "kind": "duplicates",
+      "reports": [
+        "spedite: 2792; stornate: 1393",
+        "STORNATE = 1393\nSPEDITE : 2792"
+      ],
+      "expected": 1399
+    },
+    {
+      "id": "old-duplicate-3",
+      "kind": "duplicates",
+      "reports": [
+        "spedite: 6050; stornate: 9579",
+        "STORNATE = 9579\nSPEDITE : 6050"
+      ],
+      "expected": -3529
+    },
+    {
+      "id": "old-negative-equal-net",
+      "kind": "equal_net_conflict",
+      "reports": [
+        "spedite: 550; stornate: 1293",
+        "spedite: 551; stornate: 1294"
+      ],
+      "expected": null
+    },
+    {
+      "id": "old-negative-conflict",
+      "kind": "operand_conflict",
+      "reports": [
+        "spedite: 7873; stornate: 913",
+        "STORNATE = 7962\nSPEDITE : 1425"
+      ],
+      "expected": null
+    },
+    {
+      "id": "old-negative-missing",
+      "kind": "missing_field",
+      "reports": [
+        "spedite: 6821"
+      ],
+      "expected": null
+    },
+    {
+      "id": "old-negative-noise",
+      "kind": "extra_field",
+      "reports": [
+        "spedite: 648; stornate: 9704; ripetute: 5"
+      ],
+      "expected": null
+    },
+    {
+      "id": "old-negative-empty",
+      "kind": "no_source",
+      "reports": [],
+      "expected": null
+    },
+    {
+      "id": "old-negative-mixed",
+      "kind": "unknown_source",
+      "reports": [
+        "spedite: 8501; stornate: 2335",
+        " prenotate = 6157 ; residue : 8662 "
+      ],
+      "expected": null
+    }
+  ],
+  "updates": [
+    {
+      "id": "consegne",
+      "arrival": {
+        "id": "consegne-arrival-0",
+        "kind": "clean",
+        "reports": [
+          "consegnate: 1635; rese: 2849"
+        ],
+        "expected": -1214
+      },
+      "confirmed_shipped_label": "consegnate",
+      "qualification": [
+        {
+          "id": "consegne-qualification-0",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 1614; rese: 9334"
+          ],
+          "expected": -7720
+        },
+        {
+          "id": "consegne-qualification-1",
+          "kind": "clean",
+          "reports": [
+            "RESE = 1770\nCONSEGNATE : 7011"
+          ],
+          "expected": 5241
+        },
+        {
+          "id": "consegne-qualification-2",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 3674 ; rese : 1426 "
+          ],
+          "expected": 2248
+        },
+        {
+          "id": "consegne-qualification-3",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 5572; rese: 4187"
+          ],
+          "expected": 1385
+        },
+        {
+          "id": "consegne-qualification-4",
+          "kind": "clean",
+          "reports": [
+            "RESE = 6631\nCONSEGNATE : 6898"
+          ],
+          "expected": 267
+        },
+        {
+          "id": "consegne-qualification-5",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 794 ; rese : 7720 "
+          ],
+          "expected": -6926
+        },
+        {
+          "id": "consegne-qualification-6",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 6218; rese: 3755"
+          ],
+          "expected": 2463
+        },
+        {
+          "id": "consegne-qualification-7",
+          "kind": "clean",
+          "reports": [
+            "RESE = 9682\nCONSEGNATE : 6501"
+          ],
+          "expected": -3181
+        },
+        {
+          "id": "consegne-qualification-negative-equal-net",
+          "kind": "equal_net_conflict",
+          "reports": [
+            "consegnate: 9070; rese: 28",
+            "spedite: 9071; stornate: 29"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-qualification-negative-conflict",
+          "kind": "operand_conflict",
+          "reports": [
+            "consegnate: 1940; rese: 9514",
+            "STORNATE = 3807\nSPEDITE : 4172"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-qualification-negative-missing",
+          "kind": "missing_field",
+          "reports": [
+            "consegnate: 9907"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-qualification-negative-noise",
+          "kind": "extra_field",
+          "reports": [
+            "consegnate: 5777; rese: 9969; ripetute: 5"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-qualification-negative-empty",
+          "kind": "no_source",
+          "reports": [],
+          "expected": null
+        },
+        {
+          "id": "consegne-qualification-negative-mixed",
+          "kind": "unknown_source",
+          "reports": [
+            "consegnate: 324; rese: 9422",
+            " prenotate = 3645 ; residue : 8741 "
+          ],
+          "expected": null
+        }
+      ],
+      "final": [
+        {
+          "id": "consegne-duplicate-2",
+          "kind": "duplicates",
+          "reports": [
+            "consegnate: 7267; rese: 1488",
+            "STORNATE = 1488\nSPEDITE : 7267"
+          ],
+          "expected": 5779
+        },
+        {
+          "id": "consegne-negative-equal-net",
+          "kind": "equal_net_conflict",
+          "reports": [
+            "consegnate: 2272; rese: 2204",
+            "spedite: 2273; stornate: 2205"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-negative-empty",
+          "kind": "no_source",
+          "reports": [],
+          "expected": null
+        },
+        {
+          "id": "consegne-old-1",
+          "kind": "clean",
+          "reports": [
+            "STORNATE = 161\nSPEDITE : 9138"
+          ],
+          "expected": 8977
+        },
+        {
+          "id": "consegne-duplicate-3",
+          "kind": "duplicates",
+          "reports": [
+            "consegnate: 1699; rese: 7073",
+            "STORNATE = 7073\nSPEDITE : 1699"
+          ],
+          "expected": -5374
+        },
+        {
+          "id": "consegne-new-7",
+          "kind": "clean",
+          "reports": [
+            "RESE = 836\nCONSEGNATE : 1174"
+          ],
+          "expected": 338
+        },
+        {
+          "id": "consegne-negative-missing",
+          "kind": "missing_field",
+          "reports": [
+            "consegnate: 2241"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-new-3",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 7058; rese: 9016"
+          ],
+          "expected": -1958
+        },
+        {
+          "id": "consegne-new-9",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 1788; rese: 951"
+          ],
+          "expected": 837
+        },
+        {
+          "id": "consegne-old-2",
+          "kind": "clean",
+          "reports": [
+            " spedite = 433 ; stornate : 8574 "
+          ],
+          "expected": -8141
+        },
+        {
+          "id": "consegne-new-10",
+          "kind": "clean",
+          "reports": [
+            "RESE = 6010\nCONSEGNATE : 2804"
+          ],
+          "expected": -3206
+        },
+        {
+          "id": "consegne-new-2",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 4122 ; rese : 8727 "
+          ],
+          "expected": -4605
+        },
+        {
+          "id": "consegne-new-1",
+          "kind": "clean",
+          "reports": [
+            "RESE = 720\nCONSEGNATE : 6318"
+          ],
+          "expected": 5598
+        },
+        {
+          "id": "consegne-unresolved",
+          "kind": "unresolved_format",
+          "reports": [
+            "prenotate: 8424; residue: 759"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-new-5",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 3729 ; rese : 2235 "
+          ],
+          "expected": 1494
+        },
+        {
+          "id": "consegne-old-0",
+          "kind": "clean",
+          "reports": [
+            "spedite: 3903; stornate: 7284"
+          ],
+          "expected": -3381
+        },
+        {
+          "id": "consegne-new-6",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 4628; rese: 626"
+          ],
+          "expected": 4002
+        },
+        {
+          "id": "consegne-old-3",
+          "kind": "clean",
+          "reports": [
+            "spedite: 1102; stornate: 657"
+          ],
+          "expected": 445
+        },
+        {
+          "id": "consegne-duplicate-1",
+          "kind": "duplicates",
+          "reports": [
+            "consegnate: 2485; rese: 4463",
+            "STORNATE = 4463\nSPEDITE : 2485"
+          ],
+          "expected": -1978
+        },
+        {
+          "id": "consegne-duplicate-0",
+          "kind": "duplicates",
+          "reports": [
+            "consegnate: 1091; rese: 1863",
+            "STORNATE = 1863\nSPEDITE : 1091"
+          ],
+          "expected": -772
+        },
+        {
+          "id": "consegne-new-4",
+          "kind": "clean",
+          "reports": [
+            "RESE = 5753\nCONSEGNATE : 1778"
+          ],
+          "expected": -3975
+        },
+        {
+          "id": "consegne-new-8",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 9510 ; rese : 9539 "
+          ],
+          "expected": -29
+        },
+        {
+          "id": "consegne-negative-noise",
+          "kind": "extra_field",
+          "reports": [
+            "consegnate: 4398; rese: 9170; ripetute: 5"
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-new-11",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 195 ; rese : 41 "
+          ],
+          "expected": 154
+        },
+        {
+          "id": "consegne-new-0",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 1757; rese: 5875"
+          ],
+          "expected": -4118
+        },
+        {
+          "id": "consegne-negative-mixed",
+          "kind": "unknown_source",
+          "reports": [
+            "consegnate: 8564; rese: 8513",
+            " prenotate = 5996 ; residue : 723 "
+          ],
+          "expected": null
+        },
+        {
+          "id": "consegne-negative-conflict",
+          "kind": "operand_conflict",
+          "reports": [
+            "consegnate: 4857; rese: 152",
+            "STORNATE = 7492\nSPEDITE : 2790"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "ordini",
+      "arrival": {
+        "id": "ordini-arrival-0",
+        "kind": "clean",
+        "reports": [
+          "evase: 522; annullate: 7350"
+        ],
+        "expected": -6828
+      },
+      "confirmed_shipped_label": "evase",
+      "qualification": [
+        {
+          "id": "ordini-qualification-0",
+          "kind": "clean",
+          "reports": [
+            "evase: 4010; annullate: 178"
+          ],
+          "expected": 3832
+        },
+        {
+          "id": "ordini-qualification-1",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 5697\nEVASE : 4839"
+          ],
+          "expected": -858
+        },
+        {
+          "id": "ordini-qualification-2",
+          "kind": "clean",
+          "reports": [
+            " evase = 5039 ; annullate : 8887 "
+          ],
+          "expected": -3848
+        },
+        {
+          "id": "ordini-qualification-3",
+          "kind": "clean",
+          "reports": [
+            "evase: 4832; annullate: 3124"
+          ],
+          "expected": 1708
+        },
+        {
+          "id": "ordini-qualification-4",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 3184\nEVASE : 9707"
+          ],
+          "expected": 6523
+        },
+        {
+          "id": "ordini-qualification-5",
+          "kind": "clean",
+          "reports": [
+            " evase = 8427 ; annullate : 4891 "
+          ],
+          "expected": 3536
+        },
+        {
+          "id": "ordini-qualification-6",
+          "kind": "clean",
+          "reports": [
+            "evase: 9187; annullate: 4138"
+          ],
+          "expected": 5049
+        },
+        {
+          "id": "ordini-qualification-7",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 3368\nEVASE : 1552"
+          ],
+          "expected": -1816
+        },
+        {
+          "id": "ordini-qualification-negative-equal-net",
+          "kind": "equal_net_conflict",
+          "reports": [
+            "evase: 2672; annullate: 4102",
+            "spedite: 2673; stornate: 4103"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-qualification-negative-conflict",
+          "kind": "operand_conflict",
+          "reports": [
+            "evase: 5992; annullate: 6736",
+            "STORNATE = 7860\nSPEDITE : 6763"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-qualification-negative-missing",
+          "kind": "missing_field",
+          "reports": [
+            "evase: 5890"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-qualification-negative-noise",
+          "kind": "extra_field",
+          "reports": [
+            "evase: 6708; annullate: 350; ripetute: 5"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-qualification-negative-empty",
+          "kind": "no_source",
+          "reports": [],
+          "expected": null
+        },
+        {
+          "id": "ordini-qualification-negative-mixed",
+          "kind": "unknown_source",
+          "reports": [
+            "evase: 9147; annullate: 824",
+            " prenotate = 9174 ; residue : 1862 "
+          ],
+          "expected": null
+        }
+      ],
+      "final": [
+        {
+          "id": "ordini-new-1",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 9185\nEVASE : 7966"
+          ],
+          "expected": -1219
+        },
+        {
+          "id": "ordini-old-2",
+          "kind": "clean",
+          "reports": [
+            " consegnate = 9169 ; rese : 8626 "
+          ],
+          "expected": 543
+        },
+        {
+          "id": "ordini-new-0",
+          "kind": "clean",
+          "reports": [
+            "evase: 2777; annullate: 4489"
+          ],
+          "expected": -1712
+        },
+        {
+          "id": "ordini-new-10",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 7617\nEVASE : 6971"
+          ],
+          "expected": -646
+        },
+        {
+          "id": "ordini-negative-noise",
+          "kind": "extra_field",
+          "reports": [
+            "evase: 2822; annullate: 6443; ripetute: 5"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-duplicate-2",
+          "kind": "duplicates",
+          "reports": [
+            "evase: 1432; annullate: 8300",
+            "STORNATE = 8300\nSPEDITE : 1432"
+          ],
+          "expected": -6868
+        },
+        {
+          "id": "ordini-negative-conflict",
+          "kind": "operand_conflict",
+          "reports": [
+            "evase: 7338; annullate: 6213",
+            "STORNATE = 9049\nSPEDITE : 7976"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-duplicate-3",
+          "kind": "duplicates",
+          "reports": [
+            "evase: 937; annullate: 3728",
+            "STORNATE = 3728\nSPEDITE : 937"
+          ],
+          "expected": -2791
+        },
+        {
+          "id": "ordini-old-3",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 1723; rese: 981"
+          ],
+          "expected": 742
+        },
+        {
+          "id": "ordini-new-6",
+          "kind": "clean",
+          "reports": [
+            "evase: 9276; annullate: 1773"
+          ],
+          "expected": 7503
+        },
+        {
+          "id": "ordini-duplicate-0",
+          "kind": "duplicates",
+          "reports": [
+            "evase: 1445; annullate: 8649",
+            "STORNATE = 8649\nSPEDITE : 1445"
+          ],
+          "expected": -7204
+        },
+        {
+          "id": "ordini-new-5",
+          "kind": "clean",
+          "reports": [
+            " evase = 9879 ; annullate : 3690 "
+          ],
+          "expected": 6189
+        },
+        {
+          "id": "ordini-new-2",
+          "kind": "clean",
+          "reports": [
+            " evase = 4415 ; annullate : 1377 "
+          ],
+          "expected": 3038
+        },
+        {
+          "id": "ordini-new-4",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 7492\nEVASE : 5901"
+          ],
+          "expected": -1591
+        },
+        {
+          "id": "ordini-negative-empty",
+          "kind": "no_source",
+          "reports": [],
+          "expected": null
+        },
+        {
+          "id": "ordini-negative-mixed",
+          "kind": "unknown_source",
+          "reports": [
+            "evase: 2431; annullate: 3987",
+            " prenotate = 2769 ; residue : 7365 "
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-negative-equal-net",
+          "kind": "equal_net_conflict",
+          "reports": [
+            "evase: 7631; annullate: 1254",
+            "spedite: 7632; stornate: 1255"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-new-9",
+          "kind": "clean",
+          "reports": [
+            "evase: 7197; annullate: 7765"
+          ],
+          "expected": -568
+        },
+        {
+          "id": "ordini-old-0",
+          "kind": "clean",
+          "reports": [
+            "consegnate: 4562; rese: 820"
+          ],
+          "expected": 3742
+        },
+        {
+          "id": "ordini-new-7",
+          "kind": "clean",
+          "reports": [
+            "ANNULLATE = 2121\nEVASE : 7201"
+          ],
+          "expected": 5080
+        },
+        {
+          "id": "ordini-duplicate-1",
+          "kind": "duplicates",
+          "reports": [
+            "evase: 3965; annullate: 6969",
+            "STORNATE = 6969\nSPEDITE : 3965"
+          ],
+          "expected": -3004
+        },
+        {
+          "id": "ordini-new-3",
+          "kind": "clean",
+          "reports": [
+            "evase: 3768; annullate: 6708"
+          ],
+          "expected": -2940
+        },
+        {
+          "id": "ordini-new-8",
+          "kind": "clean",
+          "reports": [
+            " evase = 290 ; annullate : 5728 "
+          ],
+          "expected": -5438
+        },
+        {
+          "id": "ordini-old-1",
+          "kind": "clean",
+          "reports": [
+            "RESE = 7805\nCONSEGNATE : 9821"
+          ],
+          "expected": 2016
+        },
+        {
+          "id": "ordini-new-11",
+          "kind": "clean",
+          "reports": [
+            " evase = 2186 ; annullate : 4063 "
+          ],
+          "expected": -1877
+        },
+        {
+          "id": "ordini-negative-missing",
+          "kind": "missing_field",
+          "reports": [
+            "evase: 3035"
+          ],
+          "expected": null
+        },
+        {
+          "id": "ordini-unresolved",
+          "kind": "unresolved_format",
+          "reports": [
+            "prenotate: 4859; residue: 5190"
+          ],
+          "expected": null
+        }
+      ]
+    }
+  ]
+}

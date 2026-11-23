@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prova Airi su un resoconto a due campi e guarda come un nuovo formato viene verificato prima di essere usato.">
+  <meta name="theme-color" content="#f3f6fb">
+  <title>Airi · Prova i nuovi formati</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <span class="brand"><span class="brand-mark" aria-hidden="true">A</span>Airi</span>
+      <a class="secondary-link" href="https://github.com/arancione3000/airi-offline-training/tree/main/scripts/research-training/adaptive-format-repair">Codice e benchmark</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <h1 id="title">Prova un formato nuovo.</h1>
+      <p>Airi calcola quante unità restano dopo gli storni. Se cambiano le etichette, ti chiede quale indica le spedizioni e verifica la regola prima di usarla.</p>
+    </section>
+
+    <section class="workbench" aria-label="Demo interattiva">
+      <div class="sheet">
+        <label class="panel-title" for="reports">Resoconti</label>
+        <div class="examples" aria-label="Carica un esempio">
+          <button id="example-new" type="button" disabled>Formato nuovo</button>
+          <button id="example-known" type="button" disabled>Formato noto</button>
+          <button id="example-conflict" type="button" disabled>Conflitto</button>
+        </div>
+        <textarea rows="5" maxlength="8192" id="reports" aria-describedby="editor-hint" spellcheck="false" disabled></textarea>
+        <p id="editor-hint" class="editor-hint">Usa due campi numerici. Separa più resoconti con una riga vuota.</p>
+        <div class="editor-actions">
+          <button id="analyze" class="primary" type="button" disabled>Analizza</button>
+          <button id="reset" class="quiet" type="button" disabled>Ricomincia</button>
+        </div>
+      </div>
+
+      <section class="result" id="result" aria-labelledby="result-title">
+        <div class="result-heading">
+          <h2 class="panel-title" id="result-title">Risposta di Airi</h2>
+          <span id="revision" class="revision" hidden></span>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Caricamento del motore Python…</p>
+        <form id="clarification" hidden>
+          <fieldset>
+            <legend id="question">Scegli il campo delle spedizioni.</legend>
+            <div id="choices" class="choices"></div>
+          </fieldset>
+          <p id="checks-hint" class="hint">Gli esempi inclusi hanno verifiche separate già preparate.</p>
+          <button type="submit" id="activate" class="primary" disabled>Verifica e approva</button>
+        </form>
+        <div id="answer-area" hidden>
+          <div id="answer" class="answer" aria-live="polite"></div>
+          <p id="operands" class="operands"></p>
+          <p id="verification" class="hint" hidden></p>
+          <button id="next-example" type="button" class="text-button" hidden>Prova il formato successivo</button>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <p>I resoconti vengono elaborati nel browser. Usa esempi sintetici per condividere un caso.</p>
+      <div class="footer-actions">
+        <a href="https://github.com/arancione3000/airi-offline-training/issues/new?title=Feedback%20demo%20Airi&body=Passaggi%20per%20riprodurre%20il%20caso%3A%0A%0ARisultato%20atteso%3A%0A%0ARisultato%20ottenuto%3A%0A%0ABrowser%20e%20versione%3A%0A%0AUsa%20solo%20dati%20sintetici.">Segnala un caso</a>
+        <button id="share" class="text-button" type="button">Copia il link alla demo</button>
+        <span id="share-status" class="share-status" role="status"></span>
+      </div>
+    </footer>
+  </main>
+  <noscript>Attiva JavaScript per eseguire il motore Python nel browser.</noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

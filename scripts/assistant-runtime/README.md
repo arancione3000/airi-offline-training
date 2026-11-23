@@ -55,7 +55,9 @@ system or a factual-world validator. Native fallback can still answer poorly.
 ## Learning new procedural skills
 
 The routing order is existing memory, ordered learned experts, then the native
-model. The first six bundled experts cover parcel-code copy, signal reversal,
+model. If recognized sources for the same exact question disagree on the data or
+operation, the assistant requests clarification and skips the neural fallback
+for that request. The first six bundled experts cover parcel-code copy, signal reversal,
 card-text uppercase, plate-text lowercase, and two named integer operations.
 For example, these messages are answered without loading Torch:
 

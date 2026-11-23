@@ -19,9 +19,13 @@ class AiriAssistant:
             return dict(memory)
         component_error=None
         if self.skill_bank is not None:
-            from skill_bank import RegistryError
+            from skill_bank import RegistryError, _conflict_reply
             try:
-                skill=self.skill_bank.predict(messages)
+                assess = getattr(self.skill_bank, 'assess', None)
+                skill, conflict = (assess(messages) if assess is not None
+                                   else (self.skill_bank.predict(messages), False))
+                if conflict:
+                    return _conflict_reply()
                 if skill is not None:return skill
             except (RegistryError,OSError):
                 component_error='learned registry unavailable; using stable native fallback'

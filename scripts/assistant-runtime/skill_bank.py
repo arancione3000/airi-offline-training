@@ -90,13 +90,55 @@ def _matching_experts(entries, messages):
             yield entry
 
 
+def _select_expert(entries, messages):
+    candidates = list(_matching_experts(entries, messages))
+    if not candidates:
+        return None, False
+    sources = skill_programs._eligible(messages)
+    if not sources:
+        return None, False
+    selected = None
+    expected_evidence = None
+    for entry in candidates:
+        program = entry['program']
+        extracted_value = None
+        for _, text in sources:
+            extracted = skill_programs._extract(program, text)
+            if extracted is None:
+                continue
+            value, operands = extracted
+            # Preserve each format's existing requirement that its own sources
+            # agree. Compare parsed operands across different formats.
+            if extracted_value is not None and extracted_value != value:
+                return None, True
+            extracted_value = value
+            evidence = (
+                program['operation'],
+                tuple(operand['value'] for operand in operands) if operands else value,
+            )
+            if selected is None:
+                selected, expected_evidence = entry, evidence
+            elif expected_evidence != evidence:
+                return None, True
+    if selected is None:
+        return None, False
+    prediction = skill_programs._predict_valid(selected['program'], sources)
+    return ((selected, prediction) if prediction is not None else None), False
+
+
+def _conflict_reply():
+    return {
+        'answer': 'Le fonti riportano valori incompatibili. Riprova in una nuova conversazione con il solo resoconto corretto.',
+        'source': 'source_conflict',
+        'provenance': None,
+    }
+
+
 def _route(entries,messages):
     memory=resolve(messages)
     if memory is not None:return memory
-    for entry in _matching_experts(entries, messages):
-        result=skill_programs.predict(entry['program'],messages)
-        if result is not None:return result
-    return None
+    selection, _ = _select_expert(entries, messages)
+    return selection[1] if selection is not None else None
 
 
 class SkillBank:
@@ -204,13 +246,17 @@ class SkillBank:
                 'state_sha256':digest(value),'recovered_from_snapshot':recovered,'capacity':MAX_SKILLS}
 
     def predict(self,messages):
-        value,recovered=self._read()
-        for entry in _matching_experts(value['entries'], messages):
-            result=skill_programs.predict(entry['program'],messages)
-            if result is not None:
-                return {**result,'skill_id':entry['id'],'skill_revision':value['revision'],
-                        'registry_recovered_from_snapshot':recovered}
-        return None
+        return self.assess(messages)[0]
+
+    def assess(self, messages):
+        """Return the established prediction, if any, and an explicit conflict flag."""
+        value, recovered = self._read()
+        selection, conflict = _select_expert(value['entries'], messages)
+        if selection is None:
+            return None, conflict
+        entry, result = selection
+        return {**result, 'skill_id': entry['id'], 'skill_revision': value['revision'],
+                'registry_recovered_from_snapshot': recovered}, False
 
     def learn(self,lesson,*,regression_gate=None,expected_revision=None):
         if not isinstance(lesson,dict) or lesson.get('trusted') is not True:raise RegistryError('explicit trusted labeled lesson required')
@@ -245,11 +291,11 @@ class SkillBank:
             if not new_coverage:return {'action':'rejected','reason':'no new qualified coverage'}
             proposal=deepcopy(state);proposal['entries'].append(entry);proposal['revision']+=1
             def route(messages):
-                for e in _matching_experts(proposal['entries'], messages):
-                    result=skill_programs.predict(e['program'],messages)
-                    if result is not None:return result
-                return None
-            # Old skills keep priority, and every old contract is replayed.
+                selection, conflict = _select_expert(proposal['entries'], messages)
+                if conflict:
+                    return _conflict_reply()
+                return selection[1] if selection is not None else None
+            # Prior evidence keeps priority when it agrees. Replay every certificate.
             for old in proposal['entries']:
                 for row in old['train']+old['qualification']:
                     result=_route(proposal['entries'],row['messages']);answer=result['answer'] if result else None

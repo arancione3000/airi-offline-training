@@ -1,0 +1,1251 @@
+{
+  "corpus_sha256": "9bd048c1db127b8939468c2544f1d8e7665f579ff9a227a4e46175d513c9311b",
+  "protected": {
+    "cases": 22,
+    "before": {
+      "correct_answers": 16,
+      "correct_nonanswers": 6,
+      "needs_review_or_clarification": 6
+    },
+    "after": {
+      "correct_answers": 16,
+      "correct_nonanswers": 6,
+      "needs_review_or_clarification": 6
+    },
+    "changed_decisions": 0
+  },
+  "human_work_proxy": {
+    "airi_confirmed_label_meanings": 2,
+    "maintained_script_confirmed_label_meanings": 2,
+    "airi_manual_rule_entries": 0,
+    "maintained_script_manual_rule_entries": 2,
+    "shared_labelled_qualification_cases": 28
+  },
+  "rounds": [
+    {
+      "id": "consegne",
+      "repair": {
+        "question": "Quale campo indica le unità spedite, «consegnate» o «rese»?",
+        "observed_report": "consegnate: 1635; rese: 2849",
+        "confirmed_shipped_label": "consegnate",
+        "approval": "activated",
+        "arrival_before": "clarification",
+        "labelled_reference_cases": 14,
+        "replayed_historical_cases": 22,
+        "arrival_after": "answered",
+        "arrival_expected": -1214,
+        "arrival_answer": -1214
+      },
+      "final": {
+        "airi": {
+          "metrics": {
+            "clarification_proposals": 1,
+            "correct_answers": 20,
+            "correct_nonanswers": 7,
+            "needs_review_or_clarification": 7
+          },
+          "cases": [
+            {
+              "id": "consegne-duplicate-2",
+              "kind": "duplicates",
+              "expected": 5779,
+              "status": "answered",
+              "answer": 5779
+            },
+            {
+              "id": "consegne-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-1",
+              "kind": "clean",
+              "expected": 8977,
+              "status": "answered",
+              "answer": 8977
+            },
+            {
+              "id": "consegne-duplicate-3",
+              "kind": "duplicates",
+              "expected": -5374,
+              "status": "answered",
+              "answer": -5374
+            },
+            {
+              "id": "consegne-new-7",
+              "kind": "clean",
+              "expected": 338,
+              "status": "answered",
+              "answer": 338
+            },
+            {
+              "id": "consegne-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-3",
+              "kind": "clean",
+              "expected": -1958,
+              "status": "answered",
+              "answer": -1958
+            },
+            {
+              "id": "consegne-new-9",
+              "kind": "clean",
+              "expected": 837,
+              "status": "answered",
+              "answer": 837
+            },
+            {
+              "id": "consegne-old-2",
+              "kind": "clean",
+              "expected": -8141,
+              "status": "answered",
+              "answer": -8141
+            },
+            {
+              "id": "consegne-new-10",
+              "kind": "clean",
+              "expected": -3206,
+              "status": "answered",
+              "answer": -3206
+            },
+            {
+              "id": "consegne-new-2",
+              "kind": "clean",
+              "expected": -4605,
+              "status": "answered",
+              "answer": -4605
+            },
+            {
+              "id": "consegne-new-1",
+              "kind": "clean",
+              "expected": 5598,
+              "status": "answered",
+              "answer": 5598
+            },
+            {
+              "id": "consegne-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "clarification",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-5",
+              "kind": "clean",
+              "expected": 1494,
+              "status": "answered",
+              "answer": 1494
+            },
+            {
+              "id": "consegne-old-0",
+              "kind": "clean",
+              "expected": -3381,
+              "status": "answered",
+              "answer": -3381
+            },
+            {
+              "id": "consegne-new-6",
+              "kind": "clean",
+              "expected": 4002,
+              "status": "answered",
+              "answer": 4002
+            },
+            {
+              "id": "consegne-old-3",
+              "kind": "clean",
+              "expected": 445,
+              "status": "answered",
+              "answer": 445
+            },
+            {
+              "id": "consegne-duplicate-1",
+              "kind": "duplicates",
+              "expected": -1978,
+              "status": "answered",
+              "answer": -1978
+            },
+            {
+              "id": "consegne-duplicate-0",
+              "kind": "duplicates",
+              "expected": -772,
+              "status": "answered",
+              "answer": -772
+            },
+            {
+              "id": "consegne-new-4",
+              "kind": "clean",
+              "expected": -3975,
+              "status": "answered",
+              "answer": -3975
+            },
+            {
+              "id": "consegne-new-8",
+              "kind": "clean",
+              "expected": -29,
+              "status": "answered",
+              "answer": -29
+            },
+            {
+              "id": "consegne-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-11",
+              "kind": "clean",
+              "expected": 154,
+              "status": "answered",
+              "answer": 154
+            },
+            {
+              "id": "consegne-new-0",
+              "kind": "clean",
+              "expected": -4118,
+              "status": "answered",
+              "answer": -4118
+            },
+            {
+              "id": "consegne-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            }
+          ]
+        },
+        "maintained_script": {
+          "metrics": {
+            "correct_answers": 20,
+            "correct_nonanswers": 7,
+            "needs_review_or_clarification": 7
+          },
+          "cases": [
+            {
+              "id": "consegne-duplicate-2",
+              "kind": "duplicates",
+              "expected": 5779,
+              "status": "answered",
+              "answer": 5779
+            },
+            {
+              "id": "consegne-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-1",
+              "kind": "clean",
+              "expected": 8977,
+              "status": "answered",
+              "answer": 8977
+            },
+            {
+              "id": "consegne-duplicate-3",
+              "kind": "duplicates",
+              "expected": -5374,
+              "status": "answered",
+              "answer": -5374
+            },
+            {
+              "id": "consegne-new-7",
+              "kind": "clean",
+              "expected": 338,
+              "status": "answered",
+              "answer": 338
+            },
+            {
+              "id": "consegne-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-3",
+              "kind": "clean",
+              "expected": -1958,
+              "status": "answered",
+              "answer": -1958
+            },
+            {
+              "id": "consegne-new-9",
+              "kind": "clean",
+              "expected": 837,
+              "status": "answered",
+              "answer": 837
+            },
+            {
+              "id": "consegne-old-2",
+              "kind": "clean",
+              "expected": -8141,
+              "status": "answered",
+              "answer": -8141
+            },
+            {
+              "id": "consegne-new-10",
+              "kind": "clean",
+              "expected": -3206,
+              "status": "answered",
+              "answer": -3206
+            },
+            {
+              "id": "consegne-new-2",
+              "kind": "clean",
+              "expected": -4605,
+              "status": "answered",
+              "answer": -4605
+            },
+            {
+              "id": "consegne-new-1",
+              "kind": "clean",
+              "expected": 5598,
+              "status": "answered",
+              "answer": 5598
+            },
+            {
+              "id": "consegne-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-5",
+              "kind": "clean",
+              "expected": 1494,
+              "status": "answered",
+              "answer": 1494
+            },
+            {
+              "id": "consegne-old-0",
+              "kind": "clean",
+              "expected": -3381,
+              "status": "answered",
+              "answer": -3381
+            },
+            {
+              "id": "consegne-new-6",
+              "kind": "clean",
+              "expected": 4002,
+              "status": "answered",
+              "answer": 4002
+            },
+            {
+              "id": "consegne-old-3",
+              "kind": "clean",
+              "expected": 445,
+              "status": "answered",
+              "answer": 445
+            },
+            {
+              "id": "consegne-duplicate-1",
+              "kind": "duplicates",
+              "expected": -1978,
+              "status": "answered",
+              "answer": -1978
+            },
+            {
+              "id": "consegne-duplicate-0",
+              "kind": "duplicates",
+              "expected": -772,
+              "status": "answered",
+              "answer": -772
+            },
+            {
+              "id": "consegne-new-4",
+              "kind": "clean",
+              "expected": -3975,
+              "status": "answered",
+              "answer": -3975
+            },
+            {
+              "id": "consegne-new-8",
+              "kind": "clean",
+              "expected": -29,
+              "status": "answered",
+              "answer": -29
+            },
+            {
+              "id": "consegne-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-11",
+              "kind": "clean",
+              "expected": 154,
+              "status": "answered",
+              "answer": 154
+            },
+            {
+              "id": "consegne-new-0",
+              "kind": "clean",
+              "expected": -4118,
+              "status": "answered",
+              "answer": -4118
+            },
+            {
+              "id": "consegne-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            }
+          ]
+        },
+        "frozen_script": {
+          "metrics": {
+            "correct_answers": 4,
+            "correct_nonanswers": 7,
+            "missed_answers": 16,
+            "needs_review_or_clarification": 23
+          },
+          "cases": [
+            {
+              "id": "consegne-duplicate-2",
+              "kind": "duplicates",
+              "expected": 5779,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-1",
+              "kind": "clean",
+              "expected": 8977,
+              "status": "answered",
+              "answer": 8977
+            },
+            {
+              "id": "consegne-duplicate-3",
+              "kind": "duplicates",
+              "expected": -5374,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-7",
+              "kind": "clean",
+              "expected": 338,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-3",
+              "kind": "clean",
+              "expected": -1958,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-9",
+              "kind": "clean",
+              "expected": 837,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-2",
+              "kind": "clean",
+              "expected": -8141,
+              "status": "answered",
+              "answer": -8141
+            },
+            {
+              "id": "consegne-new-10",
+              "kind": "clean",
+              "expected": -3206,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-2",
+              "kind": "clean",
+              "expected": -4605,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-1",
+              "kind": "clean",
+              "expected": 5598,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-5",
+              "kind": "clean",
+              "expected": 1494,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-0",
+              "kind": "clean",
+              "expected": -3381,
+              "status": "answered",
+              "answer": -3381
+            },
+            {
+              "id": "consegne-new-6",
+              "kind": "clean",
+              "expected": 4002,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-old-3",
+              "kind": "clean",
+              "expected": 445,
+              "status": "answered",
+              "answer": 445
+            },
+            {
+              "id": "consegne-duplicate-1",
+              "kind": "duplicates",
+              "expected": -1978,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-duplicate-0",
+              "kind": "duplicates",
+              "expected": -772,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-4",
+              "kind": "clean",
+              "expected": -3975,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-8",
+              "kind": "clean",
+              "expected": -29,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-11",
+              "kind": "clean",
+              "expected": 154,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-new-0",
+              "kind": "clean",
+              "expected": -4118,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "consegne-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ordini",
+      "repair": {
+        "question": "Quale campo indica le unità spedite, «annullate» o «evase»?",
+        "observed_report": "evase: 522; annullate: 7350",
+        "confirmed_shipped_label": "evase",
+        "approval": "activated",
+        "arrival_before": "clarification",
+        "labelled_reference_cases": 14,
+        "replayed_historical_cases": 36,
+        "arrival_after": "answered",
+        "arrival_expected": -6828,
+        "arrival_answer": -6828
+      },
+      "final": {
+        "airi": {
+          "metrics": {
+            "clarification_proposals": 1,
+            "correct_answers": 20,
+            "correct_nonanswers": 7,
+            "needs_review_or_clarification": 7
+          },
+          "cases": [
+            {
+              "id": "ordini-new-1",
+              "kind": "clean",
+              "expected": -1219,
+              "status": "answered",
+              "answer": -1219
+            },
+            {
+              "id": "ordini-old-2",
+              "kind": "clean",
+              "expected": 543,
+              "status": "answered",
+              "answer": 543
+            },
+            {
+              "id": "ordini-new-0",
+              "kind": "clean",
+              "expected": -1712,
+              "status": "answered",
+              "answer": -1712
+            },
+            {
+              "id": "ordini-new-10",
+              "kind": "clean",
+              "expected": -646,
+              "status": "answered",
+              "answer": -646
+            },
+            {
+              "id": "ordini-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-2",
+              "kind": "duplicates",
+              "expected": -6868,
+              "status": "answered",
+              "answer": -6868
+            },
+            {
+              "id": "ordini-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-3",
+              "kind": "duplicates",
+              "expected": -2791,
+              "status": "answered",
+              "answer": -2791
+            },
+            {
+              "id": "ordini-old-3",
+              "kind": "clean",
+              "expected": 742,
+              "status": "answered",
+              "answer": 742
+            },
+            {
+              "id": "ordini-new-6",
+              "kind": "clean",
+              "expected": 7503,
+              "status": "answered",
+              "answer": 7503
+            },
+            {
+              "id": "ordini-duplicate-0",
+              "kind": "duplicates",
+              "expected": -7204,
+              "status": "answered",
+              "answer": -7204
+            },
+            {
+              "id": "ordini-new-5",
+              "kind": "clean",
+              "expected": 6189,
+              "status": "answered",
+              "answer": 6189
+            },
+            {
+              "id": "ordini-new-2",
+              "kind": "clean",
+              "expected": 3038,
+              "status": "answered",
+              "answer": 3038
+            },
+            {
+              "id": "ordini-new-4",
+              "kind": "clean",
+              "expected": -1591,
+              "status": "answered",
+              "answer": -1591
+            },
+            {
+              "id": "ordini-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-9",
+              "kind": "clean",
+              "expected": -568,
+              "status": "answered",
+              "answer": -568
+            },
+            {
+              "id": "ordini-old-0",
+              "kind": "clean",
+              "expected": 3742,
+              "status": "answered",
+              "answer": 3742
+            },
+            {
+              "id": "ordini-new-7",
+              "kind": "clean",
+              "expected": 5080,
+              "status": "answered",
+              "answer": 5080
+            },
+            {
+              "id": "ordini-duplicate-1",
+              "kind": "duplicates",
+              "expected": -3004,
+              "status": "answered",
+              "answer": -3004
+            },
+            {
+              "id": "ordini-new-3",
+              "kind": "clean",
+              "expected": -2940,
+              "status": "answered",
+              "answer": -2940
+            },
+            {
+              "id": "ordini-new-8",
+              "kind": "clean",
+              "expected": -5438,
+              "status": "answered",
+              "answer": -5438
+            },
+            {
+              "id": "ordini-old-1",
+              "kind": "clean",
+              "expected": 2016,
+              "status": "answered",
+              "answer": 2016
+            },
+            {
+              "id": "ordini-new-11",
+              "kind": "clean",
+              "expected": -1877,
+              "status": "answered",
+              "answer": -1877
+            },
+            {
+              "id": "ordini-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "clarification",
+              "answer": null
+            }
+          ]
+        },
+        "maintained_script": {
+          "metrics": {
+            "correct_answers": 20,
+            "correct_nonanswers": 7,
+            "needs_review_or_clarification": 7
+          },
+          "cases": [
+            {
+              "id": "ordini-new-1",
+              "kind": "clean",
+              "expected": -1219,
+              "status": "answered",
+              "answer": -1219
+            },
+            {
+              "id": "ordini-old-2",
+              "kind": "clean",
+              "expected": 543,
+              "status": "answered",
+              "answer": 543
+            },
+            {
+              "id": "ordini-new-0",
+              "kind": "clean",
+              "expected": -1712,
+              "status": "answered",
+              "answer": -1712
+            },
+            {
+              "id": "ordini-new-10",
+              "kind": "clean",
+              "expected": -646,
+              "status": "answered",
+              "answer": -646
+            },
+            {
+              "id": "ordini-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-2",
+              "kind": "duplicates",
+              "expected": -6868,
+              "status": "answered",
+              "answer": -6868
+            },
+            {
+              "id": "ordini-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-3",
+              "kind": "duplicates",
+              "expected": -2791,
+              "status": "answered",
+              "answer": -2791
+            },
+            {
+              "id": "ordini-old-3",
+              "kind": "clean",
+              "expected": 742,
+              "status": "answered",
+              "answer": 742
+            },
+            {
+              "id": "ordini-new-6",
+              "kind": "clean",
+              "expected": 7503,
+              "status": "answered",
+              "answer": 7503
+            },
+            {
+              "id": "ordini-duplicate-0",
+              "kind": "duplicates",
+              "expected": -7204,
+              "status": "answered",
+              "answer": -7204
+            },
+            {
+              "id": "ordini-new-5",
+              "kind": "clean",
+              "expected": 6189,
+              "status": "answered",
+              "answer": 6189
+            },
+            {
+              "id": "ordini-new-2",
+              "kind": "clean",
+              "expected": 3038,
+              "status": "answered",
+              "answer": 3038
+            },
+            {
+              "id": "ordini-new-4",
+              "kind": "clean",
+              "expected": -1591,
+              "status": "answered",
+              "answer": -1591
+            },
+            {
+              "id": "ordini-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-9",
+              "kind": "clean",
+              "expected": -568,
+              "status": "answered",
+              "answer": -568
+            },
+            {
+              "id": "ordini-old-0",
+              "kind": "clean",
+              "expected": 3742,
+              "status": "answered",
+              "answer": 3742
+            },
+            {
+              "id": "ordini-new-7",
+              "kind": "clean",
+              "expected": 5080,
+              "status": "answered",
+              "answer": 5080
+            },
+            {
+              "id": "ordini-duplicate-1",
+              "kind": "duplicates",
+              "expected": -3004,
+              "status": "answered",
+              "answer": -3004
+            },
+            {
+              "id": "ordini-new-3",
+              "kind": "clean",
+              "expected": -2940,
+              "status": "answered",
+              "answer": -2940
+            },
+            {
+              "id": "ordini-new-8",
+              "kind": "clean",
+              "expected": -5438,
+              "status": "answered",
+              "answer": -5438
+            },
+            {
+              "id": "ordini-old-1",
+              "kind": "clean",
+              "expected": 2016,
+              "status": "answered",
+              "answer": 2016
+            },
+            {
+              "id": "ordini-new-11",
+              "kind": "clean",
+              "expected": -1877,
+              "status": "answered",
+              "answer": -1877
+            },
+            {
+              "id": "ordini-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            }
+          ]
+        },
+        "frozen_script": {
+          "metrics": {
+            "correct_nonanswers": 7,
+            "missed_answers": 20,
+            "needs_review_or_clarification": 27
+          },
+          "cases": [
+            {
+              "id": "ordini-new-1",
+              "kind": "clean",
+              "expected": -1219,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-old-2",
+              "kind": "clean",
+              "expected": 543,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-0",
+              "kind": "clean",
+              "expected": -1712,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-10",
+              "kind": "clean",
+              "expected": -646,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-noise",
+              "kind": "extra_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-2",
+              "kind": "duplicates",
+              "expected": -6868,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-conflict",
+              "kind": "operand_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-3",
+              "kind": "duplicates",
+              "expected": -2791,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-old-3",
+              "kind": "clean",
+              "expected": 742,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-6",
+              "kind": "clean",
+              "expected": 7503,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-0",
+              "kind": "duplicates",
+              "expected": -7204,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-5",
+              "kind": "clean",
+              "expected": 6189,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-2",
+              "kind": "clean",
+              "expected": 3038,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-4",
+              "kind": "clean",
+              "expected": -1591,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-empty",
+              "kind": "no_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-mixed",
+              "kind": "unknown_source",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-equal-net",
+              "kind": "equal_net_conflict",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-9",
+              "kind": "clean",
+              "expected": -568,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-old-0",
+              "kind": "clean",
+              "expected": 3742,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-7",
+              "kind": "clean",
+              "expected": 5080,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-duplicate-1",
+              "kind": "duplicates",
+              "expected": -3004,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-3",
+              "kind": "clean",
+              "expected": -2940,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-8",
+              "kind": "clean",
+              "expected": -5438,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-old-1",
+              "kind": "clean",
+              "expected": 2016,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-new-11",
+              "kind": "clean",
+              "expected": -1877,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-negative-missing",
+              "kind": "missing_field",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            },
+            {
+              "id": "ordini-unresolved",
+              "kind": "unresolved_format",
+              "expected": null,
+              "status": "review",
+              "answer": null
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
