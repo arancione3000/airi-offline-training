@@ -2,6 +2,8 @@
 
 **[Try the Airi reconciliation demo in your browser](https://airi-riconciliazione.arancione3000.chatgpt.site/).**
 
+[Free reconciliation API and examples](scripts/research-training/adaptive-format-repair/api/README.md).
+
 The [adaptive reconciliation pilot](scripts/research-training/adaptive-format-repair/README.md)
 asks for the meaning of a new pair of field labels, verifies the proposed mapping
 against independent cases and preserves prior verified decisions before committing

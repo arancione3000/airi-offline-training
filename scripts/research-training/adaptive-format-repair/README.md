@@ -10,6 +10,8 @@ La demo esegue il motore Python nel browser. Al primo avvio carica il motore da 
 
 I resoconti restano nel browser e il registro della demo si azzera al ricaricamento della pagina. Per l’approvazione la demo usa i casi di verifica già preparati per gli esempi inclusi.
 
+Per usare il calcolo in un altro programma, puoi inviare le quantità o il testo del resoconto all’API gratuita. [Istruzioni e chiamata di esempio](api/README.md)
+
 ## Guarda la demo registrata
 
 La registrazione di 25 secondi mostra la scelta sbagliata, il controllo delle due nuove regole e un conflitto su cui Airi si ferma. La prova usa esempi sintetici ed è senza audio. [Scarica il video MP4](https://github.com/arancione3000/airi-offline-training/releases/download/airi-riconciliazione-demo-v0.1.0/airi-demo.mp4)
