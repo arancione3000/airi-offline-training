@@ -10,6 +10,14 @@ La demo esegue il motore Python nel browser. Al primo avvio carica il motore da 
 
 I resoconti restano nel browser e il registro della demo si azzera al ricaricamento della pagina. Per l’approvazione la demo usa i casi di verifica già preparati per gli esempi inclusi.
 
+## Guarda la demo registrata
+
+La registrazione di 25 secondi mostra la scelta sbagliata, il controllo delle due nuove regole e un conflitto su cui Airi si ferma. La prova usa esempi sintetici ed è senza audio. [Scarica il video MP4](https://github.com/arancione3000/airi-offline-training/releases/download/airi-riconciliazione-demo-v0.1.0/airi-demo.mp4)
+
+![Airi approva il formato e calcola il saldo di −1214 unità](media/02-approvazione.png)
+
+[Domanda sul formato](media/01-domanda.png) · [Regola approvata](media/02-approvazione.png) · [Conflitto da rivedere](media/03-conflitto.png)
+
 ## Risultati e limiti
 
 Nella prova sintetica su 54 casi nuovi, Airi e uno script Python aggiornato a mano hanno ottenuto tutti i 40 saldi attesi e si sono fermati nei 14 casi da rivedere. Airi ha ricavato le regole da una conferma per formato, con le stesse verifiche richieste allo script. Il tempo risparmiato da chi lavora con documenti reali resta da misurare. [Corpus, benchmark e riproduzione](BENCHMARK.md) · [Confronto con Qwen](QWEN.md)
