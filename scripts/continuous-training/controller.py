@@ -40,7 +40,16 @@ def transient(log):
     if hard_failure(log):return False
     value='\n'.join(clean_log(log).splitlines()[-200:]).lower()
     conflict=('409' in value and 'sha' in value and ('does not match' in value or "doesn't match" in value))
-    return bool(conflict or re.search(r'(?:http|status|gh:)[^\n]{0,100}?(408|429|500|502|503|504)\b',value)
+    # An empty response to the CLI's control-state PUT is ambiguous: the
+    # server may have applied the CAS. The usual recovery must read that
+    # state again. Only accept this exact transport shape, never a JSON
+    # parse error from checkpoint or training data.
+    ambiguous_control_put=(
+        re.search(r'(?m)^.*\bunexpected end of json input\s*$',value)
+        and re.search(r"subprocess\.calledprocesserror:[^\n]*\['gh', 'api', '--method', 'put', "
+                      r"'repos/[\w.-]+/[\w.-]+/contents/control\.json', '--input', '-'\]",value)
+    )
+    return bool(conflict or ambiguous_control_put or re.search(r'(?:http|status|gh:)[^\n]{0,100}?(408|429|500|502|503|504)\b',value)
                 or any(x in value for x in ('connection reset','connection timed out',
                        'temporary failure in name resolution','runner has lost communication','tls handshake timeout',
                        'protocol_error','stream error: stream id','context deadline exceeded',

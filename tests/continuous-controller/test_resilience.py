@@ -70,6 +70,20 @@ class ResilienceTests(unittest.TestCase):
         self.assertFalse(f.retries)
         self.assertFalse(f.posts)
 
+    def test_empty_response_to_exclusive_claim_is_retried_without_advancing_checkpoint(self):
+        f = self.broken_run(attempt=2)
+        f.log = ("2026-11-25T15:51:15Z unexpected end of JSON input\n"
+                 "subprocess.CalledProcessError: Command '['gh', 'api', '--method', 'PUT', "
+                 "'repos/owner/repo/contents/control.json', '--input', '-']' returned non-zero exit status 1.")
+        same_dispatch = f.c['dispatch']['source_release']
+        self.assertEqual(module.tick(f, 100)['action'], 'recovery cooldown')
+        self.assertEqual(module.tick(f, 160)['action'], 'retry transient failure')
+        self.assertEqual(f.c['dispatch']['source_release'], same_dispatch)
+        self.assertFalse(f.posts)
+        self.assertFalse(module.transient('unexpected end of JSON input'))
+        self.assertFalse(module.transient(f.log.replace('/contents/control.json', '/contents/other.json')))
+        self.assertFalse(module.transient('ValueError: checkpoint digest mismatch\n' + f.log))
+
     def test_every_client_network_operation_has_finite_timeout(self):
         client = module.Client('owner/repo')
         with patch.object(module.subprocess, 'check_output', return_value='{}') as output, \
