@@ -1,0 +1,2687 @@
+{
+  "schema": 1,
+  "sha256": {
+    "candidate": "277f8c31a0dc7583cd3bfba7744d663d82c4b00bc14fed0c2dfe2e536df3a2ff",
+    "reserved": "e950e7f99d255bec4421f7191f36744df3829cc802fe19c24be1eced34315921",
+    "bank": "4460b73bad38102bc9a72c3ff52238b2d1e82a5dad7dd883a0f47e49de4c4614",
+    "aliases": "e2efd400b66b2e2d4e13814d7e69253f59bcfe3e7599ed296fa1e93bc81cf57d",
+    "joint": "8e0c35bb9a39d3fc81d3ab42af78528a3e003d215ade158edde85f52870f458d",
+    "speech_gate": "9622d0c99fe0f6876daae02362a46373cece1ab30e60cc6f1e5af6d5f071c84c",
+    "prior_first": "aa808942ff23461fa4c58feba2398a117866cfa97d7ba00497dbeda773e0e63a",
+    "prior_confirmation": "3bca9c68baf0347dfa6d5c217c53341013289f95bf4eb2fb42749aa3edbae2b3",
+    "families_corpus": "ccbd04b722fb6715e92496793d40d58f474ea26a62e1244e24cd63b50ca791ba",
+    "train_corpus": "284e95fa7514909432c727cdb2cd22724250a02fda5e15d456abe39df71a0f3a",
+    "qualification_corpus": "bbdf15eef835fd6a104244505c301ade67e6074e69bf16888dbbca5cd26a9fa4",
+    "driver": "3ddbdfbdb037445045fc19b7399b7f5cce0ec05a6cee208f2d36b3330fbcea24",
+    "retention_contract": "0709a96ed6c284ff143a2c132b84dc707f8e9f82c77aa2affc3ac7396be1e0a9",
+    "shared_evaluator": "bdd8fee9b7da9a40f3b0fc0141f8422ce610c9df9628774af88b3fb5e73073dd",
+    "shared_readout": "171096d7958155f1c593ce0d1dbd404c4989fa874f3736e328c0e2136fa3de5e",
+    "runtime": {
+      "assistant.py": "c593d856bb79b0864e4a5dc7adccca71a9e179b011751a1e8bd5f36f52540767",
+      "flexible_skills.py": "2c94fbc0d93ed1aec727554ffa4b7ff1d20d34b056f133eb7dd6fdeaa9b2beb5",
+      "exact_aliases.py": "b7fbaf90793896d4672328690ae3dcea0b4fc2471ea9e468a3ec49736933ea0b",
+      "skill_programs.py": "413192c0218e6268a6f6622ae91abd9f0aecf1684fbb3205a48388dfca72ed00",
+      "skill_bank.py": "395ac2fcff49675da00b3eda352a709edf329ba72cbfe9b5bca7b07f6857ffd9",
+      "context_memory.py": "521e6e6459a0ed39d3359d47b48f3cac462fc24b32b533980288709f2ab3b5b9",
+      "query_learning.py": "afd152cc95aa7818d7edf5fee03050caca74f87d6233646ecf62fc27dab9c90a",
+      "skill_validation.py": "0eae7ccf38ca907a254d9ec430d6ec69147e29c22d935a275f77db76a0e56778"
+    }
+  },
+  "verified_aliases": 198,
+  "approved_experts": 30,
+  "aliases_in_frame_training": 198,
+  "trained_frames": 105,
+  "overlap_reserved": {
+    "normalized_questions": 72,
+    "unique_masked_frames": 18,
+    "with": {
+      "previous_requests": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "alternative_names": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "v6_challenge": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "frames_challenge": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "qualification": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "prior_first": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "prior_confirmation": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "train": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "approved_aliases": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "bank_questions": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "pool": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      },
+      "pool_confirmation": {
+        "shared_normalized_questions": 0,
+        "shared_distinct_masked_frames": 0
+      }
+    }
+  },
+  "methods": {
+    "approved": {
+      "retention": {
+        "stored": 600,
+        "stored_failed_indices": [],
+        "historical": {
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "cases": 989,
+          "learned_intercepts": 0,
+          "unchanged_native_routes": 965,
+          "failed_cases": [],
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate"
+        },
+        "explicit_conflict_reviews": 30
+      },
+      "reserved": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 36,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 72,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "supported_paraphrase": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "partial": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 8,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "invented": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "conditional": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_operation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "metalinguistic": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "negation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multi_intent": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "object_swap": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 10,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {},
+        "literal_novel": {
+          "wordings": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 36,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "executions": {
+            "positive_correct": 0,
+            "positive_abstain": 72,
+            "positive_wrong": 0,
+            "negative_abstain": 72,
+            "negative_activation": 0
+          }
+        }
+      },
+      "prior_first": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 54,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 108,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "contextual_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "unsupported_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "nonrequest_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 15,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 9,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "prior_confirmation": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "foreign_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "incompatible_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "indirect_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "approved_alias_replay": {
+        "wordings": {
+          "positive_correct": 198,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 396,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "approved_alias": {
+            "positive_correct": 198,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "add": {
+            "positive_correct": 31,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 25,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 23,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 49,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      }
+    },
+    "joint": {
+      "retention": {
+        "stored": 600,
+        "stored_failed_indices": [],
+        "historical": {
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "cases": 989,
+          "learned_intercepts": 0,
+          "unchanged_native_routes": 965,
+          "failed_cases": [],
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate"
+        },
+        "explicit_conflict_reviews": 30
+      },
+      "reserved": {
+        "wordings": {
+          "positive_correct": 27,
+          "positive_abstain": 9,
+          "positive_wrong": 0,
+          "negative_abstain": 27,
+          "negative_activation": 9,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 54,
+          "positive_abstain": 18,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 18
+        },
+        "by_condition": {
+          "supported_paraphrase": {
+            "positive_correct": 27,
+            "positive_abstain": 9,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "partial": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 5,
+            "mixed": 0
+          },
+          "invented": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "conditional": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_operation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "metalinguistic": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "negation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multi_intent": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "object_swap": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 7,
+            "positive_abstain": 3,
+            "positive_wrong": 0,
+            "negative_abstain": 8,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 3,
+            "positive_abstain": 3,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {},
+        "literal_novel": {
+          "wordings": {
+            "positive_correct": 27,
+            "positive_abstain": 9,
+            "positive_wrong": 0,
+            "negative_abstain": 27,
+            "negative_activation": 9,
+            "mixed": 0
+          },
+          "executions": {
+            "positive_correct": 54,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 54,
+            "negative_activation": 18
+          }
+        }
+      },
+      "prior_first": {
+        "wordings": {
+          "positive_correct": 30,
+          "positive_abstain": 24,
+          "positive_wrong": 0,
+          "negative_abstain": 48,
+          "negative_activation": 6,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 60,
+          "positive_abstain": 48,
+          "positive_wrong": 0,
+          "negative_abstain": 96,
+          "negative_activation": 12
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 15,
+            "positive_abstain": 3,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 11,
+            "positive_abstain": 7,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "contextual_affirmative": {
+            "positive_correct": 4,
+            "positive_abstain": 14,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "unsupported_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 16,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "nonrequest_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 14,
+            "negative_activation": 4,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 8,
+            "positive_abstain": 7,
+            "positive_wrong": 0,
+            "negative_abstain": 13,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 2,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 4,
+            "positive_abstain": 5,
+            "positive_wrong": 0,
+            "negative_abstain": 7,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "prior_confirmation": {
+        "wordings": {
+          "positive_correct": 25,
+          "positive_abstain": 11,
+          "positive_wrong": 0,
+          "negative_abstain": 49,
+          "negative_activation": 5,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 50,
+          "positive_abstain": 22,
+          "positive_wrong": 0,
+          "negative_abstain": 98,
+          "negative_activation": 10
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 17,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 8,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "foreign_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 17,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "incompatible_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 17,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "indirect_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 3,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "lowercase": {
+            "positive_correct": 2,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 9,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 14,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 2,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 2,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 3,
+            "positive_abstain": 3,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "approved_alias_replay": {
+        "wordings": {
+          "positive_correct": 198,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 396,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "approved_alias": {
+            "positive_correct": 198,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "add": {
+            "positive_correct": 31,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 25,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 23,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 49,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "paired_reserved_vs_approved": {
+        "positive_gained": 27,
+        "positive_lost": 0,
+        "positive_unchanged": 9,
+        "negative_gained": 0,
+        "negative_lost": 9,
+        "negative_unchanged": 27
+      }
+    },
+    "speech_gate": {
+      "retention": {
+        "stored": 600,
+        "stored_failed_indices": [],
+        "historical": {
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "cases": 989,
+          "learned_intercepts": 0,
+          "unchanged_native_routes": 965,
+          "failed_cases": [],
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate"
+        },
+        "explicit_conflict_reviews": 30
+      },
+      "reserved": {
+        "wordings": {
+          "positive_correct": 31,
+          "positive_abstain": 5,
+          "positive_wrong": 0,
+          "negative_abstain": 28,
+          "negative_activation": 8,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 62,
+          "positive_abstain": 10,
+          "positive_wrong": 0,
+          "negative_abstain": 56,
+          "negative_activation": 16
+        },
+        "by_condition": {
+          "supported_paraphrase": {
+            "positive_correct": 31,
+            "positive_abstain": 5,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "partial": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 4,
+            "mixed": 0
+          },
+          "invented": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "conditional": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_operation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "metalinguistic": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "negation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multi_intent": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "object_swap": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 9,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 8,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 5,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {},
+        "literal_novel": {
+          "wordings": {
+            "positive_correct": 31,
+            "positive_abstain": 5,
+            "positive_wrong": 0,
+            "negative_abstain": 28,
+            "negative_activation": 8,
+            "mixed": 0
+          },
+          "executions": {
+            "positive_correct": 62,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 56,
+            "negative_activation": 16
+          }
+        }
+      },
+      "prior_first": {
+        "wordings": {
+          "positive_correct": 46,
+          "positive_abstain": 8,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 92,
+          "positive_abstain": 16,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 17,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "contextual_affirmative": {
+            "positive_correct": 11,
+            "positive_abstain": 7,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "unsupported_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "nonrequest_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 15,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 5,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 6,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 7,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 5,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "prior_confirmation": {
+        "wordings": {
+          "positive_correct": 28,
+          "positive_abstain": 8,
+          "positive_wrong": 0,
+          "negative_abstain": 49,
+          "negative_activation": 5,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 56,
+          "positive_abstain": 16,
+          "positive_wrong": 0,
+          "negative_abstain": 98,
+          "negative_activation": 10
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 10,
+            "positive_abstain": 8,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "foreign_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 17,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "incompatible_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 17,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "indirect_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 3,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "lowercase": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 4,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 10,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 14,
+            "negative_activation": 1,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 2,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 2,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 2,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 4,
+            "positive_abstain": 2,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 3,
+            "positive_abstain": 1,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "approved_alias_replay": {
+        "wordings": {
+          "positive_correct": 198,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 396,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "approved_alias": {
+            "positive_correct": 198,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "add": {
+            "positive_correct": 31,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 25,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 23,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 49,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "paired_reserved_vs_approved": {
+        "positive_gained": 31,
+        "positive_lost": 0,
+        "positive_unchanged": 5,
+        "negative_gained": 0,
+        "negative_lost": 8,
+        "negative_unchanged": 28
+      }
+    },
+    "frame": {
+      "retention": {
+        "stored": 600,
+        "stored_failed_indices": [],
+        "historical": {
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "cases": 989,
+          "learned_intercepts": 0,
+          "unchanged_native_routes": 965,
+          "failed_cases": [],
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate"
+        },
+        "explicit_conflict_reviews": 30
+      },
+      "reserved": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 36,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 72,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "supported_paraphrase": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "partial": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 8,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "invented": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "conditional": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_operation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "metalinguistic": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "negation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multi_intent": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "object_swap": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 10,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {},
+        "literal_novel": {
+          "wordings": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 36,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "executions": {
+            "positive_correct": 0,
+            "positive_abstain": 72,
+            "positive_wrong": 0,
+            "negative_abstain": 72,
+            "negative_activation": 0
+          }
+        }
+      },
+      "prior_first": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 54,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 108,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "contextual_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "unsupported_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "nonrequest_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 15,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 9,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "prior_confirmation": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "foreign_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "incompatible_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "indirect_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "approved_alias_replay": {
+        "wordings": {
+          "positive_correct": 198,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 396,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "approved_alias": {
+            "positive_correct": 198,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "add": {
+            "positive_correct": 31,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 25,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 23,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 49,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "paired_reserved_vs_approved": {
+        "positive_gained": 0,
+        "positive_lost": 0,
+        "positive_unchanged": 36,
+        "negative_gained": 0,
+        "negative_lost": 0,
+        "negative_unchanged": 36
+      }
+    },
+    "frame_leave_family_out": {
+      "retention": {
+        "stored": 600,
+        "stored_failed_indices": [],
+        "historical": {
+          "contract_sha256": "f14a448874c5d05f65e5d164c8c91c0d32f909992e9727284cdd199d71345d3d",
+          "cases": 989,
+          "learned_intercepts": 0,
+          "unchanged_native_routes": 965,
+          "failed_cases": [],
+          "passed": true,
+          "scope": "routing validation; not a new neural certificate"
+        },
+        "explicit_conflict_reviews": 30
+      },
+      "reserved": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 36,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 72,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "supported_paraphrase": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "partial": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 8,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "invented": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "conditional": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 5,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_operation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "metalinguistic": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "negation": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 2,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multi_intent": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "object_swap": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 3,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 10,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 4,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {},
+        "literal_novel": {
+          "wordings": {
+            "positive_correct": 0,
+            "positive_abstain": 36,
+            "positive_wrong": 0,
+            "negative_abstain": 36,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "executions": {
+            "positive_correct": 0,
+            "positive_abstain": 72,
+            "positive_wrong": 0,
+            "negative_abstain": 72,
+            "negative_activation": 0
+          }
+        }
+      },
+      "prior_first": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 54,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 108,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "contextual_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "wrong_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "unsupported_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "nonrequest_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 15,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 9,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "prior_confirmation": {
+        "wordings": {
+          "positive_correct": 0,
+          "positive_abstain": 36,
+          "positive_wrong": 0,
+          "negative_abstain": 54,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 0,
+          "positive_abstain": 72,
+          "positive_wrong": 0,
+          "negative_abstain": 108,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "canonical_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "paraphrased_affirmative": {
+            "positive_correct": 0,
+            "positive_abstain": 18,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "foreign_object": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "incompatible_action": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "indirect_or_compound": {
+            "positive_correct": 0,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 18,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "lowercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 0,
+            "positive_abstain": 10,
+            "positive_wrong": 0,
+            "negative_abstain": 15,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "add": {
+            "positive_correct": 0,
+            "positive_abstain": 6,
+            "positive_wrong": 0,
+            "negative_abstain": 9,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 0,
+            "positive_abstain": 4,
+            "positive_wrong": 0,
+            "negative_abstain": 6,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "approved_alias_replay": {
+        "wordings": {
+          "positive_correct": 198,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0,
+          "mixed": 0
+        },
+        "executions": {
+          "positive_correct": 396,
+          "positive_abstain": 0,
+          "positive_wrong": 0,
+          "negative_abstain": 0,
+          "negative_activation": 0
+        },
+        "by_condition": {
+          "approved_alias": {
+            "positive_correct": 198,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "by_operation": {
+          "add": {
+            "positive_correct": 31,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "multiply": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "reverse": {
+            "positive_correct": 25,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "lowercase": {
+            "positive_correct": 23,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "uppercase": {
+            "positive_correct": 26,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "subtract": {
+            "positive_correct": 18,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          },
+          "copy": {
+            "positive_correct": 49,
+            "positive_abstain": 0,
+            "positive_wrong": 0,
+            "negative_abstain": 0,
+            "negative_activation": 0,
+            "mixed": 0
+          }
+        },
+        "stages": {}
+      },
+      "paired_reserved_vs_approved": {
+        "positive_gained": 0,
+        "positive_lost": 0,
+        "positive_unchanged": 36,
+        "negative_gained": 0,
+        "negative_lost": 0,
+        "negative_unchanged": 36
+      }
+    }
+  }
+}

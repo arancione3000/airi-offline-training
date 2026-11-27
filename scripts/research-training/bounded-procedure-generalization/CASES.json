@@ -1,0 +1,4154 @@
+{
+  "schema": 1,
+  "seed": 281993,
+  "tasks": [
+    {
+      "id": "T01",
+      "domain": "text",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": "  ALBA   ",
+          "expected": "alba"
+        },
+        {
+          "input": " BeTa ",
+          "expected": "beta"
+        },
+        {
+          "input": "\tLuNa\n",
+          "expected": "luna"
+        },
+        {
+          "input": " ARCO\t\tDUNE  ",
+          "expected": "arco\t\tdune"
+        }
+      ],
+      "pool": [
+        {
+          "input": "ROSA",
+          "expected": "rosa"
+        },
+        {
+          "input": "  rosa",
+          "expected": "rosa"
+        },
+        {
+          "input": "  ROSe\n",
+          "expected": "rose"
+        },
+        {
+          "input": "\tSI  NO  ",
+          "expected": "si  no"
+        },
+        {
+          "input": "Ponte  ",
+          "expected": "ponte"
+        },
+        {
+          "input": " °C ",
+          "expected": "°c"
+        }
+      ],
+      "qualification": [
+        {
+          "input": "  MaRe ",
+          "expected": "mare"
+        },
+        {
+          "input": "ONDA   ",
+          "expected": "onda"
+        },
+        {
+          "input": "\tÉTÉ",
+          "expected": "été"
+        },
+        {
+          "input": "\nNUvole\n",
+          "expected": "nuvole"
+        },
+        {
+          "input": " QUI   ORA  ",
+          "expected": "qui   ora"
+        },
+        {
+          "input": "  NOTTE\tIMPROVVISA  ",
+          "expected": "notte\timprovvisa"
+        }
+      ],
+      "final": [
+        {
+          "input": "",
+          "expected": ""
+        },
+        {
+          "input": "   ",
+          "expected": ""
+        },
+        {
+          "input": "ÉTÉ",
+          "expected": "été"
+        },
+        {
+          "input": " A  B ",
+          "expected": "a  b"
+        },
+        {
+          "input": "  ÜBER —  Straße ",
+          "expected": "über —  straße"
+        },
+        {
+          "input": " (CaSa) ",
+          "expected": "(casa)"
+        },
+        {
+          "input": "\t  CIELO\nStelle\t",
+          "expected": "cielo\nstelle"
+        },
+        {
+          "input": " ŠUMA ",
+          "expected": "šuma"
+        },
+        {
+          "input": "BlU 2X",
+          "expected": "blu 2x"
+        },
+        {
+          "input": "Carattere—Doppio",
+          "expected": "carattere—doppio"
+        },
+        {
+          "input": "  \"TITolo\"  ",
+          "expected": "\"titolo\""
+        },
+        {
+          "input": "  Via\nVECCHIA\n  ",
+          "expected": "via\nvecchia"
+        },
+        {
+          "input": 42,
+          "expected": null
+        },
+        {
+          "input": [
+            "testo"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "T02",
+      "domain": "text",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": "7 MIRTO  ",
+          "expected": "OTRIM "
+        },
+        {
+          "input": " 2RIV3A8 ",
+          "expected": "AVIR"
+        },
+        {
+          "input": " 6LE!9 ",
+          "expected": "!EL"
+        },
+        {
+          "input": " B1\nC4 5 ",
+          "expected": " C\nB"
+        }
+      ],
+      "pool": [
+        {
+          "input": " St2a ",
+          "expected": "atS"
+        },
+        {
+          "input": "8 PRATO   ",
+          "expected": "OTARP "
+        },
+        {
+          "input": "  PORTO 7",
+          "expected": " OTROP"
+        },
+        {
+          "input": " X3-no",
+          "expected": "on-X"
+        },
+        {
+          "input": "io9 ",
+          "expected": "oi"
+        },
+        {
+          "input": "  21Z0   ",
+          "expected": "Z"
+        }
+      ],
+      "qualification": [
+        {
+          "input": "5 IL LAGO ",
+          "expected": "OGAL LI "
+        },
+        {
+          "input": " La7Riva6  ",
+          "expected": "aviRaL"
+        },
+        {
+          "input": "  DR3E4",
+          "expected": "ERD"
+        },
+        {
+          "input": " Alba4 2  ",
+          "expected": " ablA"
+        },
+        {
+          "input": " \tZ9  ",
+          "expected": "Z"
+        },
+        {
+          "input": "44 lume  ",
+          "expected": "emul "
+        }
+      ],
+      "final": [
+        {
+          "input": "",
+          "expected": ""
+        },
+        {
+          "input": "   0000   ",
+          "expected": ""
+        },
+        {
+          "input": "7 áÉ 9 ",
+          "expected": " Éá "
+        },
+        {
+          "input": " X 5",
+          "expected": " X"
+        },
+        {
+          "input": "5 X ",
+          "expected": "X "
+        },
+        {
+          "input": "  c4affè9– 9 ",
+          "expected": " –èffac"
+        },
+        {
+          "input": "\tSenza cifre\t",
+          "expected": "erfic azneS"
+        },
+        {
+          "input": "4.10",
+          "expected": "."
+        },
+        {
+          "input": " 2F6\nD1 ",
+          "expected": "D\nF"
+        },
+        {
+          "input": "0 ACQUA!  ",
+          "expected": "!AUQCA "
+        },
+        {
+          "input": "  COD3ICE\n",
+          "expected": "ECIDOC"
+        },
+        {
+          "input": " 2\t Z9  ",
+          "expected": "Z \t"
+        },
+        {
+          "input": 42,
+          "expected": null
+        },
+        {
+          "input": [
+            "testo"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "T03",
+      "domain": "text",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": " alfa , BETA, gamma  ",
+          "expected": "alfa BETA gamma"
+        },
+        {
+          "input": "perla,,  ciottolo",
+          "expected": "perla  ciottolo"
+        },
+        {
+          "input": "  miele, pane  caldo  ",
+          "expected": "miele pane  caldo"
+        },
+        {
+          "input": "riso , fungo;blu",
+          "expected": "riso fungo;blu"
+        }
+      ],
+      "pool": [
+        {
+          "input": " RIVA, riva ",
+          "expected": "RIVA riva"
+        },
+        {
+          "input": ", a, b",
+          "expected": " a b"
+        },
+        {
+          "input": "un, due,tre",
+          "expected": "un due tre"
+        },
+        {
+          "input": "  luna  ",
+          "expected": "luna"
+        },
+        {
+          "input": ";;,  ? ",
+          "expected": ";; ?"
+        },
+        {
+          "input": "  a, b  c, d  ",
+          "expected": "a b  c d"
+        }
+      ],
+      "qualification": [
+        {
+          "input": "  sabbia, NOTTE  ",
+          "expected": "sabbia NOTTE"
+        },
+        {
+          "input": ",dentro,,fuori",
+          "expected": " dentro  fuori"
+        },
+        {
+          "input": "leone,  orso  ",
+          "expected": "leone orso"
+        },
+        {
+          "input": "  bruno, bLU ,",
+          "expected": "bruno bLU "
+        },
+        {
+          "input": " ZUCCA , pera",
+          "expected": "ZUCCA pera"
+        },
+        {
+          "input": "  Z,  K\t  W ",
+          "expected": "Z K\t  W"
+        }
+      ],
+      "final": [
+        {
+          "input": "",
+          "expected": ""
+        },
+        {
+          "input": ",",
+          "expected": " "
+        },
+        {
+          "input": ",,",
+          "expected": "  "
+        },
+        {
+          "input": "  uno ",
+          "expected": "uno"
+        },
+        {
+          "input": "  cioccolàto, MIELE ",
+          "expected": "cioccolàto MIELE"
+        },
+        {
+          "input": "tè, , caffè",
+          "expected": "tè  caffè"
+        },
+        {
+          "input": "X,Y,blu,violetto,ambra",
+          "expected": "X Y blu violetto ambra"
+        },
+        {
+          "input": " sale , pepe  nero\t ",
+          "expected": "sale pepe  nero"
+        },
+        {
+          "input": "\nNEVE,\tBREZZA\n",
+          "expected": "NEVE BREZZA"
+        },
+        {
+          "input": "‘ramo’,  radici ",
+          "expected": "‘ramo’ radici"
+        },
+        {
+          "input": "a;b , c ",
+          "expected": "a;b c"
+        },
+        {
+          "input": "  Café , déjà vu | luna   ",
+          "expected": "Café déjà vu | luna"
+        },
+        {
+          "input": 42,
+          "expected": null
+        },
+        {
+          "input": [
+            "testo"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "T04",
+      "domain": "text",
+      "kind": "ambiguity",
+      "train": [
+        {
+          "input": "paglia",
+          "expected": "paglia"
+        },
+        {
+          "input": "covone",
+          "expected": "covone"
+        },
+        {
+          "input": "fieno",
+          "expected": "fieno"
+        },
+        {
+          "input": "grano",
+          "expected": "grano"
+        }
+      ],
+      "pool": [
+        {
+          "input": "terra",
+          "expected": "terra"
+        },
+        {
+          "input": "rametto",
+          "expected": "rametto"
+        },
+        {
+          "input": "rive",
+          "expected": "rive"
+        },
+        {
+          "input": "selva",
+          "expected": "selva"
+        },
+        {
+          "input": "semina",
+          "expected": "semina"
+        },
+        {
+          "input": "strada",
+          "expected": "strada"
+        }
+      ],
+      "qualification": [
+        {
+          "input": "  MIRTO  ",
+          "expected": "mirto"
+        },
+        {
+          "input": "  CHICCo\t",
+          "expected": "chicco"
+        },
+        {
+          "input": "Cancello",
+          "expected": "cancello"
+        },
+        {
+          "input": "   Fulmine",
+          "expected": "fulmine"
+        },
+        {
+          "input": "   FORNO ",
+          "expected": "forno"
+        },
+        {
+          "input": "Vetro ",
+          "expected": "vetro"
+        }
+      ],
+      "final": [
+        {
+          "input": "",
+          "expected": ""
+        },
+        {
+          "input": "  ",
+          "expected": ""
+        },
+        {
+          "input": "  ČEŠKA  ",
+          "expected": "češka"
+        },
+        {
+          "input": "ETichetta",
+          "expected": "etichetta"
+        },
+        {
+          "input": "  ViA  ",
+          "expected": "via"
+        },
+        {
+          "input": " Dora\n",
+          "expected": "dora"
+        },
+        {
+          "input": " LUNA  QUI",
+          "expected": "luna  qui"
+        },
+        {
+          "input": "  SeRa",
+          "expected": "sera"
+        },
+        {
+          "input": " PiéDE ",
+          "expected": "piéde"
+        },
+        {
+          "input": "BLU",
+          "expected": "blu"
+        },
+        {
+          "input": " Kiwi ",
+          "expected": "kiwi"
+        },
+        {
+          "input": " PANE ",
+          "expected": "pane"
+        },
+        {
+          "input": 42,
+          "expected": null
+        },
+        {
+          "input": [
+            "testo"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "T05",
+      "domain": "text",
+      "kind": "outside",
+      "train": [
+        {
+          "input": "  DAto  ",
+          "expected": "[dato]"
+        },
+        {
+          "input": "PeLo",
+          "expected": "[pelo]"
+        },
+        {
+          "input": "  RUOTA",
+          "expected": "[ruota]"
+        },
+        {
+          "input": "passo  ",
+          "expected": "[passo]"
+        }
+      ],
+      "pool": [
+        {
+          "input": "Aghi",
+          "expected": "[aghi]"
+        },
+        {
+          "input": "StrAda",
+          "expected": "[strada]"
+        },
+        {
+          "input": " NEBBIA",
+          "expected": "[nebbia]"
+        },
+        {
+          "input": "Forte ",
+          "expected": "[forte]"
+        },
+        {
+          "input": " (SEME)",
+          "expected": "[(seme)]"
+        },
+        {
+          "input": "  a—B ",
+          "expected": "[a—b]"
+        }
+      ],
+      "qualification": [
+        {
+          "input": "  Orto ",
+          "expected": "[orto]"
+        },
+        {
+          "input": " TORRE ",
+          "expected": "[torre]"
+        },
+        {
+          "input": "campo",
+          "expected": "[campo]"
+        },
+        {
+          "input": "BOMBO ",
+          "expected": "[bombo]"
+        },
+        {
+          "input": " DENTE",
+          "expected": "[dente]"
+        },
+        {
+          "input": " Onda ",
+          "expected": "[onda]"
+        }
+      ],
+      "final": [
+        {
+          "input": "",
+          "expected": "[]"
+        },
+        {
+          "input": "  ",
+          "expected": "[]"
+        },
+        {
+          "input": "  Café  ",
+          "expected": "[café]"
+        },
+        {
+          "input": " SALE  MARINO  ",
+          "expected": "[sale  marino]"
+        },
+        {
+          "input": "Ùmido ",
+          "expected": "[ùmido]"
+        },
+        {
+          "input": "Rosa\n",
+          "expected": "[rosa]"
+        },
+        {
+          "input": "“ArtE”",
+          "expected": "[“arte”]"
+        },
+        {
+          "input": "  Viola–SAmbuco",
+          "expected": "[viola–sambuco]"
+        },
+        {
+          "input": "Cézanne ",
+          "expected": "[cézanne]"
+        },
+        {
+          "input": "stelle",
+          "expected": "[stelle]"
+        },
+        {
+          "input": " PANDA ",
+          "expected": "[panda]"
+        },
+        {
+          "input": " CIELO ",
+          "expected": "[cielo]"
+        },
+        {
+          "input": 42,
+          "expected": null
+        },
+        {
+          "input": [
+            "testo"
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "S01",
+      "domain": "sequence",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": [
+            -4,
+            6,
+            6,
+            0
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            10,
+            -32,
+            2
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            -4,
+            -6,
+            0
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            15,
+            3,
+            1
+          ],
+          "expected": 19
+        }
+      ],
+      "pool": [
+        {
+          "input": [
+            0,
+            1
+          ],
+          "expected": 1
+        },
+        {
+          "input": [
+            5,
+            -2
+          ],
+          "expected": 5
+        },
+        {
+          "input": [
+            11,
+            -11
+          ],
+          "expected": 11
+        },
+        {
+          "input": [
+            2,
+            4,
+            0
+          ],
+          "expected": 6
+        },
+        {
+          "input": [
+            -3,
+            -6
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            1,
+            0,
+            5,
+            -21
+          ],
+          "expected": 6
+        }
+      ],
+      "qualification": [
+        {
+          "input": [
+            100,
+            14,
+            11,
+            12
+          ],
+          "expected": 137
+        },
+        {
+          "input": [
+            8,
+            102,
+            18,
+            0,
+            -14
+          ],
+          "expected": 128
+        },
+        {
+          "input": [
+            0,
+            -22,
+            104,
+            -4,
+            9,
+            19
+          ],
+          "expected": 132
+        },
+        {
+          "input": [
+            106,
+            -17,
+            -12,
+            -22
+          ],
+          "expected": 106
+        },
+        {
+          "input": [
+            108,
+            0,
+            -2,
+            -5,
+            -11
+          ],
+          "expected": 108
+        },
+        {
+          "input": [
+            110,
+            11,
+            -3,
+            -24,
+            21,
+            -11
+          ],
+          "expected": 142
+        },
+        {
+          "input": [
+            112,
+            25,
+            14,
+            15
+          ],
+          "expected": 166
+        },
+        {
+          "input": [
+            4,
+            -3,
+            6,
+            114,
+            -13
+          ],
+          "expected": 124
+        }
+      ],
+      "final": [
+        {
+          "input": [],
+          "expected": 0
+        },
+        {
+          "input": [
+            -81
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            93
+          ],
+          "expected": 93
+        },
+        {
+          "input": [
+            0,
+            0,
+            0
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            -90,
+            -90,
+            30,
+            30
+          ],
+          "expected": 60
+        },
+        {
+          "input": [
+            555,
+            -899,
+            -38,
+            17
+          ],
+          "expected": 572
+        },
+        {
+          "input": [
+            1000,
+            -73,
+            -41,
+            -60,
+            41,
+            -31,
+            62,
+            13,
+            74
+          ],
+          "expected": 1190
+        },
+        {
+          "input": [
+            -36,
+            1002,
+            -37,
+            31,
+            8,
+            25,
+            -6,
+            34,
+            -23,
+            71
+          ],
+          "expected": 1171
+        },
+        {
+          "input": [
+            35,
+            52,
+            1004,
+            7,
+            20,
+            -2,
+            -11,
+            -34,
+            -31,
+            -59,
+            35
+          ],
+          "expected": 1153
+        },
+        {
+          "input": [
+            -44,
+            3,
+            -42,
+            1006,
+            12,
+            45,
+            -9,
+            -36,
+            45
+          ],
+          "expected": 1111
+        },
+        {
+          "input": [
+            54,
+            42,
+            -36,
+            -31,
+            1008,
+            21,
+            49,
+            41,
+            -2,
+            24
+          ],
+          "expected": 1239
+        },
+        {
+          "input": [
+            -5,
+            23,
+            62,
+            12,
+            27,
+            1010,
+            -40,
+            75,
+            33,
+            -29,
+            -16
+          ],
+          "expected": 1242
+        },
+        {
+          "input": [
+            -36,
+            69,
+            70,
+            -32,
+            -69,
+            50,
+            1012,
+            -1,
+            -61
+          ],
+          "expected": 1201
+        },
+        {
+          "input": [
+            -19,
+            -50,
+            -66,
+            14,
+            22,
+            -43,
+            -46,
+            1014,
+            27,
+            73
+          ],
+          "expected": 1150
+        },
+        {
+          "input": "1,-3,2",
+          "expected": null
+        },
+        {
+          "input": [
+            4,
+            "7"
+          ],
+          "expected": null
+        },
+        {
+          "input": [
+            true,
+            2
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "domain": "sequence",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": [
+            3,
+            1,
+            3,
+            2
+          ],
+          "expected": [
+            2,
+            1,
+            3
+          ]
+        },
+        {
+          "input": [
+            8,
+            4,
+            8,
+            8,
+            4,
+            0
+          ],
+          "expected": [
+            0,
+            4,
+            8
+          ]
+        },
+        {
+          "input": [
+            -8,
+            1,
+            2,
+            2
+          ],
+          "expected": [
+            2,
+            1,
+            -8
+          ]
+        },
+        {
+          "input": [
+            3,
+            3,
+            1,
+            2
+          ],
+          "expected": [
+            2,
+            1,
+            3
+          ]
+        }
+      ],
+      "pool": [
+        {
+          "input": [
+            -4,
+            5,
+            -4
+          ],
+          "expected": [
+            5,
+            -4
+          ]
+        },
+        {
+          "input": [
+            8,
+            5,
+            1,
+            8
+          ],
+          "expected": [
+            1,
+            5,
+            8
+          ]
+        },
+        {
+          "input": [
+            1,
+            1,
+            2,
+            2
+          ],
+          "expected": [
+            2,
+            1
+          ]
+        },
+        {
+          "input": [
+            7,
+            6,
+            5,
+            7
+          ],
+          "expected": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "input": [
+            6,
+            6,
+            6
+          ],
+          "expected": [
+            6
+          ]
+        },
+        {
+          "input": [
+            22,
+            2,
+            3,
+            22
+          ],
+          "expected": [
+            3,
+            2,
+            22
+          ]
+        }
+      ],
+      "qualification": [
+        {
+          "input": [
+            100,
+            15,
+            -21,
+            -16
+          ],
+          "expected": [
+            -16,
+            -21,
+            15,
+            100
+          ]
+        },
+        {
+          "input": [
+            -17,
+            102,
+            19,
+            10,
+            15
+          ],
+          "expected": [
+            15,
+            10,
+            19,
+            102,
+            -17
+          ]
+        },
+        {
+          "input": [
+            16,
+            -19,
+            104,
+            -6,
+            12,
+            -19
+          ],
+          "expected": [
+            12,
+            -6,
+            104,
+            -19,
+            16
+          ]
+        },
+        {
+          "input": [
+            106,
+            -10,
+            -13,
+            -5
+          ],
+          "expected": [
+            -5,
+            -13,
+            -10,
+            106
+          ]
+        },
+        {
+          "input": [
+            108,
+            -20,
+            23,
+            6,
+            2
+          ],
+          "expected": [
+            2,
+            6,
+            23,
+            -20,
+            108
+          ]
+        },
+        {
+          "input": [
+            110,
+            2,
+            -12,
+            -19,
+            -8,
+            19
+          ],
+          "expected": [
+            19,
+            -8,
+            -19,
+            -12,
+            2,
+            110
+          ]
+        },
+        {
+          "input": [
+            112,
+            10,
+            21,
+            -4
+          ],
+          "expected": [
+            -4,
+            21,
+            10,
+            112
+          ]
+        },
+        {
+          "input": [
+            5,
+            24,
+            23,
+            114,
+            -2
+          ],
+          "expected": [
+            -2,
+            114,
+            23,
+            24,
+            5
+          ]
+        }
+      ],
+      "final": [
+        {
+          "input": [],
+          "expected": []
+        },
+        {
+          "input": [
+            17
+          ],
+          "expected": [
+            17
+          ]
+        },
+        {
+          "input": [
+            -94,
+            0,
+            21,
+            -94,
+            21
+          ],
+          "expected": [
+            21,
+            0,
+            -94
+          ]
+        },
+        {
+          "input": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0
+          ]
+        },
+        {
+          "input": [
+            86,
+            1,
+            5,
+            86
+          ],
+          "expected": [
+            5,
+            1,
+            86
+          ]
+        },
+        {
+          "input": [
+            10,
+            6,
+            9,
+            10,
+            6,
+            10
+          ],
+          "expected": [
+            9,
+            6,
+            10
+          ]
+        },
+        {
+          "input": [
+            1000,
+            62,
+            40,
+            71,
+            70,
+            15,
+            49,
+            9,
+            73
+          ],
+          "expected": [
+            73,
+            9,
+            49,
+            15,
+            70,
+            71,
+            40,
+            62,
+            1000
+          ]
+        },
+        {
+          "input": [
+            10,
+            1002,
+            49,
+            -28,
+            -8,
+            -5,
+            1,
+            31,
+            -57,
+            62
+          ],
+          "expected": [
+            62,
+            -57,
+            31,
+            1,
+            -5,
+            -8,
+            -28,
+            49,
+            1002,
+            10
+          ]
+        },
+        {
+          "input": [
+            55,
+            -42,
+            1004,
+            -42,
+            15,
+            73,
+            -10,
+            -16,
+            -66,
+            -53,
+            61
+          ],
+          "expected": [
+            61,
+            -53,
+            -66,
+            -16,
+            -10,
+            73,
+            15,
+            1004,
+            -42,
+            55
+          ]
+        },
+        {
+          "input": [
+            40,
+            -47,
+            -39,
+            1006,
+            5,
+            -21,
+            -45,
+            -47,
+            -4
+          ],
+          "expected": [
+            -4,
+            -45,
+            -21,
+            5,
+            1006,
+            -39,
+            -47,
+            40
+          ]
+        },
+        {
+          "input": [
+            69,
+            1,
+            -2,
+            -52,
+            1008,
+            -60,
+            -21,
+            -35,
+            -40,
+            27
+          ],
+          "expected": [
+            27,
+            -40,
+            -35,
+            -21,
+            -60,
+            1008,
+            -52,
+            -2,
+            1,
+            69
+          ]
+        },
+        {
+          "input": [
+            67,
+            20,
+            -16,
+            20,
+            45,
+            1010,
+            40,
+            -69,
+            44,
+            -9,
+            -62
+          ],
+          "expected": [
+            -62,
+            -9,
+            44,
+            -69,
+            40,
+            1010,
+            45,
+            -16,
+            20,
+            67
+          ]
+        },
+        {
+          "input": [
+            51,
+            -6,
+            -24,
+            -59,
+            12,
+            53,
+            1012,
+            -44,
+            -1
+          ],
+          "expected": [
+            -1,
+            -44,
+            1012,
+            53,
+            12,
+            -59,
+            -24,
+            -6,
+            51
+          ]
+        },
+        {
+          "input": [
+            57,
+            18,
+            -55,
+            -34,
+            8,
+            72,
+            -45,
+            1014,
+            74,
+            -63
+          ],
+          "expected": [
+            -63,
+            74,
+            1014,
+            -45,
+            72,
+            8,
+            -34,
+            -55,
+            18,
+            57
+          ]
+        },
+        {
+          "input": "1,-3,2",
+          "expected": null
+        },
+        {
+          "input": [
+            4,
+            "7"
+          ],
+          "expected": null
+        },
+        {
+          "input": [
+            true,
+            2
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "domain": "sequence",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": [
+            -10,
+            5,
+            2
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            -6,
+            -4,
+            2,
+            7
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            3,
+            1,
+            -5
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            0,
+            -8,
+            8,
+            -5
+          ],
+          "expected": 16
+        }
+      ],
+      "pool": [
+        {
+          "input": [
+            -5,
+            20,
+            -20
+          ],
+          "expected": 40
+        },
+        {
+          "input": [
+            7,
+            0
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            -8,
+            -2
+          ],
+          "expected": 10
+        },
+        {
+          "input": [
+            3,
+            4,
+            6
+          ],
+          "expected": 10
+        },
+        {
+          "input": [
+            27
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            -38,
+            31,
+            28
+          ],
+          "expected": 66
+        }
+      ],
+      "qualification": [
+        {
+          "input": [
+            100,
+            -20,
+            -18,
+            24
+          ],
+          "expected": 162
+        },
+        {
+          "input": [
+            -25,
+            102,
+            -3,
+            5,
+            16
+          ],
+          "expected": 118
+        },
+        {
+          "input": [
+            -7,
+            -12,
+            104,
+            -8,
+            -7,
+            11
+          ],
+          "expected": 124
+        },
+        {
+          "input": [
+            106,
+            -19,
+            -3,
+            16
+          ],
+          "expected": 122
+        },
+        {
+          "input": [
+            108,
+            20,
+            24,
+            0,
+            -8
+          ],
+          "expected": 160
+        },
+        {
+          "input": [
+            110,
+            -7,
+            -14,
+            -15,
+            23,
+            14
+          ],
+          "expected": 138
+        },
+        {
+          "input": [
+            112,
+            -16,
+            16,
+            23
+          ],
+          "expected": 144
+        },
+        {
+          "input": [
+            12,
+            -1,
+            -21,
+            114,
+            11
+          ],
+          "expected": 126
+        }
+      ],
+      "final": [
+        {
+          "input": [],
+          "expected": 0
+        },
+        {
+          "input": [
+            -53
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            -54
+          ],
+          "expected": 54
+        },
+        {
+          "input": [
+            0,
+            0,
+            0
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            -2,
+            -2,
+            -11,
+            1,
+            2
+          ],
+          "expected": 6
+        },
+        {
+          "input": [
+            -780,
+            433,
+            780,
+            2
+          ],
+          "expected": 1562
+        },
+        {
+          "input": [
+            1000,
+            11,
+            -25,
+            -58,
+            34,
+            -15,
+            -4,
+            -38,
+            -68
+          ],
+          "expected": 1202
+        },
+        {
+          "input": [
+            -50,
+            1002,
+            -51,
+            19,
+            -65,
+            38,
+            -49,
+            -61,
+            21,
+            -42
+          ],
+          "expected": 1132
+        },
+        {
+          "input": [
+            -3,
+            -3,
+            1004,
+            -9,
+            56,
+            75,
+            -49,
+            27,
+            -22,
+            -73,
+            15
+          ],
+          "expected": 1082
+        },
+        {
+          "input": [
+            -67,
+            48,
+            35,
+            1006,
+            -59,
+            42,
+            48,
+            -18,
+            -64
+          ],
+          "expected": 1226
+        },
+        {
+          "input": [
+            -10,
+            -74,
+            35,
+            19,
+            1008,
+            70,
+            -57,
+            16,
+            -25,
+            -70
+          ],
+          "expected": 1248
+        },
+        {
+          "input": [
+            -47,
+            52,
+            -36,
+            61,
+            33,
+            1010,
+            7,
+            -72,
+            -52,
+            -54,
+            9
+          ],
+          "expected": 1276
+        },
+        {
+          "input": [
+            63,
+            22,
+            0,
+            74,
+            -21,
+            42,
+            1012,
+            8,
+            12
+          ],
+          "expected": 1170
+        },
+        {
+          "input": [
+            -37,
+            54,
+            -22,
+            -53,
+            27,
+            44,
+            36,
+            1014,
+            61,
+            -15
+          ],
+          "expected": 1170
+        },
+        {
+          "input": "1,-3,2",
+          "expected": null
+        },
+        {
+          "input": [
+            4,
+            "7"
+          ],
+          "expected": null
+        },
+        {
+          "input": [
+            true,
+            2
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "domain": "sequence",
+      "kind": "outside",
+      "train": [
+        {
+          "input": [
+            -7,
+            3
+          ],
+          "expected": [
+            49,
+            9
+          ]
+        },
+        {
+          "input": [
+            4,
+            8,
+            -4
+          ],
+          "expected": [
+            16,
+            64,
+            16
+          ]
+        },
+        {
+          "input": [
+            2,
+            0,
+            5
+          ],
+          "expected": [
+            4,
+            0,
+            25
+          ]
+        },
+        {
+          "input": [
+            3,
+            6,
+            -9
+          ],
+          "expected": [
+            9,
+            36,
+            81
+          ]
+        }
+      ],
+      "pool": [
+        {
+          "input": [
+            -2,
+            3,
+            0
+          ],
+          "expected": [
+            4,
+            9,
+            0
+          ]
+        },
+        {
+          "input": [
+            12
+          ],
+          "expected": [
+            144
+          ]
+        },
+        {
+          "input": [
+            -5,
+            -5
+          ],
+          "expected": [
+            25,
+            25
+          ]
+        },
+        {
+          "input": [
+            4,
+            4,
+            1
+          ],
+          "expected": [
+            16,
+            16,
+            1
+          ]
+        },
+        {
+          "input": [
+            -11,
+            -13
+          ],
+          "expected": [
+            121,
+            169
+          ]
+        },
+        {
+          "input": [
+            17,
+            -17
+          ],
+          "expected": [
+            289,
+            289
+          ]
+        }
+      ],
+      "qualification": [
+        {
+          "input": [
+            100,
+            17,
+            8,
+            3
+          ],
+          "expected": [
+            10000,
+            289,
+            64,
+            9
+          ]
+        },
+        {
+          "input": [
+            24,
+            102,
+            -5,
+            -12,
+            -15
+          ],
+          "expected": [
+            576,
+            10404,
+            25,
+            144,
+            225
+          ]
+        },
+        {
+          "input": [
+            -10,
+            -21,
+            104,
+            15,
+            -24,
+            14
+          ],
+          "expected": [
+            100,
+            441,
+            10816,
+            225,
+            576,
+            196
+          ]
+        },
+        {
+          "input": [
+            106,
+            0,
+            -11,
+            9
+          ],
+          "expected": [
+            11236,
+            0,
+            121,
+            81
+          ]
+        },
+        {
+          "input": [
+            108,
+            -2,
+            -12,
+            8,
+            20
+          ],
+          "expected": [
+            11664,
+            4,
+            144,
+            64,
+            400
+          ]
+        },
+        {
+          "input": [
+            110,
+            23,
+            -16,
+            22,
+            24,
+            0
+          ],
+          "expected": [
+            12100,
+            529,
+            256,
+            484,
+            576,
+            0
+          ]
+        },
+        {
+          "input": [
+            112,
+            17,
+            -23,
+            -21
+          ],
+          "expected": [
+            12544,
+            289,
+            529,
+            441
+          ]
+        },
+        {
+          "input": [
+            -23,
+            -4,
+            -2,
+            114,
+            11
+          ],
+          "expected": [
+            529,
+            16,
+            4,
+            12996,
+            121
+          ]
+        }
+      ],
+      "final": [
+        {
+          "input": [],
+          "expected": []
+        },
+        {
+          "input": [
+            -6
+          ],
+          "expected": [
+            36
+          ]
+        },
+        {
+          "input": [
+            6
+          ],
+          "expected": [
+            36
+          ]
+        },
+        {
+          "input": [
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "input": [
+            -6,
+            4,
+            2,
+            -3
+          ],
+          "expected": [
+            36,
+            16,
+            4,
+            9
+          ]
+        },
+        {
+          "input": [
+            63,
+            4,
+            -9,
+            6
+          ],
+          "expected": [
+            3969,
+            16,
+            81,
+            36
+          ]
+        },
+        {
+          "input": [
+            1000,
+            -67,
+            -25,
+            -43,
+            24,
+            48,
+            5,
+            -32,
+            -6
+          ],
+          "expected": [
+            1000000,
+            4489,
+            625,
+            1849,
+            576,
+            2304,
+            25,
+            1024,
+            36
+          ]
+        },
+        {
+          "input": [
+            -8,
+            1002,
+            70,
+            72,
+            -68,
+            -55,
+            6,
+            -65,
+            59,
+            0
+          ],
+          "expected": [
+            64,
+            1004004,
+            4900,
+            5184,
+            4624,
+            3025,
+            36,
+            4225,
+            3481,
+            0
+          ]
+        },
+        {
+          "input": [
+            31,
+            -46,
+            1004,
+            10,
+            62,
+            13,
+            -45,
+            30,
+            -34,
+            42,
+            37
+          ],
+          "expected": [
+            961,
+            2116,
+            1008016,
+            100,
+            3844,
+            169,
+            2025,
+            900,
+            1156,
+            1764,
+            1369
+          ]
+        },
+        {
+          "input": [
+            43,
+            13,
+            -14,
+            1006,
+            36,
+            30,
+            7,
+            20,
+            -50
+          ],
+          "expected": [
+            1849,
+            169,
+            196,
+            1012036,
+            1296,
+            900,
+            49,
+            400,
+            2500
+          ]
+        },
+        {
+          "input": [
+            15,
+            60,
+            -28,
+            54,
+            1008,
+            -41,
+            -38,
+            -29,
+            -25,
+            60
+          ],
+          "expected": [
+            225,
+            3600,
+            784,
+            2916,
+            1016064,
+            1681,
+            1444,
+            841,
+            625,
+            3600
+          ]
+        },
+        {
+          "input": [
+            -52,
+            -22,
+            -39,
+            -47,
+            61,
+            1010,
+            9,
+            46,
+            9,
+            4,
+            35
+          ],
+          "expected": [
+            2704,
+            484,
+            1521,
+            2209,
+            3721,
+            1020100,
+            81,
+            2116,
+            81,
+            16,
+            1225
+          ]
+        },
+        {
+          "input": [
+            -49,
+            -13,
+            -56,
+            22,
+            0,
+            -60,
+            1012,
+            50,
+            -8
+          ],
+          "expected": [
+            2401,
+            169,
+            3136,
+            484,
+            0,
+            3600,
+            1024144,
+            2500,
+            64
+          ]
+        },
+        {
+          "input": [
+            -20,
+            -41,
+            4,
+            -70,
+            40,
+            -63,
+            5,
+            1014,
+            -19,
+            -13
+          ],
+          "expected": [
+            400,
+            1681,
+            16,
+            4900,
+            1600,
+            3969,
+            25,
+            1028196,
+            361,
+            169
+          ]
+        },
+        {
+          "input": "1,-3,2",
+          "expected": null
+        },
+        {
+          "input": [
+            4,
+            "7"
+          ],
+          "expected": null
+        },
+        {
+          "input": [
+            true,
+            2
+          ],
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "R01",
+      "domain": "record",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": {
+            "colli": [
+              -7,
+              3,
+              11
+            ],
+            "scarti": [
+              7,
+              3
+            ]
+          },
+          "expected": 14
+        },
+        {
+          "input": {
+            "colli": [
+              1,
+              9,
+              -33
+            ],
+            "scarti": [
+              7,
+              0
+            ]
+          },
+          "expected": 10
+        },
+        {
+          "input": {
+            "colli": [
+              -1,
+              -2,
+              0
+            ],
+            "scarti": [
+              15
+            ]
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "colli": [
+              9,
+              9,
+              -12
+            ],
+            "scarti": [
+              37,
+              1,
+              2
+            ]
+          },
+          "expected": 18
+        }
+      ],
+      "pool": [
+        {
+          "input": {
+            "colli": [
+              20,
+              -66,
+              21
+            ],
+            "scarti": [
+              21,
+              -18,
+              4
+            ]
+          },
+          "expected": 41
+        },
+        {
+          "input": {
+            "colli": [
+              21,
+              -66,
+              22
+            ],
+            "scarti": [
+              22,
+              -18,
+              4
+            ]
+          },
+          "expected": 43
+        },
+        {
+          "input": {
+            "colli": [
+              22,
+              -66,
+              23
+            ],
+            "scarti": [
+              23,
+              -18,
+              4
+            ]
+          },
+          "expected": 45
+        },
+        {
+          "input": {
+            "colli": [
+              23,
+              -66,
+              24
+            ],
+            "scarti": [
+              24,
+              -18,
+              4
+            ]
+          },
+          "expected": 47
+        },
+        {
+          "input": {
+            "colli": [
+              24,
+              -66,
+              25
+            ],
+            "scarti": [
+              25,
+              -18,
+              4
+            ]
+          },
+          "expected": 49
+        },
+        {
+          "input": {
+            "colli": [
+              25,
+              -66,
+              26
+            ],
+            "scarti": [
+              26,
+              -18,
+              4
+            ]
+          },
+          "expected": 51
+        }
+      ],
+      "qualification": [
+        {
+          "input": {
+            "colli": [
+              200,
+              24,
+              -31,
+              -10,
+              2
+            ],
+            "scarti": [
+              -10,
+              -31,
+              24,
+              200
+            ]
+          },
+          "expected": 226
+        },
+        {
+          "input": {
+            "colli": [
+              21,
+              202,
+              11,
+              5,
+              -12,
+              -16
+            ],
+            "scarti": [
+              -12,
+              5,
+              11,
+              202,
+              21
+            ]
+          },
+          "expected": 239
+        },
+        {
+          "input": {
+            "colli": [
+              -37,
+              36,
+              204,
+              -21,
+              -19,
+              27,
+              -13
+            ],
+            "scarti": [
+              27,
+              -19,
+              -21,
+              204,
+              36,
+              -37
+            ]
+          },
+          "expected": 267
+        },
+        {
+          "input": {
+            "colli": [
+              6,
+              26,
+              -29,
+              206,
+              -32
+            ],
+            "scarti": [
+              206,
+              -29,
+              26,
+              6
+            ]
+          },
+          "expected": 238
+        },
+        {
+          "input": {
+            "colli": [
+              -17,
+              -2,
+              -19,
+              16,
+              208,
+              -8
+            ],
+            "scarti": [
+              208,
+              16,
+              -19,
+              -2,
+              -17
+            ]
+          },
+          "expected": 224
+        },
+        {
+          "input": {
+            "colli": [
+              37,
+              -30,
+              21,
+              -32,
+              3,
+              210,
+              -12
+            ],
+            "scarti": [
+              210,
+              3,
+              -32,
+              21,
+              -30,
+              37
+            ]
+          },
+          "expected": 271
+        },
+        {
+          "input": {
+            "colli": [
+              16,
+              34,
+              212,
+              35,
+              -24
+            ],
+            "scarti": [
+              35,
+              212,
+              34,
+              16
+            ]
+          },
+          "expected": 297
+        },
+        {
+          "input": {
+            "colli": [
+              30,
+              36,
+              214,
+              39,
+              25,
+              -10
+            ],
+            "scarti": [
+              25,
+              39,
+              214,
+              36,
+              30
+            ]
+          },
+          "expected": 344
+        }
+      ],
+      "final": [
+        {
+          "input": {
+            "colli": [],
+            "scarti": [
+              9
+            ],
+            "lotto": "L-00"
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "colli": [
+              0
+            ],
+            "scarti": [
+              9
+            ],
+            "lotto": "L-01"
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "colli": [
+              -44
+            ],
+            "scarti": [
+              14
+            ]
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "colli": [
+              55
+            ],
+            "scarti": [
+              0
+            ]
+          },
+          "expected": 55
+        },
+        {
+          "input": {
+            "colli": [
+              999,
+              -999,
+              999
+            ],
+            "scarti": [
+              8
+            ],
+            "lotto": "L-04"
+          },
+          "expected": 1998
+        },
+        {
+          "input": {
+            "colli": [
+              1500,
+              3,
+              43,
+              7,
+              91
+            ],
+            "scarti": [
+              7,
+              43,
+              3,
+              1500
+            ]
+          },
+          "expected": 1644
+        },
+        {
+          "input": {
+            "colli": [
+              24,
+              1502,
+              -92,
+              15,
+              18,
+              38
+            ],
+            "scarti": [
+              18,
+              15,
+              -92,
+              1502,
+              24
+            ]
+          },
+          "expected": 1597
+        },
+        {
+          "input": {
+            "colli": [
+              -27,
+              35,
+              1504,
+              -56,
+              -28,
+              87,
+              45
+            ],
+            "scarti": [
+              87,
+              -28,
+              -56,
+              1504,
+              35,
+              -27
+            ]
+          },
+          "expected": 1671
+        },
+        {
+          "input": {
+            "colli": [
+              -96,
+              58,
+              96,
+              1506,
+              109
+            ],
+            "scarti": [
+              1506,
+              96,
+              58,
+              -96
+            ]
+          },
+          "expected": 1769
+        },
+        {
+          "input": {
+            "colli": [
+              51,
+              17,
+              -101,
+              -48,
+              1508,
+              103
+            ],
+            "scarti": [
+              1508,
+              -48,
+              -101,
+              17,
+              51
+            ]
+          },
+          "expected": 1679
+        },
+        {
+          "input": {
+            "colli": [
+              -106,
+              -47,
+              -12,
+              -37,
+              89,
+              1510,
+              1
+            ],
+            "scarti": [
+              1510,
+              89,
+              -37,
+              -12,
+              -47,
+              -106
+            ]
+          },
+          "expected": 1600
+        },
+        {
+          "input": {
+            "colli": [
+              -62,
+              -99,
+              1512,
+              4,
+              -109
+            ],
+            "scarti": [
+              4,
+              1512,
+              -99,
+              -62
+            ]
+          },
+          "expected": 1516
+        },
+        {
+          "input": {
+            "colli": [
+              94,
+              37,
+              1514,
+              -73,
+              19,
+              88
+            ],
+            "scarti": [
+              19,
+              -73,
+              1514,
+              37,
+              94
+            ]
+          },
+          "expected": 1752
+        },
+        {
+          "input": {
+            "colli": [
+              -94,
+              -10,
+              1516,
+              -58,
+              -14,
+              -51,
+              -89
+            ],
+            "scarti": [
+              -51,
+              -14,
+              -58,
+              1516,
+              -10,
+              -94
+            ]
+          },
+          "expected": 1516
+        },
+        {
+          "input": {
+            "colli": [
+              73,
+              1518,
+              -43,
+              -48,
+              9
+            ],
+            "scarti": [
+              -48,
+              -43,
+              1518,
+              73
+            ]
+          },
+          "expected": 1600
+        },
+        {
+          "input": {},
+          "expected": null
+        },
+        {
+          "input": {
+            "scarti": [
+              4,
+              -8
+            ]
+          },
+          "expected": null
+        },
+        {
+          "input": {
+            "colli": "4,5",
+            "scarti": [
+              4,
+              5
+            ]
+          },
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "domain": "record",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": {
+            "etichetta": "  bOx  ",
+            "codice": "  bOx  "
+          },
+          "expected": "BOX"
+        },
+        {
+          "input": {
+            "etichetta": " rIva\t",
+            "codice": " rIva\t"
+          },
+          "expected": "RIVA"
+        },
+        {
+          "input": {
+            "etichetta": "  colli",
+            "codice": "  colli"
+          },
+          "expected": "COLLI"
+        },
+        {
+          "input": {
+            "etichetta": " FINE   ",
+            "codice": " FINE   "
+          },
+          "expected": "FINE"
+        }
+      ],
+      "pool": [
+        {
+          "input": {
+            "etichetta": "   lampo  ",
+            "codice": "neve "
+          },
+          "expected": "LAMPO"
+        },
+        {
+          "input": {
+            "etichetta": "   siepe",
+            "codice": "RIVA"
+          },
+          "expected": "SIEPE"
+        },
+        {
+          "input": {
+            "etichetta": "\tviTe\t",
+            "codice": " siepe "
+          },
+          "expected": "VITE"
+        },
+        {
+          "input": {
+            "etichetta": " Onda ",
+            "codice": "onda "
+          },
+          "expected": "ONDA"
+        },
+        {
+          "input": {
+            "etichetta": " bRown ",
+            "codice": "brown "
+          },
+          "expected": "BROWN"
+        },
+        {
+          "input": {
+            "etichetta": "  fIUME ",
+            "codice": " CIELO"
+          },
+          "expected": "FIUME"
+        }
+      ],
+      "qualification": [
+        {
+          "input": {
+            "etichetta": " aLba ",
+            "codice": "ALB-01"
+          },
+          "expected": "ALBA"
+        },
+        {
+          "input": {
+            "etichetta": "  cesTo ",
+            "codice": "ces-02"
+          },
+          "expected": "CESTO"
+        },
+        {
+          "input": {
+            "etichetta": " veLa  ",
+            "codice": "VEL!"
+          },
+          "expected": "VELA"
+        },
+        {
+          "input": {
+            "etichetta": "  vASo ",
+            "codice": " V-0"
+          },
+          "expected": "VASO"
+        },
+        {
+          "input": {
+            "etichetta": "  rOvo ",
+            "codice": " R-1"
+          },
+          "expected": "ROVO"
+        },
+        {
+          "input": {
+            "etichetta": "  reTE  ",
+            "codice": "RETE!"
+          },
+          "expected": "RETE"
+        },
+        {
+          "input": {
+            "etichetta": "NUBE  ",
+            "codice": "TERRA"
+          },
+          "expected": "NUBE"
+        },
+        {
+          "input": {
+            "etichetta": "\tmarE\t",
+            "codice": "RIVA"
+          },
+          "expected": "MARE"
+        }
+      ],
+      "final": [
+        {
+          "input": {
+            "etichetta": "",
+            "codice": "AH"
+          },
+          "expected": ""
+        },
+        {
+          "input": {
+            "etichetta": "     ",
+            "codice": "AZZ"
+          },
+          "expected": ""
+        },
+        {
+          "input": {
+            "etichetta": "  bùono ",
+            "codice": "B",
+            "origine": {
+              "ambiente": "sintetico"
+            }
+          },
+          "expected": "BÙONO"
+        },
+        {
+          "input": {
+            "etichetta": "  ÉpÉe ",
+            "codice": ""
+          },
+          "expected": "ÉPÉE"
+        },
+        {
+          "input": {
+            "etichetta": "a  b",
+            "codice": "ab"
+          },
+          "expected": "A  B"
+        },
+        {
+          "input": {
+            "etichetta": "  ambra\nrosa  ",
+            "codice": "X"
+          },
+          "expected": "AMBRA\nROSA"
+        },
+        {
+          "input": {
+            "etichetta": "  Straße  ",
+            "codice": "ß"
+          },
+          "expected": "STRASSE"
+        },
+        {
+          "input": {
+            "etichetta": "🡆 blu ",
+            "codice": "100",
+            "origine": {
+              "ambiente": "sintetico"
+            }
+          },
+          "expected": "🡆 BLU"
+        },
+        {
+          "input": {
+            "etichetta": "  _blu_   ",
+            "codice": "_blu"
+          },
+          "expected": "_BLU_"
+        },
+        {
+          "input": {
+            "etichetta": "  30blu  ",
+            "codice": "blu30"
+          },
+          "expected": "30BLU"
+        },
+        {
+          "input": {
+            "etichetta": "  [tarma]  ",
+            "codice": ""
+          },
+          "expected": "[TARMA]"
+        },
+        {
+          "input": {
+            "etichetta": " MaMma ",
+            "codice": "MAMMA!"
+          },
+          "expected": "MAMMA"
+        },
+        {
+          "input": {
+            "etichetta": "  riva  "
+          },
+          "expected": "RIVA"
+        },
+        {
+          "input": {},
+          "expected": null
+        },
+        {
+          "input": {
+            "codice": "BX"
+          },
+          "expected": null
+        },
+        {
+          "input": {
+            "etichetta": 17,
+            "codice": "TEST"
+          },
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "domain": "record",
+      "kind": "bounded",
+      "train": [
+        {
+          "input": {
+            "marche": [
+              "ALBA",
+              "alba",
+              "ROSA"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "alba",
+            "rosa"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "DADO",
+              "dado",
+              "RAMO",
+              "ramo"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "dado",
+            "ramo"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "FARO",
+              "TIMO",
+              "faro"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "faro",
+            "timo"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "blu",
+              "dune",
+              "BLU",
+              "NEVE"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "blu",
+            "dune",
+            "neve"
+          ]
+        }
+      ],
+      "pool": [
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura0",
+              "cattura0"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura0"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura1",
+              "cattura1"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura1"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura2",
+              "cattura2"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura2"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura3",
+              "cattura3"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura3"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura4",
+              "cattura4"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura4"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "Sera",
+              "sera",
+              "CAttura5",
+              "cattura5"
+            ],
+            "alternative": [
+              "ALTRA",
+              "altra"
+            ]
+          },
+          "expected": [
+            "sera",
+            "cattura5"
+          ]
+        }
+      ],
+      "qualification": [
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA0",
+              "torre",
+              "vallata0"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata0"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA1",
+              "torre",
+              "vallata1"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata1"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA2",
+              "torre",
+              "vallata2"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata2"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA3",
+              "torre",
+              "vallata3"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata3"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA4",
+              "torre",
+              "vallata4"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata4"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA5",
+              "torre",
+              "vallata5"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata5"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA6",
+              "torre",
+              "vallata6"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata6"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "TORRE",
+              "VALLATA7",
+              "torre",
+              "vallata7"
+            ],
+            "alternative": [
+              "TORRE"
+            ]
+          },
+          "expected": [
+            "torre",
+            "vallata7"
+          ]
+        }
+      ],
+      "final": [
+        {
+          "input": {
+            "marche": [],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": []
+        },
+        {
+          "input": {
+            "marche": [
+              ""
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            ""
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "luce"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "luce"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "ÉTÉ",
+              "été",
+              "ÈVE"
+            ],
+            "alternative": [
+              "ALTRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "été",
+            "ève"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "sasso ",
+              "SASSO",
+              "sasso",
+              "SASSO "
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "sasso ",
+            "sasso"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "A",
+              "b",
+              "a",
+              "B",
+              "C",
+              "c",
+              "D",
+              "d",
+              "e",
+              "E"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "  cava",
+              "CAVA",
+              "  CaVa"
+            ],
+            "alternative": [
+              "ALTRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "  cava",
+            "cava"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "MINÈRALE",
+              "Minerale",
+              "minèrale",
+              "MINERALE"
+            ],
+            "alternative": [
+              "ALTRA"
+            ]
+          },
+          "expected": [
+            "minèrale",
+            "minerale"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE0",
+              "canna",
+              "botte0"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte0"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE1",
+              "canna",
+              "botte1"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte1"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE2",
+              "canna",
+              "botte2"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte2"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE3",
+              "canna",
+              "botte3"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte3"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE4",
+              "canna",
+              "botte4"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte4"
+          ]
+        },
+        {
+          "input": {
+            "marche": [
+              "CANNA",
+              "BOTTE5",
+              "canna",
+              "botte5"
+            ],
+            "alternative": [
+              "PIETRA"
+            ],
+            "lotto": "Dopo il cambiamento"
+          },
+          "expected": [
+            "canna",
+            "botte5"
+          ]
+        },
+        {
+          "input": {},
+          "expected": null
+        },
+        {
+          "input": {
+            "alternative": [
+              "BLU"
+            ]
+          },
+          "expected": null
+        },
+        {
+          "input": {
+            "marche": [
+              2,
+              "blu"
+            ]
+          },
+          "expected": null
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "domain": "record",
+      "kind": "outside",
+      "train": [
+        {
+          "input": {
+            "spedite": 120,
+            "stornate": 5
+          },
+          "expected": 115
+        },
+        {
+          "input": {
+            "spedite": 120,
+            "stornate": 10
+          },
+          "expected": 110
+        },
+        {
+          "input": {
+            "spedite": 150,
+            "stornate": 10
+          },
+          "expected": 140
+        },
+        {
+          "input": {
+            "spedite": 7,
+            "stornate": 9
+          },
+          "expected": -2
+        }
+      ],
+      "pool": [
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 20
+          },
+          "expected": 38
+        },
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 21
+          },
+          "expected": 37
+        },
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 22
+          },
+          "expected": 36
+        },
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 23
+          },
+          "expected": 35
+        },
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 24
+          },
+          "expected": 34
+        },
+        {
+          "input": {
+            "spedite": 58,
+            "stornate": 25
+          },
+          "expected": 33
+        }
+      ],
+      "qualification": [
+        {
+          "input": {
+            "spedite": 85,
+            "stornate": 33
+          },
+          "expected": 52
+        },
+        {
+          "input": {
+            "spedite": 86,
+            "stornate": 33
+          },
+          "expected": 53
+        },
+        {
+          "input": {
+            "spedite": 87,
+            "stornate": 33
+          },
+          "expected": 54
+        },
+        {
+          "input": {
+            "spedite": 88,
+            "stornate": 33
+          },
+          "expected": 55
+        },
+        {
+          "input": {
+            "spedite": 89,
+            "stornate": 33
+          },
+          "expected": 56
+        },
+        {
+          "input": {
+            "spedite": 90,
+            "stornate": 33
+          },
+          "expected": 57
+        },
+        {
+          "input": {
+            "spedite": 91,
+            "stornate": 33
+          },
+          "expected": 58
+        },
+        {
+          "input": {
+            "spedite": 92,
+            "stornate": 33
+          },
+          "expected": 59
+        }
+      ],
+      "final": [
+        {
+          "input": {
+            "spedite": 0,
+            "stornate": 0
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "spedite": 0,
+            "stornate": 4
+          },
+          "expected": -4
+        },
+        {
+          "input": {
+            "spedite": 7,
+            "stornate": 0
+          },
+          "expected": 7
+        },
+        {
+          "input": {
+            "spedite": 25,
+            "stornate": 25
+          },
+          "expected": 0
+        },
+        {
+          "input": {
+            "spedite": 220,
+            "stornate": 225,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 221,
+            "stornate": 226,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 222,
+            "stornate": 227,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 223,
+            "stornate": 228,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 224,
+            "stornate": 229,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 225,
+            "stornate": 230,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 226,
+            "stornate": 231,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 227,
+            "stornate": 232,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 228,
+            "stornate": 233,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {
+            "spedite": 229,
+            "stornate": 234,
+            "origine": "prove"
+          },
+          "expected": -5
+        },
+        {
+          "input": {},
+          "expected": null
+        },
+        {
+          "input": {
+            "spedite": 5
+          },
+          "expected": null
+        },
+        {
+          "input": {
+            "spedite": 7,
+            "stornate": "due"
+          },
+          "expected": null
+        }
+      ]
+    }
+  ]
+}

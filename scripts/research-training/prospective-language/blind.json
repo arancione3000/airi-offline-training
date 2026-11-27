@@ -1,0 +1,509 @@
+{
+  "value_offset": 45000,
+  "rows": [
+    {
+      "id": "new-language-parcel_copy-0",
+      "query": "Mi passi il codice del pacco così com'è scritto?",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-parcel_copy-1",
+      "query": "Per il modulo mi occorre l'identificativo riportato sul pacco. Me lo copi?",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": "parcel_copy",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-parcel_copy-2",
+      "query": "Del codice del pacco mostrami le ultime tre posizioni.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-parcel_copy-3",
+      "query": "Per la prova inventa un altro codice del pacco simile a quello che ti ho dato.",
+      "source_lesson_id": "parcel_copy",
+      "lesson_id": null,
+      "condition": "invented"
+    },
+    {
+      "id": "new-language-signal_reverse-0",
+      "query": "Puoi riscrivere il segnale acquisito in ordine inverso?",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-signal_reverse-1",
+      "query": "Leggimi il segnale acquisito cominciando dall'ultimo carattere e finendo col primo.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": "signal_reverse",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-signal_reverse-2",
+      "query": "Inverti il segnale acquisito solo nel caso in cui inizi per Z.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "condition": "conditional"
+    },
+    {
+      "id": "new-language-signal_reverse-3",
+      "query": "Del segnale acquisito vorrei la sequenza ordinata per carattere crescente.",
+      "source_lesson_id": "signal_reverse",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-card_upper-0",
+      "query": "Mi riscrivi la scritta sulla tessera usando tutte maiuscole?",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-card_upper-1",
+      "query": "Vorrei il testo della tessera in caratteri maiuscoli, per favore.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": "card_upper",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-card_upper-2",
+      "query": "Sul testo della tessera metti in maiuscolo soltanto la lettera finale.",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-card_upper-3",
+      "query": "Nella frase «porta in maiuscolo il testo della tessera», quale verbo esprime il comando?",
+      "source_lesson_id": "card_upper",
+      "lesson_id": null,
+      "condition": "metalinguistic"
+    },
+    {
+      "id": "new-language-plate_lower-0",
+      "query": "Puoi rendere minuscola ogni lettera della targa?",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-plate_lower-1",
+      "query": "Mi dai la scritta della targa tutta in minuscolo?",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": "plate_lower",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-plate_lower-2",
+      "query": "Evita di mostrarmi la targa in minuscolo. Ho già la copia che mi serve.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "condition": "negation"
+    },
+    {
+      "id": "new-language-plate_lower-3",
+      "query": "Scrivi la targa in minuscolo soltanto se è composta interamente da lettere.",
+      "source_lesson_id": "plate_lower",
+      "lesson_id": null,
+      "condition": "conditional"
+    },
+    {
+      "id": "new-language-delta_sum-0",
+      "query": "A quanto ammonta la somma dei due valori delta che ho indicato?",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-delta_sum-1",
+      "query": "Puoi fare primo più secondo per la coppia delta?",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": "delta_sum",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-delta_sum-2",
+      "query": "Della coppia delta mi serve la somma delle cifre del primo numero.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-delta_sum-3",
+      "query": "I due valori delta sommati arrivano almeno a mille? Rispondi sì o no.",
+      "source_lesson_id": "delta_sum",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-sigma_product-0",
+      "query": "Per la coppia sigma, quanto vale il primo intero moltiplicato per il secondo?",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-sigma_product-1",
+      "query": "Mi calcoli il prodotto dei valori sigma che ti ho dato?",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": "sigma_product",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-sigma_product-2",
+      "query": "Dei valori sigma calcola il prodotto e dammi anche la divisione tra i due.",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "condition": "multi_intent"
+    },
+    {
+      "id": "new-language-sigma_product-3",
+      "query": "Come si chiama, in inglese, l'operazione che dà il prodotto dei due interi sigma?",
+      "source_lesson_id": "sigma_product",
+      "lesson_id": null,
+      "condition": "metalinguistic"
+    },
+    {
+      "id": "new-language-auto_v1_remaining-0",
+      "query": "Quanto resta del saldo iniziale togliendo il secondo importo che ti ho indicato?",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_remaining-1",
+      "query": "Mi serve il primo valore del saldo meno il secondo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": "auto_v1_remaining",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_remaining-2",
+      "query": "Del saldo calcola il secondo importo meno il primo.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-auto_v1_remaining-3",
+      "query": "Calcola il saldo residuo solo se la differenza tra i due importi è positiva.",
+      "source_lesson_id": "auto_v1_remaining",
+      "lesson_id": null,
+      "condition": "conditional"
+    },
+    {
+      "id": "new-language-auto_v1_contact-0",
+      "query": "A chi devo rivolgermi per quest'ordine secondo i dati che ti ho passato?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_contact-1",
+      "query": "Mi ricopi il nome del referente indicato per l'ordine?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": "auto_v1_contact",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_contact-2",
+      "query": "Il referente dell'ordine l'ho già trovato. Mi ricordi invece il riferimento dell'ordine?",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "condition": "object_swap"
+    },
+    {
+      "id": "new-language-auto_v1_contact-3",
+      "query": "Proponimi tu un nome credibile da usare al posto del referente dell'ordine.",
+      "source_lesson_id": "auto_v1_contact",
+      "lesson_id": null,
+      "condition": "invented"
+    },
+    {
+      "id": "new-language-auto_v1_customer_reference-0",
+      "query": "Che identificativo è stato assegnato al cliente in questi dati?",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_customer_reference-1",
+      "query": "Ho perso di vista il riferimento cliente. Me lo rimandi identico?",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": "auto_v1_customer_reference",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_customer_reference-2",
+      "query": "A cosa serve il campo chiamato riferimento cliente?",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "condition": "metalinguistic"
+    },
+    {
+      "id": "new-language-auto_v1_customer_reference-3",
+      "query": "Trascrivimi del riferimento cliente solo i caratteri numerici.",
+      "source_lesson_id": "auto_v1_customer_reference",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-auto_v1_order_reference-0",
+      "query": "Con quale riferimento è registrato l'ordine che ho menzionato?",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_order_reference-1",
+      "query": "Ripetimi per intero l'identificativo dell'ordine, per cortesia.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": "auto_v1_order_reference",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_order_reference-2",
+      "query": "Non copiare il riferimento dell'ordine nella risposta.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "condition": "negation"
+    },
+    {
+      "id": "new-language-auto_v1_order_reference-3",
+      "query": "Mi serve il riferimento del cliente associato a quest'ordine.",
+      "source_lesson_id": "auto_v1_order_reference",
+      "lesson_id": null,
+      "condition": "object_swap"
+    },
+    {
+      "id": "new-language-auto_v1_email_alias-0",
+      "query": "Mi rimandi l'alias email esattamente come te l'ho scritto?",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_email_alias-1",
+      "query": "Quale alias risulta per la posta elettronica nei dati che hai qui?",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": "auto_v1_email_alias",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_email_alias-2",
+      "query": "Puoi contare quanti caratteri ha l'alias email?",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-auto_v1_email_alias-3",
+      "query": "Suggeriscimi un alias email alternativo che potrei usare.",
+      "source_lesson_id": "auto_v1_email_alias",
+      "lesson_id": null,
+      "condition": "invented"
+    },
+    {
+      "id": "new-language-auto_v1_tracking_reverse-0",
+      "query": "Per il controllo devo leggere il token di verifica da destra verso sinistra. Me lo riscrivi così?",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_tracking_reverse-1",
+      "query": "Mi dai i caratteri del token di verifica in ordine opposto?",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": "auto_v1_tracking_reverse",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_tracking_reverse-2",
+      "query": "Metti in ordine inverso solo i primi due caratteri del token di verifica.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-auto_v1_tracking_reverse-3",
+      "query": "Inverti il token di verifica e aggiungi uno zero davanti al risultato.",
+      "source_lesson_id": "auto_v1_tracking_reverse",
+      "lesson_id": null,
+      "condition": "multi_intent"
+    },
+    {
+      "id": "new-language-auto_v1_label_upper-0",
+      "query": "Porta tutte le lettere dell'etichetta di spedizione in maiuscolo, per favore.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_label_upper-1",
+      "query": "Come viene la dicitura sull'etichetta di spedizione se la scriviamo tutta in maiuscole?",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": "auto_v1_label_upper",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_label_upper-2",
+      "query": "Vorrei l'etichetta di spedizione con le sole iniziali delle parole in maiuscolo.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-auto_v1_label_upper-3",
+      "query": "Mostrami l'etichetta di spedizione in maiuscolo solo quando il testo contiene un trattino.",
+      "source_lesson_id": "auto_v1_label_upper",
+      "lesson_id": null,
+      "condition": "conditional"
+    },
+    {
+      "id": "new-language-auto_v1_account_lower-0",
+      "query": "Puoi ricopiare l'alias dell'account trasformando in minuscole tutte le lettere?",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_account_lower-1",
+      "query": "Mi serve una versione interamente minuscola dell'alias account.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": "auto_v1_account_lower",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_account_lower-2",
+      "query": "Converti in minuscolo la prima lettera dell'alias account e lascia intatto il resto.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-auto_v1_account_lower-3",
+      "query": "Sarebbe una buona idea usare l'alias account in minuscolo? Motivami la risposta.",
+      "source_lesson_id": "auto_v1_account_lower",
+      "lesson_id": null,
+      "condition": "metalinguistic"
+    },
+    {
+      "id": "new-language-auto_v1_stock_remaining-0",
+      "query": "Mi calcoli la scorta rimasta togliendo la seconda quantità dalla prima?",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_stock_remaining-1",
+      "query": "Per la scorta fai il primo valore meno il secondo e dimmi quanto rimane.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": "auto_v1_stock_remaining",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_stock_remaining-2",
+      "query": "Quanto fa la differenza in valore assoluto fra i due dati della scorta?",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-auto_v1_stock_remaining-3",
+      "query": "Calcola la scorta residua e indica anche la percentuale consumata.",
+      "source_lesson_id": "auto_v1_stock_remaining",
+      "lesson_id": null,
+      "condition": "multi_intent"
+    },
+    {
+      "id": "new-language-auto_v1_cart_total-0",
+      "query": "Sommando le due quantità del carrello, quanti pezzi ci sono in tutto?",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_cart_total-1",
+      "query": "Mi dai il totale delle quantità segnate nel carrello?",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": "auto_v1_cart_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_cart_total-2",
+      "query": "Quale delle due quantità del carrello pesa di più sul totale?",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "condition": "wrong_operation"
+    },
+    {
+      "id": "new-language-auto_v1_cart_total-3",
+      "query": "Aggiungi a caso altri articoli e inventa un nuovo totale per il carrello.",
+      "source_lesson_id": "auto_v1_cart_total",
+      "lesson_id": null,
+      "condition": "invented"
+    },
+    {
+      "id": "new-language-auto_v1_inventory_total-0",
+      "query": "Mi sommi le due quantità che compaiono in inventario?",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_inventory_total-1",
+      "query": "Quanto ottengo mettendo insieme entrambe le quantità dell'inventario?",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": "auto_v1_inventory_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_inventory_total-2",
+      "query": "Somma le quantità dell'inventario soltanto se il primo valore è un multiplo di tre.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "condition": "conditional"
+    },
+    {
+      "id": "new-language-auto_v1_inventory_total-3",
+      "query": "Riporta l'ultima cifra del totale delle due quantità in inventario.",
+      "source_lesson_id": "auto_v1_inventory_total",
+      "lesson_id": null,
+      "condition": "partial"
+    },
+    {
+      "id": "new-language-auto_v1_unit_total-0",
+      "query": "Quanto viene la spesa moltiplicando il prezzo di un pezzo per il numero di pezzi?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_unit_total-1",
+      "query": "Dal prezzo unitario e dalla quantità che ti ho fornito, mi calcoli il costo complessivo?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": "auto_v1_unit_total",
+      "condition": "supported_paraphrase"
+    },
+    {
+      "id": "new-language-auto_v1_unit_total-2",
+      "query": "Moltiplica il prezzo unitario per la quantità e applica uno sconto del dieci per cento.",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "condition": "multi_intent"
+    },
+    {
+      "id": "new-language-auto_v1_unit_total-3",
+      "query": "Per la stessa quantità, quanto spenderei acquistando un prodotto diverso di cui non sai il prezzo?",
+      "source_lesson_id": "auto_v1_unit_total",
+      "lesson_id": null,
+      "condition": "object_swap"
+    }
+  ]
+}
